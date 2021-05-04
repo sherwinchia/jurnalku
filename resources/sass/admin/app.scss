@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap");
+
+@tailwind base;
+
+html,
+body {
+    @apply p-0 text-black font-roboto;
+    letter-spacing: 1px;
+}
+
+button {
+    @apply px-3 py-2 bg-primary rounded-md text-white text-sm font-semibold;
+
+    &:hover {
+        background-color: rgb(119, 101, 224);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(107, 76, 245, 0.733);
+    }
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+h2 {
+    font-size: 1.5em;
+    margin: 0.75em 0;
+}
+h3 {
+    font-size: 1.17em;
+    margin: 0.83em 0;
+}
+h5 {
+    font-size: 0.83em;
+    margin: 1.5em 0;
+}
+h6 {
+    font-size: 0.75em;
+    margin: 1.67em 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bolder;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+//partials
+@import "partials/_input-group";
+@import "partials/_card";
+@import "partials/_navbar";
+@import "partials/_data-table";
+@import "partials/_scroll-bar";
+
+//fontawesome-free
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";

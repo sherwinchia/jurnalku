@@ -1,0 +1,38 @@
+.input-group {
+    @apply mb-5;
+    label {
+        @apply block font-medium text-sm text-gray-700;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    input[type="email"],
+    input[type="password"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+        @apply border-gray-300 rounded-md shadow-sm w-full;
+    }
+
+    input[type="text"]:focus,
+    input[type="file"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="datetime-local"]:focus,
+    input[type="date"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+        @apply border-indigo-300 ring ring-indigo-200 ring-opacity-50;
+    }
+}
+
+.error-msg {
+    @apply text-red-600 text-sm italic;
+}
+
+.success-msg {
+    @apply text-green-600 text-sm italic;
+}
