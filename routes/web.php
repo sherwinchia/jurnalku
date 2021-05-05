@@ -20,9 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
 Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     });
 
     Route::group(['middleware' => 'role:user', 'prefix' => 'user', 'as' => 'user.'], function () {
-        Route::resource('dashboard', UserDashboardController::class);
+        Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard.index');
     });
 });
 

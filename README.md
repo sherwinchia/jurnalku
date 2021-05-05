@@ -32,3 +32,8 @@ $php artisan serve
 -   Laravel 8
 -   Jetstream
 -   MySql
+
+## Library Used
+
+-   Spatie Backup
+-   Spatie Media Library
