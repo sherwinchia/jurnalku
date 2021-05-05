@@ -8,18 +8,18 @@ body {
     letter-spacing: 1px;
 }
 
-button {
-    @apply px-3 py-2 bg-primary rounded-md text-white text-sm font-semibold;
+// button {
+//     @apply px-3 py-2 bg-primary rounded-md text-white text-sm font-semibold;
 
-    &:hover {
-        background-color: rgb(119, 101, 224);
-    }
+//     &:hover {
+//         background-color: rgb(119, 101, 224);
+//     }
 
-    &:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(107, 76, 245, 0.733);
-    }
-}
+//     &:focus {
+//         outline: none;
+//         box-shadow: 0 0 0 3px rgba(107, 76, 245, 0.733);
+//     }
+// }
 
 [x-cloak] {
     display: none !important;

@@ -71,7 +71,8 @@ class UserForm extends Component
                 'phone_number' => 'nullable| numeric | starts_with: 6,0',
                 'address' => 'nullable|regex:/(^[-0-9A-Za-z.,\/ ]+$)/'
             ]);
-        } else {
+        }
+        if (!$this->edit) {
             $data = $this->validate($this->rules);
         }
 
@@ -86,12 +87,6 @@ class UserForm extends Component
             session()->flash('success', 'User successfully updated.');
             return redirect()->route('admin.users.index');
         } else {
-            // $user = User::create([
-            //     'role_id' => $data['role_id'],
-            //     'name' => $data['name'],
-            //     'email' => $data['email'],
-            //     'password' => $data['password']
-            // ]);
             User::create($data);
             session()->flash('success', 'User successfully created.');
             return redirect()->route('admin.users.index');

@@ -21,9 +21,6 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/admin.css') }}">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-        crossorigin="anonymous" /> --}}
 
     @livewireStyles
 
@@ -32,8 +29,6 @@
 </head>
 
 <body class="font-sans antialiased">
-    {{-- <x-jet-banner /> --}}
-
     <main class="">
         <div x-data="adminSideBar()" class="flex min-h-screen h-screen" x-init="init()">
             <div class="flex-1 flex overflow-hidden">
@@ -45,9 +40,10 @@
                     <div class=" text-center text-black overflow-hidden h-24 flex items-center justify-center px-2">
                         {{-- <img width="50" height="50" src="{{ asset('images/brand/logo-transparent.png') }}"
                             alt="logo"> --}}
-                        <div class=" font-semibold text-2xl">
+                        {{-- <div class=" font-semibold text-2xl">
                             {{ config('app.name') }}
-                        </div>
+                        </div> --}}
+                        <x-jet-authentication-card-logo />
                     </div>
                     <div class="overflow-y-auto">
                         <livewire:admin.navbar>

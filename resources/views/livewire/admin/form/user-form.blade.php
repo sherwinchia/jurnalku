@@ -47,7 +47,9 @@
 
                     <section>
                         <div class="input-group">
-                            <label for="password">Password <span class="text-red-500">*</span></label>
+                            <label for="password">Password  @if (!$edit)
+                                <span class="text-red-500">*</span>
+                            @endif</label>
                             <input wire:model="password" type="text">
                             @error('password') <span class="error-msg">{{ $message }}</span> @enderror
                         </div>

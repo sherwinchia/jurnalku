@@ -1,12 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\User\ProfileController as UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
 use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
 use Laravel\Jetstream\Http\Controllers\Livewire\PrivacyPolicyController;
 use Laravel\Jetstream\Http\Controllers\Livewire\TeamController;
 use Laravel\Jetstream\Http\Controllers\Livewire\TermsOfServiceController;
-use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
+// use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Jetstream;
 
@@ -20,7 +22,7 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
         //Admin
         Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
-            Route::get('profile', [UserProfileController::class, 'show'])
+            Route::get('profile', [ProfileController::class, 'show'])
                 ->name('profile.show');
         });
 
