@@ -14,7 +14,17 @@ module.exports = {
     theme: {
         extend: {
           colors:{
-            primary:'#6875F5',
+            primary:{
+              100:'#c4b492',
+              200:'#baa880',
+              300:'#b09b6d',
+              400:'#a68f5b',
+              500:'#9c8249',
+              600:'#8c7542',
+              700:'#7d683a',
+              800:'#6d5b33',
+              900:'#5e4e2c',
+            },
             hover:'#ECEFF3',
             base:'#fcfdff',
             dark:{

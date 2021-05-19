@@ -12,17 +12,8 @@ class UserForm extends Component
 {
     public $user;
 
-    public $slug;
-    public $name;
-    public $phone_number;
-    public $address;
-
-    public $email;
-    public $password;
-
-    public $role_id;
-    public $roles;
-
+    public $slug, $name, $phone_number, $address, $email, $role_id, $roles;
+    public $password, $password_confirmation;
     public $edit;
 
     public $buttonText = 'Create';
@@ -30,19 +21,18 @@ class UserForm extends Component
     protected $rules = [
         'name' => 'required|regex:/^[A-Z]+$/i|max:80',
         'role_id' => 'required',
-        'password' => 'required',
+        'password' => 'required|confirmed',
         'email' => 'required|email|unique:users,email',
-        'phone_number' => 'nullable| numeric | starts_with: 6,0',
-        'address' => 'nullable|regex:/(^[-0-9A-Za-z.,\/ ]+$)/'
+        'phone_number' => 'nullable|numeric|digits_between:10,15',
+        'address' => 'nullable|regex:^[#.0-9a-zA-Z\s,-]+$^'
     ];
 
-
-    public function mount($userId = null)
+    public function mount($model = null)
     {
-        $this->edit = isset($userId) ? true : false;
+        $this->edit = isset($model) ? true : false;
 
-        if (isset($userId)) {
-            $this->user = User::findOrFail($userId);
+        if (isset($model)) {
+            $this->user = $model;
             $this->email = $this->user->email;
             $this->name = $this->user->name;
             $this->phone_number = $this->user->phone_number;
@@ -67,9 +57,9 @@ class UserForm extends Component
             $data = $this->validate([
                 'name' => 'required|regex:/^[A-Z]+$/i|max:80',
                 'role_id' => 'required',
-                'password' => 'nullable',
-                'phone_number' => 'nullable| numeric | starts_with: 6,0',
-                'address' => 'nullable|regex:/(^[-0-9A-Za-z.,\/ ]+$)/'
+                'password' => 'nullable|confirmed',
+                'phone_number' => 'nullable|numeric|digits_between:10,15',
+                'address' => 'nullable|regex:^[#.0-9a-zA-Z\s,-]+$^'
             ]);
         }
         if (!$this->edit) {
@@ -85,12 +75,11 @@ class UserForm extends Component
         if ($this->edit) {
             $this->user->update($data);
             session()->flash('success', 'User successfully updated.');
-            return redirect()->route('admin.users.index');
         } else {
-            User::create($data);
+            $this->user = User::create($data);
             session()->flash('success', 'User successfully created.');
-            return redirect()->route('admin.users.index');
         }
+        return redirect()->route('admin.users.edit', $this->user->id);
     }
 
     public function render()
