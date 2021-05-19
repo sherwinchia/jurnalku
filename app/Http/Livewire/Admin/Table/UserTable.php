@@ -17,6 +17,8 @@ class UserTable extends Component
     public $sortField = 'id';
     public $sortAsc = true;
     public $perPage = 10;
+    public $modalVisible;
+    public $modalId;
 
     public function updatingSearch()
     {
@@ -32,6 +34,24 @@ class UserTable extends Component
         }
 
         $this->sortField = $field;
+    }
+
+    public function showModal($id)
+    {
+        $this->modalVisible = true;
+        $this->modalId = $id;
+    }
+
+    public function delete()
+    {
+        $user = User::find($this->modalId);
+        $user->delete();
+        $this->modalVisible = false;
+    }
+
+    public function createUser()
+    {
+        return redirect(route('admin.users.create'));
     }
 
     public function paginationView()

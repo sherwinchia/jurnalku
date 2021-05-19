@@ -12,7 +12,7 @@
         <li class="{{ request()->is('admin/users*') ? 'navbar-active-list' : 'navbar-list' }}">
             <a class="flex-col justify-between items-center" href="{{ route('admin.users.index') }}">
                 <div>
-                    <i class="fa fa-user w-8 text-lg"></i>
+                    <i class="fa fa-users w-8 text-lg"></i>
                     <span class="font-roboto text-md">User</span>
                 </div>
             </a>

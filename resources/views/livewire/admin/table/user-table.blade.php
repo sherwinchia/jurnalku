@@ -1,4 +1,4 @@
-<div class="data-table">
+<div class="data-table overflow-x-auto">
     <div class="top">
         <div class="flex justify-between mb-2">
             <div class="flex space-x-2">
@@ -13,11 +13,15 @@
                     </select>
                 </div>
             </div>
-            <a href="{{ route('admin.users.create') }}" role="button">
-                <x-jet-button>
+            <div>
+                <x-jet-button wire:click="createUser" wire:loading.attr="disabled">
                     Create
+                    <span wire:loading wire:target="createUser"
+                        class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                    </span>
                 </x-jet-button>
-            </a>
+            </div>
+
         </div>
     </div>
     <div class="bottom">
@@ -66,8 +70,7 @@
                                     href="{{ route('admin.users.edit', $user->id) }}">
                                     <i class="far fa-edit"></i>
                                 </a>
-                                <a class="mx-1 text-lg" role="button"
-                                    wire:click="$emitTo('admin.partials.delete-modal-component', 'onTrashIcon' ,{{ $user->id }}, 'user')">
+                                <a class="mx-1 text-lg" role="button" wire:click="showModal({{ $user->id }})">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -93,5 +96,26 @@
             </div>
         </div>
     </div>
-    <livewire:admin.partials.delete-modal-component />
+    <x-jet-dialog-modal wire:model="modalVisible">
+        <x-slot name="title">
+            Delete User
+        </x-slot>
+
+        <x-slot name="content">
+            This action can not be recovered!
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$toggle('modalVisible')" wire:loading.attr="disabled">
+                Cancel
+            </x-jet-secondary-button>
+
+            <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
+                Delete
+                <span wire:loading wire:target="delete"
+                    class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                </span>
+            </x-jet-danger-button>
+        </x-slot>
+    </x-jet-dialog-modal>
 </div>

@@ -8,18 +8,25 @@ body {
     letter-spacing: 1px;
 }
 
-// button {
-//     @apply px-3 py-2 bg-primary rounded-md text-white text-sm font-semibold;
+button {
+    @apply inline-flex items-center px-4 py-2 bg-primary-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest disabled:opacity-25 transition;
 
-//     &:hover {
-//         background-color: rgb(119, 101, 224);
-//     }
+    &:hover {
+        @apply bg-primary-400;
+    }
 
-//     &:focus {
-//         outline: none;
-//         box-shadow: 0 0 0 3px rgba(107, 76, 245, 0.733);
-//     }
-// }
+    &:active {
+        @apply bg-primary-600;
+    }
+
+    &:focus {
+        @apply outline-none border-primary-600 ring ring-primary-300;
+    }
+
+    &:disabled {
+        @apply opacity-25;
+    }
+}
 
 [x-cloak] {
     display: none !important;
@@ -27,23 +34,27 @@ body {
 
 h1 {
     font-size: 2em;
-    margin: 0.67em 0;
+    @apply mb-2;
 }
 h2 {
     font-size: 1.5em;
-    margin: 0.75em 0;
+    @apply mb-2;
 }
 h3 {
     font-size: 1.17em;
-    margin: 0.83em 0;
+    @apply mb-2;
+}
+h4 {
+    font-size: 1em;
+    @apply mb-2;
 }
 h5 {
     font-size: 0.83em;
-    margin: 1.5em 0;
+    @apply mb-2;
 }
 h6 {
     font-size: 0.75em;
-    margin: 1.67em 0;
+    @apply mb-2;
 }
 h1,
 h2,
