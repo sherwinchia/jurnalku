@@ -37,12 +37,10 @@
                     x-transition:enter-end="transform -translate-x-0" x-transition:leave="transition duration-600"
                     x-transition:leave-start="transform" x-transition:leave-end="transform -translate-x-full"
                     class="navigation-bar w-64 flex-none overflow-y-auto transform origin-left flex flex-col">
-                    <div class=" text-center text-black overflow-hidden h-24 flex items-center justify-center px-2">
-                        {{-- <img width="50" height="50" src="{{ asset('images/brand/logo-transparent.png') }}"
-                            alt="logo"> --}}
-                        {{-- <div class=" font-semibold text-2xl">
+                    <div class=" text-center text-black overflow-hidden h-24 flex items-center justify-center px-2 gap-4">
+                         <div class=" font-semibold text-2xl">
                             {{ config('app.name') }}
-                        </div> --}}
+                        </div> 
                         <x-jet-authentication-card-logo />
                     </div>
                     <div class="overflow-y-auto">

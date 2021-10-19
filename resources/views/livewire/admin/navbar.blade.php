@@ -18,7 +18,33 @@
             </a>
         </li>
 
-        <li class="navbar-list pr-0"
+        <li class="{{ request()->is('admin/transactions*') ? 'navbar-active-list' : 'navbar-list' }}">
+            <a class="flex-col justify-between items-center" href="{{ route('admin.transactions.index') }}">
+                <div>
+                    <i class="fa fa-money-bill-wave-alt w-8 text-lg"></i>
+                    <span class="font-roboto text-md">Transaction</span>
+                </div>
+            </a>
+        </li>
+        <li class="{{ request()->is('admin/subscriptions*') ? 'navbar-active-list' : 'navbar-list' }}">
+            <a class="flex-col justify-between items-center" href="{{ route('admin.subscriptions.index') }}">
+                <div>
+                    <i class="fa fa-credit-card w-8 text-lg"></i>
+                    <span class="font-roboto text-md">Subscription</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="{{ request()->is('admin/packages*') ? 'navbar-active-list' : 'navbar-list' }}">
+            <a class="flex-col justify-between items-center" href="{{ route('admin.packages.index') }}">
+                <div>
+                    <i class="fa fa-box-open w-8 text-lg"></i>
+                    <span class="font-roboto text-md">Package</span>
+                </div>
+            </a>
+        </li>
+
+        {{-- <li class="navbar-list pr-0"
             x-data="{contentDrop: {{ request()->is('admin/articles*') ? 'true' : 'false' }}} ">
             <a class="flex-col justify-between items-center cursor-pointer" @click="contentDrop=!contentDrop">
                 <div>
@@ -52,8 +78,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
-
+        </li> --}}
 
         <li class="{{ request()->is('admin/profile*') ? 'navbar-active-list' : 'navbar-list' }}">
             <a class="flex-col justify-between items-center" href="{{ route('admin.profile.show') }}">

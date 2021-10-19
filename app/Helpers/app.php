@@ -107,11 +107,27 @@ function current_user(){
         return $new_string;
   }
 
-function getUniquePromoCode() {
-    $code = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6));
-    if (PromoCode::where('code', $code)->exists()) {
-        $this->getUniquePromoCode();
+    function getUniquePromoCode() {
+        $code = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6));
+        if (PromoCode::where('code', $code)->exists()) {
+            getUniquePromoCode();
+        }
+
+        return $code;
     }
 
-    return $code;
-}
+    function pluralize($quantity, $singular, $plural=null) {
+        if($quantity==1 || !strlen($singular)) return $singular;
+        if($plural!==null) return $plural;
+    
+        $last_letter = strtolower($singular[strlen($singular)-1]);
+        switch($last_letter) {
+            case 'y':
+                return substr($singular,0,-1).'ies';
+            case 's':
+                return $singular.'es';
+            default:
+                return $singular.'s';
+        }
+    }
+
