@@ -20,6 +20,6 @@ class PackageController extends Controller
     
     public function create()
     {
-        return view('admin.package.edit');
+        return view('admin.package.create');
     }
 }

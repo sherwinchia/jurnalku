@@ -44,6 +44,21 @@ class GenerateDatatable extends Command
         $model_lowercase = strtolower($model);
         $pluralize_model = pluralize(2,$model_lowercase);
 
+        $controller_file = "{$model}Table.php";
+        $view_file = "{$model_lowercase}-table.blade.php";
+
+        $app_path = app_path();
+        $resource_path = resource_path();
+
+        $controller_path = "{$app_path}/Http/Livewire/Admin/Table/{$controller_file}";
+        $view_path = "{$resource_path}/views/livewire/admin/table/{$view_file}";
+        
+        if(file_exists($controller_path))
+            return $this->error('⚠️ ' . $controller_path.' file already exists!');
+
+        if(file_exists($view_path))
+            return $this->error('⚠️ ' . $view_path.' file already exists!');
+
         $view_content='<div class="data-table overflow-x-auto">
 <div class="top">
     <div class="flex justify-between mb-2">
@@ -231,21 +246,6 @@ class '.$model.'Table extends Component
 }';
 
         if ($this->confirm("Do you wish to generate {$model_lowercase}-table.blade.php and {$model}Table.php file?")) {
-            $controller_file = "{$model}Table.php";
-            $view_file = "{$model_lowercase}-table.blade.php";
-
-            $app_path = app_path();
-            $resource_path = resource_path();
-
-            $controller_path = "{$app_path}/Http/Livewire/Admin/Table/{$controller_file}";
-            $view_path = "{$resource_path}/views/livewire/admin/table/{$view_file}";
-
-            if($this->files->isFile($controller_file))
-                return $this->error($controller_file.' File Already exists!');
-
-            if($this->files->isFile($view_file))
-                return $this->error($view_file.' File Already exists!');
-        
             if(!$this->files->put($controller_path, $controller_content))
                 return $this->error('Something went wrong!');
 

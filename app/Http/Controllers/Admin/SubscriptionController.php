@@ -12,4 +12,12 @@ class SubscriptionController extends Controller
     {
         return view('admin.subscription.index');
     }
+    public function create()
+    {
+        return view('admin.subscription.create');
+    }
+    public function edit()
+    {
+        return view('admin.subscription.edit');
+    }
 }

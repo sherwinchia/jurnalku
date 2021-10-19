@@ -3,23 +3,21 @@
 namespace App\Http\Livewire\Admin\Form;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Hash;
 
-use App\Models\Package;
+use App\Models\Subscription;
 
-class UserForm extends Component
+class SubscriptionForm extends Component
 {
-    public $package;
+    public $subscription;
 
-    public  $name, $description, $price, $duration;
+    public  $expired_at, $type, $user_id;
     public $edit;
 
     public $buttonText = "Create";
 
-    protected $rules = ["name" => "required",
-                "description" => "required",
-                "price" => "required",
-                "duration" => "required"
+    protected $rules = ["expired_at" => "required",
+                "type" => "required",
+                "user_id" => "required"
                 ];
 
     public function mount($model = null)
@@ -27,7 +25,7 @@ class UserForm extends Component
         $this->edit = isset($model) ? true : false;
 
         if (isset($model)) {
-            $this->package = $model;
+            $this->subscription = $model;
 
             $this->buttonText = "Update";
         }
@@ -45,16 +43,16 @@ class UserForm extends Component
 
         if ($this->edit) {
             $this->user->update($data);
-            session()->flash("success", "Package successfully updated.");
+            session()->flash("success", "Subscription successfully updated.");
         } else {
             $this->user = User::create($data);
-            session()->flash("success", "Package successfully created.");
+            session()->flash("success", "Subscription successfully created.");
         }
-        return redirect()->route("admin.packages.edit", $this->package->id);
+        return redirect()->route("admin.subscriptions.edit", $this->subscription->id);
     }
 
     public function render()
     {
-        return view("livewire.admin.form.package-form");
+        return view("livewire.admin.form.subscription-form");
     }
 }

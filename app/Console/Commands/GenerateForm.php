@@ -43,6 +43,21 @@ class GenerateForm extends Command
         $model_lowercase = strtolower($model);
         $fillable = app("App\Models\\".$model)->getFillable();
         $pluralize_model = pluralize(2,$model_lowercase);
+        
+        $controller_file = "{$model}Form.php";
+        $view_file = "{$model_lowercase}-form.blade.php";
+
+        $app_path = app_path();
+        $resource_path = resource_path();
+
+        $controller_path = "{$app_path}/Http/Livewire/Admin/Form/{$controller_file}";
+        $view_path = "{$resource_path}/views/livewire/admin/form/{$view_file}";
+
+        if(file_exists($controller_path))
+            return $this->error('⚠️ ' . $controller_path.' file already exists!');
+
+        if(file_exists($view_path))
+            return $this->error('⚠️ ' . $view_path.' file already exists!');
 
         $rules = "";
         foreach ($fillable as $val) {
@@ -53,7 +68,6 @@ class GenerateForm extends Command
                 $rules .= "\"{$val}\" => \"required\",
                 ";
             }
-
         }
 
         $variables = "";
@@ -69,9 +83,9 @@ class GenerateForm extends Command
         foreach ($fillable as $val) {
             $input_sections .= '<section>
             <div class="input-group">
-                <label for="'.$model_lowercase.'">'.$model.' <span class="text-red-500">*</span></label>
-                <input wire:model.defer="'.$model_lowercase.'" type="text">
-                @error("'.$model_lowercase.'") <span class="error-msg">{{ $message }}</span> @enderror
+                <label for="'.$val.'">'.$this->getLabel($val).' <span class="text-red-500">*</span></label>
+                <input wire:model.defer="'.$val.'" type="text">
+                @error("'.$val.'") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
 ';
@@ -80,7 +94,7 @@ class GenerateForm extends Command
         $view_content='<div class="flex-1 flex justify-center overflow-y-hidden">
 <div class="card w-full max-w-xl">
     <div class="card-header">
-        <p>{{ $buttonText }} User</p>
+        <p>{{ $buttonText }} '.$model.'</p>
     </div>
     <div class="card-body">
         <form wire:submit.prevent="submit" class="flex-none flex flex-col justify-between">
@@ -103,11 +117,10 @@ $controller_content='<?php
 namespace App\Http\Livewire\Admin\Form;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Hash;
 
 use App\Models\\'.$model.';
 
-class UserForm extends Component
+class '.$model.'Form extends Component
 {
     public $'.$model_lowercase.';
 
@@ -156,21 +169,7 @@ class UserForm extends Component
 }';
         
         if ($this->confirm("Do you wish to generate {$model_lowercase}-form.blade.php and {$model}Form.php file?")) {
-            $controller_file = "{$model}Form.php";
-            $view_file = "{$model_lowercase}-form.blade.php";
 
-            $app_path = app_path();
-            $resource_path = resource_path();
-
-            $controller_path = "{$app_path}/Http/Livewire/Admin/Form/{$controller_file}";
-            $view_path = "{$resource_path}/views/livewire/admin/form/{$view_file}";
-
-            if($this->files->isFile($controller_file))
-                return $this->error($controller_file.' File Already exists!');
-
-            if($this->files->isFile($view_file))
-                return $this->error($view_file.' File Already exists!');
-        
             if(!$this->files->put($controller_path, $controller_content))
                 return $this->error('Something went wrong!');
 
@@ -181,5 +180,19 @@ class UserForm extends Component
             $this->info($controller_path);
             return $this->info($view_path);
         }
+    }
+
+    public function getLabel($string){
+        $string_array = explode ("_", $string);
+        $label = "";
+        if (sizeof($string_array) == 1) {
+            $label = ucfirst(strtolower($string_array[0]));
+        } else {
+            foreach ($string_array as $string) {
+                $label .= ucfirst(strtolower($string)) . " ";
+            }
+        }
+
+        return $label;
     }
 }
