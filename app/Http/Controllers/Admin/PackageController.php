@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\Package;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
@@ -13,9 +13,9 @@ class PackageController extends Controller
         return view('admin.package.index');
     }
 
-    public function edit()
+    public function edit(Package $package)
     {
-        return view('admin.package.edit');
+        return view('admin.package.edit', compact('package'));
     }
     
     public function create()

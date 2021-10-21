@@ -62,30 +62,31 @@ class GenerateForm extends Command
         $rules = "";
         foreach ($fillable as $val) {
             if (end($fillable) === $val) {
-                $rules .= "\"{$val}\" => \"required\"
+                $rules .= "\"{$model_lowercase}.{$val}\" => \"required\"
                 ";
             } else {
-                $rules .= "\"{$val}\" => \"required\",
+                $rules .= "\"{$model_lowercase}.{$val}\" => \"required\",
                 ";
             }
         }
 
-        $variables = "";
-        foreach ($fillable as $val) {
-            if (end($fillable) === $val) {
-                $variables .= " \${$val};";
-            } else {
-                $variables .= " \${$val},";
-            }
-        }
+        // $variables = "";
+        // foreach ($fillable as $val) {
+        //     if (end($fillable) === $val) {
+        //         $variables .= " \${$val};";
+        //     } else {
+        //         $variables .= " \${$val},";
+        //     }
+        // }
 
         $input_sections = ""; 
         foreach ($fillable as $val) {
-            $input_sections .= '<section>
+            $input_sections .= '
+        <section>
             <div class="input-group">
                 <label for="'.$val.'">'.$this->getLabel($val).' <span class="text-red-500">*</span></label>
-                <input wire:model.defer="'.$val.'" type="text">
-                @error("'.$val.'") <span class="error-msg">{{ $message }}</span> @enderror
+                <input wire:model.defer="'.$model_lowercase.'.'.$val.'" type="text">
+                @error("'.$model_lowercase.'.'.$val.'") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
 ';
@@ -124,39 +125,35 @@ class '.$model.'Form extends Component
 {
     public $'.$model_lowercase.';
 
-    public '.$variables.'
-    public $edit;
+    public $edit = false;
 
     public $buttonText = "Create";
 
-    protected $rules = ['.$rules.'];
+    protected $rules = ['
+        .$rules.
+    '];
 
     public function mount($model = null)
     {
-        $this->edit = isset($model) ? true : false;
-
+        
         if (isset($model)) {
+            $this->edit = true;
             $this->'.$model_lowercase.' = $model;
-
             $this->buttonText = "Update";
+        } else {
+            $this->'.$model_lowercase.' = new '.$model.'();
         }
     }
 
     public function submit()
     {
-        if (!$this->edit) {
-            $data = $this->validate($this->rules);
-        }
+        $this->validate();
+
+        $this->package->save();
 
         if ($this->edit) {
-            $data = null;
-        }
-
-        if ($this->edit) {
-            $this->user->update($data);
             session()->flash("success", "'.$model.' successfully updated.");
         } else {
-            $this->user = User::create($data);
             session()->flash("success", "'.$model.' successfully created.");
         }
         return redirect()->route("admin.'.$pluralize_model.'.edit", $this->'.$model_lowercase.'->id);

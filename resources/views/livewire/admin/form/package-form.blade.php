@@ -5,32 +5,36 @@
     </div>
     <div class="card-body">
         <form wire:submit.prevent="submit" class="flex-none flex flex-col justify-between">
+        
         <section>
             <div class="input-group">
                 <label for="name">Name <span class="text-red-500">*</span></label>
-                <input wire:model.defer="name" type="text">
-                @error("name") <span class="error-msg">{{ $message }}</span> @enderror
+                <input wire:model.defer="package.name" type="text">
+                @error("package.name") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
-<section>
+
+        <section>
             <div class="input-group">
                 <label for="description">Description <span class="text-red-500">*</span></label>
-                <input wire:model.defer="description" type="text">
-                @error("description") <span class="error-msg">{{ $message }}</span> @enderror
+                <input wire:model.defer="package.description" type="text">
+                @error("package.description") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
-<section>
+
+        <section>
             <div class="input-group">
                 <label for="price">Price <span class="text-red-500">*</span></label>
-                <input wire:model.defer="price" type="text">
-                @error("price") <span class="error-msg">{{ $message }}</span> @enderror
+                <input wire:model.defer="package.price" type="number" min="0">
+                @error("package.price") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
-<section>
+
+        <section>
             <div class="input-group">
-                <label for="duration">Duration <span class="text-red-500">*</span></label>
-                <input wire:model.defer="duration" type="text">
-                @error("duration") <span class="error-msg">{{ $message }}</span> @enderror
+                <label for="duration">Duration (Total Days) <span class="text-red-500">*</span></label>
+                <input wire:model.defer="package.duration" type="number" min="0">
+                @error("package.duration") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
    
