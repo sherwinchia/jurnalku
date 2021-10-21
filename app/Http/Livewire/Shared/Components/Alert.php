@@ -6,14 +6,15 @@ use Livewire\Component;
 
 class Alert extends Component
 {
-
     protected $listeners = ['new'];
 
     public $alerts = array();
 
     public function mount()
     {
-
+        if (session()->has('alert')) {
+            array_push($this->alerts, session()->get('alert'));
+        } 
     }
 
     public function new($data)

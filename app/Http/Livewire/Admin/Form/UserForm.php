@@ -19,7 +19,7 @@ class UserForm extends Component
     public $buttonText = 'Create';
 
     protected $rules = [
-        'name' => 'required|regex:/^[A-Z]+$/i|max:80',
+        'name' => 'required|max:80',
         'role_id' => 'required',
         'password' => 'required|confirmed',
         'email' => 'required|email|unique:users,email',
@@ -55,7 +55,7 @@ class UserForm extends Component
     {
         if ($this->edit) {
             $data = $this->validate([
-                'name' => 'required|regex:/^[A-Z]+$/i|max:80',
+                'name' => 'required|max:80',
                 'role_id' => 'required',
                 'password' => 'nullable|confirmed',
                 'phone_number' => 'nullable|numeric|digits_between:10,15',

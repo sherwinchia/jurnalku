@@ -127,7 +127,7 @@ class GenerateDatatable extends Command
                                 href="{{ route(\'admin.'.$pluralize_model.'.edit\', $'.$model_lowercase.'->id) }}">
                                 <i class="far fa-edit"></i>
                             </a>
-                            <a class="mx-1 text-lg" role="button" wire:click="showModal({{ $'.$model_lowercase.'->id }})">
+                            <a class="mx-1 text-lg" role="button" wire:click="showModal(\'{{ Crypt::encrypt('.$model_lowercase.'->id) }}\')">
                                 <i class="far fa-trash-alt"></i>
                             </a>
                         </div>
@@ -180,20 +180,23 @@ class GenerateDatatable extends Command
         $controller_content='<?php
 namespace App\Http\Livewire\Admin\Table;
 
+use App\Http\Traits\Alert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\\'.$model.';
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class '.$model.'Table extends Component
 {
-    use WithPagination;
+    use WithPagination, Alert;
     protected $listeners = [\'tableRefresh\' => \'$refresh\'];
     public $search = "";
     public $sortField = "id";
     public $sortAsc = true;
     public $perPage = 10;
     public $modalVisible = false;
-    public $modalId;
+    public $encryptedId;
 
     public function updatingSearch()
     {
@@ -214,13 +217,25 @@ class '.$model.'Table extends Component
     public function showModal($id)
     {
         $this->modalVisible = true;
-        $this->modalId = $id;
+        $this->encryptedId = $id;
     }
 
     public function delete()
     {
-        $'.$model_lowercase.' = '.$model.'::find($this->modalId);
-        $'.$model_lowercase.'->delete();
+
+        try{
+            $id = Crypt::decrypt($this->encryptedId);
+            '.$model.'::find($id)->delete();
+            $this->alert([
+                "type" => "success",
+                "message" => "Package has been successfully deleted."
+            ]);
+        } catch {
+            $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
         $this->modalVisible = false;
     }
 

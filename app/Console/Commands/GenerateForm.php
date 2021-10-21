@@ -117,12 +117,14 @@ $controller_content='<?php
 
 namespace App\Http\Livewire\Admin\Form;
 
+use App\Http\Traits\Alert;
 use Livewire\Component;
-
 use App\Models\\'.$model.';
 
 class '.$model.'Form extends Component
 {
+    use Alert;
+
     public $'.$model_lowercase.';
 
     public $edit = false;
@@ -149,12 +151,18 @@ class '.$model.'Form extends Component
     {
         $this->validate();
 
-        $this->package->save();
+        $this->'.$model_lowercase.'->save();
 
         if ($this->edit) {
-            session()->flash("success", "'.$model.' has been successfully updated.");
+            $this->alert([
+                "type" => "success",
+                "message" => "'.$model.' has been successfully updated."
+            ]);
         } else {
-            session()->flash("success", "'.$model.' has been successfully created.");
+            $this->alert([
+                "type" => "success",
+                "message" => "'.$model.' has been successfully created."
+            ]);
         }
         return redirect()->route("admin.'.$pluralize_model.'.edit", $this->'.$model_lowercase.'->id);
     }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Admin\Form;
 
+use App\Http\Traits\Alert;
 use Livewire\Component;
-
 use App\Models\Package;
 
 class PackageForm extends Component
 {
+    use Alert;
+
     public $package;
 
     public $edit = false;
@@ -34,17 +36,23 @@ class PackageForm extends Component
 
     public function submit()
     {
-        
         $this->validate();
 
         $this->package->save();
 
         if ($this->edit) {
-            session()->flash("success", "Package successfully updated.");
+            $this->alert([
+                "type" => "success",
+                "message" => "Package has been successfully updated."
+            ]);
         } else {
-            session()->flash("success", "Package successfully created.");
+            $this->alert([
+                "type" => "success",
+                "message" => "Package has been successfully created.",
+                "session" => true
+            ]);
+            return redirect()->route("admin.packages.edit", $this->package->id);
         }
-        return redirect()->route("admin.packages.edit", $this->package->id);
     }
 
     public function render()

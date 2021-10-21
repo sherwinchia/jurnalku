@@ -45,22 +45,18 @@ class PackageTable extends Component
     {
         try {
             $id = Crypt::decrypt($this->encryptedId);
-            // $package = Package::find($id);
-            // $package->delete();
-            $this->modalVisible = false;
+            Package::find($id)->delete();
             $this->alert([
-                'type' => 'success',
-                'message' => 'Package has been successfully deleted.'
+                "type" => "success",
+                "message" => "Package has been successfully deleted."
             ]);
         } catch (DecryptException $e) {
-
-            $this->modalVisible = false;
             $this->alert([
-                'type' => 'error',
-                'message' => $e->getMessage()
+                "type" => "error",
+                "message" => $e->getMessage()
             ]);
         }
-        
+        $this->modalVisible = false;
     }
 
     public function createPackage()
