@@ -155,7 +155,7 @@ class GenerateDatatable extends Command
 </div>
 <x-jet-dialog-modal wire:model="modalVisible">
     <x-slot name="title">
-        Delete User
+        Delete '.$model.'
     </x-slot>
 
     <x-slot name="content">
@@ -192,7 +192,7 @@ class '.$model.'Table extends Component
     public $sortField = "id";
     public $sortAsc = true;
     public $perPage = 10;
-    public $modalVisible;
+    public $modalVisible = false;
     public $modalId;
 
     public function updatingSearch()
@@ -221,7 +221,7 @@ class '.$model.'Table extends Component
     {
         $'.$model_lowercase.' = '.$model.'::find($this->modalId);
         $'.$model_lowercase.'->delete();
-        $'.$model_lowercase.'->modalVisible = false;
+        $this->modalVisible = false;
     }
 
     public function create'.$model.'()

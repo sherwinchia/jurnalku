@@ -66,7 +66,7 @@
                                 href="{{ route('admin.packages.edit', $package->id) }}">
                                 <i class="far fa-edit"></i>
                             </a>
-                            <a class="mx-1 text-lg" role="button" wire:click="showModal({{ $package->id }})">
+                            <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($package->id)}}')">
                                 <i class="far fa-trash-alt"></i>
                             </a>
                         </div>
@@ -94,7 +94,7 @@
 </div>
 <x-jet-dialog-modal wire:model="modalVisible">
     <x-slot name="title">
-        Delete User
+        Delete Package
     </x-slot>
 
     <x-slot name="content">

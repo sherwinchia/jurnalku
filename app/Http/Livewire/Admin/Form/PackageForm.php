@@ -34,6 +34,7 @@ class PackageForm extends Component
 
     public function submit()
     {
+        
         $this->validate();
 
         $this->package->save();

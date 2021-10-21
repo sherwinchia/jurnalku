@@ -58,18 +58,14 @@
                             @yield('breadcrumbs')
                         </div>
                     </div>
-
-                    <div class="mt-16 px-8">
-                        @include('admin.partials.notification')
-                    </div>
+                    <div class="pb-16"></div>
                     {{ $slot }}
                 </div>
             </div>
         </div>
+        <livewire:shared.components.alert />
     </main>
-
-
-    @stack('modals')
+    {{-- @stack('modals') --}}
     {{-- <script type="application/javascript" src="{{ mix('js/admin.js') }}"></script> --}}
     @livewireScripts
     @yield('scripts')

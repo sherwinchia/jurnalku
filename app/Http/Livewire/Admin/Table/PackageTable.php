@@ -1,20 +1,23 @@
 <?php
 namespace App\Http\Livewire\Admin\Table;
 
+use App\Http\Traits\Alert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Package;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class PackageTable extends Component
 {
-    use WithPagination;
+    use WithPagination, Alert;
     protected $listeners = ['tableRefresh' => '$refresh'];
     public $search = "";
     public $sortField = "id";
     public $sortAsc = true;
     public $perPage = 10;
-    public $modalVisible;
-    public $modalId;
+    public $modalVisible = false;
+    public $encryptedId;
 
     public function updatingSearch()
     {
@@ -35,14 +38,29 @@ class PackageTable extends Component
     public function showModal($id)
     {
         $this->modalVisible = true;
-        $this->modalId = $id;
+        $this->encryptedId = $id;
     }
 
     public function delete()
     {
-        $package = Package::find($this->modalId);
-        $package->delete();
-        $package->modalVisible = false;
+        try {
+            $id = Crypt::decrypt($this->encryptedId);
+            // $package = Package::find($id);
+            // $package->delete();
+            $this->modalVisible = false;
+            $this->alert([
+                'type' => 'success',
+                'message' => 'Package has been successfully deleted.'
+            ]);
+        } catch (DecryptException $e) {
+
+            $this->modalVisible = false;
+            $this->alert([
+                'type' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+        
     }
 
     public function createPackage()

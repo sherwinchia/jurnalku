@@ -152,9 +152,9 @@ class '.$model.'Form extends Component
         $this->package->save();
 
         if ($this->edit) {
-            session()->flash("success", "'.$model.' successfully updated.");
+            session()->flash("success", "'.$model.' has been successfully updated.");
         } else {
-            session()->flash("success", "'.$model.' successfully created.");
+            session()->flash("success", "'.$model.' has been successfully created.");
         }
         return redirect()->route("admin.'.$pluralize_model.'.edit", $this->'.$model_lowercase.'->id);
     }

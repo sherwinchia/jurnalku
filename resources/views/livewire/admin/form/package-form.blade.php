@@ -29,8 +29,7 @@
                 @error("package.price") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
-
-        <section>
+<section>
             <div class="input-group">
                 <label for="duration">Duration (Total Days) <span class="text-red-500">*</span></label>
                 <input wire:model.defer="package.duration" type="number" min="0">
