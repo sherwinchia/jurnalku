@@ -23,5 +23,7 @@
         "sass-loader": "^11.0.1",
         "tailwindcss": "^2.0.1"
     },
-    "dependencies": {}
+    "dependencies": {
+        "animate.css": "^4.1.1"
+    }
 }

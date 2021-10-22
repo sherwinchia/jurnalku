@@ -45,11 +45,18 @@ class PackageTable extends Component
     {
         try {
             $id = Crypt::decrypt($this->encryptedId);
-            Package::find($id)->delete();
-            $this->alert([
-                "type" => "success",
-                "message" => "Package has been successfully deleted."
-            ]);
+            try {
+                Package::find($id)->delete();
+                $this->alert([
+                    "type" => "success",
+                    "message" => "Package has been successfully deleted."
+                ]);
+            } catch (\Illuminate\Database\QueryException $e) {
+                $this->alert([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ]);
+            }
         } catch (DecryptException $e) {
             $this->alert([
                 "type" => "error",

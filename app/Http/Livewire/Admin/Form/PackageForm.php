@@ -43,7 +43,7 @@ class PackageForm extends Component
         if ($this->edit) {
             $this->alert([
                 "type" => "success",
-                "message" => "Package has been successfully updated."
+                "message" => "Package has been successfully updated.",
             ]);
         } else {
             $this->alert([

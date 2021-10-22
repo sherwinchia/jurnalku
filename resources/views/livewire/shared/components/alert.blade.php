@@ -1,58 +1,16 @@
-<div id="live-alert" class="absolute bottom-4 right-4 flex-col flex gap-y-2 z-50" >
+<div id="live-alert" class="absolute bottom-4 right-4 flex-col flex gap-y-2 z-50 p-3 overflow-hidden" >
     @foreach ($alerts as $key => $alert)
-        @if ($alert["type"] == "success")    
-        <div class=" bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded flex items-center gap-2 justify-between alert-item"
-            role="alert">
-            <div>
-                <strong class="font-bold">Success!</strong>
-                <span class="block sm:inline">{{ $alert['message'] }}</span>
+        <div class=" bg-white border rounded-lg shadow-md px-2 py-3 animate__animated animate__slideInRight" role="alert">
+            <div class="border-l-4 border-{{ $alert['color'] }} flex items-center gap-4 p-2 max-w-md justify-between">
+                <div class="flex gap-4 items-center">
+                    <i class=" text-2xl fas fa-check-circle text-{{ $alert['color'] }} pl-2"></i>
+                    <div class="flex flex-col items-left">
+                        <span class="font-semibold text-sm">{{ $alert['title'] }}</span>
+                        <p class=" text-xs">{{ $alert['message'] }}</p>
+                    </div>
+                </div>
+                <i wire:click="remove({{ $key }})" class="fas fa-times text-sm text-gray-400 cursor-pointer"></i>
             </div>
-            <span wire:click="remove({{ $key }})" class="cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </span>
         </div>
-        @endif
-        @if ($alert["type"] == "error")    
-        <div class=" bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex items-center gap-2 justify-between alert-item"
-            role="alert">
-            <div>
-                <strong class="font-bold">Error!</strong>
-                <span class="block sm:inline">{{ $alert['message'] }}</span>
-            </div>
-            <span wire:click="remove({{ $key }})" class="cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </span>
-        </div>
-        @endif
-        @if ($alert["type"] == "warning")    
-        <div class=" bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded flex items-center gap-2 justify-between alert-item"
-            role="alert">
-            <div>
-                <strong class="font-bold">Warning!</strong>
-                <span class="block sm:inline">{{ $alert['message'] }}</span>
-            </div>
-            <span wire:click="remove({{ $key }})" class="cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </span>
-        </div>
-        @endif
-        @if ($alert["type"] == "info")    
-        <div class=" bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded flex items-center gap-2 justify-between alert-item"
-            role="alert">
-            <div>
-                <strong class="font-bold">Info!</strong>
-                <span class="block sm:inline">{{ $alert['message'] }}</span>
-            </div>
-                <span wire:click="remove({{ $key }})" class="cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </span>
-        </div>
-        @endif
     @endforeach
-
-    <script>
-
-    </script>
-
 </div>
-
