@@ -18,6 +18,9 @@ class CreateSubscriptionsTable extends Migration
             $table->foreignId('user_id')
                 ->constrained()
                 ->onDelete('cascade');
+            $table->foreignId('package_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->timestamp('expired_at');
             $table->enum('type', ['Free', 'Paid']);
             $table->timestamps();

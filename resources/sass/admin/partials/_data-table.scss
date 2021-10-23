@@ -11,7 +11,7 @@
             }
             tbody {
                 tr {
-                    .non-id {
+                    .data-item {
                         @apply px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5;
                     }
                 }

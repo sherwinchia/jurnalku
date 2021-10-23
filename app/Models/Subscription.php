@@ -12,11 +12,16 @@ class Subscription extends Model
     protected $fillable = [
         'user_id',
         'type',
-        'expired_at'
+        'expired_at',
+        'package_id'
     ];
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+    public function package()
+    {
+        return $this->belongsTo('App\Models\Package');
     }
 }

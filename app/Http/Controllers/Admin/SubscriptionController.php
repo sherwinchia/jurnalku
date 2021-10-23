@@ -1,23 +1,30 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
+use App\Models\Subscription;
 
-use Illuminate\Http\Request;
+class SubscriptionController extends Controller{
 
-class SubscriptionController extends Controller
-{
+    const PATH = "admin.subscription.";
+
     public function index()
     {
-        return view('admin.subscription.index');
+        return view(self::PATH . "index");
     }
+
     public function create()
     {
-        return view('admin.subscription.create');
+        return view(self::PATH . "create");
     }
-    public function edit()
+
+    public function show(Subscription $subscription)
     {
-        return view('admin.subscription.edit');
+        return view(self::PATH . "show", compact("subscription"));
+    }
+
+    public function edit(Subscription $subscription)
+    {
+        return view(self::PATH . "edit", compact("subscription"));
     }
 }
+        

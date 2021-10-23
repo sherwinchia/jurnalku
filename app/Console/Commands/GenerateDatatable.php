@@ -12,7 +12,7 @@ class GenerateDatatable extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:datatable {model} {indentifier=name}';
+    protected $signature = 'generate:datatable {path} {indentifier=id}';
 
     /**
      * The console command description.
@@ -39,9 +39,16 @@ class GenerateDatatable extends Command
      */
     public function handle()
     {
-        $model=ucfirst(strtolower($this->argument('model')));
+        $path = strtolower($this->argument('path'));
         $identifier=strtolower($this->argument('indentifier'));
-        $model_lowercase = strtolower($model);
+
+        $path_array = explode('/', $path);
+        $folder = $path_array[0];
+        $folder_uppercase = ucfirst($path_array[0]);
+
+
+        $model_lowercase = end($path_array);
+        $model = ucfirst($model_lowercase);
         $pluralize_model = pluralize(2,$model_lowercase);
 
         $controller_file = "{$model}Table.php";
@@ -50,8 +57,8 @@ class GenerateDatatable extends Command
         $app_path = app_path();
         $resource_path = resource_path();
 
-        $controller_path = "{$app_path}/Http/Livewire/Admin/Table/{$controller_file}";
-        $view_path = "{$resource_path}/views/livewire/admin/table/{$view_file}";
+        $controller_path = "{$app_path}/Http/Livewire/{$folder_uppercase}/Table/{$controller_file}";
+        $view_path = "{$resource_path}/views/livewire/{$folder}/table/{$view_file}";
         
         if(file_exists($controller_path))
             return $this->error('⚠️ ' . $controller_path.' file already exists!');
@@ -61,7 +68,7 @@ class GenerateDatatable extends Command
 
         $view_content='<div class="data-table overflow-x-auto">
 <div class="top">
-    <div class="flex justify-between mb-2">
+    <div class="flex justify-between items-center mb-2">
         <div class="flex space-x-2">
             <div class="input-group">
                 <input wire:model="search" class="" type="text" placeholder="Search">
@@ -74,64 +81,60 @@ class GenerateDatatable extends Command
                 </select>
             </div>
         </div>
-        <div>
-            <x-jet-button wire:click="create'.$model.'" wire:loading.attr="disabled">
-                Create
-                <span wire:loading wire:target="create'.$model.'"
-                    class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
-                </span>
-            </x-jet-button>
-        </div>
-
+        <x-jet-button wire:click="create'.$model.'" wire:loading.attr="disabled">
+            Create
+            <span wire:loading wire:target="create'.$model.'"
+                class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+            </span>
+        </x-jet-button>
     </div>
 </div>
 <div class="bottom">
     <table class="min-w-full">
         <thead>
             <tr>
-                <th class="text-left">
-                    <a wire:click.prevent="sortBy(\'id\')" role="button">ID</a>
-                    @include(\'admin.partials.sort-icon\', [\'field\'=>\'id\'])
-                </th>
-                <th class="text-left">
-                    <a wire:click.prevent="sortBy(\'name\')" role="button">Name</a>
-                    @include(\'admin.partials.sort-icon\', [\'field\'=>\'name\'])
-                </th>
-
-                <!--Add column header here-->
-
-                <th>
-                    Action
-                </th>
+            @foreach ($columns as $column)
+            <th class="text-left">
+                @if ($column["sortable"] == true) 
+                    <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ ucfirst($column["field"]) }}</a>
+                    @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                @else
+                    {{ ucfirst($column["field"]) }}
+                @endif
+            </th>
+            @endforeach
             </tr>
         </thead>
         <tbody class="bg-white">
             @foreach ($'.$pluralize_model.' as $'.$model_lowercase.')
                 <tr>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="text-sm leading-5 text-gray-800">{{ $'.$model_lowercase.'->id }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="non-id">
-                        {{ $'.$model_lowercase.'->'.$identifier.' }}
-                    </td>
-
-                    <!--Add column table data here-->
-
-                    <td class="non-id">
+                @foreach ($columns as $column)
+                @if ($column["field"] === "action")
+                    <td class="data-item">
                         <div class="flex justify-center text-gray-600">
-                            <a class="mx-1 text-lg" role="button"
-                                href="{{ route(\'admin.'.$pluralize_model.'.edit\', $'.$model_lowercase.'->id) }}">
-                                <i class="far fa-edit"></i>
-                            </a>
-                            <a class="mx-1 text-lg" role="button" wire:click="showModal(\'{{ Crypt::encrypt('.$model_lowercase.'->id) }}\')">
-                                <i class="far fa-trash-alt"></i>
-                            </a>
+                        @foreach ($column["type"] as $type)
+                            @if ($type === "view")
+                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.'.$pluralize_model.'.show", $'.$model_lowercase.'->id) }}">
+                                    <i class="far fa-eye"></i>
+                                </a>    
+                            @elseif ($type === "edit")
+                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.'.$pluralize_model.'.edit", $'.$model_lowercase.'->id) }}">
+                                    <i class="far fa-edit"></i>
+                                </a>    
+                            @elseif ($type === "delete")
+                                <a class="mx-1 text-lg" role="button" wire:click="showModal(\'{{Crypt::encrypt($'.$model_lowercase.'->id)}}\')">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            @endif
+                        @endforeach
                         </div>
                     </td>
+                @else
+                    <td class="data-item">
+                        {{ $'.$model_lowercase.'->{$column["field"]} }}
+                    </td>
+                @endif
+            @endforeach
                 </tr>
             @endforeach
         </tbody>
@@ -197,6 +200,17 @@ class '.$model.'Table extends Component
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
+    public $columns = [
+        [
+            "field" => "id",
+            "sortable" => true, 
+        ],
+        [
+            "field" => "action",
+            "sortable" => false,
+            "type" => ["delete", "edit"]
+        ],
+    ];
 
     public function updatingSearch()
     {
@@ -228,9 +242,9 @@ class '.$model.'Table extends Component
             '.$model.'::find($id)->delete();
             $this->alert([
                 "type" => "success",
-                "message" => "Package has been successfully deleted."
+                "message" => "'.$model.' has been successfully deleted."
             ]);
-        } catch {
+        } catch(\Illuminate\Database\QueryException $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
@@ -260,16 +274,15 @@ class '.$model.'Table extends Component
     }
 }';
 
-        if ($this->confirm("Do you wish to generate {$model_lowercase}-table.blade.php and {$model}Table.php file?")) {
-            if(!$this->files->put($controller_path, $controller_content))
-                return $this->error('Something went wrong!');
+        // if ($this->confirm("Do you wish to generate {$model_lowercase}-table.blade.php and {$model}Table.php file?")) {}
+        if(!$this->files->put($controller_path, $controller_content))
+            return $this->error('Something went wrong!');
 
-            if(!$this->files->put($view_path, $view_content))
-                return $this->error('Something went wrong!');
-                
-            $this->info("{$controller_file} and {$view_file} has been generated ✌️");
-            $this->info($controller_path);
-            return $this->info($view_path);
-        }
+        if(!$this->files->put($view_path, $view_content))
+            return $this->error('Something went wrong!');
+            
+        $this->info("{$controller_file} and {$view_file} has been generated ✌️");
+        $this->info($controller_path);
+        return $this->info($view_path);
     }    
 }

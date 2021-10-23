@@ -25,15 +25,24 @@
         <section>
             <div class="input-group">
                 <label for="price">Price <span class="text-red-500">*</span></label>
-                <input wire:model.defer="package.price" type="number" min="0">
+                <input wire:model.defer="package.price" type="number">
                 @error("package.price") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
-<section>
+
+        <section>
             <div class="input-group">
                 <label for="duration">Duration (Total Days) <span class="text-red-500">*</span></label>
-                <input wire:model.defer="package.duration" type="number" min="0">
+                <input wire:model.defer="package.duration" type="number">
                 @error("package.duration") <span class="error-msg">{{ $message }}</span> @enderror
+            </div>
+        </section>
+
+        <section>
+            <div class="input-group">
+                <label for="active">Active <span class="text-red-500">*</span></label>
+                <input wire:model.defer="package.active" type="checkbox" class="w-6 h-6">
+                @error("package.active") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
    

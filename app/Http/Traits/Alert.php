@@ -4,11 +4,6 @@ namespace App\Http\Traits;
 
 trait Alert
 {
-    public function getListeners()
-    {
-        return ['new'];
-    }
-
     public function alert($data)
     {
         $data['type'] = strtolower($data['type']);
@@ -28,7 +23,8 @@ trait Alert
         if ($data['session'] == true){
             session()->flash('alert', $data);
         }
-        $this->emitTo('shared.components.alert', 'new', $data);
+
+        return $this->emitTo('shared.components.alert', 'new', $data);
     }
 
     public function getColor($type)

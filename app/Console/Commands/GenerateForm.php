@@ -12,7 +12,7 @@ class GenerateForm extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:form {model}';
+    protected $signature = 'generate:form {path}';
 
     /**
      * The console command description.
@@ -39,19 +39,25 @@ class GenerateForm extends Command
      */
     public function handle()
     {
-        $model=ucfirst(strtolower($this->argument('model')));
-        $model_lowercase = strtolower($model);
-        $fillable = app("App\Models\\".$model)->getFillable();
+        $path = strtolower($this->argument('path'));
+
+        $path_array = explode('/', $path);
+        $folder = $path_array[0];
+        $folder_uppercase = ucfirst($path_array[0]);
+
+        $model_lowercase = end($path_array);
+        $model = ucfirst($model_lowercase);
         $pluralize_model = pluralize(2,$model_lowercase);
-        
+    
+        $fillable = app("App\Models\\".$model)->getFillable();
         $controller_file = "{$model}Form.php";
         $view_file = "{$model_lowercase}-form.blade.php";
 
         $app_path = app_path();
         $resource_path = resource_path();
 
-        $controller_path = "{$app_path}/Http/Livewire/Admin/Form/{$controller_file}";
-        $view_path = "{$resource_path}/views/livewire/admin/form/{$view_file}";
+        $controller_path = "{$app_path}/Http/Livewire/{$folder_uppercase}/Form/{$controller_file}";
+        $view_path = "{$resource_path}/views/livewire/{$folder}/form/{$view_file}";
 
         if(file_exists($controller_path))
             return $this->error('⚠️ ' . $controller_path.' file already exists!');
@@ -154,17 +160,18 @@ class '.$model.'Form extends Component
         $this->'.$model_lowercase.'->save();
 
         if ($this->edit) {
-            $this->alert([
+            return $this->alert([
                 "type" => "success",
                 "message" => "'.$model.' has been successfully updated."
             ]);
         } else {
             $this->alert([
                 "type" => "success",
-                "message" => "'.$model.' has been successfully created."
+                "message" => "'.$model.' has been successfully created.",
+                "session" => true
             ]);
+            return redirect()->route("admin.'.$pluralize_model.'.edit", $this->'.$model_lowercase.'->id);
         }
-        return redirect()->route("admin.'.$pluralize_model.'.edit", $this->'.$model_lowercase.'->id);
     }
 
     public function render()
@@ -173,18 +180,16 @@ class '.$model.'Form extends Component
     }
 }';
         
-        if ($this->confirm("Do you wish to generate {$model_lowercase}-form.blade.php and {$model}Form.php file?")) {
+        if(!$this->files->put($controller_path, $controller_content))
+            return $this->error('Something went wrong!');
 
-            if(!$this->files->put($controller_path, $controller_content))
-                return $this->error('Something went wrong!');
-
-            if(!$this->files->put($view_path, $view_content))
-                return $this->error('Something went wrong!');
-                
-            $this->info("{$controller_file} and {$view_file} has been generated ✌️");
-            $this->info($controller_path);
-            return $this->info($view_path);
-        }
+        if(!$this->files->put($view_path, $view_content))
+            return $this->error('Something went wrong!');
+            
+        $this->info("{$controller_file} and {$view_file} has been generated ✌️");
+        $this->info($controller_path);
+        return $this->info($view_path);
+        
     }
 
     public function getLabel($string){

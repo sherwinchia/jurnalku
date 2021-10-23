@@ -5,25 +5,36 @@
     </div>
     <div class="card-body">
         <form wire:submit.prevent="submit" class="flex-none flex flex-col justify-between">
+        
+        <section>
+            <div class="input-group">
+                <label for="user_id">User Id  <span class="text-red-500">*</span></label>
+                <input wire:model.defer="subscription.user_id" type="text">
+                @error("subscription.user_id") <span class="error-msg">{{ $message }}</span> @enderror
+            </div>
+        </section>
+
+        <section>
+            <div class="input-group">
+                <label for="type">Type <span class="text-red-500">*</span></label>
+                <input wire:model.defer="subscription.type" type="text">
+                @error("subscription.type") <span class="error-msg">{{ $message }}</span> @enderror
+            </div>
+        </section>
+
         <section>
             <div class="input-group">
                 <label for="expired_at">Expired At  <span class="text-red-500">*</span></label>
-                <input wire:model.defer="expired_at" type="text">
-                @error("expired_at") <span class="error-msg">{{ $message }}</span> @enderror
+                <input wire:model.defer="subscription.expired_at" type="text">
+                @error("subscription.expired_at") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
-<section>
+
+        <section>
             <div class="input-group">
-                <label for="type">Type <span class="text-red-500">*</span></label>
-                <input wire:model.defer="type" type="text">
-                @error("type") <span class="error-msg">{{ $message }}</span> @enderror
-            </div>
-        </section>
-<section>
-            <div class="input-group">
-                <label for="user_id">User Id  <span class="text-red-500">*</span></label>
-                <input wire:model.defer="user_id" type="text">
-                @error("user_id") <span class="error-msg">{{ $message }}</span> @enderror
+                <label for="package_id">Package Id  <span class="text-red-500">*</span></label>
+                <input wire:model.defer="subscription.package_id" type="text">
+                @error("subscription.package_id") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>
    

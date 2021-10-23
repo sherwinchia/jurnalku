@@ -89,6 +89,15 @@
             </a>
         </li>
 
+        <li class="{{ request()->is('admin/setting*') ? 'navbar-active-list' : 'navbar-list' }}">
+            <a class="flex-col justify-between items-center" href="#">
+                <div class="w-full">
+                    <i class="fas fa-cogs w-8 text-l"></i>
+                    <span class="font-roboto text-m">Setting</span>
+                </div>
+            </a>
+        </li>
+
         <li class="navbar-list">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

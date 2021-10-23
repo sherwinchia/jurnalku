@@ -18,6 +18,29 @@ class PackageTable extends Component
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
+    public $columns = [
+        [
+            'field' => 'id',
+            'sortable' => 'true', 
+        ],
+        [
+            'field' => 'name',
+            'sortable' => 'true', 
+        ],
+        [
+            'field' => 'price',
+            'sortable' => 'true', 
+        ],
+        [
+            'field' => 'active',
+            'sortable' => 'true', 
+        ],
+        [
+            'field' => 'action',
+            'sortable' => 'false',
+            'type' => ['delete', 'edit']
+        ],
+    ];
 
     public function updatingSearch()
     {

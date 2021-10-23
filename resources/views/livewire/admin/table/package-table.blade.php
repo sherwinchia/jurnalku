@@ -1,6 +1,6 @@
 <div class="data-table overflow-x-auto">
 <div class="top">
-    <div class="flex justify-between mb-2">
+    <div class="flex justify-between mb-2 items-center">
         <div class="flex space-x-2">
             <div class="input-group">
                 <input wire:model="search" class="" type="text" placeholder="Search">
@@ -13,64 +13,60 @@
                 </select>
             </div>
         </div>
-        <div>
-            <x-jet-button wire:click="createPackage" wire:loading.attr="disabled">
-                Create
-                <span wire:loading wire:target="createPackage"
-                    class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
-                </span>
-            </x-jet-button>
-        </div>
-
+        <x-jet-button wire:click="createPackage" wire:loading.attr="disabled">
+            Create
+            <span wire:loading wire:target="createPackage"
+                class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+            </span>
+        </x-jet-button>
     </div>
 </div>
 <div class="bottom">
     <table class="min-w-full">
         <thead>
             <tr>
+                @foreach ($columns as $column)
                 <th class="text-left">
-                    <a wire:click.prevent="sortBy('id')" role="button">ID</a>
-                    @include('admin.partials.sort-icon', ['field'=>'id'])
+                    @if ($column['sortable'] == true) 
+                        <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ ucfirst($column['field']) }}</a>
+                        @include('admin.partials.sort-icon', ['field'=>$column['field'] ])
+                    @else
+                        {{ ucfirst($column['field']) }}
+                    @endif
                 </th>
-                <th class="text-left">
-                    <a wire:click.prevent="sortBy('name')" role="button">Name</a>
-                    @include('admin.partials.sort-icon', ['field'=>'name'])
-                </th>
-
-                <!--Add column header here-->
-
-                <th>
-                    Action
-                </th>
+                @endforeach
             </tr>
         </thead>
         <tbody class="bg-white">
             @foreach ($packages as $package)
                 <tr>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="text-sm leading-5 text-gray-800">{{ $package->id }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="non-id">
-                        {{ $package->name }}
-                    </td>
-
-                    <!--Add column table data here-->
-
-                    <td class="non-id">
-                        <div class="flex justify-center text-gray-600">
-                            <a class="mx-1 text-lg" role="button"
-                                href="{{ route('admin.packages.edit', $package->id) }}">
-                                <i class="far fa-edit"></i>
-                            </a>
-                            <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($package->id)}}')">
-                                <i class="far fa-trash-alt"></i>
-                            </a>
-                        </div>
-                    </td>
+                    @foreach ($columns as $column)
+                        @if ($column['field'] === 'action')
+                            <td class="data-item">
+                                <div class="flex text-gray-600">
+                                @foreach ($column['type'] as $type)
+                                    @if ($type === 'view')
+                                        <a class="mx-1 text-lg" role="button" href="{{ route('admin.packages.show', $package->id) }}">
+                                            <i class="far fa-eye"></i>
+                                        </a>    
+                                    @elseif ($type === 'edit')
+                                        <a class="mx-1 text-lg" role="button" href="{{ route('admin.packages.edit', $package->id) }}">
+                                            <i class="far fa-edit"></i>
+                                        </a>    
+                                    @elseif ($type === 'delete')
+                                        <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($package->id)}}')">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    @endif
+                                @endforeach
+                                </div>
+                            </td>
+                        @else
+                            <td class="data-item">
+                                {{ $package->{$column['field']} }}
+                            </td>
+                        @endif
+                    @endforeach
                 </tr>
             @endforeach
         </tbody>

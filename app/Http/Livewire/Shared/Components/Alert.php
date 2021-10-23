@@ -6,9 +6,12 @@ use Livewire\Component;
 
 class Alert extends Component
 {
-    protected $listeners = ['new'];
-
     public $alerts = array();
+
+    public function getListeners()
+    {
+        return ['new'];
+    }
 
     public function mount()
     {

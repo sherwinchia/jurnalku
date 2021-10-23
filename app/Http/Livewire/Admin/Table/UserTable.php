@@ -65,6 +65,7 @@ class UserTable extends Component
             'users' => User::query()
                 ->where('id', '!=', auth()->user()->id)
                 ->where('name', 'LIKE', "%{$this->search}%")
+                ->with("role")
                 ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                 ->paginate($this->perPage)
         ]);

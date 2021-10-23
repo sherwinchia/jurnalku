@@ -1,20 +1,34 @@
 <?php
 namespace App\Http\Livewire\Admin\Table;
 
+use App\Http\Traits\Alert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Subscription;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class SubscriptionTable extends Component
 {
-    use WithPagination;
+    use WithPagination, Alert;
     protected $listeners = ['tableRefresh' => '$refresh'];
     public $search = "";
     public $sortField = "id";
     public $sortAsc = true;
     public $perPage = 10;
-    public $modalVisible;
-    public $modalId;
+    public $modalVisible = false;
+    public $encryptedId;
+    public $columns = [
+        [
+            "field" => "id",
+            "sortable" => true, 
+        ],
+        [
+            "field" => "action",
+            "sortable" => false,
+            "type" => ["delete", "edit"]
+        ],
+    ];
 
     public function updatingSearch()
     {
@@ -35,14 +49,26 @@ class SubscriptionTable extends Component
     public function showModal($id)
     {
         $this->modalVisible = true;
-        $this->modalId = $id;
+        $this->encryptedId = $id;
     }
 
     public function delete()
     {
-        $subscription = Subscription::find($this->modalId);
-        $subscription->delete();
-        $subscription->modalVisible = false;
+
+        try{
+            $id = Crypt::decrypt($this->encryptedId);
+            Subscription::find($id)->delete();
+            $this->alert([
+                "type" => "success",
+                "message" => "Subscription has been successfully deleted."
+            ]);
+        } catch(\Illuminate\Database\QueryException $e) {
+            $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+        $this->modalVisible = false;
     }
 
     public function createSubscription()

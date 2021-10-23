@@ -17,5 +17,6 @@ class Package extends Model implements HasMedia
         'description',
         'price',
         'duration', 
+        'active'
     ];
 }

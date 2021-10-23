@@ -12,7 +12,7 @@ class GenerateView extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:view {path} {--t|type=CRUDI}';
+    protected $signature = 'generate:view {path} {--t|type=ceis}';
 
     /**
      * The console command description.

@@ -12,7 +12,7 @@ class GenerateController extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:controller {model}';
+    protected $signature = 'generate:controller {path}';
 
     /**
      * The console command description.
@@ -39,11 +39,15 @@ class GenerateController extends Command
      */
     public function handle()
     {
-        $model = ucfirst(strtolower($this->argument('model')));
-        $model_lowercase = strtolower($model);
+        $path = ucfirst(strtolower($this->argument('path')));
+        $path_array = explode('/', $path);
+        $path_array = array_map('ucfirst', $path_array);
+        $file_path = implode('/', $path_array);
+        $model_lowercase = strtolower(end($path_array));
+        $model = ucfirst($model_lowercase);
         $app_path = app_path();
 
-        if (file_exists($app_path . '/Http/Controllers/Admin/' . $model . 'Controller.php')) {
+        if (file_exists($app_path . '/Http/Controllers/' . $file_path . 'Controller.php')) {
             return $this->error('⚠️ ' . $app_path . '/Http/Controllers/Admin/' . $model . 'Controller.php file already exist.');
         }
 

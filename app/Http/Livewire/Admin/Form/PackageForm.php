@@ -16,10 +16,11 @@ class PackageForm extends Component
 
     public $buttonText = "Create";
 
-    protected $rules = ["package.name" => "required",
-                "package.description" => "required",
-                "package.price" => "required",
-                "package.duration" => "required"
+    protected $rules = ["package.name" => "required|string",
+                "package.description" => "required|string",
+                "package.price" => "required|numeric",
+                "package.duration" => "required|integer",
+                "package.active" => "required|boolean"
                 ];
 
     public function mount($model = null)
@@ -41,9 +42,9 @@ class PackageForm extends Component
         $this->package->save();
 
         if ($this->edit) {
-            $this->alert([
+            return $this->alert([
                 "type" => "success",
-                "message" => "Package has been successfully updated.",
+                "message" => "Package has been successfully updated."
             ]);
         } else {
             $this->alert([

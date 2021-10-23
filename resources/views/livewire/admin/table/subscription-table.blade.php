@@ -1,6 +1,6 @@
 <div class="data-table overflow-x-auto">
 <div class="top">
-    <div class="flex justify-between mb-2">
+    <div class="flex justify-between items-center mb-2">
         <div class="flex space-x-2">
             <div class="input-group">
                 <input wire:model="search" class="" type="text" placeholder="Search">
@@ -13,64 +13,62 @@
                 </select>
             </div>
         </div>
-        <div>
-            <x-jet-button wire:click="createSubscription" wire:loading.attr="disabled">
-                Create
-                <span wire:loading wire:target="createSubscription"
-                    class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
-                </span>
-            </x-jet-button>
-        </div>
-
+        <x-jet-button wire:click="createSubscription" wire:loading.attr="disabled">
+            Create
+            <span wire:loading wire:target="createSubscription"
+                class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+            </span>
+        </x-jet-button>
     </div>
 </div>
 <div class="bottom">
     <table class="min-w-full">
         <thead>
             <tr>
+            @foreach ($columns as $column)
+                @if ($column["sortable"] === true) 
                 <th class="text-left">
-                    <a wire:click.prevent="sortBy('id')" role="button">ID</a>
-                    @include('admin.partials.sort-icon', ['field'=>'id'])
+                    <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ ucfirst($column["field"]) }}</a>
+                    @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
                 </th>
-                <th class="text-left">
-                    <a wire:click.prevent="sortBy('name')" role="button">Name</a>
-                    @include('admin.partials.sort-icon', ['field'=>'name'])
+                @else
+                <th class="">
+                    {{ ucfirst($column["field"]) }}
                 </th>
-
-                <!--Add column header here-->
-
-                <th>
-                    Action
-                </th>
+                @endif
+            @endforeach
             </tr>
         </thead>
         <tbody class="bg-white">
             @foreach ($subscriptions as $subscription)
                 <tr>
-                    <td class="px-6 py-4 whitespace-no-wrap border-b">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="text-sm leading-5 text-gray-800">{{ $subscription->id }}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="non-id">
-                        {{ $subscription->id }}
-                    </td>
-
-                    <!--Add column table data here-->
-
-                    <td class="non-id">
+                @foreach ($columns as $column)
+                @if ($column["field"] === "action")
+                    <td class="data-item">
                         <div class="flex justify-center text-gray-600">
-                            <a class="mx-1 text-lg" role="button"
-                                href="{{ route('admin.subscriptions.edit', $subscription->id) }}">
-                                <i class="far fa-edit"></i>
-                            </a>
-                            <a class="mx-1 text-lg" role="button" wire:click="showModal({{ $subscription->id }})">
-                                <i class="far fa-trash-alt"></i>
-                            </a>
+                        @foreach ($column["type"] as $type)
+                            @if ($type === "view")
+                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.subscriptions.show", $subscription->id) }}">
+                                    <i class="far fa-eye"></i>
+                                </a>    
+                            @elseif ($type === "edit")
+                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.subscriptions.edit", $subscription->id) }}">
+                                    <i class="far fa-edit"></i>
+                                </a>    
+                            @elseif ($type === "delete")
+                                <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($subscription->id)}}')">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            @endif
+                        @endforeach
                         </div>
                     </td>
+                @else
+                    <td class="data-item">
+                        {{ $subscription->{$column["field"]} }}
+                    </td>
+                @endif
+            @endforeach
                 </tr>
             @endforeach
         </tbody>
@@ -94,7 +92,7 @@
 </div>
 <x-jet-dialog-modal wire:model="modalVisible">
     <x-slot name="title">
-        Delete User
+        Delete Subscription
     </x-slot>
 
     <x-slot name="content">

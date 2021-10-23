@@ -21,6 +21,7 @@ class CreatePackagesTable extends Migration
             $table->text('description');
             $table->decimal('price',19,2);
             $table->integer('duration');
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
