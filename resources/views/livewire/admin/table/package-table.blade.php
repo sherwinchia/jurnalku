@@ -1,6 +1,6 @@
 <div class="data-table overflow-x-auto">
 <div class="top">
-    <div class="flex justify-between mb-2 items-center">
+    <div class="flex justify-between items-center mb-2">
         <div class="flex space-x-2">
             <div class="input-group">
                 <input wire:model="search" class="" type="text" placeholder="Search">
@@ -13,60 +13,72 @@
                 </select>
             </div>
         </div>
+        @if (in_array("create", $actions))
         <x-jet-button wire:click="createPackage" wire:loading.attr="disabled">
             Create
             <span wire:loading wire:target="createPackage"
                 class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
             </span>
         </x-jet-button>
+        @endif
     </div>
 </div>
 <div class="bottom">
     <table class="min-w-full">
         <thead>
             <tr>
-                @foreach ($columns as $column)
+            @foreach ($columns as $column)
+                @if ( $column["field"] === "action") 
+                <th>
+                    {{ $column["name"] }}
+                </th>
+                @else
                 <th class="text-left">
-                    @if ($column['sortable'] == true) 
-                        <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ ucfirst($column['field']) }}</a>
-                        @include('admin.partials.sort-icon', ['field'=>$column['field'] ])
+                    @if(isset($column["field"]))
+                        <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ $column["name"] }}</a>
+                        @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
                     @else
-                        {{ ucfirst($column['field']) }}
+                        {{ $column["name"] }}
                     @endif
                 </th>
-                @endforeach
+                @endif
+            @endforeach
             </tr>
         </thead>
         <tbody class="bg-white">
             @foreach ($packages as $package)
                 <tr>
-                    @foreach ($columns as $column)
-                        @if ($column['field'] === 'action')
-                            <td class="data-item">
-                                <div class="flex text-gray-600">
-                                @foreach ($column['type'] as $type)
-                                    @if ($type === 'view')
-                                        <a class="mx-1 text-lg" role="button" href="{{ route('admin.packages.show', $package->id) }}">
-                                            <i class="far fa-eye"></i>
-                                        </a>    
-                                    @elseif ($type === 'edit')
-                                        <a class="mx-1 text-lg" role="button" href="{{ route('admin.packages.edit', $package->id) }}">
-                                            <i class="far fa-edit"></i>
-                                        </a>    
-                                    @elseif ($type === 'delete')
-                                        <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($package->id)}}')">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-                                    @endif
-                                @endforeach
-                                </div>
-                            </td>
+                @foreach ($columns as $column)
+                @if ($column["field"] === "action")
+                    <td class="data-item">
+                        <div class="flex justify-center text-gray-600">
+                        @foreach ($actions as $action)
+                            @if ($action === "show")
+                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.packages.show", $package->id) }}">
+                                    <i class="far fa-eye"></i>
+                                </a>    
+                            @elseif ($action === "edit")
+                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.packages.edit", $package->id) }}">
+                                    <i class="far fa-edit"></i>
+                                </a>    
+                            @elseif ($action === "delete")
+                                <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($package->id)}}')">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            @endif
+                        @endforeach
+                        </div>
+                    </td>
+                @else
+                    <td class="data-item">
+                        @if (isset($column["relation"]))
+                            {{ data_get($package,$column["relation"]) }}
                         @else
-                            <td class="data-item">
-                                {{ $package->{$column['field']} }}
-                            </td>
+                            {{ data_get($package,$column["field"]) }}
                         @endif
-                    @endforeach
+                    </td>
+                @endif
+            @endforeach
                 </tr>
             @endforeach
         </tbody>

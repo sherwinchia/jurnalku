@@ -18,27 +18,17 @@ class PackageTable extends Component
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
+    public $actions = ["create"];
     public $columns = [
         [
-            'field' => 'id',
-            'sortable' => 'true', 
+            "name" => "ID",
+            "field" => "id",
+            "sortable" => true, 
         ],
         [
-            'field' => 'name',
-            'sortable' => 'true', 
-        ],
-        [
-            'field' => 'price',
-            'sortable' => 'true', 
-        ],
-        [
-            'field' => 'active',
-            'sortable' => 'true', 
-        ],
-        [
-            'field' => 'action',
-            'sortable' => 'false',
-            'type' => ['delete', 'edit']
+            "name" => "Action",
+            "field" => "action",
+            "sortable" => false,
         ],
     ];
 
@@ -66,21 +56,15 @@ class PackageTable extends Component
 
     public function delete()
     {
-        try {
+
+        try{
             $id = Crypt::decrypt($this->encryptedId);
-            try {
-                Package::find($id)->delete();
-                $this->alert([
-                    "type" => "success",
-                    "message" => "Package has been successfully deleted."
-                ]);
-            } catch (\Illuminate\Database\QueryException $e) {
-                $this->alert([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ]);
-            }
-        } catch (DecryptException $e) {
+            Package::find($id)->delete();
+            $this->alert([
+                "type" => "success",
+                "message" => "Package has been successfully deleted."
+            ]);
+        } catch(\Illuminate\Database\QueryException $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
@@ -103,7 +87,7 @@ class PackageTable extends Component
     {
         return view("livewire.admin.table.package-table", [
             "packages" => Package::query()
-                ->where("name", "LIKE", "%{$this->search}%")
+                ->where("id", "LIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)
         ]);

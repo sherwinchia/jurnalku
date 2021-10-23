@@ -18,15 +18,17 @@ class SubscriptionTable extends Component
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
+    public $actions = ["create"];
     public $columns = [
         [
+            "name" => "ID",
             "field" => "id",
             "sortable" => true, 
         ],
         [
+            "name" => "Action",
             "field" => "action",
             "sortable" => false,
-            "type" => ["delete", "edit"]
         ],
     ];
 

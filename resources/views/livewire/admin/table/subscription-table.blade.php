@@ -13,12 +13,14 @@
                 </select>
             </div>
         </div>
+        @if (in_array("create", $actions))
         <x-jet-button wire:click="createSubscription" wire:loading.attr="disabled">
             Create
             <span wire:loading wire:target="createSubscription"
                 class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
             </span>
         </x-jet-button>
+        @endif
     </div>
 </div>
 <div class="bottom">
@@ -26,14 +28,18 @@
         <thead>
             <tr>
             @foreach ($columns as $column)
-                @if ($column["sortable"] === true) 
-                <th class="text-left">
-                    <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ ucfirst($column["field"]) }}</a>
-                    @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                @if ( $column["field"] === "action") 
+                <th>
+                    {{ $column["name"] }}
                 </th>
                 @else
-                <th class="">
-                    {{ ucfirst($column["field"]) }}
+                <th class="text-left">
+                    @if(isset($column["field"]))
+                        <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ $column["name"] }}</a>
+                        @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                    @else
+                        {{ $column["name"] }}
+                    @endif
                 </th>
                 @endif
             @endforeach
@@ -46,16 +52,16 @@
                 @if ($column["field"] === "action")
                     <td class="data-item">
                         <div class="flex justify-center text-gray-600">
-                        @foreach ($column["type"] as $type)
-                            @if ($type === "view")
+                        @foreach ($actions as $action)
+                            @if ($action === "show")
                                 <a class="mx-1 text-lg" role="button" href="{{ route("admin.subscriptions.show", $subscription->id) }}">
                                     <i class="far fa-eye"></i>
                                 </a>    
-                            @elseif ($type === "edit")
+                            @elseif ($action === "edit")
                                 <a class="mx-1 text-lg" role="button" href="{{ route("admin.subscriptions.edit", $subscription->id) }}">
                                     <i class="far fa-edit"></i>
                                 </a>    
-                            @elseif ($type === "delete")
+                            @elseif ($action === "delete")
                                 <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($subscription->id)}}')">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
@@ -65,7 +71,11 @@
                     </td>
                 @else
                     <td class="data-item">
-                        {{ $subscription->{$column["field"]} }}
+                        @if (isset($column["relation"]))
+                            {{ data_get($subscription,$column["relation"]) }}
+                        @else
+                            {{ data_get($subscription,$column["field"]) }}
+                        @endif
                     </td>
                 @endif
             @endforeach

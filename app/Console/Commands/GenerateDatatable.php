@@ -81,12 +81,14 @@ class GenerateDatatable extends Command
                 </select>
             </div>
         </div>
+        @if (in_array("create", $actions))
         <x-jet-button wire:click="create'.$model.'" wire:loading.attr="disabled">
             Create
             <span wire:loading wire:target="create'.$model.'"
                 class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
             </span>
         </x-jet-button>
+        @endif
     </div>
 </div>
 <div class="bottom">
@@ -94,14 +96,20 @@ class GenerateDatatable extends Command
         <thead>
             <tr>
             @foreach ($columns as $column)
-            <th class="text-left">
-                @if ($column["sortable"] == true) 
-                    <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ ucfirst($column["field"]) }}</a>
-                    @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                @if ( $column["field"] === "action") 
+                <th>
+                    {{ $column["name"] }}
+                </th>
                 @else
-                    {{ ucfirst($column["field"]) }}
+                <th class="text-left">
+                    @if(isset($column["field"]))
+                        <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
+                        @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                    @else
+                        {{ $column["name"] }}
+                    @endif
+                </th>
                 @endif
-            </th>
             @endforeach
             </tr>
         </thead>
@@ -112,16 +120,16 @@ class GenerateDatatable extends Command
                 @if ($column["field"] === "action")
                     <td class="data-item">
                         <div class="flex justify-center text-gray-600">
-                        @foreach ($column["type"] as $type)
-                            @if ($type === "view")
+                        @foreach ($actions as $action)
+                            @if ($action === "show")
                                 <a class="mx-1 text-lg" role="button" href="{{ route("admin.'.$pluralize_model.'.show", $'.$model_lowercase.'->id) }}">
                                     <i class="far fa-eye"></i>
                                 </a>    
-                            @elseif ($type === "edit")
+                            @elseif ($action === "edit")
                                 <a class="mx-1 text-lg" role="button" href="{{ route("admin.'.$pluralize_model.'.edit", $'.$model_lowercase.'->id) }}">
                                     <i class="far fa-edit"></i>
                                 </a>    
-                            @elseif ($type === "delete")
+                            @elseif ($action === "delete")
                                 <a class="mx-1 text-lg" role="button" wire:click="showModal(\'{{Crypt::encrypt($'.$model_lowercase.'->id)}}\')">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
@@ -131,7 +139,11 @@ class GenerateDatatable extends Command
                     </td>
                 @else
                     <td class="data-item">
-                        {{ $'.$model_lowercase.'->{$column["field"]} }}
+                        @if (isset($column["relation"]))
+                            {{ data_get($'.$model_lowercase.',$column["relation"]) }}
+                        @else
+                            {{ data_get($'.$model_lowercase.',$column["field"]) }}
+                        @endif
                     </td>
                 @endif
             @endforeach
@@ -200,15 +212,17 @@ class '.$model.'Table extends Component
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
+    public $actions = ["create"];
     public $columns = [
         [
+            "name" => "ID",
             "field" => "id",
             "sortable" => true, 
         ],
         [
+            "name" => "Action",
             "field" => "action",
             "sortable" => false,
-            "type" => ["delete", "edit"]
         ],
     ];
 
