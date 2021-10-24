@@ -28,53 +28,74 @@
         <table class="min-w-full">
             <thead>
                 <tr>
-                    <th class="text-left">
-                        <a wire:click.prevent="sortBy('id')" role="button">ID</a>
-                        @include('admin.partials.sort-icon', ['field'=>'id'])
-                    </th>
-                    <th class="text-left">
-                        <a wire:click.prevent="sortBy('name')" role="button">Name</a>
-                        @include('admin.partials.sort-icon', ['field'=>'name'])
-                    </th>
-
-                    <th class="text-left">
-                        Role
-                    </th>
-
+                    @foreach ($columns as $column)
+                    @if ( array_key_exists("field", $column) && $column["field"] === "action") 
                     <th>
-                        Action
+                        {{ $column["name"] }}
                     </th>
+                    @else
+                    <th class="text-left">
+                        @if(array_key_exists("field", $column) && isset($column["field"]))
+                            <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ $column["name"] }}</a>
+                            @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                        @else
+                            {{ $column["name"] }}
+                        @endif
+                    </th>
+                    @endif
+                @endforeach
                 </tr>
             </thead>
             <tbody class="bg-white">
                 @foreach ($users as $user)
                     <tr>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b">
-                            <div class="flex items-center">
-                                <div>
-                                    <div class="text-sm leading-5 text-gray-800">{{ $user->id }}</div>
+                        @foreach ($columns as $column)
+                        @if (array_key_exists("field", $column) && $column["field"] === "action")
+                            <td class="data-item">
+                                <div class="flex justify-center text-gray-600">
+                                @foreach ($actions as $action)
+                                    @if ($action === "show")
+                                        <a class="mx-1 text-lg" role="button" href="{{ route("admin.users.show", $user->id) }}">
+                                            <i class="far fa-eye"></i>
+                                        </a>    
+                                    @elseif ($action === "edit")
+                                        <a class="mx-1 text-lg" role="button" href="{{ route("admin.users.edit", $user->id) }}">
+                                            <i class="far fa-edit"></i>
+                                        </a>    
+                                    @elseif ($action === "delete")
+                                        <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($user->id)}}')">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    @endif
+                                @endforeach
                                 </div>
-                            </div>
-                        </td>
-                        <td class="non-id">
-                            {{ $user->name }}
-                        </td>
-
-                        <td class="non-id">
-                            {{ $user->role->name }}
-                        </td>
-
-                        <td class="non-id">
-                            <div class="flex justify-center text-gray-600">
-                                <a class="mx-1 text-lg" role="button"
-                                    href="{{ route('admin.users.edit', $user->id) }}">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                                <a class="mx-1 text-lg" role="button" wire:click="showModal({{ $user->id }})">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
+                            </td>
+                        @else
+                            <td class="data-item">
+                                @if (array_key_exists("relation", $column) && isset($column["relation"]))
+                                    @if (array_key_exists("format", $column) && isset($column["format"]))
+                                        @if (count($column["format"]) > 1)
+                                            {{ $column["format"][0](data_get($user,$column["relation"]), implode(",", array_slice($column["format"], 1))) }}
+                                        @else
+                                            {{ $column["format"][0](data_get($user,$column["relation"])) }}
+                                        @endif
+                                    @else
+                                        {{ data_get($user,$column["relation"]) }}
+                                    @endif
+                                @else
+                                    @if (array_key_exists("format", $column) && isset($column["format"]))
+                                        @if (count($column["format"]) > 1)
+                                            {{ $column["format"][0](data_get($user,$column["relation"]), implode(",", array_slice($column["format"], 1))) }}
+                                        @else
+                                            {{ $column["format"][0](data_get($user,$column["relation"])) }}
+                                        @endif
+                                    @else
+                                        {{ data_get($user,$column["field"]) }}
+                                    @endif
+                                @endif
+                            </td>
+                        @endif
+                        @endforeach
                     </tr>
                 @endforeach
             </tbody>

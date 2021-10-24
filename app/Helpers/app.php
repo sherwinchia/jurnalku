@@ -107,10 +107,10 @@ function current_user(){
         return $new_string;
   }
 
-    function getUniquePromoCode() {
+    function get_unique_promocode() {
         $code = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6));
         if (PromoCode::where('code', $code)->exists()) {
-            getUniquePromoCode();
+            get_unique_promocode();
         }
 
         return $code;
@@ -130,4 +130,17 @@ function current_user(){
                 return $singular.'s';
         }
     }
+
+    function get_boolean_value($value)
+    {
+        if ($value == true) {
+            return "True";
+        }
+
+        if ($value == false) {
+            return "False";
+        }
+    }
+
+    
 

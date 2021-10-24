@@ -14,9 +14,9 @@
             </div>
         </div>
         @if (in_array("create", $actions))
-        <x-jet-button wire:click="createPackage" wire:loading.attr="disabled">
+        <x-jet-button wire:click="createTransaction" wire:loading.attr="disabled">
             Create
-            <span wire:loading wire:target="createPackage"
+            <span wire:loading wire:target="createTransaction"
                 class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
             </span>
         </x-jet-button>
@@ -46,7 +46,7 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($packages as $package)
+            @foreach ($transactions as $transaction)
                 <tr>
                 @foreach ($columns as $column)
                 @if (array_key_exists("field", $column) && $column["field"] === "action")
@@ -54,15 +54,15 @@
                         <div class="flex justify-center text-gray-600">
                         @foreach ($actions as $action)
                             @if ($action === "show")
-                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.packages.show", $package->id) }}">
+                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.transactions.show", $transaction->id) }}">
                                     <i class="far fa-eye"></i>
                                 </a>    
                             @elseif ($action === "edit")
-                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.packages.edit", $package->id) }}">
+                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.transactions.edit", $transaction->id) }}">
                                     <i class="far fa-edit"></i>
                                 </a>    
                             @elseif ($action === "delete")
-                                <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($package->id)}}')">
+                                <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($transaction->id)}}')">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             @endif
@@ -71,30 +71,14 @@
                     </td>
                 @else
                     <td class="data-item">
-                    @if (array_key_exists("relation", $column) && isset($column["relation"]))
-                        @if (array_key_exists("format", $column) && isset($column["format"]))
-                            @if (count($column["format"]) > 1)
-                                {{ $column["format"][0](data_get($package,$column["relation"]), implode(",", array_slice($column["format"], 1))) }}
-                            @else
-                                {{ $column["format"][0](data_get($package,$column["relation"])) }}
-                            @endif
+                        @if (array_key_exists("relation", $column) && isset($column["relation"]))
+                            {{ data_get($transaction,$column["relation"]) }}
                         @else
-                            {{ data_get($package,$column["field"]) }}
+                            {{ data_get($transaction,$column["field"]) }}
                         @endif
-                    @else
-                        @if (array_key_exists("format", $column) && isset($column["format"]))
-                            @if (count($column["format"]) > 1)
-                                {{ $column["format"][0](data_get($package,$column["field"]), implode(",", array_slice($column["format"], 1))) }}
-                            @else
-                                {{ $column["format"][0](data_get($package,$column["field"])) }}
-                            @endif
-                        @else
-                            {{ data_get($package,$column["field"]) }}
-                        @endif
-                    @endif
                     </td>
                 @endif
-                @endforeach
+            @endforeach
                 </tr>
             @endforeach
         </tbody>
@@ -103,22 +87,22 @@
         <div>
             <p class="text-sm leading-5">
                 Showing
-                <span class="font-medium">{{ $packages->firstItem() }}</span>
+                <span class="font-medium">{{ $transactions->firstItem() }}</span>
                 to
-                <span class="font-medium">{{ $packages->lastItem() }}</span>
+                <span class="font-medium">{{ $transactions->lastItem() }}</span>
                 of
-                <span class="font-medium">{{ $packages->total() }}</span>
+                <span class="font-medium">{{ $transactions->total() }}</span>
                 results
             </p>
         </div>
         <div class="inline-block">
-            {{ $packages->links() }}
+            {{ $transactions->links() }}
         </div>
     </div>
 </div>
 <x-jet-dialog-modal wire:model="modalVisible">
     <x-slot name="title">
-        Delete Package
+        Delete Transaction
     </x-slot>
 
     <x-slot name="content">

@@ -41,7 +41,7 @@
         <section>
             <div class="input-group">
                 <label for="active">Active <span class="text-red-500">*</span></label>
-                <input wire:model.defer="package.active" type="checkbox" class="w-6 h-6">
+                <input wire:model.defer="package.active" type="checkbox" class="w-6 h-6"> <br>
                 @error("package.active") <span class="error-msg">{{ $message }}</span> @enderror
             </div>
         </section>

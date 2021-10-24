@@ -26,14 +26,15 @@
                 </div>
             </a>
         </li>
-        <li class="{{ request()->is('admin/subscriptions*') ? 'navbar-active-list' : 'navbar-list' }}">
+        
+        {{-- <li class="{{ request()->is('admin/subscriptions*') ? 'navbar-active-list' : 'navbar-list' }}">
             <a class="flex-col justify-between items-center" href="{{ route('admin.subscriptions.index') }}">
                 <div>
                     <i class="fa fa-credit-card w-8 text-lg"></i>
                     <span class="font-roboto text-md">Subscription</span>
                 </div>
             </a>
-        </li>
+        </li> --}}
 
         <li class="{{ request()->is('admin/packages*') ? 'navbar-active-list' : 'navbar-list' }}">
             <a class="flex-col justify-between items-center" href="{{ route('admin.packages.index') }}">

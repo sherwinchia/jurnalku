@@ -96,13 +96,13 @@ class GenerateDatatable extends Command
         <thead>
             <tr>
             @foreach ($columns as $column)
-                @if ( $column["field"] === "action") 
+                @if ( array_key_exists("field", $column) && $column["field"] === "action") 
                 <th>
                     {{ $column["name"] }}
                 </th>
                 @else
                 <th class="text-left">
-                    @if(isset($column["field"]))
+                    @if(array_key_exists("field", $column) && isset($column["field"]))
                         <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
                         @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
                     @else
@@ -117,7 +117,7 @@ class GenerateDatatable extends Command
             @foreach ($'.$pluralize_model.' as $'.$model_lowercase.')
                 <tr>
                 @foreach ($columns as $column)
-                @if ($column["field"] === "action")
+                @if (array_key_exists("field", $column) && $column["field"] === "action")
                     <td class="data-item">
                         <div class="flex justify-center text-gray-600">
                         @foreach ($actions as $action)
@@ -139,10 +139,26 @@ class GenerateDatatable extends Command
                     </td>
                 @else
                     <td class="data-item">
-                        @if (isset($column["relation"]))
-                            {{ data_get($'.$model_lowercase.',$column["relation"]) }}
+                        @if (array_key_exists("relation", $column) && isset($column["relation"]))
+                            @if (array_key_exists("format", $column) && isset($column["format"]))
+                                @if (count($column["format"]) > 1)
+                                    {{ $column["format"][0](data_get($'.$model_lowercase.',$column["relation"]), implode(",", array_slice($column["format"], 1))) }}
+                                @else
+                                    {{ $column["format"][0](data_get($'.$model_lowercase.',$column["relation"])) }}
+                                @endif
+                            @else
+                                {{ data_get($'.$model_lowercase.',$column["relation"]) }}
+                            @endif
                         @else
-                            {{ data_get($'.$model_lowercase.',$column["field"]) }}
+                            @if (array_key_exists("format", $column) && isset($column["format"]))
+                                @if (count($column["format"]) > 1)
+                                    {{ $column["format"][0](data_get($'.$model_lowercase.',$column["field"]), implode(",", array_slice($column["format"], 1))) }}
+                                @else
+                                    {{ $column["format"][0](data_get($'.$model_lowercase.',$column["field"])) }}
+                                @endif
+                            @else
+                                {{ data_get($'.$model_lowercase.',$column["field"]) }}
+                            @endif
                         @endif
                     </td>
                 @endif

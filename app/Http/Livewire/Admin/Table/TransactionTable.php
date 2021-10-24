@@ -4,11 +4,11 @@ namespace App\Http\Livewire\Admin\Table;
 use App\Http\Traits\Alert;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Package;
+use App\Models\Transaction;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 
-class PackageTable extends Component
+class TransactionTable extends Component
 {
     use WithPagination, Alert;
     protected $listeners = ['tableRefresh' => '$refresh'];
@@ -18,34 +18,12 @@ class PackageTable extends Component
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
-    public $actions = ["create", "edit", "delete"];
+    public $actions = ["create"];
     public $columns = [
         [
             "name" => "ID",
             "field" => "id",
             "sortable" => true, 
-        ],
-        [
-            "name" => "Name",
-            "field" => "name",
-            "sortable" => true,
-        ],
-        [
-            "name" => "Price",
-            "field" => "price",
-            "sortable" => true,
-            "format"=> ["decimal_to_human","Rp"]
-        ],
-        [
-            "name" => "Duration",
-            "field" => "duration",
-            "sortable" => true,
-        ],
-        [
-            "name" => "Active",
-            "field" => "active",
-            "sortable" => true,
-            "format"=> ["get_boolean_value"]
         ],
         [
             "name" => "Action",
@@ -81,10 +59,10 @@ class PackageTable extends Component
 
         try{
             $id = Crypt::decrypt($this->encryptedId);
-            Package::find($id)->delete();
+            Transaction::find($id)->delete();
             $this->alert([
                 "type" => "success",
-                "message" => "Package has been successfully deleted."
+                "message" => "Transaction has been successfully deleted."
             ]);
         } catch(\Illuminate\Database\QueryException $e) {
             $this->alert([
@@ -95,9 +73,9 @@ class PackageTable extends Component
         $this->modalVisible = false;
     }
 
-    public function createPackage()
+    public function createTransaction()
     {
-        return redirect(route("admin.packages.create"));
+        return redirect(route("admin.transactions.create"));
     }
 
     public function paginationView()
@@ -107,8 +85,8 @@ class PackageTable extends Component
 
     public function render()
     {
-        return view("livewire.admin.table.package-table", [
-            "packages" => Package::query()
+        return view("livewire.admin.table.transaction-table", [
+            "transactions" => Transaction::query()
                 ->where("id", "LIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)
