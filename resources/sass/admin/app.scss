@@ -32,44 +32,44 @@ button {
     display: none !important;
 }
 
-h1 {
-    font-size: 2em;
-    @apply mb-2;
-}
-h2 {
-    font-size: 1.5em;
-    @apply mb-2;
-}
-h3 {
-    font-size: 1.17em;
-    @apply mb-2;
-}
-h4 {
-    font-size: 1em;
-    @apply mb-2;
-}
-h5 {
-    font-size: 0.83em;
-    @apply mb-2;
-}
-h6 {
-    font-size: 0.75em;
-    @apply mb-2;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-weight: bolder;
-}
+// h1 {
+//     font-size: 2em;
+//     @apply mb-2;
+// }
+// h2 {
+//     font-size: 1.5em;
+//     @apply mb-2;
+// }
+// h3 {
+//     font-size: 1.17em;
+//     @apply mb-2;
+// }
+// h4 {
+//     font-size: 1em;
+//     @apply mb-2;
+// }
+// h5 {
+//     font-size: 0.83em;
+//     @apply mb-2;
+// }
+// h6 {
+//     font-size: 0.75em;
+//     @apply mb-2;
+// }
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//     font-weight: bolder;
+// }
 
 @tailwind components;
 @tailwind utilities;
 
 //partials
-@import "partials/_input-group";
+// @import "partials/_input-group";
 @import "partials/_card";
 @import "partials/_navbar";
 @import "partials/_data-table";

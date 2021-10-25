@@ -44,7 +44,7 @@
                         <x-jet-authentication-card-logo />
                     </div>
                     <div class="overflow-y-auto">
-                        <livewire:admin.navbar>
+                        <livewire:admin.shared.navbar>
                     </div>
 
                 </div>

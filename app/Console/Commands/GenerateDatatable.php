@@ -28,7 +28,7 @@ class GenerateDatatable extends Command
      */
     public function __construct(Filesystem $files)
     {
-        $this->files=$files;
+        $this->files = $files;
         parent::__construct();
     }
 
@@ -40,7 +40,7 @@ class GenerateDatatable extends Command
     public function handle()
     {
         $path = strtolower($this->argument('path'));
-        $identifier=strtolower($this->argument('indentifier'));
+        $identifier = strtolower($this->argument('indentifier'));
 
         $path_array = explode('/', $path);
         $folder = $path_array[0];
@@ -49,7 +49,7 @@ class GenerateDatatable extends Command
 
         $model_lowercase = end($path_array);
         $model = ucfirst($model_lowercase);
-        $pluralize_model = pluralize(2,$model_lowercase);
+        $pluralize_model = pluralize(2, $model_lowercase);
 
         $controller_file = "{$model}Table.php";
         $view_file = "{$model_lowercase}-table.blade.php";
@@ -57,168 +57,182 @@ class GenerateDatatable extends Command
         $app_path = app_path();
         $resource_path = resource_path();
 
-        $controller_path = "{$app_path}/Http/Livewire/{$folder_uppercase}/Table/{$controller_file}";
-        $view_path = "{$resource_path}/views/livewire/{$folder}/table/{$view_file}";
-        
-        if(file_exists($controller_path))
-            return $this->error('⚠️ ' . $controller_path.' file already exists!');
+        $controller_folder_path =  "{$app_path}/Http/Livewire/{$folder_uppercase}/{$model}";
+        $view_folder_path = "{$resource_path}/views/livewire/{$folder}/{$model_lowercase}";
 
-        if(file_exists($view_path))
-            return $this->error('⚠️ ' . $view_path.' file already exists!');
+        $controller_path = "{$app_path}/Http/Livewire/{$folder_uppercase}/{$model}/{$controller_file}";
+        $view_path = "{$resource_path}/views/livewire/{$folder}/{$model_lowercase}/{$view_file}";
 
-        $view_content='<div class="data-table overflow-x-auto">
-<div class="top">
-    <div class="flex justify-between items-center mb-2">
-        <div class="flex space-x-2">
-            <div class="input-group">
-                <input wire:model="search" class="" type="text" placeholder="Search">
-            </div>
-            <div class="input-group">
-                <select class="" wire:model="perPage">
+        if (!$this->files->isDirectory($controller_folder_path)) {
+            $this->files->makeDirectory($controller_folder_path);
+            $this->info("{$model} folder have been created.");
+        }
+        if (!$this->files->isDirectory($view_folder_path)) {
+            $this->files->makeDirectory($view_folder_path);
+            $this->info("{$model_lowercase} folder have been created.");
+        }
+
+        if (file_exists($controller_path))
+            return $this->error('⚠️ ' . $controller_path . ' file already exists!');
+
+        if (file_exists($view_path))
+            return $this->error('⚠️ ' . $view_path . ' file already exists!');
+
+        $view_content = '<x-ui.table>
+        <x-slot name="actions">
+            <div class="flex flex-col lg:flex-row gap-2">
+                <x-jet-input wire:model="search" class="" type="text" placeholder="Search" />
+                <x-ui.select class="" wire:model="perPage">
                     <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
-                </select>
+                </x-ui.select>
             </div>
-        </div>
-        @if (in_array("create", $actions))
-        <x-jet-button wire:click="create'.$model.'" wire:loading.attr="disabled">
-            Create
-            <span wire:loading wire:target="create'.$model.'"
-                class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
-            </span>
-        </x-jet-button>
-        @endif
-    </div>
-</div>
-<div class="bottom">
-    <table class="min-w-full">
+    
+            @if (in_array("create", $actions))
+            <div class="flex items-center">
+                <x-jet-button wire:click="create' . $model . '" wire:loading.attr="disabled">
+                    Create
+                    <span wire:loading wire:target="create' . $model . '"
+                        class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                    </span>
+                </x-jet-button>
+            </div>
+            @endif
+        </x-slot>
         <thead>
             <tr>
-            @foreach ($columns as $column)
-                @if ( array_key_exists("field", $column) && $column["field"] === "action") 
-                <th>
+                @foreach ($columns as $column)
+                @if ( array_key_exists("field", $column) && $column["field"] === "action")
+                <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm">
                     {{ $column["name"] }}
                 </th>
                 @else
-                <th class="text-left">
+                <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm text-left">
                     @if(array_key_exists("field", $column) && isset($column["field"]))
-                        <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
-                        @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                    <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
+                    @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
                     @else
-                        {{ $column["name"] }}
+                    {{ $column["name"] }}
                     @endif
                 </th>
                 @endif
-            @endforeach
+                @endforeach
             </tr>
         </thead>
-        <tbody class="bg-white">
-            @foreach ($'.$pluralize_model.' as $'.$model_lowercase.')
-                <tr>
+    
+        <tbody>
+            @foreach ($' . $pluralize_model . ' as $' . $model_lowercase . ')
+            <tr>
                 @foreach ($columns as $column)
                 @if (array_key_exists("field", $column) && $column["field"] === "action")
-                    <td class="data-item">
-                        <div class="flex justify-center text-gray-600">
+                <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+                    <div class="flex justify-center text-gray-600">
                         @foreach ($actions as $action)
-                            @if ($action === "show")
-                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.'.$pluralize_model.'.show", $'.$model_lowercase.'->id) }}">
-                                    <i class="far fa-eye"></i>
-                                </a>    
-                            @elseif ($action === "edit")
-                                <a class="mx-1 text-lg" role="button" href="{{ route("admin.'.$pluralize_model.'.edit", $'.$model_lowercase.'->id) }}">
-                                    <i class="far fa-edit"></i>
-                                </a>    
-                            @elseif ($action === "delete")
-                                <a class="mx-1 text-lg" role="button" wire:click="showModal(\'{{Crypt::encrypt($'.$model_lowercase.'->id)}}\')">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
-                            @endif
-                        @endforeach
-                        </div>
-                    </td>
-                @else
-                    <td class="data-item">
-                        @if (array_key_exists("relation", $column) && isset($column["relation"]))
-                            @if (array_key_exists("format", $column) && isset($column["format"]))
-                                @if (count($column["format"]) > 1)
-                                    {{ $column["format"][0](data_get($'.$model_lowercase.',$column["relation"]), implode(",", array_slice($column["format"], 1))) }}
-                                @else
-                                    {{ $column["format"][0](data_get($'.$model_lowercase.',$column["relation"])) }}
-                                @endif
-                            @else
-                                {{ data_get($'.$model_lowercase.',$column["relation"]) }}
-                            @endif
-                        @else
-                            @if (array_key_exists("format", $column) && isset($column["format"]))
-                                @if (count($column["format"]) > 1)
-                                    {{ $column["format"][0](data_get($'.$model_lowercase.',$column["field"]), implode(",", array_slice($column["format"], 1))) }}
-                                @else
-                                    {{ $column["format"][0](data_get($'.$model_lowercase.',$column["field"])) }}
-                                @endif
-                            @else
-                                {{ data_get($'.$model_lowercase.',$column["field"]) }}
-                            @endif
+                        @if ($action === "show")
+                        <a class="mx-1 text-lg" role="button" href="{{ route(\'admin.' . $pluralize_model . '.show\', $' . $model_lowercase . '->id)
+                            }}">
+                            <i class="far fa-eye"></i>
+                        </a>
+                        @elseif ($action === "edit")
+                        <a class="mx-1 text-lg" role="button" href="{{ route(\'admin.' . $pluralize_model . '.edit\', $' . $model_lowercase . '->id)
+                            }}">
+                            <i class="far fa-edit"></i>
+                        </a>
+                        @elseif ($action === "delete")
+                        <a class="mx-1 text-lg" role="button" wire:click="showModal(\'{{Crypt::encrypt($' . $model_lowercase . '->id)}}\')">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
                         @endif
-                    </td>
+                        @endforeach
+                    </div>
+                </td>
+                @else
+                <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+                    @if (array_key_exists("relation", $column) && isset($column["relation"]))
+                    @if (array_key_exists("format", $column) && isset($column["format"]))
+                    @if (count($column["format"]) > 1)
+                    {{ $column["format"][0](data_get($' . $model_lowercase . ',$column["relation"]), implode(",",
+                    array_slice($column["format"], 1))) }}
+                    @else
+                    {{ $column["format"][0](data_get($' . $model_lowercase . ',$column["relation"])) }}
+                    @endif
+                    @else
+                    {{ data_get($' . $model_lowercase . ',$column["relation"]) }}
+                    @endif
+                    @else
+                    @if (array_key_exists("format", $column) && isset($column["format"]))
+                    @if (count($column["format"]) > 1)
+                    {{ $column["format"][0](data_get($' . $model_lowercase . ',$column["field"]), implode(",", array_slice($column["format"],
+                    1))) }}
+                    @else
+                    {{ $column["format"][0](data_get($' . $model_lowercase . ',$column["field"])) }}
+                    @endif
+                    @else
+                    {{ data_get($' . $model_lowercase . ',$column["field"]) }}
+                    @endif
+                    @endif
+                </td>
                 @endif
-            @endforeach
-                </tr>
+                @endforeach
+            </tr>
             @endforeach
         </tbody>
-    </table>
-    <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
-        <div>
-            <p class="text-sm leading-5">
-                Showing
-                <span class="font-medium">{{ $'.$pluralize_model.'->firstItem() }}</span>
-                to
-                <span class="font-medium">{{ $'.$pluralize_model.'->lastItem() }}</span>
-                of
-                <span class="font-medium">{{ $'.$pluralize_model.'->total() }}</span>
-                results
-            </p>
-        </div>
-        <div class="inline-block">
-            {{ $'.$pluralize_model.'->links() }}
-        </div>
-    </div>
-</div>
-<x-jet-dialog-modal wire:model="modalVisible">
-    <x-slot name="title">
-        Delete '.$model.'
-    </x-slot>
+    
+        <x-slot name="footer">
+            <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
+                <div>
+                    <p class="text-sm leading-5">
+                        Showing
+                        <span class="font-medium">{{ $' . $pluralize_model . '->firstItem() }}</span>
+                        to
+                        <span class="font-medium">{{ $' . $pluralize_model . '->lastItem() }}</span>
+                        of
+                        <span class="font-medium">{{ $' . $pluralize_model . '->total() }}</span>
+                        results
+                    </p>
+                </div>
+                <div class="inline-block">
+                    {{ $' . $pluralize_model . '->links() }}
+                </div>
+            </div>
+            </div>
+            <x-jet-dialog-modal wire:model="modalVisible">
+                <x-slot name="title">
+                    Delete ' . $model . '
+                </x-slot>
+    
+                <x-slot name="content">
+                    This action can not be recovered!
+                </x-slot>
+    
+                <x-slot name="footer">
+                    <x-jet-secondary-button wire:click="$toggle(\'modalVisible\')" wire:loading.attr="disabled">
+                        Cancel
+                    </x-jet-secondary-button>
+    
+                    <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
+                        Delete
+                        <span wire:loading wire:target="delete"
+                            class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                        </span>
+                    </x-jet-danger-button>
+                </x-slot>
+            </x-jet-dialog-modal>
+        </x-slot>
+    </x-ui.table>';
 
-    <x-slot name="content">
-        This action can not be recovered!
-    </x-slot>
-
-    <x-slot name="footer">
-        <x-jet-secondary-button wire:click="$toggle(\'modalVisible\')" wire:loading.attr="disabled">
-            Cancel
-        </x-jet-secondary-button>
-
-        <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
-            Delete
-            <span wire:loading wire:target="delete"
-                class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
-            </span>
-        </x-jet-danger-button>
-    </x-slot>
-</x-jet-dialog-modal>
-</div>';
-
-        $controller_content='<?php
+        $controller_content = '<?php
 namespace App\Http\Livewire\Admin\Table;
 
 use App\Http\Traits\Alert;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\\'.$model.';
+use App\Models\\' . $model . ';
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 
-class '.$model.'Table extends Component
+class ' . $model . 'Table extends Component
 {
     use WithPagination, Alert;
     protected $listeners = [\'tableRefresh\' => \'$refresh\'];
@@ -269,10 +283,10 @@ class '.$model.'Table extends Component
 
         try{
             $id = Crypt::decrypt($this->encryptedId);
-            '.$model.'::find($id)->delete();
+            ' . $model . '::find($id)->delete();
             $this->alert([
                 "type" => "success",
-                "message" => "'.$model.' has been successfully deleted."
+                "message" => "' . $model . ' has been successfully deleted."
             ]);
         } catch(\Illuminate\Database\QueryException $e) {
             $this->alert([
@@ -283,9 +297,9 @@ class '.$model.'Table extends Component
         $this->modalVisible = false;
     }
 
-    public function create'.$model.'()
+    public function create' . $model . '()
     {
-        return redirect(route("admin.'.$pluralize_model.'.create"));
+        return redirect(route("admin.' . $pluralize_model . '.create"));
     }
 
     public function paginationView()
@@ -295,9 +309,9 @@ class '.$model.'Table extends Component
 
     public function render()
     {
-        return view("livewire.admin.table.'.$model_lowercase.'-table", [
-            "'.$pluralize_model.'" => '.$model.'::query()
-                ->where("'.$identifier.'", "LIKE", "%{$this->search}%")
+        return view("livewire.admin.table.' . $model_lowercase . '-table", [
+            "' . $pluralize_model . '" => ' . $model . '::query()
+                ->where("' . $identifier . '", "LIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)
         ]);
@@ -305,14 +319,14 @@ class '.$model.'Table extends Component
 }';
 
         // if ($this->confirm("Do you wish to generate {$model_lowercase}-table.blade.php and {$model}Table.php file?")) {}
-        if(!$this->files->put($controller_path, $controller_content))
+        if (!$this->files->put($controller_path, $controller_content))
             return $this->error('Something went wrong!');
 
-        if(!$this->files->put($view_path, $view_content))
+        if (!$this->files->put($view_path, $view_content))
             return $this->error('Something went wrong!');
-            
+
         $this->info("{$controller_file} and {$view_file} has been generated ✌️");
         $this->info($controller_path);
         return $this->info($view_path);
-    }    
+    }
 }

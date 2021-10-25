@@ -47,6 +47,11 @@ class GenerateView extends Command
         $resource_path = resource_path();
         $file_path = $resource_path . "/views/" . $path;
 
+        if (!$this->files->isDirectory($file_path)) {
+            $this->files->makeDirectory($file_path);
+            $this->info("{$model_lowercase} folder have been created.");
+        } 
+
         if (str_contains($type,'c') && file_exists($file_path . '/create.blade.php')) {
             return $this->error('⚠️ ' . $file_path . '/create.blade.php file already exist');
         }
@@ -62,20 +67,20 @@ class GenerateView extends Command
 
         $index_content = '<x-layout.admin>
         <div class="flex-1 flex flex-col p-8">
-            <livewire:admin.table.'.$model_lowercase.'-table>
+            <livewire:admin.'.$model_lowercase.'.'.$model_lowercase.'-table>
         </div>
 </x-layout.admin>';
 
         $create_content = '<x-layout.admin>
         <div class="flex-1 flex flex-col p-8">
-            <livewire:admin.form.'.$model_lowercase.'-form />
+            <livewire:admin.'.$model_lowercase.'.'.$model_lowercase.'-form />
         </div>
 </x-layout.admin>
     ';
 
         $edit_content = '<x-layout.admin>
         <div class="flex-1 flex flex-col p-8">
-            <livewire:admin.form.'.$model_lowercase.'-form :model="$'.$model_lowercase.'" />
+            <livewire:admin.'.$model_lowercase.'.'.$model_lowercase.'-form :model="$'.$model_lowercase.'" />
         </div>
 </x-layout.admin>
     ';
@@ -84,16 +89,20 @@ class GenerateView extends Command
 
         if (str_contains($type,'c')) {
             $this->files->put($file_path . '/create.blade.php', $create_content);  
+            $this->info("create file have been created.");
         }
         if (str_contains($type,'e')) {
-            $this->files->put($file_path . '/edit.blade.php', $edit_content); 
+            $this->files->put($file_path . '/edit.blade.php', $edit_content);
+            $this->info("edit file have been created."); 
         }
         if (str_contains($type,'i')) {
             $this->files->put($file_path . '/index.blade.php', $index_content);
+            $this->info("index file have been created.");
         }
         if (str_contains($type,'s')) {
             $this->files->put($file_path . '/show.blade.php', $show_content);
+            $this->info("show file have been created.");
         }
-        return $this->info("The files has been generated ✌️");
+        return $this->info("Action complete ✌️");
     }
 }

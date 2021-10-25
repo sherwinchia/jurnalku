@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\PromoCode;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+
 class PromoCodeSeeder extends Seeder
 {
     /**
@@ -15,7 +16,7 @@ class PromoCodeSeeder extends Seeder
     public function run()
     {
         PromoCode::create([
-            'code' => getUniquePromoCode(),
+            'code' => get_unique_promocode(),
             'type' => 'Percentage',
             'value' => 20,
             'max_discount' => 10000,
@@ -25,9 +26,9 @@ class PromoCodeSeeder extends Seeder
             'expired_at' => Carbon::now()->addDays(10),
             'active' => true,
         ]);
-        
+
         PromoCode::create([
-            'code' => getUniquePromoCode(),
+            'code' => get_unique_promocode(),
             'type' => 'Fixed',
             'value' => 10000,
             'max_discount' => null,
