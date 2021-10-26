@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Livewire\Admin\Table;
+
+namespace App\Http\Livewire\Admin\Transaction;
 
 use App\Http\Traits\Alert;
 use Livewire\Component;
@@ -19,11 +20,32 @@ class TransactionTable extends Component
     public $modalVisible = false;
     public $encryptedId;
     public $actions = ["create"];
+
     public $columns = [
         [
             "name" => "ID",
             "field" => "id",
-            "sortable" => true, 
+            "sortable" => true,
+        ],
+        [
+            "name" => "Name",
+            "relation" => "user.name",
+            "sortable" => false,
+        ],
+        [
+            "name" => "Package",
+            "relation" => "package.name",
+            "sortable" => false,
+        ],
+        [
+            "name" => "Status",
+            "field" => "status",
+            "sortable" => false,
+        ],
+        [
+            "name" => "Net Total",
+            "field" => "net_total",
+            "sortable" => false,
         ],
         [
             "name" => "Action",
@@ -57,14 +79,14 @@ class TransactionTable extends Component
     public function delete()
     {
 
-        try{
+        try {
             $id = Crypt::decrypt($this->encryptedId);
             Transaction::find($id)->delete();
             $this->alert([
                 "type" => "success",
                 "message" => "Transaction has been successfully deleted."
             ]);
-        } catch(\Illuminate\Database\QueryException $e) {
+        } catch (\Illuminate\Database\QueryException $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
@@ -85,8 +107,9 @@ class TransactionTable extends Component
 
     public function render()
     {
-        return view("livewire.admin.table.transaction-table", [
+        return view("livewire.admin.transaction.transaction-table", [
             "transactions" => Transaction::query()
+                ->with(['user', 'package'])
                 ->where("id", "LIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)

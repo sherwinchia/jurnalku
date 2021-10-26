@@ -15,9 +15,10 @@ class Alert extends Component
 
     public function mount()
     {
+
         if (session()->has('alert')) {
             array_push($this->alerts, session()->get('alert'));
-        } 
+        }
     }
 
     public function new($data)

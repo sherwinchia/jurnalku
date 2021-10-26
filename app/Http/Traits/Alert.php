@@ -8,7 +8,7 @@ trait Alert
     {
         $data['type'] = strtolower($data['type']);
 
-        if (!isset($data['session'])){
+        if (!isset($data['session'])) {
             $data['session'] = false;
         }
 
@@ -20,7 +20,7 @@ trait Alert
             $data['color'] = $this->getColor($data['type']);
         }
 
-        if ($data['session'] == true){
+        if ($data['session'] === true) {
             session()->flash('alert', $data);
         }
 

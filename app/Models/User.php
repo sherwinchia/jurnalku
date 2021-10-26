@@ -76,4 +76,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Subscription');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany('App\Models\Transaction');
+    }
 }

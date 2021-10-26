@@ -26,5 +26,6 @@ class PackageSeeder extends Seeder
             'price' => 99900,
             'duration' => 30,
         ]);
+        Package::factory()->count(50)->create();
     }
 }

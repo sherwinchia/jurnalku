@@ -100,7 +100,7 @@ class GenerateForm extends Command
         $input_sections = "";
         foreach ($fillable as $val) {
             $input_sections .= '
-        <x-ui.form-section field="' . $this->getLabel($val) . '" required="true">
+        <x-ui.form-section field="' . $this->getLabel($val) . '" required="true" method="POST">
             <x-jet-input wire:model.defer="' . $model_lowercase . '.' . $val . '" type="text" />
             @error("' . $model_lowercase . '.' . $val . '")
             <x-message.validation type="error">{{ $message }}</x-message.validation>

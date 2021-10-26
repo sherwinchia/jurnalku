@@ -1,6 +1,6 @@
 <div class="flex-1">
     <x-ui.card class="w-full max-w-xl mx-auto">
-        <x-ui.form wire:submit.prevent="submit" heading="{{ $buttonText }} Package">
+        <x-ui.form wire:submit.prevent="submit" heading="{{ $buttonText }} Package" method="POST">
             <x-ui.form-section field="Name" required="true">
                 <x-jet-input wire:model.defer="package.name" type="text" />
                 @error('package.name')
@@ -33,7 +33,7 @@
             </x-ui.form-section>
 
             <x-slot name="actions">
-                <x-jet-button wire:click="submit">{{ $buttonText }}</x-jet-button>
+                <x-jet-button type="submit">{{ $buttonText }}</x-jet-button>
             </x-slot>
         </x-ui.form>
     </x-ui.card>

@@ -16,12 +16,13 @@ class PackageForm extends Component
 
     public $buttonText = "Create";
 
-    protected $rules = ["package.name" => "required|string",
-                "package.description" => "required|string",
-                "package.price" => "required|numeric",
-                "package.duration" => "required|integer",
-                "package.active" => "boolean"
-                ];
+    protected $rules = [
+        "package.name" => "required|string",
+        "package.description" => "required|string",
+        "package.price" => "required|numeric",
+        "package.duration" => "required|integer",
+        "package.active" => "boolean"
+    ];
 
     public function mount($model = null)
     {

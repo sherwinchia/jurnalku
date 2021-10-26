@@ -32,5 +32,7 @@ class TransactionSeeder extends Seeder
             'discount' => 2000,
             'net_total' => 17900
         ]);
+
+        Transaction::factory()->count(10000)->create();
     }
 }

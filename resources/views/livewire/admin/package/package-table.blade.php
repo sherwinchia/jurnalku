@@ -1,5 +1,6 @@
 <x-ui.table>
-    <x-slot name="actions">
+    <x-slot name="header">
+        @if (in_array("search", $actions))
         <div class="flex flex-col lg:flex-row gap-2">
             <x-jet-input wire:model="search" class="" type="text" placeholder="Search" />
             <x-ui.select class="" wire:model="perPage">
@@ -8,7 +9,7 @@
                 <option value="20">20</option>
             </x-ui.select>
         </div>
-
+        @endif
         @if (in_array("create", $actions))
         <div class="flex items-center">
             <x-jet-button wire:click="createPackage" wire:loading.attr="disabled">
@@ -24,18 +25,18 @@
         <tr>
             @foreach ($columns as $column)
             @if ( array_key_exists("field", $column) && $column["field"] === "action")
-            <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm">
+            <x-ui.table-header class="text-center">
                 {{ $column["name"] }}
-            </th>
+            </x-ui.table-header>
             @else
-            <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm text-left">
+            <x-ui.table-header class="">
                 @if(array_key_exists("field", $column) && isset($column["field"]))
                 <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ $column["name"] }}</a>
                 @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
                 @else
                 {{ $column["name"] }}
                 @endif
-            </th>
+            </x-ui.table-header>
             @endif
             @endforeach
         </tr>
@@ -46,17 +47,17 @@
         <tr>
             @foreach ($columns as $column)
             @if (array_key_exists("field", $column) && $column["field"] === "action")
-            <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+            <x-ui.table-data class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
                 <div class="flex justify-center text-gray-600">
                     @foreach ($actions as $action)
                     @if ($action === "show")
                     <a class="mx-1 text-lg" role="button" href="{{ route('admin.packages.show', $package->id)
-                        }}">
+                            }}">
                         <i class="far fa-eye"></i>
                     </a>
                     @elseif ($action === "edit")
                     <a class="mx-1 text-lg" role="button" href="{{ route('admin.packages.edit', $package->id)
-                        }}">
+                            }}">
                         <i class="far fa-edit"></i>
                     </a>
                     @elseif ($action === "delete")
@@ -66,9 +67,9 @@
                     @endif
                     @endforeach
                 </div>
-            </td>
+            </x-ui.table-data>
             @else
-            <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+            <x-ui.table-data class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
                 @if (array_key_exists("relation", $column) && isset($column["relation"]))
                 @if (array_key_exists("format", $column) && isset($column["format"]))
                 @if (count($column["format"]) > 1)
@@ -92,7 +93,7 @@
                 {{ data_get($package,$column["field"]) }}
                 @endif
                 @endif
-            </td>
+            </x-ui.table-data>
             @endif
             @endforeach
         </tr>

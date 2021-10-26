@@ -6,13 +6,12 @@ use App\Http\Traits\Alert;
 use App\Models\User;
 use App\Models\Role;
 use Livewire\Component;
-use Illuminate\Support\Facades\Hash;
 
 class UserForm extends Component
 {
     use Alert;
 
-    public $user, $roles, $password_confirmation;
+    public $user, $roles, $password, $password_confirmation;
 
     public $edit = false;
 
@@ -21,11 +20,11 @@ class UserForm extends Component
     protected $rules = [
         'user.name' => 'required|max:80',
         'user.role_id' => 'required',
-        'user.password' => 'required|min:6',
         'user.email' => 'required|email|unique:users,email',
         'user.phone_number' => 'nullable|numeric|digits_between:10,15',
         'user.address' => 'nullable|regex:^[#.0-9a-zA-Z\s,-]+$^',
-        'password_confirmation' => 'required_with:user.password|same:user.password'
+        'password' => 'required|min:6|confirmed',
+        'password_confirmation' => 'required'
     ];
 
     public function mount($model = null)
@@ -59,16 +58,16 @@ class UserForm extends Component
             $this->validate([
                 'user.name' => 'required|max:80',
                 'user.role_id' => 'required',
-                'user.password' => 'nullable|min:6',
                 'user.phone_number' => 'nullable|numeric|digits_between:10,15',
                 'user.address' => 'nullable|regex:^[#.0-9a-zA-Z\s,-]+$^',
-                'password_confirmation' => 'required_with:user.password|same:user.password'
+                'password' => 'nullable|min:6|confirmed',
+                'password_confirmation' => 'nullable'
             ]);
         }
 
-        $this->user->password ?? $this->user->password = bcrypt($this->user->password);
-
-        $this->password_confirmation = null;
+        if (isset($this->password)) {
+            $this->user->password = bcrypt($this->password);
+        }
 
         $this->user->save();
 

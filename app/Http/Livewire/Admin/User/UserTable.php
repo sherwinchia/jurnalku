@@ -21,17 +21,17 @@ class UserTable extends Component
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
-    public $actions = ["create", "edit", "delete"];
+    public $actions = ["search", "create", "show", "edit", "delete"];
     public $columns = [
         [
             "name" => "ID",
             "field" => "id",
-            "sortable" => true, 
+            "sortable" => true,
         ],
         [
             "name" => "Name",
             "field" => "name",
-            "sortable" => true, 
+            "sortable" => true,
         ],
         [
             "name" => "Role",
@@ -46,7 +46,7 @@ class UserTable extends Component
         [
             "name" => "Expiry",
             "relation" => "subscription.expired_at",
-            "format" => ["date_to_human","d/m/Y"],
+            "format" => ["date_to_human", "d/m/Y"],
             "sortable" => false,
         ],
         [
@@ -80,14 +80,14 @@ class UserTable extends Component
 
     public function delete()
     {
-        try{
+        try {
             $id = Crypt::decrypt($this->encryptedId);
             User::find($id)->delete();
             $this->alert([
                 "type" => "success",
                 "message" => "User has been successfully deleted."
             ]);
-        } catch(\Illuminate\Database\QueryException $e) {
+        } catch (\Illuminate\Database\QueryException $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
@@ -110,7 +110,8 @@ class UserTable extends Component
     {
         return view('livewire.admin.user.user-table', [
             'users' => User::query()
-                ->where('name', 'LIKE', "%{$this->search}%")
+                ->where('id', '!=', auth()->user()->id)
+                ->where('name', 'ILIKE', "%{$this->search}%")
                 ->with("role")
                 ->with("subscription")
                 ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')

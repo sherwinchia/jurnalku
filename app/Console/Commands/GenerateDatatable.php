@@ -46,9 +46,9 @@ class GenerateDatatable extends Command
         $folder = $path_array[0];
         $folder_uppercase = ucfirst($path_array[0]);
 
-
         $model_lowercase = end($path_array);
         $model = ucfirst($model_lowercase);
+
         $pluralize_model = pluralize(2, $model_lowercase);
 
         $controller_file = "{$model}Table.php";
@@ -60,8 +60,8 @@ class GenerateDatatable extends Command
         $controller_folder_path =  "{$app_path}/Http/Livewire/{$folder_uppercase}/{$model}";
         $view_folder_path = "{$resource_path}/views/livewire/{$folder}/{$model_lowercase}";
 
-        $controller_path = "{$app_path}/Http/Livewire/{$folder_uppercase}/{$model}/{$controller_file}";
-        $view_path = "{$resource_path}/views/livewire/{$folder}/{$model_lowercase}/{$view_file}";
+        $controller_path = "{$controller_folder_path}/{$controller_file}";
+        $view_path = "{$view_folder_path}/{$view_file}";
 
         if (!$this->files->isDirectory($controller_folder_path)) {
             $this->files->makeDirectory($controller_folder_path);
@@ -79,7 +79,7 @@ class GenerateDatatable extends Command
             return $this->error('⚠️ ' . $view_path . ' file already exists!');
 
         $view_content = '<x-ui.table>
-        <x-slot name="actions">
+        <x-slot name="header">
             <div class="flex flex-col lg:flex-row gap-2">
                 <x-jet-input wire:model="search" class="" type="text" placeholder="Search" />
                 <x-ui.select class="" wire:model="perPage">
@@ -104,18 +104,18 @@ class GenerateDatatable extends Command
             <tr>
                 @foreach ($columns as $column)
                 @if ( array_key_exists("field", $column) && $column["field"] === "action")
-                <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm">
+                <x-ui.table-header>
                     {{ $column["name"] }}
-                </th>
+                </x-ui.table-header>
                 @else
-                <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm text-left">
+                <x-ui.table-header>
                     @if(array_key_exists("field", $column) && isset($column["field"]))
                     <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
                     @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
                     @else
                     {{ $column["name"] }}
                     @endif
-                </th>
+                </x-ui.table-header>
                 @endif
                 @endforeach
             </tr>
@@ -126,7 +126,7 @@ class GenerateDatatable extends Command
             <tr>
                 @foreach ($columns as $column)
                 @if (array_key_exists("field", $column) && $column["field"] === "action")
-                <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+                <x-ui.table-data>
                     <div class="flex justify-center text-gray-600">
                         @foreach ($actions as $action)
                         @if ($action === "show")
@@ -146,9 +146,9 @@ class GenerateDatatable extends Command
                         @endif
                         @endforeach
                     </div>
-                </td>
+                </x-ui.table-data>
                 @else
-                <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+                <x-ui.table-data>
                     @if (array_key_exists("relation", $column) && isset($column["relation"]))
                     @if (array_key_exists("format", $column) && isset($column["format"]))
                     @if (count($column["format"]) > 1)
@@ -172,7 +172,7 @@ class GenerateDatatable extends Command
                     {{ data_get($' . $model_lowercase . ',$column["field"]) }}
                     @endif
                     @endif
-                </td>
+                </x-ui.table-data>
                 @endif
                 @endforeach
             </tr>
@@ -223,7 +223,7 @@ class GenerateDatatable extends Command
     </x-ui.table>';
 
         $controller_content = '<?php
-namespace App\Http\Livewire\Admin\Table;
+namespace App\Http\Livewire\Admin\\' . $model . ';
 
 use App\Http\Traits\Alert;
 use Livewire\Component;
@@ -309,9 +309,9 @@ class ' . $model . 'Table extends Component
 
     public function render()
     {
-        return view("livewire.admin.table.' . $model_lowercase . '-table", [
+        return view("livewire.admin.' . $model_lowercase . '.' . $model_lowercase . '-table", [
             "' . $pluralize_model . '" => ' . $model . '::query()
-                ->where("' . $identifier . '", "LIKE", "%{$this->search}%")
+                ->where("' . $identifier . '", "ILIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)
         ]);
