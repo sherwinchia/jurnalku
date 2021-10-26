@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\PromoCode;
+use App\Models\Promocode;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class PromoCodeSeeder extends Seeder
+class PromocodeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class PromoCodeSeeder extends Seeder
      */
     public function run()
     {
-        PromoCode::create([
+        Promocode::create([
             'code' => get_unique_promocode(),
             'type' => 'Percentage',
             'value' => 20,
@@ -27,7 +27,7 @@ class PromoCodeSeeder extends Seeder
             'active' => true,
         ]);
 
-        PromoCode::create([
+        Promocode::create([
             'code' => get_unique_promocode(),
             'type' => 'Fixed',
             'value' => 10000,

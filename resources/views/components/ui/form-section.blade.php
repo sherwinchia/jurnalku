@@ -1,9 +1,7 @@
-<div class="flex flex-col gap-2 mb-1">
+<div {{ $attributes->merge(['class'=>'flex flex-col gap-2 mb-1']) }}>
     <label class="text-sm">
         {{ $field }}
-        @if(isset($required) && $required == true)
-        <span class="text-red-500">*</span>
-        @endif
+        <span class="{{ $required == 'true' ? 'inline-block' : 'hidden' }} text-red-500">*</span>
     </label>
     {{ $slot }}
 </div>

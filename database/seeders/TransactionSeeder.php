@@ -18,21 +18,25 @@ class TransactionSeeder extends Seeder
             'user_id' => 2,
             'package_id' => 1,
             'status' => 'Pending',
-            'promo_code_id' => 1,
+            'promocode_id' => 1,
             'gross_total' => 19900,
             'discount' => 2000,
-            'net_total' => 17900
+            'net_total' => 17900,
+            'reference' => 'INV118923123',
+            'merchant_ref' => 'TPX1231908230'
         ]);
         Transaction::create([
             'user_id' => 2,
             'package_id' => 2,
             'status' => 'Pending',
-            'promo_code_id' => 2,
+            'promocode_id' => 2,
             'gross_total' => 19900,
             'discount' => 2000,
-            'net_total' => 17900
+            'net_total' => 17900,
+            'reference' => 'INV111123223',
+            'merchant_ref' => 'TPX1231111130'
         ]);
 
-        Transaction::factory()->count(10000)->create();
+        Transaction::factory()->count(1000)->create();
     }
 }

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PackageSeeder::class,
             SubscriptionSeeder::class,
-            PromoCodeSeeder::class,
+            PromocodeSeeder::class,
             TransactionSeeder::class,
         ]);
     }

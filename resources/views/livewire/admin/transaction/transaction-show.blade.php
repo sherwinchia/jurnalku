@@ -12,7 +12,7 @@
                 ID
             </div>
             <div class="col-span-2">
-                INV1282AXT12 # {{ $transaction->id }}
+                INV1282AXT12#{{ $transaction->id }}
             </div>
             <div class="">
                 Date

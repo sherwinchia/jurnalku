@@ -28,10 +28,12 @@ class TransactionFactory extends Factory
             'user_id' => $this->faker->numberBetween(2, 100),
             'package_id' => $this->faker->numberBetween(1, 50),
             'status' => $statuses[array_rand($statuses, 1)],
-            'promo_code_id' => $this->faker->numberBetween(1, 2),
+            'promocode_id' => $this->faker->numberBetween(1, 2),
             'gross_total' => $gross_total,
             'discount' => $discount,
-            'net_total' => $gross_total - $discount
+            'net_total' => $gross_total - $discount,
+            'reference' => 'INV' . $this->faker->numberBetween(1000000, 9999999),
+            'merchant_ref' => 'TPX' . $this->faker->numberBetween(1000000, 9999999)
         ];
     }
 }

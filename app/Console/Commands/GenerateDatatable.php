@@ -127,7 +127,7 @@ class GenerateDatatable extends Command
                 @foreach ($columns as $column)
                 @if (array_key_exists("field", $column) && $column["field"] === "action")
                 <x-ui.table-data>
-                    <div class="flex justify-center text-gray-600">
+                    <div class="flex text-gray-600">
                         @foreach ($actions as $action)
                         @if ($action === "show")
                         <a class="mx-1 text-lg" role="button" href="{{ route(\'admin.' . $pluralize_model . '.show\', $' . $model_lowercase . '->id)

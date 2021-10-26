@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\PromocodeController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransactionController;
@@ -33,6 +34,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         Route::resource('users', UserController::class)->name('*', 'user')->only('index', 'create', 'edit', 'show');
         Route::resource('transactions', TransactionController::class)->name('*', 'transaction')->only('index', 'show');
         Route::resource('packages', PackageController::class)->name('*', 'package')->only('index', 'edit', 'create');
+        Route::resource('promocodes', PromocodeController::class)->name('*', 'promocode')->only('index', 'edit', 'create');
         // Route::resource('subscriptions', SubscriptionController::class)->name('*', 'subscription')->only('show','index');
     });
 

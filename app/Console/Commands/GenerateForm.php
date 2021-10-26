@@ -46,7 +46,9 @@ class GenerateForm extends Command
         $folder_uppercase = ucfirst($path_array[0]);
 
         $model_lowercase = end($path_array);
+
         $model = ucfirst($model_lowercase);
+
         $pluralize_model = pluralize(2, $model_lowercase);
 
         $fillable = app("App\Models\\" . $model)->getFillable();
@@ -100,7 +102,7 @@ class GenerateForm extends Command
         $input_sections = "";
         foreach ($fillable as $val) {
             $input_sections .= '
-        <x-ui.form-section field="' . $this->getLabel($val) . '" required="true" method="POST">
+        <x-ui.form-section field="' . $this->getLabel($val) . '" required="true">
             <x-jet-input wire:model.defer="' . $model_lowercase . '.' . $val . '" type="text" />
             @error("' . $model_lowercase . '.' . $val . '")
             <x-message.validation type="error">{{ $message }}</x-message.validation>
@@ -111,15 +113,19 @@ class GenerateForm extends Command
 
         $view_content = '<div class="flex-1">
         <x-ui.card class="w-full max-w-xl mx-auto">
-        <x-ui.form wire:submit.prevent="submit" heading="{{ $buttonText }} ' . $model . '">
+        <x-ui.form wire:submit.prevent="submit" heading="{{ $buttonText }} ' . $model . '" method="POST">
         ' . $input_sections . '   
         </x-ui.form>
+
+        <x-slot name="actions">
+            <x-jet-button type="submit">{{ $buttonText }}</x-jet-button>
+        </x-slot>
     </x-ui.card>
 </div>';
 
         $controller_content = '<?php
 
-namespace App\Http\Livewire\Admin\Form;
+namespace App\Http\Livewire\Admin\\' . $model . ';
 
 use App\Http\Traits\Alert;
 use Livewire\Component;
@@ -174,7 +180,7 @@ class ' . $model . 'Form extends Component
 
     public function render()
     {
-        return view("livewire.admin.form.' . $model_lowercase . '-form");
+        return view("livewire.admin.' . $model_lowercase . '.' . $model_lowercase . '-form");
     }
 }';
 

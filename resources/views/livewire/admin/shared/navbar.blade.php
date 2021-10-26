@@ -26,7 +26,7 @@
                 </div>
             </a>
         </li>
-        
+
         {{-- <li class="{{ request()->is('admin/subscriptions*') ? 'navbar-active-list' : 'navbar-list' }}">
             <a class="flex-col justify-between items-center" href="{{ route('admin.subscriptions.index') }}">
                 <div>
@@ -41,6 +41,15 @@
                 <div>
                     <i class="fa fa-box-open w-8 text-lg"></i>
                     <span class="font-roboto text-md">Package</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="{{ request()->is('admin/promocodes*') ? 'navbar-active-list' : 'navbar-list' }}">
+            <a class="flex-col justify-between items-center" href="{{ route('admin.promocodes.index') }}">
+                <div>
+                    <i class="fa fa-ticket-alt w-8 text-lg"></i>
+                    <span class="font-roboto text-md">Promocode</span>
                 </div>
             </a>
         </li>

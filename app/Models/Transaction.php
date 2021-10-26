@@ -31,8 +31,8 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\Package', 'package_id');
     }
 
-    public function promoCode()
+    public function promocode()
     {
-        return $this->belongsTo('App\Models\PromoCode', 'promo_code_id');
+        return $this->belongsTo('App\Models\Promocode', 'promocode_id');
     }
 }

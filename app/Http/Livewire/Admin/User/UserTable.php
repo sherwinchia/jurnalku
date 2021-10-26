@@ -46,7 +46,7 @@ class UserTable extends Component
         [
             "name" => "Expiry",
             "relation" => "subscription.expired_at",
-            "format" => ["date_to_human", "d/m/Y"],
+            "format" => ["date_to_human", "d F Y"],
             "sortable" => false,
         ],
         [

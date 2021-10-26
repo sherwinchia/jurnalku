@@ -20,7 +20,7 @@ class CreateTransactionsTable extends Migration
                 ->onDelete('cascade');
             $table->foreignId('package_id')->constrained();
             $table->enum('status', ['Pending', 'Success', 'Fail', 'Cancelled'])->default('Pending');
-            $table->foreignId('promo_code_id')
+            $table->foreignId('promocode_id')
                 ->nullable()
                 ->constrained();
             $table->decimal('gross_total', 19, 2);
