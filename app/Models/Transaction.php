@@ -16,6 +16,8 @@ class Transaction extends Model
         'promo_code_id',
         'gross_total',
         'discount',
+        'reference',
+        'merchant_ref',
         'net_total'
     ];
 
@@ -26,11 +28,11 @@ class Transaction extends Model
 
     public function package()
     {
-        return $this->belongsTo('App\Models\Package','package_id');
+        return $this->belongsTo('App\Models\Package', 'package_id');
     }
 
     public function promoCode()
     {
-        return $this->belongsTo('App\Models\PromoCode','promo_code_id');
+        return $this->belongsTo('App\Models\PromoCode', 'promo_code_id');
     }
 }

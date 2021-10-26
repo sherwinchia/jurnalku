@@ -28,7 +28,7 @@ class GenerateView extends Command
      */
     public function __construct(Filesystem $files)
     {
-        $this->files=$files;
+        $this->files = $files;
 
         parent::__construct();
     }
@@ -50,56 +50,61 @@ class GenerateView extends Command
         if (!$this->files->isDirectory($file_path)) {
             $this->files->makeDirectory($file_path);
             $this->info("{$model_lowercase} folder have been created.");
-        } 
+        }
 
-        if (str_contains($type,'c') && file_exists($file_path . '/create.blade.php')) {
+        if (str_contains($type, 'c') && file_exists($file_path . '/create.blade.php')) {
             return $this->error('⚠️ ' . $file_path . '/create.blade.php file already exist');
         }
-        if (str_contains($type,'e') && file_exists($file_path . '/edit.blade.php')) {
+        if (str_contains($type, 'e') && file_exists($file_path . '/edit.blade.php')) {
             return $this->error('⚠️ ' . $file_path . '/edit.blade.php file already exist');
         }
-        if (str_contains($type,'i') && file_exists($file_path . '/index.blade.php')) {
+        if (str_contains($type, 'i') && file_exists($file_path . '/index.blade.php')) {
             return $this->error('⚠️ ' . $file_path . '/index.blade.php file already exist');
         }
-        if (file_exists(str_contains($type,'s') && $file_path . '/show.blade.php')) {
+        if (file_exists(str_contains($type, 's') && $file_path . '/show.blade.php')) {
             return $this->error('⚠️ ' . $file_path . '/show.blade.php file already exist');
         }
 
         $index_content = '<x-layout.admin>
         <div class="flex-1 flex flex-col p-8">
-            <livewire:admin.'.$model_lowercase.'.'.$model_lowercase.'-table>
+            <livewire:admin.' . $model_lowercase . '.' . $model_lowercase . '-table>
         </div>
 </x-layout.admin>';
 
         $create_content = '<x-layout.admin>
         <div class="flex-1 flex flex-col p-8">
-            <livewire:admin.'.$model_lowercase.'.'.$model_lowercase.'-form />
+            <livewire:admin.' . $model_lowercase . '.' . $model_lowercase . '-form />
         </div>
 </x-layout.admin>
     ';
 
         $edit_content = '<x-layout.admin>
         <div class="flex-1 flex flex-col p-8">
-            <livewire:admin.'.$model_lowercase.'.'.$model_lowercase.'-form :model="$'.$model_lowercase.'" />
+            <livewire:admin.' . $model_lowercase . '.' . $model_lowercase . '-form :model="$' . $model_lowercase . '" />
         </div>
 </x-layout.admin>
     ';
 
-        $show_content = '';
+        $show_content = '<x-layout.admin>
+        <div class="flex-1 flex flex-col p-8">
+            <livewire:admin.' . $model_lowercase . '.' . $model_lowercase . '-show :model="$' . $model_lowercase . '"/>
+        </div>
+</x-layout.admin>
+    ';
 
-        if (str_contains($type,'c')) {
-            $this->files->put($file_path . '/create.blade.php', $create_content);  
+        if (str_contains($type, 'c')) {
+            $this->files->put($file_path . '/create.blade.php', $create_content);
             $this->info("create file have been created.");
         }
-        if (str_contains($type,'e')) {
+        if (str_contains($type, 'e')) {
             $this->files->put($file_path . '/edit.blade.php', $edit_content);
-            $this->info("edit file have been created."); 
+            $this->info("edit file have been created.");
         }
-        if (str_contains($type,'i')) {
+        if (str_contains($type, 'i')) {
             $this->files->put($file_path . '/index.blade.php', $index_content);
             $this->info("index file have been created.");
         }
-        if (str_contains($type,'s')) {
+        if (str_contains($type, 's')) {
             $this->files->put($file_path . '/show.blade.php', $show_content);
             $this->info("show file have been created.");
         }

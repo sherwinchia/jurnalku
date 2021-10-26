@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::resource('users', UserController::class)->name('*', 'user')->only('index', 'create', 'edit', 'show');
-        Route::resource('transactions', TransactionController::class)->name('*', 'transaction')->only('index', 'edit');
+        Route::resource('transactions', TransactionController::class)->name('*', 'transaction')->only('index', 'show');
         Route::resource('packages', PackageController::class)->name('*', 'package')->only('index', 'edit', 'create');
         // Route::resource('subscriptions', SubscriptionController::class)->name('*', 'subscription')->only('show','index');
     });

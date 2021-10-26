@@ -15,11 +15,11 @@ class TransactionTable extends Component
     protected $listeners = ['tableRefresh' => '$refresh'];
     public $search = "";
     public $sortField = "id";
-    public $sortAsc = true;
+    public $sortAsc = false;
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
-    public $actions = ["create"];
+    public $actions = ["show"];
 
     public $columns = [
         [
@@ -33,19 +33,22 @@ class TransactionTable extends Component
             "sortable" => false,
         ],
         [
-            "name" => "Package",
-            "relation" => "package.name",
-            "sortable" => false,
-        ],
-        [
             "name" => "Status",
             "field" => "status",
-            "sortable" => false,
+            "sortable" => true,
+            "custom_component" => '<x-ui.status type="{{ $transaction->status }}">{{ $transaction->status }}</x-ui.status>'
         ],
         [
             "name" => "Net Total",
             "field" => "net_total",
-            "sortable" => false,
+            "sortable" => true,
+            "format" => ["decimal_to_human", "Rp"]
+        ],
+        [
+            "name" => "Date",
+            "field" => "created_at",
+            "sortable" => true,
+            "format" => ["date_to_human", "d M Y"]
         ],
         [
             "name" => "Action",
@@ -109,8 +112,10 @@ class TransactionTable extends Component
     {
         return view("livewire.admin.transaction.transaction-table", [
             "transactions" => Transaction::query()
+                ->whereHas('user', function ($query) {
+                    $query->where("name", "ILIKE", "%{$this->search}%");
+                })
                 ->with(['user', 'package'])
-                ->where("id", "LIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)
         ]);

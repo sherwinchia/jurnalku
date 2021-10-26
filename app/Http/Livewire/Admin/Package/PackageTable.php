@@ -19,7 +19,7 @@ class PackageTable extends Component
     public $perPage = 10;
     public $modalVisible = false;
     public $encryptedId;
-    public $actions = ["create", "edit", "delete"];
+    public $actions = ["search", "create", "edit", "delete"];
     public $columns = [
         [
             "name" => "ID",

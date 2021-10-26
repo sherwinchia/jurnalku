@@ -17,6 +17,7 @@ class AddRoleIdToUsersTable extends Migration
             $table->foreignId('role_id')->constrained();
             $table->string('phone_number')->nullable();
             $table->text('address')->nullable();
+            $table->date('birth_date')->nullable();
         });
     }
 
