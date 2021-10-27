@@ -21,7 +21,7 @@
         @endif
     </x-slot>
     <thead>
-        <tr>
+        <x-ui.table-row>
             @foreach ($columns as $column)
             @if ( array_key_exists("field", $column) && $column["field"] === "action")
             <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm">
@@ -38,12 +38,12 @@
             </th>
             @endif
             @endforeach
-        </tr>
+        </x-ui.table-row>
     </thead>
 
     <tbody>
         @foreach ($transactions as $transaction)
-        <tr>
+        <x-ui.table-row>
             @foreach ($columns as $column)
             @if (array_key_exists("field", $column) && $column["field"] === "action")
             <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
@@ -97,7 +97,7 @@
             </td>
             @endif
             @endforeach
-        </tr>
+        </x-ui.table-row>
         @endforeach
     </tbody>
 

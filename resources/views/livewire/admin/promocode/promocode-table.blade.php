@@ -21,7 +21,7 @@
         @endif
     </x-slot>
     <thead>
-        <tr>
+        <x-ui.table-row>
             @foreach ($columns as $column)
             @if ( array_key_exists("field", $column) && $column["field"] === "action")
             <x-ui.table-header>
@@ -38,12 +38,12 @@
             </x-ui.table-header>
             @endif
             @endforeach
-        </tr>
+        </x-ui.table-row>
     </thead>
 
     <tbody>
         @foreach ($promocodes as $promocode)
-        <tr>
+        <x-ui.table-row>
             @foreach ($columns as $column)
             @if (array_key_exists("field", $column) && $column["field"] === "action")
             <x-ui.table-data>
@@ -96,7 +96,7 @@
             </x-ui.table-data>
             @endif
             @endforeach
-        </tr>
+        </x-ui.table-row>
         @endforeach
     </tbody>
 

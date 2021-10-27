@@ -21,8 +21,9 @@ class UserForm extends Component
         'user.name' => 'required|max:80',
         'user.role_id' => 'required',
         'user.email' => 'required|email|unique:users,email',
-        'user.phone_number' => 'nullable|numeric|digits_between:10,15',
+        'user.phone_number' => 'nullable|numeric|digits_between:10,15|unique:users,phone_number',
         'user.address' => 'nullable|regex:^[#.0-9a-zA-Z\s,-]+$^',
+        'user.birth_date' => 'nullable|date',
         'password' => 'required|min:6|confirmed',
         'password_confirmation' => 'required'
     ];
@@ -58,8 +59,9 @@ class UserForm extends Component
             $this->validate([
                 'user.name' => 'required|max:80',
                 'user.role_id' => 'required',
-                'user.phone_number' => 'nullable|numeric|digits_between:10,15',
+                'user.phone_number' => 'nullable|numeric|digits_between:10,15|unique:users,phone_number,' . $this->user->id,
                 'user.address' => 'nullable|regex:^[#.0-9a-zA-Z\s,-]+$^',
+                'user.birth_date' => 'nullable|date',
                 'password' => 'nullable|min:6|confirmed',
                 'password_confirmation' => 'nullable'
             ]);

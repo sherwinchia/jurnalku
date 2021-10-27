@@ -19,7 +19,7 @@ class PackageForm extends Component
     protected $rules = [
         "package.name" => "required|string",
         "package.description" => "required|string",
-        "package.price" => "required|numeric",
+        "package.price" => "required|numeric|min:0",
         "package.duration" => "required|integer",
         "package.active" => "boolean"
     ];

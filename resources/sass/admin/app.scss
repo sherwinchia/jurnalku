@@ -7,6 +7,20 @@ body {
     @apply p-0 text-black font-roboto;
     letter-spacing: 1px;
 }
+[x-cloak] {
+    display: none !important;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 // button {
 //     @apply inline-flex items-center px-4 py-2 bg-primary-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest disabled:opacity-25 transition;
@@ -28,9 +42,6 @@ body {
 //     }
 // }
 
-[x-cloak] {
-    display: none !important;
-}
 
 // h1 {
 //     font-size: 2em;

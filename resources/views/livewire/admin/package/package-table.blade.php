@@ -22,7 +22,7 @@
         @endif
     </x-slot>
     <thead>
-        <tr>
+        <x-ui.table-row>
             @foreach ($columns as $column)
             @if ( array_key_exists("field", $column) && $column["field"] === "action")
             <x-ui.table-header class="text-center">
@@ -39,12 +39,12 @@
             </x-ui.table-header>
             @endif
             @endforeach
-        </tr>
+        </x-ui.table-row>
     </thead>
 
     <tbody>
         @foreach ($packages as $package)
-        <tr>
+        <x-ui.table-row>
             @foreach ($columns as $column)
             @if (array_key_exists("field", $column) && $column["field"] === "action")
             <x-ui.table-data class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
@@ -96,7 +96,7 @@
             </x-ui.table-data>
             @endif
             @endforeach
-        </tr>
+        </x-ui.table-row>
         @endforeach
     </tbody>
 

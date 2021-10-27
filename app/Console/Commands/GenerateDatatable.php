@@ -101,7 +101,7 @@ class GenerateDatatable extends Command
             @endif
         </x-slot>
         <thead>
-            <tr>
+            <x-ui.table-row>
                 @foreach ($columns as $column)
                 @if ( array_key_exists("field", $column) && $column["field"] === "action")
                 <x-ui.table-header>
@@ -118,12 +118,12 @@ class GenerateDatatable extends Command
                 </x-ui.table-header>
                 @endif
                 @endforeach
-            </tr>
+            </x-ui.table-row>
         </thead>
     
         <tbody>
             @foreach ($' . $pluralize_model . ' as $' . $model_lowercase . ')
-            <tr>
+            <x-ui.table-row>
                 @foreach ($columns as $column)
                 @if (array_key_exists("field", $column) && $column["field"] === "action")
                 <x-ui.table-data>
@@ -175,7 +175,7 @@ class GenerateDatatable extends Command
                 </x-ui.table-data>
                 @endif
                 @endforeach
-            </tr>
+            </x-ui.table-row>
             @endforeach
         </tbody>
     

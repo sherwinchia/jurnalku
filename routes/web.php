@@ -28,7 +28,7 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->name('dashboard');
 
-Route::group(['middleware' => 'auth', 'verified'], function () {
+Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::resource('users', UserController::class)->name('*', 'user')->only('index', 'create', 'edit', 'show');

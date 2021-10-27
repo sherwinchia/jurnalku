@@ -60,7 +60,7 @@
         <x-ui.header class="font-semibold text-lg border-b border-gray-200">Transactions</x-ui.header>
         <x-ui.table>
             <thead>
-                <tr>
+                <x-ui.table-row>
                     <x-ui.table-header>ID</x-ui.table-header>
                     <x-ui.table-header>Package</x-ui.table-header>
                     <x-ui.table-header>Gross Total</x-ui.table-header>
@@ -69,12 +69,12 @@
                     <x-ui.table-header>Date</x-ui.table-header>
                     <x-ui.table-header>Status</x-ui.table-header>
                     <x-ui.table-header>Action</x-ui.table-header>
-                </tr>
+                </x-ui.table-row>
             </thead>
 
             <tbody>
                 @foreach ($transactions as $transaction)
-                <tr>
+                <x-ui.table-row>
                     <x-ui.table-data>{{ $transaction->id }}</x-ui.table-data>
                     <x-ui.table-data>{{ $transaction->package->name }}</x-ui.table-data>
                     <x-ui.table-data>{{ decimal_to_human($transaction->gross_total, "Rp") }}</x-ui.table-data>
@@ -92,7 +92,7 @@
                             </a>
                         </div>
                     </x-ui.table-data>
-                </tr>
+                </x-ui.table-row>
                 @endforeach
             </tbody>
 

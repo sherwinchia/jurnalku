@@ -90,14 +90,14 @@
             </ul>
         </li> --}}
 
-        <li class="{{ request()->is('admin/profile*') ? 'navbar-active-list' : 'navbar-list' }}">
+        <!-- <li class="{{ request()->is('admin/profile*') ? 'navbar-active-list' : 'navbar-list' }}">
             <a class="flex-col justify-between items-center" href="{{ route('admin.profile.show') }}">
                 <div class="w-full">
                     <i class="fas fa-user w-8 text-l"></i>
                     <span class="font-roboto text-m">Profile</span>
                 </div>
             </a>
-        </li>
+        </li> -->
 
         <li class="{{ request()->is('admin/setting*') ? 'navbar-active-list' : 'navbar-list' }}">
             <a class="flex-col justify-between items-center" href="#">
@@ -108,7 +108,7 @@
             </a>
         </li>
 
-        <li class="navbar-list">
+        <!-- <li class="navbar-list">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <a onclick="this.parentNode.submit();" class="flex-col justify-between items-center cursor-pointer">
@@ -118,6 +118,6 @@
                     </div>
                 </a>
             </form>
-        </li>
+        </li> -->
     </ul>
 </div>
