@@ -10,10 +10,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> --}}
+    {{--
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> --}}
 
     <!--Favicon-->
-    {{-- <link rel="icon" type='image/x-icon' href="{{ asset('images/brand/favicon.ico') }}">
+    {{--
+    <link rel="icon" type='image/x-icon' href="{{ asset('images/brand/favicon.ico') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/brand/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/brand/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/brand/favicon-16x16.png') }}">
@@ -37,19 +39,19 @@
                     x-transition:enter-end="transform -translate-x-0" x-transition:leave="transition duration-600"
                     x-transition:leave-start="transform" x-transition:leave-end="transform -translate-x-full"
                     class="navigation-bar w-64 flex-none overflow-y-auto transform origin-left flex flex-col">
-                    <div class=" text-center text-black overflow-hidden h-24 flex items-center justify-center px-2 gap-4">
-                         <div class=" font-semibold text-2xl">
+                    <div
+                        class=" text-center text-black overflow-hidden h-24 flex items-center justify-center px-2 gap-4">
+                        <div class=" font-semibold text-2xl">
                             {{ config('app.name') }}
-                        </div> 
+                        </div>
                         <x-jet-authentication-card-logo />
                     </div>
                     <div class="overflow-y-auto">
                         <livewire:admin.shared.navbar>
                     </div>
-
                 </div>
                 <div class="content flex-1 flex flex-col overflow-y-auto bg-gray-100">
-                    <div class="fixed top-0 w-full flex items-center p-6 h-16 bg-white drop-shadow-xl">
+                    <div class="fixed top-0 w-full flex items-center p-6 h-16 bg-white drop-shadow-xl z-50">
                         <div class="text-black text-lg font-roboto font-bold uppercase cursor-pointer mr-4"
                             @click="toggle()">
                             <i class="fas fa-bars text-lg text-black"></i>
@@ -66,9 +68,11 @@
         <livewire:shared.components.alert />
     </main>
     {{-- @stack('modals') --}}
-    {{-- <script type="application/javascript" src="{{ mix('js/admin.js') }}"></script> --}}
+    {{--
+    <script type="application/javascript" src="{{ mix('js/admin.js') }}"></script> --}}
     @livewireScripts
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false" data-turbo-eval="false"></script>
     @yield('scripts')
     <script>
         function adminSideBar() {

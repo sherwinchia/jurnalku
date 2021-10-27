@@ -8,25 +8,25 @@ body {
     letter-spacing: 1px;
 }
 
-button {
-    @apply inline-flex items-center px-4 py-2 bg-primary-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest disabled:opacity-25 transition;
+// button {
+//     @apply inline-flex items-center px-4 py-2 bg-primary-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest disabled:opacity-25 transition;
 
-    &:hover {
-        @apply bg-primary-400;
-    }
+//     &:hover {
+//         @apply bg-primary-400;
+//     }
 
-    &:active {
-        @apply bg-primary-600;
-    }
+//     &:active {
+//         @apply bg-primary-600;
+//     }
 
-    &:focus {
-        @apply outline-none border-primary-600 ring ring-primary-300;
-    }
+//     &:focus {
+//         @apply outline-none border-primary-600 ring ring-primary-300;
+//     }
 
-    &:disabled {
-        @apply opacity-25;
-    }
-}
+//     &:disabled {
+//         @apply opacity-25;
+//     }
+// }
 
 [x-cloak] {
     display: none !important;
