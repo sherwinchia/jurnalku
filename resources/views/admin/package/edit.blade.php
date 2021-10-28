@@ -1,5 +1,6 @@
 <x-layout.admin>
-    <div class="flex-1 flex flex-col p-8">
-        <livewire:admin.package.package-form :model="$package" />
-    </div>
+    <x-slot name="breadcrumbs">
+        {{ Breadcrumbs::render('admin.packages.edit', $package) }}
+    </x-slot>
+    <livewire:admin.package.package-form :model="$package" />
 </x-layout.admin>

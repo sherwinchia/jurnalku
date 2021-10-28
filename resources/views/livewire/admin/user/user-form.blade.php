@@ -39,7 +39,7 @@
                     <div
                         class="inset-y-0 left-0 border-r border-gray-300 overflow-hidden absolute flex items-center p-2">
                         +62</div>
-                    <x-jet-input class="w-full pl-8 sm:pl-14" wire:model.defer="user.phone_number" type="number" />
+                    <x-jet-input class="w-full pl-14" wire:model.defer="user.phone_number" type="number" />
                 </div>
                 @error('user.phone_number')
                 <x-message.validation type="error">{{ $message }}</x-message.validation>

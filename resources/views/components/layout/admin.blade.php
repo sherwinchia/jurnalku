@@ -36,7 +36,7 @@
 
         <!-- Sidebar -->
         <aside x-transition:enter="transition transform duration-300"
-            x-transition:enter-start="-translate-x-full opacity-30  ease-in"
+            x-transition:enter-start="-translate-x-full opacity-30 ease-in"
             x-transition:enter-end="translate-x-0 opacity-100 ease-out"
             x-transition:leave="transition transform duration-300"
             x-transition:leave-start="translate-x-0 opacity-100 ease-out"
@@ -44,10 +44,9 @@
             class="fixed inset-y-0 z-10 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform bg-white border-r shadow-lg lg:z-auto lg:static lg:shadow-none"
             :class="{'-translate-x-full lg:translate-x-0 lg:w-20': !isSidebarOpen}">
             <!-- sidebar header -->
-            <div class="flex items-center justify-between flex-shrink-0 p-2"
-                :class="{'lg:justify-center': !isSidebarOpen}">
+            <div class="flex items-center justify-between  p-2" :class="{'lg:justify-center': !isSidebarOpen}">
                 <span
-                    class="p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap flex items-center gap-2">
+                    class="p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap flex items-center gap-2 text-gray-700">
                     <x-icon.cash class="w-8 h-8 inline-block" /><span :class="{'lg:hidden': !isSidebarOpen}">{{
                         config('app.name')
                         }}</span>
@@ -57,11 +56,11 @@
                 </button>
             </div>
             <!-- Sidebar links -->
-            <nav class="flex-1 overflow-hidden hover:overflow-y-auto">
-                <ul class="p-2 overflow-hidden">
+            <nav class="flex-1 overflow-hidden hover:overflow-y-auto text-gray-700">
+                <ul class="p-2 overflow-hidden text-lg flex flex-col">
                     <li>
                         <a href="{{ route('admin.dashboard.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-300 hover:text-white {{ request()->is('admin/dashboard') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/dashboard*') ? 'bg-primary-500 text-white' : '' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <x-icon.home class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Dashboard</span>
@@ -69,7 +68,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.users.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-300 hover:text-white {{ request()->is('admin/users') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/users*') ? 'bg-primary-500 text-white' : '' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <x-icon.users class="h-6 w-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">User</span>
@@ -77,7 +76,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.transactions.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-300 hover:text-white {{ request()->is('admin/transactions') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/transactions*') ? 'bg-primary-500 text-white' : '' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <span>
                                 <x-icon.cash class="w-6 h-6" />
@@ -87,7 +86,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.packages.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-300 hover:text-white {{ request()->is('admin/packages') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/packages*') ? 'bg-primary-500 text-white' : '' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <span>
                                 <x-icon.archive class="w-6 h-6" />
@@ -97,7 +96,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.promocodes.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-300 hover:text-white {{ request()->is('admin/promocodes') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/promocodes*') ? 'bg-primary-500 text-white' : '' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <span>
                                 <x-icon.ticket class="w-6 h-6" />
@@ -107,7 +106,7 @@
                     </li>
                     <li>
                         <a href="#"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-300 hover:text-white {{ request()->is('admin/setting') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/setting*') ? 'bg-primary-500 text-white' : '' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <span>
                                 <x-icon.cog class="w-6 h-6" />
@@ -136,7 +135,7 @@
 
         <div class="flex flex-col flex-1 h-full overflow-hidden">
             <!-- Navbar -->
-            <header class="flex-shrink-0 border-b">
+            <header class="flex-shrink-0 border-b text-gray-700">
                 <div class="flex items-center justify-between p-2">
                     <!-- Navbar left -->
                     <div class="flex items-center space-x-3">
@@ -156,8 +155,7 @@
 
                     <!-- Navbar right -->
                     <div class="relative flex items-center space-x-3">
-
-                        <!-- avatar button -->
+                        <!-- Name button-->
                         <div class="relative" x-data="{ isOpen: false }">
                             <button @click="isOpen = !isOpen"
                                 class="px-3 py-2 rounded-lg focus:outline-none focus:ring flex items-center gap-2">
@@ -189,7 +187,7 @@
                                             @csrf
                                             <button onclick="event.preventDefault();
                                                             this.closest('form').submit();">
-                                                {{ __('Logoutt') }}
+                                                {{ __('Logout') }}
                                             </button>
                                         </form>
                                     </li>
@@ -202,11 +200,17 @@
             </header>
             <!-- Main content -->
             <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll bg-gray-50">
+                <!-- Breadcrumbs -->
+                @if(isset($breadcrumbs))
+                <div class="mb-4">
+                    {{ $breadcrumbs }}
+                </div>
+                @endif
                 <!-- Main content header -->
                 @if(isset($header))
                 <div
-                    class="flex flex-col items-start justify-between pb-6 space-y-4 border-b lg:items-center lg:space-y-0 lg:flex-row">
-                    <h1 class="text-2xl font-semibold whitespace-nowrap">{{ $header }}</h1>
+                    class="flex flex-col items-start justify-between pb-4 mb-4 space-y-4 border-b lg:items-center lg:space-y-0 lg:flex-row">
+                    <h1 class="text-xl font-semibold whitespace-nowrap">{{ $header }}</h1>
                 </div>
                 @endif
                 <!-- Slot -->
@@ -214,6 +218,7 @@
             </main>
         </div>
     </div>
+    <livewire:shared.components.alert />
     @livewireScripts
     <script>
         const setup = () => {

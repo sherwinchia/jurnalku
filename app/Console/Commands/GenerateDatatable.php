@@ -132,16 +132,16 @@ class GenerateDatatable extends Command
                         @if ($action === "show")
                         <a class="mx-1 text-lg" role="button" href="{{ route(\'admin.' . $pluralize_model . '.show\', $' . $model_lowercase . '->id)
                             }}">
-                            <i class="far fa-eye"></i>
+                            <x-icon.eye class="w-5 h-5" />
                         </a>
                         @elseif ($action === "edit")
                         <a class="mx-1 text-lg" role="button" href="{{ route(\'admin.' . $pluralize_model . '.edit\', $' . $model_lowercase . '->id)
                             }}">
-                            <i class="far fa-edit"></i>
+                            <x-icon.pencil-alt class="w-5 h-5" />
                         </a>
                         @elseif ($action === "delete")
                         <a class="mx-1 text-lg" role="button" wire:click="showModal(\'{{Crypt::encrypt($' . $model_lowercase . '->id)}}\')">
-                            <i class="far fa-trash-alt"></i>
+                            <x-icon.trash class="w-5 h-5" />
                         </a>
                         @endif
                         @endforeach

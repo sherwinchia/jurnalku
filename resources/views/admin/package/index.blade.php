@@ -1,5 +1,3 @@
 <x-layout.admin>
-    <div class="flex-1 flex flex-col p-8">
-        <livewire:admin.package.package-table>
-    </div>
+    <livewire:admin.package.package-table>
 </x-layout.admin>

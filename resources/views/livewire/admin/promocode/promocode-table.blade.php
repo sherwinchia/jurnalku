@@ -52,16 +52,16 @@
                     @if ($action === "show")
                     <a class="mx-1 text-lg" role="button" href="{{ route('admin.promocodes.show', $promocode->id)
                             }}">
-                        <i class="far fa-eye"></i>
+                        <x-icon.eye class="w-5 h-5" />
                     </a>
                     @elseif ($action === "edit")
                     <a class="mx-1 text-lg" role="button" href="{{ route('admin.promocodes.edit', $promocode->id)
                             }}">
-                        <i class="far fa-edit"></i>
+                        <x-icon.pencil-alt class="w-5 h-5" />
                     </a>
                     @elseif ($action === "delete")
                     <a class="mx-1 text-lg" role="button" wire:click="showModal('{{Crypt::encrypt($promocode->id)}}')">
-                        <i class="far fa-trash-alt"></i>
+                        <x-icon.trash class="w-5 h-5" />
                     </a>
                     @endif
                     @endforeach

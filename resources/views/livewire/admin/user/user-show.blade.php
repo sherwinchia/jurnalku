@@ -88,7 +88,7 @@
                         <div class="flex text-gray-600">
                             <a class="mx-1 text-lg" role="button" href="{{ route('admin.transactions.show', $transaction->id)
                             }}">
-                                <i class="far fa-eye"></i>
+                                <x-icon.eye class="w-5 h-5" />
                             </a>
                         </div>
                     </x-ui.table-data>

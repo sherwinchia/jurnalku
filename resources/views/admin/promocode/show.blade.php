@@ -1,6 +1,7 @@
 <x-layout.admin>
-        <div class="flex-1 flex flex-col p-8">
-            <livewire:admin.promocode.promocode-show :model="$promocode"/>
-        </div>
+    <x-slot name="breadcrumbs">
+        {{ Breadcrumbs::render('admin.promocodes.show',$promocode) }}
+    </x-slot>
+    <livewire:admin.promocode.promocode-show :model="$promocode" />
+
 </x-layout.admin>
-    
