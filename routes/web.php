@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('test-dashboard', function () {
+    return view('test-dashboard');
+});
+
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
 // })->name('dashboard');
@@ -42,5 +46,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard.index');
     });
 });
+
+
 
 require_once __DIR__ . '/jetstream.php';

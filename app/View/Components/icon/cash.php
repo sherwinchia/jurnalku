@@ -1,20 +1,19 @@
 <?php
 
-namespace App\View\Components\layout;
+namespace App\View\Components\icon;
 
 use Illuminate\View\Component;
 
-class Admin extends Component
+class cash extends Component
 {
-    public $header;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($header = null)
+    public function __construct()
     {
-        $this->header = $header;
+        //
     }
 
     /**
@@ -24,6 +23,6 @@ class Admin extends Component
      */
     public function render()
     {
-        return view('components.layout.admin');
+        return view('components.icon.cash');
     }
 }
