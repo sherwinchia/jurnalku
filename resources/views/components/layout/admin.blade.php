@@ -21,7 +21,6 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/admin.css') }}">
-
     @livewireStyles
 
     <!-- Scripts -->
@@ -44,7 +43,7 @@
             class="fixed inset-y-0 z-10 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform bg-white border-r shadow-lg lg:z-auto lg:static lg:shadow-none"
             :class="{'-translate-x-full lg:translate-x-0 lg:w-20': !isSidebarOpen}">
             <!-- sidebar header -->
-            <div class="flex items-center justify-between  p-2" :class="{'lg:justify-center': !isSidebarOpen}">
+            <div class="flex items-center justify-between p-2" :class="{'lg:justify-center': !isSidebarOpen}">
                 <span
                     class="p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap flex items-center gap-2 text-gray-700">
                     <x-icon.cash class="w-8 h-8 inline-block" /><span :class="{'lg:hidden': !isSidebarOpen}">{{
@@ -60,7 +59,7 @@
                 <ul class="p-2 overflow-hidden text-lg flex flex-col">
                     <li>
                         <a href="{{ route('admin.dashboard.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/dashboard*') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600  hover:text-white {{ request()->is('admin/dashboard*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <x-icon.home class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Dashboard</span>
@@ -68,7 +67,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.users.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/users*') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/users*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <x-icon.users class="h-6 w-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">User</span>
@@ -76,7 +75,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.transactions.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/transactions*') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/transactions*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <span>
                                 <x-icon.cash class="w-6 h-6" />
@@ -86,7 +85,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.packages.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/packages*') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/packages*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <span>
                                 <x-icon.archive class="w-6 h-6" />
@@ -96,7 +95,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.promocodes.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/promocodes*') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/promocodes*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <span>
                                 <x-icon.ticket class="w-6 h-6" />
@@ -106,7 +105,7 @@
                     </li>
                     <li>
                         <a href="#"
-                            class="flex items-center p-2 space-x-2 rounded-md hover:bg-primary-600 hover:text-white {{ request()->is('admin/setting*') ? 'bg-primary-500 text-white' : '' }}"
+                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/setting*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <span>
                                 <x-icon.cog class="w-6 h-6" />
@@ -122,11 +121,12 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button onclick="event.preventDefault(); this.closest('form').submit();"
-                        class="flex items-center justify-center w-full px-4 py-2 space-x-1 font-medium tracking-wider bg-gray-100 border rounded-md focus:outline-none focus:ring">
+                        class="flex items-center justify-center w-full px-4 py-2 space-x-1 bg-gray-100 border rounded-md focus:outline-none focus:ring">
                         <span>
-                            <x-icon.logout class="h-6 w-6" />
+                            <x-icon.logout class="h-5 w-5" />
                         </span>
-                        <span :class="{'lg:hidden': !isSidebarOpen}"> Logout </span>
+                        <span class="text-xs uppercase tracking-widest" :class="{'lg:hidden': !isSidebarOpen}"> Logout
+                        </span>
                     </button>
                 </form>
 
@@ -199,7 +199,7 @@
                 </div>
             </header>
             <!-- Main content -->
-            <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll bg-gray-50">
+            <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-auto bg-gray-50">
                 <!-- Breadcrumbs -->
                 @if(isset($breadcrumbs))
                 <div class="mb-4">

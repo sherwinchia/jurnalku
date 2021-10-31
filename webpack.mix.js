@@ -14,12 +14,19 @@ const mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss');
 
 mix.js('resources/js/admin/app.js', 'public/js/admin.js')
- .sass('resources/sass/admin/app.scss', 'public/css/admin.css')
- .options({
-     processCssUrls: false,
-     postCss: [tailwindcss('./tailwind.config.js')],
- });
- 
+    .sass('resources/sass/admin/app.scss', 'public/css/admin.css')
+    .options({
+        processCssUrls: false,
+        postCss: [tailwindcss('./tailwind.config.js')],
+    });
+
+mix.js('resources/js/user/app.js', 'public/js/user.js')
+    .sass('resources/sass/user/app.scss', 'public/css/user.css')
+    .options({
+        processCssUrls: false,
+        postCss: [tailwindcss('./tailwind.config.js')],
+    });
+
 // mix.js('resources/js/app.js', 'public/js')
 //     .postCss('resources/css/app.css', 'public/css', [
 //         require('postcss-import'),

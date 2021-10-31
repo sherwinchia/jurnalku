@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     });
 
     Route::group(['middleware' => 'role:user', 'prefix' => 'user', 'as' => 'user.'], function () {
-        Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('home', [UserDashboardController::class, 'index'])->name('home.index');
     });
 });
 
