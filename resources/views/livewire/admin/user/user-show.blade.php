@@ -62,6 +62,7 @@
             <thead>
                 <x-ui.table-row>
                     <x-ui.table-header>ID</x-ui.table-header>
+                    <x-ui.table-header>Reference</x-ui.table-header>
                     <x-ui.table-header>Package</x-ui.table-header>
                     <x-ui.table-header>Gross Total</x-ui.table-header>
                     <x-ui.table-header>Discount</x-ui.table-header>
@@ -76,6 +77,7 @@
                 @foreach ($transactions as $transaction)
                 <x-ui.table-row>
                     <x-ui.table-data>{{ $transaction->id }}</x-ui.table-data>
+                    <x-ui.table-data>{{ $transaction->reference }}</x-ui.table-data>
                     <x-ui.table-data>{{ $transaction->package->name }}</x-ui.table-data>
                     <x-ui.table-data>{{ decimal_to_human($transaction->gross_total, "Rp") }}</x-ui.table-data>
                     <x-ui.table-data>{{ decimal_to_human($transaction->discount, "Rp") }}</x-ui.table-data>

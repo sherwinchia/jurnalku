@@ -1,7 +1,7 @@
 @if ($sortField !== $field)
-    <i class="text-muted fas fa-sort"></i>
+    <x-icon.sort-descending class="w-4 h-4 inline-block"/>
 @elseif($sortAsc)
-    <i class="fas fa-sort-up"></i>
+    <x-icon.sort-ascending class="w-4 h-4 inline-block"/>
 @else
-    <i class="fas fa-sort-down"></i>
+    <x-icon.sort-descending class="w-4 h-4 inline-block"/>
 @endif

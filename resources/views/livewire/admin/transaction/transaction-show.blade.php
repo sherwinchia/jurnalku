@@ -12,7 +12,7 @@
                 ID
             </div>
             <div class="col-span-2">
-                INV1282AXT12#{{ $transaction->id }}
+                {{ $transaction->reference }}#{{ $transaction->id }}
             </div>
             <div class="">
                 Date
@@ -29,25 +29,51 @@
         </div>
 
         <div class="mb-3">
+            <h5 class="text-lg font-semibold">Buyer Details</h5>
+            <div class=" grid grid-cols-1 lg:grid-cols-3 gap-1">
+
+
+                <div class="">
+                    Name
+                </div>
+                <div class="col-span-2">
+                    {{ data_get($transaction, 'user.name', '-') }}
+                </div>
+                <div class="">
+                    Email
+                </div>
+                <div class="col-span-2">
+                    {{ data_get($transaction, 'user.email', '-') }}
+                </div>
+                <div class="">
+                    Phone Number
+                </div>
+                <div class="col-span-2">
+                    {{ data_get($transaction, 'user.phone_number', '-') }}
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
             <h5 class="text-lg font-semibold">Package Details</h5>
             <div class=" grid grid-cols-1 lg:grid-cols-3 gap-1">
                 <div class="">
                     Name
                 </div>
                 <div class="col-span-2">
-                    {{ $transaction->package->name }}
+                    {{ data_get($transaction, 'package.name') }}
                 </div>
                 <div class="">
                     Duration
                 </div>
                 <div class="col-span-2">
-                    {{ $transaction->package->duration }} days
+                    {{ data_get($transaction, 'package.duration')  }} days
                 </div>
                 <div class="">
                     Price
                 </div>
                 <div class="col-span-2">
-                    {{ decimal_to_human($transaction->package->price , "Rp") }}
+                    {{ decimal_to_human(data_get($transaction, 'package.price')  , "Rp") }}
                 </div>
             </div>
         </div>

@@ -4,10 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-
-class CreatePackagesTable extends Migration
+class CreatePortfoliosTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -15,15 +13,12 @@ class CreatePackagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 60);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('name');
             $table->text('description');
-            $table->decimal('price',19,2);
-            $table->integer('duration');
-            $table->boolean('active')->default(false);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -34,6 +29,6 @@ class CreatePackagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('packages');
+        Schema::dropIfExists('portfolios');
     }
 }

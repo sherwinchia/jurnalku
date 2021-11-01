@@ -6,7 +6,8 @@ use App\Http\Controllers\Admin\PromocodeController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\HomeController as UserDashboardController;
+use App\Http\Controllers\User\JournalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,15 +32,16 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-        Route::resource('users', UserController::class)->name('*', 'user')->only('index', 'create', 'edit', 'show');
-        Route::resource('transactions', TransactionController::class)->name('*', 'transaction')->only('index', 'show');
-        Route::resource('packages', PackageController::class)->name('*', 'package')->only('index', 'edit', 'create');
-        Route::resource('promocodes', PromocodeController::class)->name('*', 'promocode')->only('index', 'edit', 'create');
+        Route::resource('users', UserController::class)->only('index', 'create', 'edit', 'show');
+        Route::resource('transactions', TransactionController::class)->only('index', 'show');
+        Route::resource('packages', PackageController::class)->only('index', 'edit', 'create');
+        Route::resource('promocodes', PromocodeController::class)->only('index', 'edit', 'create');
         // Route::resource('subscriptions', SubscriptionController::class)->name('*', 'subscription')->only('show','index');
     });
 
     Route::group(['middleware' => 'role:user', 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('home', [UserDashboardController::class, 'index'])->name('home.index');
+        Route::resource('journals', JournalController::class)->only('index', 'edit', 'create');
     });
 });
 

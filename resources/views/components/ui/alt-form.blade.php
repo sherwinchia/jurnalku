@@ -1,5 +1,5 @@
 <form {{ $attributes->merge(['class' => 'flex flex-col justify-between']) }}>
-    <div class="flex flex-col gap-4 p-4">
+    <div class="flex flex-col gap-4">
         @if(isset($heading))
         <x-ui.header>{{ $heading }}</x-ui.header>
         @endif

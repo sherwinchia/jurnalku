@@ -73,8 +73,7 @@
                 <ul class="p-2 overflow-hidden text-lg flex flex-col gap-2">
                     <li>
                         <a href="{{ route('user.home.index') }}"
-                            class="flex items-center p-2 space-x-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-400 focus:outline-none
-                            active:bg-primary-600 focus:border-primary-600 {{ request()->is('user/home*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
+                        class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600  hover:text-white {{ request()->is('user/home*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <x-icon.home class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Home</span>
@@ -82,7 +81,7 @@
                     </li>
 
                     <li>
-                        <a href="#"
+                        <a href="{{ route('user.journals.index') }}"
                             class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600  hover:text-white {{ request()->is('user/journal*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
                             <x-icon.book-open class="h-6 w-6" />

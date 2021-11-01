@@ -28,6 +28,11 @@ class TransactionTable extends Component
             "sortable" => true,
         ],
         [
+            "name" => "Reference",
+            "field" => "reference",
+            "sortable" => false,
+        ],
+        [
             "name" => "Name",
             "relation" => "user.name",
             "sortable" => false,
@@ -89,7 +94,7 @@ class TransactionTable extends Component
                 "type" => "success",
                 "message" => "Transaction has been successfully deleted."
             ]);
-        } catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Exception $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
@@ -115,7 +120,8 @@ class TransactionTable extends Component
                 ->whereHas('user', function ($query) {
                     $query->where("name", "ILIKE", "%{$this->search}%");
                 })
-                ->with(['user', 'package'])
+                ->orWhere('reference','ILIKE', "%{$this->search}%")
+                ->with('user', 'package')
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)
         ]);

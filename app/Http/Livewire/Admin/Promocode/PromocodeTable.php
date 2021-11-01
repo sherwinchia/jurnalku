@@ -94,7 +94,7 @@ class PromocodeTable extends Component
                 "type" => "success",
                 "message" => "Promocode has been successfully deleted."
             ]);
-        } catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Exception $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()

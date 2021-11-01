@@ -33,7 +33,7 @@ module.exports = {
               300:'#15161A',
             },
             formhover:'#e7eff5',
-            
+
           },
           fontFamily:{
             roboto:['Roboto','sans-serif']

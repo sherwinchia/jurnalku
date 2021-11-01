@@ -87,7 +87,7 @@ class UserTable extends Component
                 "type" => "success",
                 "message" => "User has been successfully deleted."
             ]);
-        } catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Exception $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()

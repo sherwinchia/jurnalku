@@ -86,7 +86,7 @@ class PackageTable extends Component
                 "type" => "success",
                 "message" => "Package has been successfully deleted."
             ]);
-        } catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Exception $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()

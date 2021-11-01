@@ -8,18 +8,20 @@ use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
+    const PATH = "admin.package.";
+
     public function index()
     {
-        return view('admin.package.index');
+        return view(self::PATH . 'index');
     }
 
     public function edit(Package $package)
     {
-        return view('admin.package.edit', compact('package'));
+        return view(self::PATH . 'edit', compact('package'));
     }
-    
+
     public function create()
     {
-        return view('admin.package.create');
+        return view(self::PATH . 'create');
     }
 }

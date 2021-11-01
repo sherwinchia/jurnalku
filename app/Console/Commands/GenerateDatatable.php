@@ -80,7 +80,7 @@ class GenerateDatatable extends Command
 
         $view_content = '<x-ui.table>
         <x-slot name="header">
-            <div class="flex flex-col lg:flex-row gap-2">
+            <div class="flex flex-col gap-2 lg:flex-row">
                 <x-jet-input wire:model="search" class="" type="text" placeholder="Search" />
                 <x-ui.select class="" wire:model="perPage">
                     <option value="10">10</option>
@@ -88,13 +88,13 @@ class GenerateDatatable extends Command
                     <option value="20">20</option>
                 </x-ui.select>
             </div>
-    
+
             @if (in_array("create", $actions))
             <div class="flex items-center">
                 <x-jet-button wire:click="create' . $model . '" wire:loading.attr="disabled">
                     Create
                     <span wire:loading wire:target="create' . $model . '"
-                        class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
                     </span>
                 </x-jet-button>
             </div>
@@ -103,24 +103,20 @@ class GenerateDatatable extends Command
         <thead>
             <x-ui.table-row>
                 @foreach ($columns as $column)
-                @if ( array_key_exists("field", $column) && $column["field"] === "action")
-                <x-ui.table-header>
-                    {{ $column["name"] }}
-                </x-ui.table-header>
-                @else
-                <x-ui.table-header>
-                    @if(array_key_exists("field", $column) && isset($column["field"]))
-                    <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
-                    @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                    @if ( array_key_exists("sortable", $column) && $column["sortable"] === true)
+                    <x-ui.table-header>
+                        <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
+                        @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                    </x-ui.table-header>
                     @else
-                    {{ $column["name"] }}
+                    <x-ui.table-header>
+                        {{ $column["name"] }}
+                    </x-ui.table-header>
                     @endif
-                </x-ui.table-header>
-                @endif
                 @endforeach
             </x-ui.table-row>
         </thead>
-    
+
         <tbody>
             @foreach ($' . $pluralize_model . ' as $' . $model_lowercase . ')
             <x-ui.table-row>
@@ -178,9 +174,9 @@ class GenerateDatatable extends Command
             </x-ui.table-row>
             @endforeach
         </tbody>
-    
+
         <x-slot name="footer">
-            <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
+            <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between work-sans">
                 <div>
                     <p class="text-sm leading-5">
                         Showing
@@ -201,20 +197,20 @@ class GenerateDatatable extends Command
                 <x-slot name="title">
                     Delete ' . $model . '
                 </x-slot>
-    
+
                 <x-slot name="content">
                     This action can not be recovered!
                 </x-slot>
-    
+
                 <x-slot name="footer">
                     <x-jet-secondary-button wire:click="$toggle(\'modalVisible\')" wire:loading.attr="disabled">
                         Cancel
                     </x-jet-secondary-button>
-    
+
                     <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
                         Delete
                         <span wire:loading wire:target="delete"
-                            class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
                         </span>
                     </x-jet-danger-button>
                 </x-slot>
@@ -223,7 +219,7 @@ class GenerateDatatable extends Command
     </x-ui.table>';
 
         $controller_content = '<?php
-namespace App\Http\Livewire\Admin\\' . $model . ';
+namespace App\Http\Livewire\\'.$folder_uppercase.'\\' . $model . ';
 
 use App\Http\Traits\Alert;
 use Livewire\Component;
@@ -247,7 +243,7 @@ class ' . $model . 'Table extends Component
         [
             "name" => "ID",
             "field" => "id",
-            "sortable" => true, 
+            "sortable" => true,
         ],
         [
             "name" => "Action",
@@ -288,7 +284,7 @@ class ' . $model . 'Table extends Component
                 "type" => "success",
                 "message" => "' . $model . ' has been successfully deleted."
             ]);
-        } catch(\Illuminate\Database\QueryException $e) {
+        } catch(\Exception $e) {
             $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
@@ -309,7 +305,7 @@ class ' . $model . 'Table extends Component
 
     public function render()
     {
-        return view("livewire.admin.' . $model_lowercase . '.' . $model_lowercase . '-table", [
+        return view("livewire.'.$folder.'.' . $model_lowercase . '.' . $model_lowercase . '-table", [
             "' . $pluralize_model . '" => ' . $model . '::query()
                 ->where("' . $identifier . '", "ILIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
