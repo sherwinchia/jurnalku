@@ -54,9 +54,23 @@
                     <x-icon.x class="h-6 w-6" />
                 </button>
             </div>
+
+            <!-- Balance stats -->
+            <div class="bg-primary-500 rounded-md m-2 p-3 justify-between items-center text-white"
+                :class="{'hidden': !isSidebarOpen, 'lg:flex ': isSidebarOpen}">
+                <span class="text-2xl font-semibold">Rp</span>
+                <div class="flex flex-col text-right">
+                    <span
+                        class="font-semibold whitespace-nowrap overflow-ellipsis overflow-hidden inline-block text-2xl">{{
+                        decimal_to_human(1900009)
+                        }}</span>
+                    <span>Balance</span>
+                </div>
+            </div>
+
             <!-- Sidebar links -->
             <nav class="flex-1 overflow-hidden hover:overflow-y-auto ">
-                <ul class="p-2 overflow-hidden text-lg flex flex-col">
+                <ul class="p-2 overflow-hidden text-lg flex flex-col gap-2">
                     <li>
                         <a href="{{ route('user.home.index') }}"
                             class="flex items-center p-2 space-x-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-400 focus:outline-none

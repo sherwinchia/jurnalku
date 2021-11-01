@@ -56,7 +56,7 @@
             </div>
             <!-- Sidebar links -->
             <nav class="flex-1 overflow-hidden hover:overflow-y-auto text-gray-700">
-                <ul class="p-2 overflow-hidden text-lg flex flex-col">
+                <ul class="p-2 overflow-hidden text-lg flex flex-col gap-2">
                     <li>
                         <a href="{{ route('admin.dashboard.index') }}"
                             class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600  hover:text-white {{ request()->is('admin/dashboard*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
