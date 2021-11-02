@@ -2,9 +2,11 @@
 
 <x-jet-modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
     <div class="px-6 py-4">
-        <div class="text-lg">
+        @if(isset($title))
+        <div class="py-2 text-lg font-semibold border-b">
             {{ $title }}
         </div>
+        @endif
 
         <div class="mt-4">
             {{ $content }}

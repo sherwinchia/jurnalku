@@ -20,33 +20,20 @@ class CreateTradesTable extends Migration
             $table->string('setup')->nullable();
             $table->string('mistake')->nullable();
             $table->timestamp('entry_date');
-            $table->timestamp('exit_date');
+            $table->timestamp('exit_date')->nullable();
             $table->decimal('entry_price', 19, 2);
-            $table->decimal('exit_price', 19, 2);
+            $table->decimal('exit_price', 19, 2)->nullable();
             $table->decimal('take_profit', 19, 2);
             $table->decimal('stop_loss', 19, 2);
             $table->decimal('quantity', 19, 2);
-            $table->decimal('fees', 19, 2)->nullable();
+            $table->decimal('entry_fee', 19, 2)->default(0);
+            $table->decimal('exit_fee', 19, 2)->default(0);
             $table->decimal('gain_loss', 19, 2)->nullable();
             $table->boolean('favorite')->default(0);
             $table->text('note')->nullable();
+            $table->enum('status',['open', 'win', 'lose', 'neutral', 'close'])->default('open');
             $table->timestamps();
         });
-
-        // 'portofolio_id',
-        // 'entry_date',
-        // 'exit_date',
-        // 'instrument_id',
-        // 'quantity',
-        // 'setup_id',
-        // 'mistake_id',
-        // 'entry_price',
-        // 'exit_price',
-        // 'take_profit',
-        // 'stop_loss',
-        // 'fees',
-        // 'gain_loss',
-        // 'favorite'
     }
 
     /**

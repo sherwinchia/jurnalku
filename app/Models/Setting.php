@@ -13,4 +13,9 @@ class Setting extends Model
         'user_id',
         'data'
     ];
+
+    public function getGetBalanceAttribute()
+    {
+
+    }
 }

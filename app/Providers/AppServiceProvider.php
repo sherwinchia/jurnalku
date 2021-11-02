@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\UserSettings;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(UserSettings::class, function(){
+            return new UserSettings();
+        });
     }
 
     /**

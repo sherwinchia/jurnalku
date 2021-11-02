@@ -13,18 +13,20 @@ class Trade extends Model
         'portfolio_id',
         'entry_date',
         'exit_date',
-        'instrument_id',
+        'instrument',
         'quantity',
-        'setup_id',
-        'mistake_id',
+        'setup',
+        'mistake',
         'entry_price',
         'exit_price',
         'take_profit',
         'stop_loss',
-        'fees',
+        'entry_fee',
+        'exit_fee',
         'gain_loss',
         'favorite',
-        'note'
+        'note',
+        'status'
     ];
 
     public function portfolio()
@@ -32,18 +34,8 @@ class Trade extends Model
         return $this->belongsTo('App\Models\Portofolio');
     }
 
-    public function instrument()
+    public function getCalculateTotalAttribute()
     {
-        return $this->belongsTo('App\Models\Instrument');
-    }
-
-    public function setup()
-    {
-        return $this->belongsTo('App\Models\Setup');
-    }
-
-    public function mistake()
-    {
-        return $this->belongsTo('App\Models\Mistake');
+        return $this->exit_price - $this->entry_price - $this->entry_fee - $this->exit_fee;
     }
 }

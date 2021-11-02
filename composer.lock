@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e20dd69456ba1dc692886de9442f0e8",
+    "content-hash": "4a6f5f977348194541d7745d161e8c75",
     "packages": [
         {
             "name": "asantibanez/livewire-select",
@@ -4048,6 +4048,68 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "sherwinchia/livewire-image-uploader",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sherwinchia/livewire-image-uploader.git",
+                "reference": "ec1a9b20989b38f5d46b2021c9328e5f7642db39"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sherwinchia/livewire-image-uploader/zipball/ec1a9b20989b38f5d46b2021c9328e5f7642db39",
+                "reference": "ec1a9b20989b38f5d46b2021c9328e5f7642db39",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0",
+                "livewire/livewire": "^2.4",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Sherwinchia\\LivewireImageUploader\\LivewireImageUploaderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sherwinchia\\LivewireImageUploader\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sherwin Variancia",
+                    "email": "sherwinvariancia@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Livewire upload image component.",
+            "homepage": "https://github.com/sherwinchia/livewire-image-uploader",
+            "keywords": [
+                "image",
+                "laravel",
+                "livewire",
+                "sherwinchia",
+                "uploader"
+            ],
+            "support": {
+                "issues": "https://github.com/sherwinchia/livewire-image-uploader/issues",
+                "source": "https://github.com/sherwinchia/livewire-image-uploader/tree/1.0.1"
+            },
+            "time": "2021-05-26T11:05:55+00:00"
         },
         {
             "name": "spatie/db-dumper",

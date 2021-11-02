@@ -45,32 +45,30 @@
             <!-- sidebar header -->
             <div class="flex items-center justify-between p-2" :class="{'lg:justify-center': !isSidebarOpen}">
                 <span
-                    class="p-2 text-xl font-semibold leading-8 tracking-widest uppercase whitespace-nowrap flex items-center gap-2 text-gray-700">
-                    <x-icon.cash class="w-8 h-8 inline-block" /><span :class="{'lg:hidden': !isSidebarOpen}">{{
+                    class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-widest text-gray-700 uppercase whitespace-nowrap">
+                    <x-icon.cash class="inline-block w-8 h-8" /><span :class="{'lg:hidden': !isSidebarOpen}">{{
                         config('app.name')
                         }}</span>
                 </span>
                 <button @click="toggleSidbarMenu()" class="p-2 rounded-md lg:hidden">
-                    <x-icon.x class="h-6 w-6" />
+                    <x-icon.x class="w-6 h-6" />
                 </button>
             </div>
 
             <!-- Balance stats -->
-            <div class="bg-primary-500 rounded-md m-2 p-3 justify-between items-center text-white"
+            <div class="items-center justify-between p-3 m-2 text-white rounded-md bg-primary-500"
                 :class="{'hidden': !isSidebarOpen, 'lg:flex ': isSidebarOpen}">
                 <span class="text-2xl font-semibold">Rp</span>
                 <div class="flex flex-col text-right">
                     <span
-                        class="font-semibold whitespace-nowrap overflow-ellipsis overflow-hidden inline-block text-2xl">{{
-                        decimal_to_human(1900009)
-                        }}</span>
+                        class="inline-block overflow-hidden text-2xl font-semibold whitespace-nowrap overflow-ellipsis"></span>
                     <span>Balance</span>
                 </div>
             </div>
 
             <!-- Sidebar links -->
             <nav class="flex-1 overflow-hidden hover:overflow-y-auto ">
-                <ul class="p-2 overflow-hidden text-lg flex flex-col gap-2">
+                <ul class="flex flex-col gap-2 p-2 overflow-hidden text-lg">
                     <li>
                         <a href="{{ route('user.home.index') }}"
                         class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600  hover:text-white {{ request()->is('user/home*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
@@ -84,7 +82,7 @@
                         <a href="{{ route('user.journals.index') }}"
                             class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600  hover:text-white {{ request()->is('user/journal*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
                             :class="{'justify-center': !isSidebarOpen}">
-                            <x-icon.book-open class="h-6 w-6" />
+                            <x-icon.book-open class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Journal</span>
                         </a>
                     </li>
@@ -167,9 +165,9 @@
                     <button onclick="event.preventDefault(); this.closest('form').submit();"
                         class="flex items-center justify-center w-full px-4 py-2 space-x-1 font-medium tracking-wider bg-gray-100 border rounded-md focus:outline-none focus:ring">
                         <span>
-                            <x-icon.logout class="h-5 w-5" />
+                            <x-icon.logout class="w-5 h-5" />
                         </span>
-                        <span class="text-xs uppercase tracking-widest" :class="{'lg:hidden': !isSidebarOpen}"> Logout
+                        <span class="text-xs tracking-widest uppercase" :class="{'lg:hidden': !isSidebarOpen}"> Logout
                         </span>
                     </button>
                 </form>
@@ -179,7 +177,7 @@
 
         <div class="flex flex-col flex-1 h-full overflow-hidden">
             <!-- Navbar -->
-            <header class="flex-shrink-0 border-b text-gray-700">
+            <header class="flex-shrink-0 text-gray-700 border-b">
                 <div class="flex items-center justify-between p-2">
                     <!-- Navbar left -->
                     <div class="flex items-center space-x-3">
@@ -202,7 +200,7 @@
                         <!-- Name button-->
                         <div class="relative" x-data="{ isOpen: false }">
                             <button @click="isOpen = !isOpen"
-                                class="px-3 py-2 rounded-lg focus:outline-none focus:ring flex items-center gap-2">
+                                class="flex items-center gap-2 px-3 py-2 rounded-lg focus:outline-none focus:ring">
                                 <span>{{ current_user()->name }}</span>
                                 <svg class="w-4 h-4" :class="{'transform transition-transform rotate-180': isOpen}"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -214,7 +212,7 @@
 
                             <!-- Dropdown card -->
                             <div @click.away="isOpen = false" x-show.transition.opacity="isOpen"
-                                class="absolute mt-3 transform -translate-x-44 bg-white rounded-md shadow-lg w-64">
+                                class="absolute w-64 mt-3 transform bg-white rounded-md shadow-lg -translate-x-44">
                                 <div class="flex flex-col p-4 space-y-1 font-medium border-b">
                                     <span class="text-gray-800">{{ current_user()->name }}</span>
                                     <span class="text-sm text-gray-400">{{ current_user()->email }}</span>
@@ -226,7 +224,7 @@
                                             Profile</a>
                                     </li>
                                     <li>
-                                        <form class=" px-2 py-1 transition rounded-md hover:bg-gray-100" method="POST"
+                                        <form class="px-2 py-1 transition rounded-md hover:bg-gray-100" method="POST"
                                             action="{{ route('logout') }}">
                                             @csrf
                                             <button class="w-full text-left focus:outline-none" onclick="event.preventDefault();
