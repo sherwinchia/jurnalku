@@ -45,75 +45,54 @@
             <!-- sidebar header -->
             <div class="flex items-center justify-between p-2" :class="{'lg:justify-center': !isSidebarOpen}">
                 <span
-                    class="p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap flex items-center gap-2 text-gray-700">
-                    <x-icon.cash class="w-8 h-8 inline-block" /><span :class="{'lg:hidden': !isSidebarOpen}">{{
+                    class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-wider text-gray-700 uppercase whitespace-nowrap">
+                    <x-icon.cash class="inline-block w-8 h-8" /><span :class="{'lg:hidden': !isSidebarOpen}">{{
                         config('app.name')
                         }}</span>
                 </span>
                 <button @click="toggleSidbarMenu()" class="p-2 rounded-md lg:hidden">
-                    <x-icon.x class="h-6 w-6" />
+                    <x-icon.x class="w-6 h-6" />
                 </button>
             </div>
             <!-- Sidebar links -->
-            <nav class="flex-1 overflow-hidden hover:overflow-y-auto text-gray-700">
-                <ul class="p-2 overflow-hidden text-lg flex flex-col gap-2">
+            <nav class="flex-1 overflow-hidden text-gray-700 hover:overflow-y-auto">
+                <ul class="flex flex-col gap-2 p-2 overflow-hidden text-lg">
                     <li>
-                        <a href="{{ route('admin.dashboard.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600  hover:text-white {{ request()->is('admin/dashboard*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
-                            :class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('admin.dashboard.index') }}" class="{{ request()->is('admin/dashboard*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.home class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Dashboard</span>
-                        </a>
+                        </x-ui.navbar-link>
                     </li>
                     <li>
-                        <a href="{{ route('admin.users.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/users*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
-                            :class="{'justify-center': !isSidebarOpen}">
-                            <x-icon.users class="h-6 w-6" />
+                        <x-ui.navbar-link href="{{ route('admin.users.index') }}" class="{{ request()->is('admin/users*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                            <x-icon.users class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">User</span>
-                        </a>
+                        </x-ui.navbar-link>
                     </li>
                     <li>
-                        <a href="{{ route('admin.transactions.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/transactions*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
-                            :class="{'justify-center': !isSidebarOpen}">
-                            <span>
-                                <x-icon.cash class="w-6 h-6" />
-                            </span>
+                        <x-ui.navbar-link href="{{ route('admin.transactions.index') }}" class="{{ request()->is('admin/transactions*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                            <x-icon.cash class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Transaction</span>
-                        </a>
+                        </x-ui.navbar-link>
                     </li>
                     <li>
-                        <a href="{{ route('admin.packages.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/packages*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
-                            :class="{'justify-center': !isSidebarOpen}">
-                            <span>
-                                <x-icon.archive class="w-6 h-6" />
-                            </span>
+                        <x-ui.navbar-link href="{{ route('admin.packages.index') }}" class="{{ request()->is('admin/packages*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                            <x-icon.archive class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Package</span>
-                        </a>
+                        </x-ui.navbar-link>
                     </li>
                     <li>
-                        <a href="{{ route('admin.promocodes.index') }}"
-                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/promocodes*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
-                            :class="{'justify-center': !isSidebarOpen}">
-                            <span>
-                                <x-icon.ticket class="w-6 h-6" />
-                            </span>
+                        <x-ui.navbar-link href="{{ route('admin.promocodes.index') }}" class="{{ request()->is('admin/promocodes*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                            <x-icon.ticket class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Promocode</span>
-                        </a>
+                        </x-ui.navbar-link>
                     </li>
                     <li>
-                        <a href="#"
-                            class="flex items-center p-2 space-x-2 rounded-md border border-transparent font-semibold text-xs uppercase tracking-widest hover:bg-primary-400 focus:outline-none active:bg-primary-600 focus:border-primary-600 hover:text-white {{ request()->is('admin/setting*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}"
-                            :class="{'justify-center': !isSidebarOpen}">
-                            <span>
-                                <x-icon.cog class="w-6 h-6" />
-                            </span>
+                        <x-ui.navbar-link href="#" class="{{ request()->is('admin/setting*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                            <x-icon.cog class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Setting</span>
-                        </a>
+                        </x-ui.navbar-link>
                     </li>
-
                 </ul>
             </nav>
             <!-- Sidebar footer -->
@@ -123,9 +102,9 @@
                     <button onclick="event.preventDefault(); this.closest('form').submit();"
                         class="flex items-center justify-center w-full px-4 py-2 space-x-1 bg-gray-100 border rounded-md focus:outline-none focus:ring">
                         <span>
-                            <x-icon.logout class="h-5 w-5" />
+                            <x-icon.logout class="w-5 h-5" />
                         </span>
-                        <span class="text-xs uppercase tracking-widest" :class="{'lg:hidden': !isSidebarOpen}"> Logout
+                        <span class="text-xs tracking-widest uppercase" :class="{'lg:hidden': !isSidebarOpen}"> Logout
                         </span>
                     </button>
                 </form>
@@ -135,7 +114,7 @@
 
         <div class="flex flex-col flex-1 h-full overflow-hidden">
             <!-- Navbar -->
-            <header class="flex-shrink-0 border-b text-gray-700">
+            <header class="flex-shrink-0 text-gray-700 border-b">
                 <div class="flex items-center justify-between p-2">
                     <!-- Navbar left -->
                     <div class="flex items-center space-x-3">
@@ -158,7 +137,7 @@
                         <!-- Name button-->
                         <div class="relative" x-data="{ isOpen: false }">
                             <button @click="isOpen = !isOpen"
-                                class="px-3 py-2 rounded-lg focus:outline-none focus:ring flex items-center gap-2">
+                                class="flex items-center gap-2 px-3 py-2 rounded-lg focus:outline-none focus:ring">
                                 <span>{{ current_user()->name }}</span>
                                 <svg class="w-4 h-4" :class="{'transform transition-transform rotate-180': isOpen}"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -170,7 +149,7 @@
 
                             <!-- Dropdown card -->
                             <div @click.away="isOpen = false" x-show.transition.opacity="isOpen"
-                                class="absolute mt-3 transform -translate-x-44 bg-white rounded-md shadow-lg w-64">
+                                class="absolute w-64 mt-3 transform bg-white rounded-md shadow-lg -translate-x-44">
                                 <div class="flex flex-col p-4 space-y-1 font-medium border-b">
                                     <span class="text-gray-800">{{ current_user()->name }}</span>
                                     <span class="text-sm text-gray-400">{{ current_user()->email }}</span>

@@ -28,7 +28,7 @@ class SettingSeeder extends Seeder
             "generals" => [
                 "currency" => "Rp",
                 "decimals" => 2,
-                "public_profile" => false
+                "public_page" => false
             ],
             "balances" => [
                 [
@@ -49,13 +49,5 @@ class SettingSeeder extends Seeder
         Setting::where('user_id', '2')->update([
             'data' => json_encode($data)
         ]);
-
-        // $users = User::all()->except([1, 2]);
-
-        // foreach ($users as $user) {
-        //     Setting::create([
-        //         'user_id' => $user->id
-        //     ]);
-        // }
     }
 }

@@ -163,12 +163,7 @@ class JournalTable extends Component
     {
         $this->validate();
 
-        // dd($this->trade);
         $this->trade->portfolio_id = $this->decrypt($this->selectedPortfolio);
-
-        if (!$this->edit) {
-            $this->trade->exit_fee = 0;
-        }
 
         if ($this->edit && isset($this->trade->exit_date) && isset($this->trade->exit_price)) {
             $this->trade->gain_loss = $this->trade->calculate_total;
@@ -185,13 +180,18 @@ class JournalTable extends Component
         }
 
         $this->trade->save();
-
         $this->trade = new Trade();
         $this->tradeFormModal = false;
 
+        if($this->edit){
+            $message = 'Trade has been successfully updated.';
+        } else {
+            $message = 'Trade has been successfully added.';
+        }
+
         return $this->alert([
             "type" => "success",
-            "message" => "Trade has been successfully added."
+            "message" => $message
         ]);
     }
 

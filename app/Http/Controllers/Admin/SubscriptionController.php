@@ -27,4 +27,3 @@ class SubscriptionController extends Controller{
         return view(self::PATH . "edit", compact("subscription"));
     }
 }
-        

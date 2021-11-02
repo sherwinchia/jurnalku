@@ -20,11 +20,11 @@ class CreateSettingsTable extends Migration
             'generals' => [
                 'currency' => 'Rp',
                 'decimals' => 2,
-                'public_profile' => false
+                'public_page' => false
             ],
             'balances' => [],
         ];
-        // "a:5:{s:11:\"instruments\";a:0:{}s:6:\"setups\";a:0:{}s:8:\"mistakes\";a:0:{}s:8:\"generals\";a:3:{s:8:\"currency\";s:2:\"Rp\";s:8:\"decimals\";i:2;s:14:\"public_profile\";b:0;}s:8:\"balances\";a:0:{}}"
+
         Schema::create('settings', function (Blueprint $table) use ($data) {
             $table->id();
             $table->foreignId('user_id')

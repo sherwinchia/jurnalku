@@ -1,7 +1,7 @@
 <x-ui.table>
         <x-slot name="header">
-            <div class="flex flex-col gap-2 lg:flex-row">
-                <x-ui.form-section field="Portfolio" required="false">
+            <div class="flex w-full gap-2 lg:w-1/5">
+                <x-ui.form-section class="w-1/2" field="Portfolio" required="false">
                     <x-ui.select wire:model="selectedPortfolio" wire:ignore>
                         @foreach($portfolios as $portfolio)
                         <option value="{{ Crypt::encrypt($portfolio->id) }}">{{ $portfolio->name }}</option>
@@ -9,13 +9,13 @@
                     </x-ui.select>
                 </x-ui.form-section>
                 <!-- <x-jet-input wire:model="search" class="" type="text" placeholder="Search" /> -->
-                <x-ui.form-section field="Show" required="false">
-                <x-ui.select class="" wire:model="perPage">
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                </x-ui.select>
-            </x-ui.form-section>
+                <x-ui.form-section class="w-1/2" field="Show" required="false">
+                    <x-ui.select wire:model="perPage">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </x-ui.select>
+                </x-ui.form-section>
             </div>
 
             <div class="flex items-center">
@@ -241,18 +241,6 @@
                         <div class="col-span-full">
                             <x-ui.header class="mb-2 border-b">Extra</x-ui.header>
                             <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
-                                <x-ui.form-section field="Mistake" required="true" class="col-span-4 sm:col-span-2">
-                                    <x-ui.select wire:model.lazy="trade.mistake">
-                                        <option value="null" disabled>Choose mistake</option>
-                                        @foreach($settings->mistakes as $mistake)
-                                        <option value="{{ $mistake }}">{{ $mistake }}</option>
-                                        @endforeach
-                                    </x-ui.select>
-                                    @error("trade.mistake")
-                                    <x-message.validation type="error">{{ $message }}</x-message.validation>
-                                    @enderror
-                                </x-ui.form-section>
-
                                 <x-ui.form-section field="Setup" required="false" class="col-span-4 sm:col-span-2">
                                     <x-ui.select wire:model.lazy="trade.setup">
                                         <option value="null" disabled>Choose setup</option>
@@ -261,6 +249,18 @@
                                         @endforeach
                                     </x-ui.select>
                                     @error("trade.setup")
+                                    <x-message.validation type="error">{{ $message }}</x-message.validation>
+                                    @enderror
+                                </x-ui.form-section>
+
+                                <x-ui.form-section field="Mistake" required="true" class="col-span-4 sm:col-span-2">
+                                    <x-ui.select wire:model.lazy="trade.mistake">
+                                        <option value="null" disabled>Choose mistake</option>
+                                        @foreach($settings->mistakes as $mistake)
+                                        <option value="{{ $mistake }}">{{ $mistake }}</option>
+                                        @endforeach
+                                    </x-ui.select>
+                                    @error("trade.mistake")
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>

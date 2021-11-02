@@ -3,11 +3,11 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PromocodeController;
-use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\User\HomeController as UserDashboardController;
 use App\Http\Controllers\User\JournalController;
+use App\Http\Controllers\User\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
 
     Route::group(['middleware' => 'role:user', 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('home', [UserDashboardController::class, 'index'])->name('home.index');
+        Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::resource('journals', JournalController::class)->only('index', 'edit', 'create');
     });
 });
