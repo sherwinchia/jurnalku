@@ -104,3 +104,14 @@ Breadcrumbs::for('admin.promocodes.edit', function (BreadcrumbTrail $trail, $mod
     $trail->parent('admin.promocodes.index');
     $trail->push($model->code);
 });
+
+// Journals
+Breadcrumbs::for('user.journals.index', function (BreadcrumbTrail $trail) {
+    $trail->push('Journals', route('user.journals.index'));
+});
+
+// Journals > Show
+Breadcrumbs::for('user.trades.show', function (BreadcrumbTrail $trail, $model) {
+    $trail->parent('user.journals.index');
+    $trail->push($model->instrument);
+});

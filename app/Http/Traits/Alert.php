@@ -27,6 +27,25 @@ trait Alert
         return $this->emitTo('shared.components.alert', 'new', $data);
     }
 
+    public function altAlert($data)
+    {
+        $data['type'] = strtolower($data['type']);
+
+        if (!isset($data['session'])) {
+            $data['session'] = false;
+        }
+
+        if (!isset($data['title'])) {
+            $data['title'] = ucfirst($data['type']);
+        }
+
+        if (!isset($data['color'])) {
+            $data['color'] = $this->getColor($data['type']);
+        }
+
+        return request()->session()->flash('alert', $data);
+    }
+
     public function getColor($type)
     {
         if ($type == 'success') {

@@ -1,10 +1,10 @@
 <div class="flex-1">
-    <x-ui.card class="w-full mx-auto p-8">
+    <x-ui.card class="w-full p-6 mx-auto">
         <div class="">
-            <x-ui.header class="font-semibold text-lg pb-2 border-b border-gray-200">User Details</x-ui.header>
-            <div class="flex lg:flex-row flex-col mb-2">
+            <x-ui.header class="pb-2 text-lg font-semibold border-b border-gray-200">User Details</x-ui.header>
+            <div class="flex flex-col mb-2 lg:flex-row">
                 <div class="w-1/2">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
+                    <div class="grid grid-cols-1 gap-2 lg:grid-cols-3">
                         <div class="font-semibold">
                             Name
                         </div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="w-1/2">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
+                    <div class="grid grid-cols-1 gap-2 lg:grid-cols-3">
                         <div class="font-semibold">
                             Subscription
                         </div>
@@ -57,7 +57,7 @@
         </div>
 
 
-        <x-ui.header class="font-semibold text-lg border-b border-gray-200">Transactions</x-ui.header>
+        <x-ui.header class="text-lg font-semibold border-b border-gray-200">Transactions</x-ui.header>
         <x-ui.table>
             <thead>
                 <x-ui.table-row>
@@ -99,7 +99,7 @@
             </tbody>
 
             <x-slot name="footer">
-                <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
+                <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between work-sans">
                     <div>
                         <p class="text-sm leading-5">
                             Showing

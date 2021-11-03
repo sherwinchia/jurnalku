@@ -58,37 +58,37 @@
             <nav class="flex-1 overflow-hidden text-gray-700 hover:overflow-y-auto">
                 <ul class="flex flex-col gap-2 p-2 overflow-hidden text-lg">
                     <li>
-                        <x-ui.navbar-link href="{{ route('admin.dashboard.index') }}" class="{{ request()->is('admin/dashboard*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('admin.dashboard.index') }}" class="{{ request()->is('admin/dashboard*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.home class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Dashboard</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="{{ route('admin.users.index') }}" class="{{ request()->is('admin/users*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('admin.users.index') }}" class="{{ request()->is('admin/users*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.users class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">User</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="{{ route('admin.transactions.index') }}" class="{{ request()->is('admin/transactions*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('admin.transactions.index') }}" class="{{ request()->is('admin/transactions*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.cash class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Transaction</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="{{ route('admin.packages.index') }}" class="{{ request()->is('admin/packages*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('admin.packages.index') }}" class="{{ request()->is('admin/packages*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.archive class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Package</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="{{ route('admin.promocodes.index') }}" class="{{ request()->is('admin/promocodes*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('admin.promocodes.index') }}" class="{{ request()->is('admin/promocodes*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.ticket class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Promocode</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('admin/setting*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#" class="{{ request()->is('admin/setting*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.cog class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Setting</span>
                         </x-ui.navbar-link>

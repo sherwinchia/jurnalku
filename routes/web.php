@@ -42,7 +42,8 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:user', 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('home', [UserDashboardController::class, 'index'])->name('home.index');
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-        Route::resource('journals', JournalController::class)->only('index', 'edit', 'create');
+        Route::get('journals', [JournalController::class, 'index'])->name('journals.index');
+        Route::get('trades/{trade}', [JournalController::class, 'show'])->name('trades.show');
     });
 });
 

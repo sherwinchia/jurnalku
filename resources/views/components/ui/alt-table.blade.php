@@ -5,7 +5,7 @@
     </div>
     @endif
 
-    <x-ui.card class="flex flex-col">
+    <div class="flex flex-col">
         <div class="flex-1 overflow-x-auto ">
             <table class="w-full">
                 {{ $slot }}
@@ -16,5 +16,5 @@
             {{ $footer }}
         </div>
         @endif
-    </x-ui.card>
+    </div>
 </div>

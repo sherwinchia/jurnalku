@@ -104,12 +104,12 @@ class GenerateDatatable extends Command
             <x-ui.table-row>
                 @foreach ($columns as $column)
                     @if ( array_key_exists("sortable", $column) && $column["sortable"] === true)
-                    <x-ui.table-header>
+                    <x-ui.table-header class="{{ $column[\'align\'] ?? \'\' }}>
                         <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
                         @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
                     </x-ui.table-header>
                     @else
-                    <x-ui.table-header>
+                    <x-ui.table-header class="{{ $column[\'align\'] ?? \'\' }}>
                         {{ $column["name"] }}
                     </x-ui.table-header>
                     @endif
@@ -122,7 +122,7 @@ class GenerateDatatable extends Command
             <x-ui.table-row>
                 @foreach ($columns as $column)
                 @if (array_key_exists("field", $column) && $column["field"] === "action")
-                <x-ui.table-data>
+                <x-ui.table-data class="{{ $column[\'align\'] ?? \'\' }}>
                     <div class="flex text-gray-600">
                         @foreach ($actions as $action)
                         @if ($action === "show")
@@ -142,7 +142,7 @@ class GenerateDatatable extends Command
                         @endif
                         @endforeach
                     </div>
-                </x-ui.table-data>
+                </x-ui.table-data class="{{ $column[\'align\'] ?? \'\' }}>
                 @else
                 <x-ui.table-data>
                     @if (array_key_exists("relation", $column) && isset($column["relation"]))

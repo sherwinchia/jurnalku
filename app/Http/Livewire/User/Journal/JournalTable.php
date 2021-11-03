@@ -3,25 +3,25 @@ namespace App\Http\Livewire\User\Journal;
 
 use App\Helpers\UserSettings;
 use App\Http\Traits\Alert;
-use App\Models\Instrument;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Journal;
 use App\Models\Portfolio;
-use App\Models\Setting;
 use App\Models\Trade;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Gate;
 
 class JournalTable extends Component
 {
-    use WithPagination, Alert;
+    use WithPagination, Alert, AuthorizesRequests;
     protected $listeners = ['tableRefresh' => '$refresh'];
-    private $decryptedPortfolioId;
     // public $search = "";
+    public $entryFeeType;
+    public $exitFeeType;
     public $trade;
-    public $selectedPortfolio;
-
+    public $selectedPortfolioId;
+    public $tab = 0;
     public $edit = false;
     public $sortField = "id";
     public $sortAsc = false;
@@ -31,7 +31,7 @@ class JournalTable extends Component
     public $actions = ["delete","edit"];
     public $columns = [
         [
-            "name" => "Ticker",
+            "name" => "Instrument",
             "field" => "instrument",
             "sortable" => true,
         ],
@@ -48,40 +48,11 @@ class JournalTable extends Component
             "format" => ["date_to_human"]
         ],
         [
-            "name" => "Entry Price",
-            "field" => "entry_price",
-            "sortable" => false,
-            "format" => ["decimal_to_human"]
-        ],
-        [
-            "name" => "Quantity",
-            "field" => "quantity",
-            "sortable" => false,
-            "format" => ["decimal_to_human"]
-        ],
-        [
-            "name" => "Exit Price",
-            "field" => "exit_price",
-            "sortable" => false,
-            "format" => ["decimal_to_human"]
-        ],
-        [
-            "name" => "Take Profit",
-            "field" => "take_profit",
-            "sortable" => false,
-            "format" => ["decimal_to_human"]
-        ],
-        [
-            "name" => "Stop Loss",
-            "field" => "stop_loss",
-            "sortable" => false,
-            "format" => ["decimal_to_human"]
-        ],
-        [
             "name" => "Gain/Loss",
             "field" => "gain_loss",
             "sortable" => false,
-            "format" => ["decimal_to_human"]
+            "format" => ["decimal_to_human"],
+            "align" => 'text-center'
         ],
         [
             "name" => "Setup",
@@ -97,6 +68,7 @@ class JournalTable extends Component
             "name" => "Status",
             "field" => "status",
             "sortable" => false,
+            "align" => 'text-center'
         ],
         [
             "name" => "Action",
@@ -123,50 +95,84 @@ class JournalTable extends Component
 
     public function mount()
     {
-        $this->selectedPortfolio = Crypt::encrypt(current_user()->portfolios->first()->id);
-        $this->decryptedPortfolioId = $this->decrypt($this->selectedPortfolio);
+        $this->selectedPortfolioId = Crypt::encrypt(current_user()->portfolios->first()->id);
     }
 
     public function showAddTradeModal()
     {
+        if (! Gate::allows('add-trade', Portfolio::findOrFail($this->decrypt($this->selectedPortfolioId)))) {
+            return $this->alert([
+                "type" => "error",
+                "message" => "Unauthorized action!"
+            ]);
+        }
+
         $this->edit = false;
+        $this->tab = 0;
         $this->trade = new Trade();
         $this->trade->entry_fee = 0;
         $this->trade->exit_fee = 0;
         $this->tradeFormModal = true;
     }
 
-    public function showEditFormModal($encryptedTradeId)
+    public function showEditFormModal($tradeId)
     {
-        $this->edit = true;
-        try {
-            $this->trade = Trade::findOrFail($this->decrypt($encryptedTradeId));
+        $trade = Trade::findOrFail($tradeId);
 
-            if (isset($this->trade->entry_date)) {
-                $this->trade->entry_date = date_to_datetime_local($this->trade->entry_date);
-            }
-            if (isset($this->trade->exit_date)) {
-                $this->trade->exit_date = date_to_datetime_local($this->trade->exit_date);
-            }
-
-
-        } catch (\Exception $e) {
-            $this->alert([
+        if (! Gate::allows('edit-trade', $trade)) {
+            return $this->alert([
                 "type" => "error",
-                "message" => $e->getMessage()
+                "message" => "Unauthorized action!"
             ]);
         }
+
+        $this->edit = true;
+        $this->tab = 1;
+
+        $this->trade = $trade;
+
+        if (isset($this->trade->entry_date)) {
+            $this->trade->entry_date = date_to_datetime_local($this->trade->entry_date);
+        }
+        if (isset($this->trade->exit_date)) {
+            $this->trade->exit_date = date_to_datetime_local($this->trade->exit_date);
+        }
+
         $this->tradeFormModal = true;
     }
 
     public function submitTrade()
     {
+        $decrpt_portfolio_id = $this->decrypt($this->selectedPortfolioId);
+        if ($this->edit) {
+            if (! Gate::allows('edit-trade', Trade::findOrFail($this->trade->id))) {
+                return $this->alert([
+                    "type" => "error",
+                    "message" => "Unauthorized action!"
+                ]);
+            }
+        } else {
+            if (! Gate::allows('add-trade', Portfolio::findOrFail($decrpt_portfolio_id))) {
+                return $this->alert([
+                    "type" => "error",
+                    "message" => "Unauthorized action!"
+                ]);
+            }
+        }
+
         $this->validate();
 
-        $this->trade->portfolio_id = $this->decrypt($this->selectedPortfolio);
+        $this->trade->portfolio_id = $decrpt_portfolio_id;
 
-        if ($this->edit && isset($this->trade->exit_date) && isset($this->trade->exit_price)) {
-            $this->trade->gain_loss = $this->trade->calculate_total;
+        if ($this->entryFeeType == '%') {
+            $this->trade->entry_fee = $this->trade->entry_price * $this->trade->quantity * $this->trade->entry_fee / 100;
+        }
+        if ($this->exitFeeType == '%') {
+            $this->trade->exit_fee = $this->trade->exit_price * $this->trade->quantity * $this->trade->exit_fee / 100;
+        }
+
+        if ( isset($this->trade->exit_date) && isset($this->trade->exit_price)) {
+            $this->trade->gain_loss = $this->trade->calculate_net;
 
             if ($this->trade->gain_loss > 0) {
                 $this->trade->status = "win";
@@ -180,7 +186,6 @@ class JournalTable extends Component
         }
 
         $this->trade->save();
-        $this->trade = new Trade();
         $this->tradeFormModal = false;
 
         if($this->edit){
@@ -189,22 +194,28 @@ class JournalTable extends Component
             $message = 'Trade has been successfully added.';
         }
 
-        return $this->alert([
+         $this->alert([
             "type" => "success",
             "message" => $message
         ]);
+        return $this->trade = new Trade();
     }
 
     public function deleteTrade()
     {
-        $id = $this->decrypt($this->encryptedTradeId);
-        if (isset($id)) {
-            Trade::find($id)->delete();
-            $this->alert([
-                "type" => "success",
-                "message" => "Trade has been successfully deleted."
+        $trade = Trade::findOrFail($this->tradeId);
+        if (! Gate::allows('delete-trade', $trade)) {
+            return $this->alert([
+                "type" => "error",
+                "message" => "Unauthorized action!"
             ]);
         }
+
+        $trade->delete();
+        $this->alert([
+            "type" => "success",
+            "message" => "Trade has been successfully deleted."
+        ]);
         $this->deleteTradeModal = false;
     }
 
@@ -212,6 +223,30 @@ class JournalTable extends Component
     // {
     //     $this->resetPage();
     // }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortAsc = !$this->sortAsc;
+        } else {
+            $this->sortAsc = true;
+        }
+
+        $this->sortField = $field;
+    }
+
+    public function showDeleteModal($id)
+    {
+        if (! Gate::allows('delete-trade', Trade::findOrFail($id))) {
+            return $this->alert([
+                "type" => "error",
+                "message" => "Unauthorized action!"
+            ]);
+        }
+
+        $this->deleteTradeModal = true;
+        $this->tradeId = $id;
+    }
 
     private function decrypt(string $string)
     {
@@ -225,23 +260,6 @@ class JournalTable extends Component
         }
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortAsc = !$this->sortAsc;
-        } else {
-            $this->sortAsc = true;
-        }
-
-        $this->sortField = $field;
-    }
-
-    public function showDeleteModal($encryptedTradeId)
-    {
-        $this->deleteTradeModal = true;
-        $this->encryptedTradeId = $encryptedTradeId;
-    }
-
     public function paginationView()
     {
         return "admin.partials.pagination";
@@ -251,7 +269,7 @@ class JournalTable extends Component
     {
         return view("livewire.user.journal.journal-table", [
             "trades" => Trade::query()
-                ->where('portfolio_id',"=", $this->decrypt($this->selectedPortfolio))
+                ->where('portfolio_id',"=", $this->decrypt($this->selectedPortfolioId))
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage),
             "portfolios" => current_user()->portfolios,

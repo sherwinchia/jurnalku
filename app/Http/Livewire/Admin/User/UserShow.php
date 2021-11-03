@@ -10,11 +10,6 @@ class UserShow extends Component
     use WithPagination;
     public $user;
 
-    public function mount($model)
-    {
-        $this->user = $model;
-    }
-
     public function paginationView()
     {
         return 'admin.partials.pagination';

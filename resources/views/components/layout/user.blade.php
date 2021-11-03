@@ -70,56 +70,56 @@
             <nav class="flex-1 overflow-hidden hover:overflow-y-auto ">
                 <ul class="flex flex-col h-full gap-2 p-2 overflow-y-auto text-lg">
                     <li>
-                        <x-ui.navbar-link href="{{ route('user.home.index') }}" class="{{ request()->is('user/home*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('user.home.index') }}" class="{{ request()->is('user/home*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.home class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Home</span>
                         </x-ui.navbar-link>
                     </li>
 
                     <li>
-                        <x-ui.navbar-link href="{{ route('user.journals.index') }}" class="{{ request()->is('user/journal*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('user.journals.index') }}" class="{{ request()->is('user/journal*') || request()->is('user/trade*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.book-open class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Journal</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/trade-analytics*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#" class="{{ request()->is('user/trade-analytics*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.chart-pie class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Analytics</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/chart-lab*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#" class="{{ request()->is('user/chart-lab*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.beaker class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Chart Lab</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/simulator*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#" class="{{ request()->is('user/simulator*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.desktop-computer class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Simulator</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/session*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#" class="{{ request()->is('user/session*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.cash class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Session</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/chart-book*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#" class="{{ request()->is('user/chart-book*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.chart-square-bar class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Chart Book</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link class="{{ request()->is('user/notebook*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link class="{{ request()->is('user/notebook*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.book-open class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Notebook</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="{{ route('user.settings.index') }}" class="{{ request()->is('user/settings*') ? 'bg-primary-500 text-white' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('user.settings.index') }}" class="{{ request()->is('user/settings*') ? 'bg-primary-100 border-primary-500 text-primary-500' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.cog class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Settings</span>
                         </x-ui.navbar-link>

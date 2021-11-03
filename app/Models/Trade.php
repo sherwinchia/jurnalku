@@ -31,11 +31,18 @@ class Trade extends Model
 
     public function portfolio()
     {
-        return $this->belongsTo('App\Models\Portofolio');
+        return $this->belongsTo('App\Models\Portfolio');
     }
 
-    public function getCalculateTotalAttribute()
+    public function getCalculatePercentageAttribute()
     {
-        return $this->exit_price - $this->entry_price - $this->entry_fee - $this->exit_fee;
+        $initial = $this->entry_price * $this->quantity + $this->entry_fee + $this->exit_fee;
+        return ($this->exit_price * $this->quantity - $initial) / $initial * 100;
+    }
+
+    public function getCalculateNetAttribute()
+    {
+        $initial = $this->entry_price * $this->quantity + $this->entry_fee + $this->exit_fee;
+        return $this->exit_price * $this->quantity - $initial;
     }
 }

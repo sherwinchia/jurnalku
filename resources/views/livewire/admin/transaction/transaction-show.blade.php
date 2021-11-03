@@ -1,13 +1,13 @@
 <div class="flex-1">
-    <x-ui.card class=" max-w-2xl mx-auto p-8">
-        <div class="flex justify-between items-center border-b border-gray-300 mb-2">
+    <x-ui.card class="max-w-2xl p-6 mx-auto ">
+        <div class="flex items-center justify-between mb-2 border-b border-gray-300">
             <x-ui.header>Transaction Details</x-ui.header>
             <div class="p-1">
                 <x-ui.status type="{{ $transaction->status }}">{{ $transaction->status }}</x-ui.alert>
             </div>
         </div>
 
-        <div class=" grid grid-cols-1 lg:grid-cols-3 gap-1 mb-3">
+        <div class="grid grid-cols-1 gap-1 mb-3  lg:grid-cols-3">
             <div class="">
                 ID
             </div>
@@ -30,7 +30,7 @@
 
         <div class="mb-3">
             <h5 class="text-lg font-semibold">Buyer Details</h5>
-            <div class=" grid grid-cols-1 lg:grid-cols-3 gap-1">
+            <div class="grid grid-cols-1 gap-1  lg:grid-cols-3">
 
 
                 <div class="">
@@ -56,7 +56,7 @@
 
         <div class="mb-3">
             <h5 class="text-lg font-semibold">Package Details</h5>
-            <div class=" grid grid-cols-1 lg:grid-cols-3 gap-1">
+            <div class="grid grid-cols-1 gap-1  lg:grid-cols-3">
                 <div class="">
                     Name
                 </div>
@@ -80,8 +80,8 @@
 
         @if($transaction->status == "Success")
         <div>
-            <h5 class=" text-lg font-semibold">Payment Details</h5>
-            <div class=" grid grid-cols-1 lg:grid-cols-3 gap-1">
+            <h5 class="text-lg font-semibold ">Payment Details</h5>
+            <div class="grid grid-cols-1 gap-1  lg:grid-cols-3">
                 <div class="">
                     Gross Total
                 </div>

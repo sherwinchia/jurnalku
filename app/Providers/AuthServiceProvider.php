@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Portfolio;
+use App\Models\Trade;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +28,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('view-trade', function (User $user, Trade $trade) {
+            return $user->id === $trade->portfolio->user_id;
+        });
+        Gate::define('edit-trade', function (User $user, Trade $trade) {
+            return $user->id === $trade->portfolio->user_id;
+        });
+        Gate::define('delete-trade', function (User $user, Trade $trade) {
+            return $user->id === $trade->portfolio->user_id;
+        });
+        Gate::define('add-trade', function (User $user, Portfolio $portfolio) {
+            return $user->id === $portfolio->user_id;
+        });
     }
 }
