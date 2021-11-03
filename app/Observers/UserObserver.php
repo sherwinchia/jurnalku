@@ -20,7 +20,7 @@ class UserObserver
         Portfolio::create([
             'user_id' => $user->id,
             'name' => 'Default',
-            'description' => 'Default Portfolio',
+            'currency' => 'Rp',
         ]);
 
         //default Settings

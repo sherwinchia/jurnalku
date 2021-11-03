@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Portfolio extends Model
+class PortfolioBalance extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'name',
-        'currency'
+        'portfolio_id',
+        'type',
+        'amount'
     ];
 
-    public function trades()
+    public function portfolio()
     {
-        return $this->hasMany('App\Models\Trade');
+        return $this->belongsTo('App\Models\Portfolio');
     }
 }

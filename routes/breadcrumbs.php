@@ -107,7 +107,7 @@ Breadcrumbs::for('admin.promocodes.edit', function (BreadcrumbTrail $trail, $mod
 
 // Journals
 Breadcrumbs::for('user.journals.index', function (BreadcrumbTrail $trail) {
-    $trail->push('Journals', route('user.journals.index'));
+    $trail->push('Portfolio', route('user.journals.index'));
 });
 
 // Journals > Show

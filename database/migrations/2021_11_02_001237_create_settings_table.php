@@ -18,11 +18,8 @@ class CreateSettingsTable extends Migration
             'setups' => [],
             'mistakes' => [],
             'generals' => [
-                'currency' => 'Rp',
-                'decimals' => 2,
                 'public_page' => false
-            ],
-            'balances' => [],
+            ]
         ];
 
         Schema::create('settings', function (Blueprint $table) use ($data) {

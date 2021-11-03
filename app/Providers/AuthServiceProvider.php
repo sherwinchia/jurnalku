@@ -28,16 +28,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('view-trade', function (User $user, Trade $trade) {
+        Gate::define('manage-trade', function (User $user, Trade $trade) {
             return $user->id === $trade->portfolio->user_id;
         });
-        Gate::define('edit-trade', function (User $user, Trade $trade) {
-            return $user->id === $trade->portfolio->user_id;
-        });
-        Gate::define('delete-trade', function (User $user, Trade $trade) {
-            return $user->id === $trade->portfolio->user_id;
-        });
+
         Gate::define('add-trade', function (User $user, Portfolio $portfolio) {
+            return $user->id === $portfolio->user_id;
+        });
+
+        Gate::define('manage-portfolio', function (User $user, Portfolio $portfolio) {
             return $user->id === $portfolio->user_id;
         });
     }

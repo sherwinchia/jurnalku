@@ -2,19 +2,19 @@
     <x-ui.header class="mb-4 font-semibold border-b border-gray-300">General</x-ui.header>
     <x-ui.alt-form wire:submit.prevent="submit">
 
-        <x-ui.form-section field="Currency" required="true">
+        <!-- <x-ui.form-section field="Currency" required="true">
             <x-jet-input wire:model="generals.currency" type="text" class="w-full lg:w-64"/>
             @error("generals.currency")
             <x-message.validation type="error">{{ $message }}</x-message.validation>
             @enderror
-        </x-ui.form-section>
+        </x-ui.form-section> -->
 
-        <x-ui.form-section field="Decimal" required="true">
+        <!-- <x-ui.form-section field="Decimal" required="true">
             <x-jet-input wire:model="generals.decimals" type="number" class="w-full lg:w-64"/>
             @error("generals.decimals")
             <x-message.validation type="error">{{ $message }}</x-message.validation>
             @enderror
-        </x-ui.form-section>
+        </x-ui.form-section> -->
 
         <x-ui.form-section field="Public Page" required="true">
             <x-jet-input wire:model="generals.public_page" type="checkbox" class="w-6 h-6"/>

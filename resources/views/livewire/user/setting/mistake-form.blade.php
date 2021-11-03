@@ -1,25 +1,21 @@
 <div>
     <x-ui.header class="mb-4 font-semibold border-b border-gray-300 ">Mistake</x-ui.header>
-    <x-ui.table class="w-full lg:w-96">
-        <x-slot name="header">
-            <x-ui.alt-form wire:submit.prevent="submit">
-                    <x-ui.form-section field="Name" required="true">
-                        <x-jet-input wire:model="mistake" type="text" min="0" class="w-full lg:w-64"/>
-                        @error("mistake")
-                        <x-message.validation type="error">{{ $message }}</x-message.validation>
-                        @enderror
-                    </x-ui.form-section>
-                    <div class="mb-1">
-                        <x-jet-button class="h-10" type="submit" wire:loading.attr="disabled" wire:target="submit">Add
-                            <span wire:loading wire:target="submit"
-                                class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                            </span>
-                        </x-jet-button>
-                    </div>
-
-            </x-ui.alt-form>
-        </x-slot>
-
+    <x-ui.alt-form wire:submit.prevent="submit" class="mb-3">
+        <x-ui.form-section field="Name" required="true">
+            <div>
+                <x-jet-input wire:model="mistake" type="text" min="0" class=""/>
+                <x-jet-button class="h-10" type="submit" wire:loading.attr="disabled" wire:target="submit">Add
+                    <span wire:loading wire:target="submit"
+                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
+                    </span>
+                </x-jet-button>
+            </div>
+        </x-ui.form-section>
+        @error("mistake")
+        <x-message.validation type="error">{{ $message }}</x-message.validation>
+        @enderror
+    </x-ui.alt-form>
+    <x-ui.alt-table class="w-full overflow-y-auto border lg:w-96 max-h-96">
         <thead>
             <x-ui.table-row>
                 <x-ui.table-header>Name</x-ui.table-header>
@@ -38,7 +34,7 @@
             </x-ui.table-row>
             @endforeach
         </tbody>
-    </x-ui.table>
+    </x-ui.alt-table>
 
     <x-jet-dialog-modal wire:model="modalVisible">
         <x-slot name="title">

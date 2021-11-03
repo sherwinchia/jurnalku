@@ -107,7 +107,6 @@ class JournalTable extends Component
             ]);
         }
 
-        $this->edit = false;
         $this->tab = 0;
         $this->trade = new Trade();
         $this->trade->entry_fee = 0;
@@ -119,7 +118,7 @@ class JournalTable extends Component
     {
         $trade = Trade::findOrFail($tradeId);
 
-        if (! Gate::allows('edit-trade', $trade)) {
+        if (! Gate::allows('manage-trade', $trade)) {
             return $this->alert([
                 "type" => "error",
                 "message" => "Unauthorized action!"
@@ -143,16 +142,16 @@ class JournalTable extends Component
 
     public function submitTrade()
     {
-        $decrpt_portfolio_id = $this->decrypt($this->selectedPortfolioId);
+        $decrypt_portfolio_id = $this->decrypt($this->selectedPortfolioId);
         if ($this->edit) {
-            if (! Gate::allows('edit-trade', Trade::findOrFail($this->trade->id))) {
+            if (! Gate::allows('manage-trade', Trade::findOrFail($this->trade->id))) {
                 return $this->alert([
                     "type" => "error",
                     "message" => "Unauthorized action!"
                 ]);
             }
         } else {
-            if (! Gate::allows('add-trade', Portfolio::findOrFail($decrpt_portfolio_id))) {
+            if (! Gate::allows('add-trade', Portfolio::findOrFail($decrypt_portfolio_id))) {
                 return $this->alert([
                     "type" => "error",
                     "message" => "Unauthorized action!"
@@ -162,7 +161,7 @@ class JournalTable extends Component
 
         $this->validate();
 
-        $this->trade->portfolio_id = $decrpt_portfolio_id;
+        $this->trade->portfolio_id = $decrypt_portfolio_id;
 
         if ($this->entryFeeType == '%') {
             $this->trade->entry_fee = $this->trade->entry_price * $this->trade->quantity * $this->trade->entry_fee / 100;
@@ -187,6 +186,7 @@ class JournalTable extends Component
 
         $this->trade->save();
         $this->tradeFormModal = false;
+        $this->edit = false;
 
         if($this->edit){
             $message = 'Trade has been successfully updated.';
@@ -194,17 +194,16 @@ class JournalTable extends Component
             $message = 'Trade has been successfully added.';
         }
 
-         $this->alert([
+        return $this->alert([
             "type" => "success",
             "message" => $message
         ]);
-        return $this->trade = new Trade();
     }
 
     public function deleteTrade()
     {
         $trade = Trade::findOrFail($this->tradeId);
-        if (! Gate::allows('delete-trade', $trade)) {
+        if (! Gate::allows('manage-trade', $trade)) {
             return $this->alert([
                 "type" => "error",
                 "message" => "Unauthorized action!"
@@ -237,7 +236,7 @@ class JournalTable extends Component
 
     public function showDeleteModal($id)
     {
-        if (! Gate::allows('delete-trade', Trade::findOrFail($id))) {
+        if (! Gate::allows('manage-trade', Trade::findOrFail($id))) {
             return $this->alert([
                 "type" => "error",
                 "message" => "Unauthorized action!"

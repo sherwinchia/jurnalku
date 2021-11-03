@@ -24,7 +24,7 @@ class JournalController extends Controller
     public function show(Trade $trade)
     {
         // $this->authorize('view-trade', $trade);
-        if (! Gate::allows('view-trade', $trade)) {
+        if (! Gate::allows('manage-trade', $trade)) {
             $this->altAlert([
                 "type"=>"error",
                 "message"=>"This action is unauthorized!"
