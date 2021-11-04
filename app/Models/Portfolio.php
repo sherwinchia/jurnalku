@@ -15,6 +15,11 @@ class Portfolio extends Model
         'currency'
     ];
 
+    public function getCalculateBalanceAttribute()
+    {
+        return $this->balances->where('type','=','deposit')->sum('amount') - $this->balances->where('type','=','withdraw')->sum('amount') + $this->trades->sum('gain_loss');
+    }
+
     public function trades()
     {
         return $this->hasMany('App\Models\Trade');

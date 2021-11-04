@@ -18,6 +18,7 @@ class CreatePortfoliosTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('currency');
+            $table->decimal('balance', 19, 2)->default(0);
             $table->timestamps();
         });
     }

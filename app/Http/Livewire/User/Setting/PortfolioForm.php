@@ -6,7 +6,6 @@ use App\Http\Traits\Alert;
 use App\Models\Portfolio;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class PortfolioForm extends Component
@@ -17,7 +16,6 @@ class PortfolioForm extends Component
     public $deleteModal = false;
     public $formModal = false;
     public $edit = false;
-    public $encryptedId;
 
     protected $rules = [
         'portfolio.name'=>'required|string',
@@ -50,14 +48,13 @@ class PortfolioForm extends Component
         $this->portfolio = $portfolio;
         $this->edit = true;
         $this->formModal = true;
-        $this->encryptedId = $encryptedId;
     }
 
     public function submit()
     {
         if ($this->edit) {
             try {
-                $this->authorize('manage-portfolio', Portfolio::findOrFail($this->decrypt($this->encryptedId)));
+                $this->authorize('manage-portfolio', $this->portfolio);
                 $message = 'Portfolio has been successfully updated.';
             } catch (\Exception $e) {
                 return $this->alert([
@@ -93,8 +90,9 @@ class PortfolioForm extends Component
 
     public function showDeleteModal($encryptedId)
     {
+        $portfolio = Portfolio::findOrFail($this->decrypt($encryptedId));
         try {
-            $this->authorize('manage-portfolio', Portfolio::findOrFail($this->decrypt($encryptedId)));
+            $this->authorize('manage-portfolio', $portfolio);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -103,12 +101,12 @@ class PortfolioForm extends Component
         }
 
         $this->deleteModal = true;
-        $this->encryptedId = $encryptedId;
+        $this->portfolio = $portfolio;
     }
 
     public function delete()
     {
-        $portfolio = Portfolio::findOrFail($this->decrypt($this->encryptedId));
+        $portfolio = $this->portfolio;
 
         try {
             $this->authorize('manage-portfolio', $portfolio);
@@ -124,6 +122,8 @@ class PortfolioForm extends Component
             "type" => "success",
             "message" => "Portfolio has been successfully deleted."
         ]);
+
+        $this->portfolio = new Portfolio();
         $this->deleteModal = false;
     }
 

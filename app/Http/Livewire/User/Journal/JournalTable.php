@@ -114,9 +114,9 @@ class JournalTable extends Component
         $this->tradeFormModal = true;
     }
 
-    public function showEditFormModal($tradeId)
+    public function showEditFormModal($id)
     {
-        $trade = Trade::findOrFail($tradeId);
+        $trade = Trade::findOrFail($id);
 
         try {
             $this->authorize('manage-trade', $trade);
@@ -148,7 +148,7 @@ class JournalTable extends Component
 
         if ($this->edit) {
             try {
-                $this->authorize('manage-trade', Trade::findOrFail($this->trade->id));
+                $this->authorize('manage-trade', $this->trade);
                 $message = 'Trade has been successfully updated.';
             } catch (\Exception $e) {
                 return $this->alert([
@@ -213,23 +213,7 @@ class JournalTable extends Component
 
     public function showDeleteModal($id)
     {
-        try {
-            $this->authorize('manage-trade', Trade::findOrFail($id));
-        } catch (\Exception $e) {
-            return $this->alert([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ]);
-        }
-
-        $this->deleteTradeModal = true;
-        $this->tradeId = $id;
-    }
-
-    public function deleteTrade()
-    {
-        $trade = Trade::findOrFail($this->tradeId);
-
+        $trade = Trade::findOrFail($id);
         try {
             $this->authorize('manage-trade', $trade);
         } catch (\Exception $e) {
@@ -239,11 +223,27 @@ class JournalTable extends Component
             ]);
         }
 
-        $trade->delete();
+        $this->deleteTradeModal = true;
+        $this->trade = $trade;
+    }
+
+    public function deleteTrade()
+    {
+        try {
+            $this->authorize('manage-trade', $this->trade);
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+
+        $this->trade->delete();
         $this->alert([
             "type" => "success",
             "message" => "Trade has been successfully deleted."
         ]);
+        $this->trade = new Trade();
         $this->deleteTradeModal = false;
     }
 
