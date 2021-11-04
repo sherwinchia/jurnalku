@@ -19,7 +19,7 @@ class CreateTransactionsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->foreignId('package_id')->constrained();
-            $table->enum('status', ['Pending', 'Success', 'Fail', 'Cancelled'])->default('Pending');
+            $table->enum('status', ['pending', 'success', 'fail', 'cancelled'])->default('pending');
             $table->foreignId('promocode_id')
                 ->nullable()
                 ->constrained();

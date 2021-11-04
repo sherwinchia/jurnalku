@@ -89,4 +89,14 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Setting');
     }
+
+    public function getSubscriptionTypeAttribute()
+    {
+        return $this->subscription->type;
+    }
+
+    public function getMaxPortfolioAttribute()
+    {
+        return $this->subscription->max_portfolio;
+    }
 }

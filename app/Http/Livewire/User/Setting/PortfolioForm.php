@@ -4,13 +4,14 @@ namespace App\Http\Livewire\User\Setting;
 
 use App\Http\Traits\Alert;
 use App\Models\Portfolio;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class PortfolioForm extends Component
 {
-    use Alert;
+    use Alert, AuthorizesRequests;
 
     public $portfolio;
     public $deleteModal = false;
@@ -30,18 +31,19 @@ class PortfolioForm extends Component
 
     public function showBlankFormModal()
     {
-        $this->edit = false;
-        $this->portfolio = new Portfolio();
         $this->formModal = true;
     }
 
     public function showFormModal($encryptedId)
     {
         $portfolio = Portfolio::findOrFail($this->decrypt($encryptedId));
-        if (! Gate::allows('manage-portfolio', $portfolio)) {
+
+        try {
+            $this->authorize('manage-portfolio', $portfolio);
+        } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => "Unauthorized action!"
+                "message" => $e->getMessage()
             ]);
         }
 
@@ -54,10 +56,23 @@ class PortfolioForm extends Component
     public function submit()
     {
         if ($this->edit) {
-            if (! Gate::allows('manage-portfolio', Portfolio::findOrFail($this->decrypt($this->encryptedId)))) {
+            try {
+                $this->authorize('manage-portfolio', Portfolio::findOrFail($this->decrypt($this->encryptedId)));
+                $message = 'Portfolio has been successfully updated.';
+            } catch (\Exception $e) {
                 return $this->alert([
                     "type" => "error",
-                    "message" => "Unauthorized action!"
+                    "message" => $e->getMessage()
+                ]);
+            }
+        } else {
+            try {
+                $this->authorize('add-portfolio');
+                $message = 'Portfolio has been successfully added.';
+            } catch (\Exception $e) {
+                return $this->alert([
+                    "type" => "error",
+                    "message" => "You've reached limit number of portfolio."
                 ]);
             }
         }
@@ -65,13 +80,10 @@ class PortfolioForm extends Component
         $this->validate();
         $this->portfolio->user_id = current_user()->id;
         $this->portfolio->save();
-        $this->formModal = false;
 
-        if($this->edit){
-            $message = 'Portfolio has been successfully updated.';
-        } else {
-            $message = 'Portfolio has been successfully added.';
-        }
+        $this->formModal = false;
+        $this->edit = false;
+        $this->portfolio = new Portfolio();
 
         return $this->alert([
             "type" => "success",
@@ -81,12 +93,15 @@ class PortfolioForm extends Component
 
     public function showDeleteModal($encryptedId)
     {
-        if (! Gate::allows('manage-portfolio', Portfolio::findOrFail($this->decrypt($encryptedId)))) {
+        try {
+            $this->authorize('manage-portfolio', Portfolio::findOrFail($this->decrypt($encryptedId)));
+        } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => "Unauthorized action!"
+                "message" => $e->getMessage()
             ]);
         }
+
         $this->deleteModal = true;
         $this->encryptedId = $encryptedId;
     }
@@ -94,12 +109,16 @@ class PortfolioForm extends Component
     public function delete()
     {
         $portfolio = Portfolio::findOrFail($this->decrypt($this->encryptedId));
-        if (! Gate::allows('manage-portfolio', $portfolio)) {
+
+        try {
+            $this->authorize('manage-portfolio', $portfolio);
+        } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => "Unauthorized action!"
+                "message" => $e->getMessage()
             ]);
         }
+
         $portfolio->delete();
         $this->alert([
             "type" => "success",
@@ -123,7 +142,7 @@ class PortfolioForm extends Component
     public function render()
     {
         return view('livewire.user.setting.portfolio-form',[
-            'portfolios' => current_user()->portfolios
+            'portfolios' => Portfolio::where('user_id', '=', current_user()->id)->get(),
         ]);
     }
 }

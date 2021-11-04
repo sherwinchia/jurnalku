@@ -19,4 +19,9 @@ class Portfolio extends Model
     {
         return $this->hasMany('App\Models\Trade');
     }
+
+    public function balances()
+    {
+        return $this->hasMany('App\Models\PortfolioBalance');
+    }
 }

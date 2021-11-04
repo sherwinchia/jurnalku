@@ -100,7 +100,7 @@
 
             <x-slot name="footer">
                 <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between work-sans">
-                    <div>
+                    <div class="py-3">
                         <p class="text-sm leading-5">
                             Showing
                             <span class="font-medium">{{ $transactions->firstItem() }}</span>

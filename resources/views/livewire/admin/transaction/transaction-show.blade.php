@@ -7,7 +7,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-1 mb-3  lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-1 mb-3 lg:grid-cols-3">
             <div class="">
                 ID
             </div>
@@ -30,7 +30,7 @@
 
         <div class="mb-3">
             <h5 class="text-lg font-semibold">Buyer Details</h5>
-            <div class="grid grid-cols-1 gap-1  lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
 
 
                 <div class="">
@@ -56,7 +56,7 @@
 
         <div class="mb-3">
             <h5 class="text-lg font-semibold">Package Details</h5>
-            <div class="grid grid-cols-1 gap-1  lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
                 <div class="">
                     Name
                 </div>
@@ -78,10 +78,10 @@
             </div>
         </div>
 
-        @if($transaction->status == "Success")
+        @if($transaction->status == "success")
         <div>
             <h5 class="text-lg font-semibold ">Payment Details</h5>
-            <div class="grid grid-cols-1 gap-1  lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
                 <div class="">
                     Gross Total
                 </div>

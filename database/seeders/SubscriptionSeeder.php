@@ -25,22 +25,23 @@ class SubscriptionSeeder extends Seeder
     {
         Subscription::create([
             'user_id' => 1,
-            'type' => 'Free',
+            'type' => 'free',
             'expired_at' => Carbon::now()->addDays(5),
             'package_id' => 1
         ]);
         Subscription::create([
             'user_id' => 2,
-            'type' => 'Paid',
+            'type' => 'paid',
             'expired_at' => Carbon::now()->addDays(30),
-            'package_id' => 1
+            'package_id' => 1,
+            'max_portfolio' => 2
         ]);
 
         // $users = User::where('id', '!=', 1)->where('id', '!=', 2)->get();
         $users = User::all()->except([1, 2]);
 
         foreach ($users as $user) {
-            $types = ['Free', 'Paid'];
+            $types = ['free', 'paid'];
             Subscription::create([
                 'user_id' => $user->id,
                 'type' => $types[array_rand($types, 1)],

@@ -49,7 +49,7 @@ class PromocodeForm extends Component
             if (isset($this->promocode->min_spending)) {
                 $this->min_spending = true;
             }
-            if ($this->promocode->type == "Percentage" && isset($this->promocode->max_discount)) {
+            if ($this->promocode->type == "percentage" && isset($this->promocode->max_discount)) {
                 $this->discount_limit = true;
             }
         } else {
@@ -95,7 +95,7 @@ class PromocodeForm extends Component
         if ($this->min_spending === false) {
             $this->promocode->min_spending = 0;
         }
-        if ($this->promocode->type == "Fixed") {
+        if ($this->promocode->type == "fixed") {
             $this->promocode->max_discount = (int) $this->promocode->value;
         }
 

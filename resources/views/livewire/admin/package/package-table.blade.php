@@ -1,7 +1,7 @@
 <x-ui.table>
     <x-slot name="header">
         @if (in_array("search", $actions))
-        <div class="flex flex-col lg:flex-row gap-2">
+        <div class="flex flex-col gap-2 lg:flex-row">
             <x-jet-input wire:model="search" class="" type="text" placeholder="Search" />
             <x-ui.select class="" wire:model="perPage">
                 <option value="10">10</option>
@@ -15,7 +15,7 @@
             <x-jet-button wire:click="createPackage" wire:loading.attr="disabled">
                 Create
                 <span wire:loading wire:target="createPackage"
-                    class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
                 </span>
             </x-jet-button>
         </div>
@@ -47,7 +47,7 @@
         <x-ui.table-row>
             @foreach ($columns as $column)
             @if (array_key_exists("field", $column) && $column["field"] === "action")
-            <x-ui.table-data class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+            <x-ui.table-data class="px-6 py-4 text-sm leading-5 text-black border-b whitespace-nowrap">
                 <div class="flex justify-center text-gray-600">
                     @foreach ($actions as $action)
                     @if ($action === "show")
@@ -69,7 +69,7 @@
                 </div>
             </x-ui.table-data>
             @else
-            <x-ui.table-data class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+            <x-ui.table-data class="px-6 py-4 text-sm leading-5 text-black border-b whitespace-nowrap">
                 @if (array_key_exists("relation", $column) && isset($column["relation"]))
                 @if (array_key_exists("format", $column) && isset($column["format"]))
                 @if (count($column["format"]) > 1)
@@ -101,8 +101,8 @@
     </tbody>
 
     <x-slot name="footer">
-        <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
-            <div>
+        <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between work-sans">
+            <div class="py-3">
                 <p class="text-sm leading-5">
                     Showing
                     <span class="font-medium">{{ $packages->firstItem() }}</span>
@@ -135,7 +135,7 @@
                 <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
                     Delete
                     <span wire:loading wire:target="delete"
-                        class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
                     </span>
                 </x-jet-danger-button>
             </x-slot>

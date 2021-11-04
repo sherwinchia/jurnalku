@@ -80,12 +80,12 @@ class JournalTable extends Component
     protected $rules = [
         "trade.instrument" => "required",
         "trade.entry_date" => "required",
-        "trade.exit_date" => "nullable|after:trade.entry_date",
+        "trade.exit_date" => "after:trade.entry_date|nullable",
         "trade.entry_price" => "required|numeric|min:1",
         "trade.exit_price" => "required_with:trade.exit_date|numeric|min:0|nullable",
         "trade.take_profit" => "required|numeric|min:1",
         "trade.stop_loss" => "required|numeric|min:1",
-        "trade.entry_fee" => "required_with:trade.entry_date|numeric|min:0|nullable",
+        "trade.entry_fee" => "required_with:trade.entry_date|numeric|min:0",
         "trade.exit_fee" => "required_with:trade.exit_date|numeric|min:0|nullable",
         "trade.quantity" => "required|numeric|min:0",
         "trade.note" => "nullable|string",
@@ -96,21 +96,21 @@ class JournalTable extends Component
     public function mount()
     {
         $this->selectedPortfolioId = Crypt::encrypt(current_user()->portfolios->first()->id);
+        $this->trade = new Trade();
     }
 
     public function showAddTradeModal()
     {
-        if (! Gate::allows('add-trade', Portfolio::findOrFail($this->decrypt($this->selectedPortfolioId)))) {
+        try {
+            $this->authorize('add-trade', Portfolio::findOrFail($this->decrypt($this->selectedPortfolioId)));
+        } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => "Unauthorized action!"
+                "message" => $e->getMessage()
             ]);
         }
 
         $this->tab = 0;
-        $this->trade = new Trade();
-        $this->trade->entry_fee = 0;
-        $this->trade->exit_fee = 0;
         $this->tradeFormModal = true;
     }
 
@@ -118,10 +118,12 @@ class JournalTable extends Component
     {
         $trade = Trade::findOrFail($tradeId);
 
-        if (! Gate::allows('manage-trade', $trade)) {
+        try {
+            $this->authorize('manage-trade', $trade);
+        } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => "Unauthorized action!"
+                "message" => $e->getMessage()
             ]);
         }
 
@@ -143,18 +145,25 @@ class JournalTable extends Component
     public function submitTrade()
     {
         $decrypt_portfolio_id = $this->decrypt($this->selectedPortfolioId);
+
         if ($this->edit) {
-            if (! Gate::allows('manage-trade', Trade::findOrFail($this->trade->id))) {
+            try {
+                $this->authorize('manage-trade', Trade::findOrFail($this->trade->id));
+                $message = 'Trade has been successfully updated.';
+            } catch (\Exception $e) {
                 return $this->alert([
                     "type" => "error",
-                    "message" => "Unauthorized action!"
+                    "message" => $e->getMessage()
                 ]);
             }
         } else {
-            if (! Gate::allows('add-trade', Portfolio::findOrFail($decrypt_portfolio_id))) {
+            try {
+                $this->authorize('add-trade', Portfolio::findOrFail($decrypt_portfolio_id));
+                $message = 'Trade has been successfully added.';
+            } catch (\Exception $e) {
                 return $this->alert([
                     "type" => "error",
-                    "message" => "Unauthorized action!"
+                    "message" => $e->getMessage()
                 ]);
             }
         }
@@ -163,9 +172,14 @@ class JournalTable extends Component
 
         $this->trade->portfolio_id = $decrypt_portfolio_id;
 
+        if (!isset($this->trade->exit_fee)) {
+            $this->trade->exit_fee = 0;
+        }
+
         if ($this->entryFeeType == '%') {
             $this->trade->entry_fee = $this->trade->entry_price * $this->trade->quantity * $this->trade->entry_fee / 100;
         }
+
         if ($this->exitFeeType == '%') {
             $this->trade->exit_fee = $this->trade->exit_price * $this->trade->quantity * $this->trade->exit_fee / 100;
         }
@@ -185,14 +199,11 @@ class JournalTable extends Component
         }
 
         $this->trade->save();
+        $this->trade = new Trade();
+        $this->trade->entry_fee = 0;
+        $this->trade->exit_fee = 0;
         $this->tradeFormModal = false;
         $this->edit = false;
-
-        if($this->edit){
-            $message = 'Trade has been successfully updated.';
-        } else {
-            $message = 'Trade has been successfully added.';
-        }
 
         return $this->alert([
             "type" => "success",
@@ -200,13 +211,31 @@ class JournalTable extends Component
         ]);
     }
 
+    public function showDeleteModal($id)
+    {
+        try {
+            $this->authorize('manage-trade', Trade::findOrFail($id));
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+
+        $this->deleteTradeModal = true;
+        $this->tradeId = $id;
+    }
+
     public function deleteTrade()
     {
         $trade = Trade::findOrFail($this->tradeId);
-        if (! Gate::allows('manage-trade', $trade)) {
+
+        try {
+            $this->authorize('manage-trade', $trade);
+        } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => "Unauthorized action!"
+                "message" => $e->getMessage()
             ]);
         }
 
@@ -232,19 +261,6 @@ class JournalTable extends Component
         }
 
         $this->sortField = $field;
-    }
-
-    public function showDeleteModal($id)
-    {
-        if (! Gate::allows('manage-trade', Trade::findOrFail($id))) {
-            return $this->alert([
-                "type" => "error",
-                "message" => "Unauthorized action!"
-            ]);
-        }
-
-        $this->deleteTradeModal = true;
-        $this->tradeId = $id;
     }
 
     private function decrypt(string $string)

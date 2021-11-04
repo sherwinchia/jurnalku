@@ -17,7 +17,7 @@ class TransactionSeeder extends Seeder
         Transaction::create([
             'user_id' => 2,
             'package_id' => 1,
-            'status' => 'Pending',
+            'status' => 'pending',
             'promocode_id' => 1,
             'gross_total' => 19900,
             'discount' => 2000,
@@ -28,7 +28,7 @@ class TransactionSeeder extends Seeder
         Transaction::create([
             'user_id' => 2,
             'package_id' => 2,
-            'status' => 'Pending',
+            'status' => 'pending',
             'promocode_id' => 2,
             'gross_total' => 19900,
             'discount' => 2000,

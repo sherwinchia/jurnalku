@@ -1,2 +1,10 @@
 {
+    "files.associations": {
+        "*.tpl": "html",
+        "*.blade.php": "html"
+    },
+    "blade.format.enable": true,
+    "emmet.includeLanguages": {
+        "blade": "html"
+    }
 }

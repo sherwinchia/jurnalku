@@ -62,7 +62,7 @@
         </x-slot>
 
         <x-slot name="content">
-            <x-ui.alt-form>
+            <x-ui.alt-form wire:submit.prevent="submit">
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
                 <x-ui.form-section field="Name" required="true" class="col-span-4 sm:col-span-2">
                     <x-jet-input wire:model.defer="portfolio.name" type="text" class="" />

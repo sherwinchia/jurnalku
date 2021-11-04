@@ -15,10 +15,12 @@ class MistakeForm extends Component
     public $mistake;
 
     public $modalId;
-    public $modalVisible = false;
+    public $deleteModal = false;
+    public $formModal = false;
+    public $edit = false;
 
     protected $rules = [
-        'mistake' => 'required|regex:/^[\pL\s\-]+$/u'
+        'mistake' => 'required|regex:/^[\w\-\s]+$/'
     ];
 
     public function mount()
@@ -26,10 +28,47 @@ class MistakeForm extends Component
         $this->mistakes = (array) UserSettings::all()->mistakes;
     }
 
-    public function showModal(int $key)
+    public function showBlankFormModal()
+    {
+        $this->formModal = true;
+    }
+
+    public function showFormModal($key)
+    {
+        $this->mistake = $this->mistakes[$key];
+        $this->modalId = $key;
+        $this->edit = true;
+        $this->formModal = true;
+    }
+
+    public function submit()
+    {
+        $this->validate();
+
+        if ($this->edit) {
+            $this->mistakes[$this->modalId] = $this->mistake;
+            $message = "Mistake has been successfully updated.";
+        } else {
+            array_push($this->mistakes, $this->mistake);
+            $message = "Mistake has been successfully added.";
+        }
+
+        $this->updateDatabase();
+
+        $this->mistake = '';
+        $this->formModal = false;
+        $this->edit = false;
+
+        return $this->alert([
+            "type" => "success",
+            "message" => $message
+        ]);
+    }
+
+    public function showDeleteModal(int $key)
     {
         $this->modalId = $key;
-        $this->modalVisible = true;
+        $this->deleteModal = true;
     }
 
     public function delete()
@@ -38,27 +77,11 @@ class MistakeForm extends Component
 
         $this->updateDatabase();
 
-        $this->modalVisible = false;
+        $this->deleteModal = false;
 
         return $this->alert([
             "type" => "success",
             "message" => "Mistake has been successfully removed."
-        ]);
-    }
-
-    public function submit()
-    {
-        $this->validate();
-
-        array_push($this->mistakes, $this->mistake);
-
-        $this->updateDatabase();
-
-        $this->mistake = '';
-
-        return $this->alert([
-            "type" => "success",
-            "message" => "Mistake has been successfully added."
         ]);
     }
 

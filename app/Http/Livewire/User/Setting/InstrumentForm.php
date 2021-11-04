@@ -15,7 +15,9 @@ class InstrumentForm extends Component
     public $instrument;
 
     public $modalId;
-    public $modalVisible = false;
+    public $deleteModal = false;
+    public $formModal = false;
+    public $edit = false;
 
     protected $rules = [
         'instrument' => 'required|alpha'
@@ -26,10 +28,47 @@ class InstrumentForm extends Component
         $this->instruments = (array) UserSettings::all()->instruments;
     }
 
-    public function showModal(int $key)
+    public function showBlankFormModal()
+    {
+        $this->formModal = true;
+    }
+
+    public function showFormModal($key)
+    {
+        $this->instrument = $this->instruments[$key];
+        $this->modalId = $key;
+        $this->edit = true;
+        $this->formModal = true;
+    }
+
+    public function submit()
+    {
+        $this->validate();
+
+        if ($this->edit) {
+            $this->instruments[$this->modalId] = strtoupper($this->instrument);
+            $message = "Instrument has been successfully updated.";
+        } else {
+            array_push($this->instruments, strtoupper($this->instrument));
+            $message = "Instrument has been successfully added.";
+        }
+
+        $this->updateDatabase();
+
+        $this->instrument = '';
+        $this->formModal = false;
+        $this->edit = false;
+
+        return $this->alert([
+            "type" => "success",
+            "message" => $message
+        ]);
+    }
+
+    public function showDeleteModal(int $key)
     {
         $this->modalId = $key;
-        $this->modalVisible = true;
+        $this->deleteModal = true;
     }
 
     public function delete()
@@ -38,27 +77,11 @@ class InstrumentForm extends Component
 
         $this->updateDatabase();
 
-        $this->modalVisible = false;
+        $this->deleteModal = false;
 
         return $this->alert([
             "type" => "success",
             "message" => "Instrument has been successfully removed."
-        ]);
-    }
-
-    public function submit()
-    {
-        $this->validate();
-
-        array_push($this->instruments, strtoupper($this->instrument));
-
-        $this->updateDatabase();
-
-        $this->instrument = '';
-
-        return $this->alert([
-            "type" => "success",
-            "message" => "Instrument has been successfully added."
         ]);
     }
 

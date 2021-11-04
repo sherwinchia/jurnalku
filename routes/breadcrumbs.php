@@ -24,6 +24,12 @@ Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trail, $model) {
     $trail->push($model->name);
 });
 
+// Users > Show > Transaction
+// Breadcrumbs::for('admin.transactions.create', function (BreadcrumbTrail $trail, $model) {
+//     $trail->parent('admin.users.show');
+//     $trail->push($model->reference);
+// });
+
 // Users > Create
 Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.users.index');

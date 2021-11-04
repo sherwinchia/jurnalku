@@ -1,6 +1,6 @@
 <x-ui.table>
     <x-slot name="header">
-        <div class="flex flex-col lg:flex-row gap-2">
+        <div class="flex flex-col gap-2 lg:flex-row">
             <x-jet-input wire:model.debounce.500ms="search" class="" type="text" placeholder="Search" />
             <x-ui.select class="" wire:model="perPage">
                 <option value="10">10</option>
@@ -14,7 +14,7 @@
             <x-jet-button wire:click="createTransaction" wire:loading.attr="disabled">
                 Create
                 <span wire:loading wire:target="createTransaction"
-                    class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
                 </span>
             </x-jet-button>
         </div>
@@ -24,11 +24,11 @@
         <x-ui.table-row>
             @foreach ($columns as $column)
             @if ( array_key_exists("field", $column) && $column["field"] === "action")
-            <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm">
+            <th class="px-6 py-3 text-sm leading-4 tracking-wider border-b-2">
                 {{ $column["name"] }}
             </th>
             @else
-            <th class="px-6 py-3 border-b-2 leading-4 tracking-wider text-sm text-left">
+            <th class="px-6 py-3 text-sm leading-4 tracking-wider text-left border-b-2">
                 @if(array_key_exists("field", $column) && isset($column["field"]))
                 <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ $column["name"] }}</a>
                 @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
@@ -46,7 +46,7 @@
         <x-ui.table-row>
             @foreach ($columns as $column)
             @if (array_key_exists("field", $column) && $column["field"] === "action")
-            <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+            <td class="px-6 py-4 text-sm leading-5 text-black border-b whitespace-nowrap">
                 <div class="flex justify-center text-gray-600">
                     @foreach ($actions as $action)
                     @if ($action === "show")
@@ -69,7 +69,7 @@
                 </div>
             </td>
             @else
-            <td class="px-6 py-4 whitespace-nowrap border-b text-black text-sm leading-5">
+            <td class="px-6 py-4 text-sm leading-5 text-black border-b whitespace-nowrap">
                 @if (array_key_exists("relation", $column) && isset($column["relation"]))
                 @if (array_key_exists("format", $column) && isset($column["format"]))
                 @if (count($column["format"]) > 1)
@@ -102,8 +102,8 @@
     </tbody>
 
     <x-slot name="footer">
-        <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
-            <div>
+        <div class="mt-4 sm:flex-1 sm:flex sm:items-center sm:justify-between work-sans">
+            <div class="py-3">
                 <p class="text-sm leading-5">
                     Showing
                     <span class="font-medium">{{ $transactions->firstItem() }}</span>
@@ -136,7 +136,7 @@
                 <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
                     Delete
                     <span wire:loading wire:target="delete"
-                        class="ml-2 animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-white">
+                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
                     </span>
                 </x-jet-danger-button>
             </x-slot>

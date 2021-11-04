@@ -17,7 +17,7 @@ class PromocodeSeeder extends Seeder
     {
         Promocode::create([
             'code' => get_unique_promocode(),
-            'type' => 'Percentage',
+            'type' => 'percentage',
             'value' => 20,
             'max_discount' => 10000,
             'max_use_count' => 100,
@@ -29,7 +29,7 @@ class PromocodeSeeder extends Seeder
 
         Promocode::create([
             'code' => get_unique_promocode(),
-            'type' => 'Fixed',
+            'type' => 'fixed',
             'value' => 10000,
             'max_discount' => null,
             'max_use_count' => 20,

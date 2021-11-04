@@ -21,7 +21,8 @@ class CreateSubscriptionsTable extends Migration
             $table->foreignId('package_id')
                 ->constrained();
             $table->timestamp('expired_at');
-            $table->enum('type', ['Free', 'Paid']);
+            $table->integer('max_portfolio')->default(1);
+            $table->enum('type', ['free', 'paid']);
             $table->timestamps();
         });
     }
