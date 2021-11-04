@@ -26,8 +26,6 @@ class SettingSeeder extends Seeder
                 "FOMO","Emotional Trading","Guessing","Quick CL","Avoid Plan"
             ],
             "generals" => [
-                "currency" => "Rp",
-                "decimals" => 2,
                 "public_page" => false
             ],
             "balances" => [

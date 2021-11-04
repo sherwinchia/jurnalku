@@ -39,7 +39,7 @@
         </x-slot>
 
         <x-slot name="content">
-            This action can not be recovered! All associated trades within a portfolio will be removed as well!
+            This action can not be recovered! All associated data like trades and balances within the portfolio will be removed as well!
         </x-slot>
 
         <x-slot name="footer">

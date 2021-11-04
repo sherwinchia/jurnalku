@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex w-full gap-2 lg:w-1/5">
             <x-ui.form-section class="w-1/2" field="Portfolio" required="false">
-                <x-ui.select wire:model="selectedPortfolioId" wire:ignore>
+                <x-ui.select wire:model="selectedPortfolioId" wire:change="updatePortfolio" wire:ignore>
                     @foreach($portfolios as $portfolio)
                     <option value="{{ Crypt::encrypt($portfolio->id) }}">{{ $portfolio->name }}</option>
                     @endforeach
@@ -18,7 +18,13 @@
             </x-ui.form-section>
         </div>
 
-        <div class="flex items-center">
+        <div class="flex items-center gap-2">
+            <x-jet-button wire:click="exportPortfolio" wire:loading.attr="disabled">
+                Export Portfolio
+                <span wire:loading wire:target="exportPortfolio"
+                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
+                </span>
+            </x-jet-button>
             <x-jet-button wire:click="showAddTradeModal" wire:loading.attr="disabled">
                 Add Trade
                 <span wire:loading wire:target="showAddTradeModal"
@@ -127,7 +133,7 @@
                 </div>
             </x-slot>
             <x-slot name="content">
-                <x-ui.alt-form method="POST" x-data="{activeTab: {{ $tab }}, tabs: ['General','Post Trade','Extra']}">
+                <x-ui.alt-form method="POST" x-data="{activeTab: {{ $tab }}, tabs: ['Entry','Exit','Extra']}">
                     <div class="bg-white">
                         <ul class="flex flex-wrap gap-4 p-0 pb-2">
                             <template x-for="(tab, index) in tabs" :key="index">
@@ -163,10 +169,10 @@
 
                                 <x-ui.form-section field="Take Profit" required="true" class="col-span-4 sm:col-span-2">
                                     <div class="relative flex w-full">
-                                        <div class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300">
-                                            {{ $settings->generals->currency }}
+                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                                            {{ $currency }}
                                         </div>
-                                        <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full pl-11" />
+                                        <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full pl-14" />
                                     </div>
                                     @error("trade.take_profit")
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
@@ -175,10 +181,10 @@
 
                                 <x-ui.form-section field="Stop Loss" required="true" class="col-span-4 sm:col-span-2">
                                     <div class="relative flex w-full">
-                                        <div class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300">
-                                            {{ $settings->generals->currency }}
+                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                                            {{ $currency }}
                                         </div>
-                                        <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full pl-11" />
+                                        <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full pl-14" />
                                     </div>
                                     @error("trade.stop_loss")
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
@@ -194,10 +200,10 @@
 
                                 <x-ui.form-section field="Entry Price" required="true" class="col-span-4 sm:col-span-2">
                                     <div class="relative flex w-full">
-                                        <div class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300">
-                                            {{ $settings->generals->currency }}
+                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                                            {{ $currency }}
                                         </div>
-                                        <x-jet-input wire:model.defer="trade.entry_price" type="number" class="w-full pl-11" />
+                                        <x-jet-input wire:model.defer="trade.entry_price" type="number" class="w-full pl-14" />
                                     </div>
                                     @error("trade.entry_price")
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
@@ -206,11 +212,11 @@
 
                                 <x-ui.form-section field="Entry Fee" required="true" class="col-span-4 sm:col-span-2">
                                     <div class="relative flex w-full">
-                                        <x-ui.select wire:model="entryFeeType" class="absolute inset-y-0 left-0">
-                                            <option value="{{ $settings->generals->currency }}">{{ $settings->generals->currency }}</option>
+                                        <x-ui.select wire:model="entryFeeType" class="absolute inset-y-0 left-0 w-20 text-sm">
+                                            <option value="{{ $currency }}">{{ $currency }}</option>
                                             <option value="%">%</option>
                                         </x-ui.select>
-                                        <x-jet-input wire:model.defer="trade.entry_fee" type="number" class="w-full pl-20"/>
+                                        <x-jet-input wire:model.defer="trade.entry_fee" type="number" class="w-full" style="padding-left: 5.5rem;"/>
                                     </div>
                                     @error("trade.entry_fee")
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
@@ -229,10 +235,10 @@
                                     </x-ui.form-section>
                                     <x-ui.form-section field="Exit Price" required="false" class="col-span-4 sm:col-span-2">
                                         <div class="relative flex w-full">
-                                            <div class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300">
-                                                {{ $settings->generals->currency }}
+                                            <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                                                {{ $currency }}
                                             </div>
-                                            <x-jet-input wire:model.defer="trade.exit_price" type="number" class="w-full pl-11" />
+                                            <x-jet-input wire:model.defer="trade.exit_price" type="number" class="w-full pl-14" />
                                         </div>
                                         @error("trade.exit_price")
                                         <x-message.validation type="error">{{ $message }}</x-message.validation>
@@ -240,11 +246,11 @@
                                     </x-ui.form-section>
                                     <x-ui.form-section field="Exit Fee" required="true" class="col-span-4 sm:col-span-2">
                                         <div class="relative flex w-full">
-                                            <x-ui.select wire:model="exitFeeType" class="absolute inset-y-0 left-0">
-                                                <option value="Rp">{{ $settings->generals->currency }}</option>
+                                            <x-ui.select wire:model="exitFeeType" class="absolute inset-y-0 left-0 w-20 text-sm">
+                                                <option value="{{ $currency }}">{{ $currency }}</option>
                                                 <option value="%">%</option>
                                             </x-ui.select>
-                                            <x-jet-input wire:model.defer="trade.exit_fee" type="number" class="w-full pl-20" />
+                                            <x-jet-input wire:model.defer="trade.exit_fee" type="number" class="w-full" style="padding-left: 5.5rem;"/>
                                         </div>
                                         @error("trade.exit_fee")
                                         <x-message.validation type="error">{{ $message }}</x-message.validation>

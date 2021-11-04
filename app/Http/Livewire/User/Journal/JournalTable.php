@@ -17,6 +17,7 @@ class JournalTable extends Component
     use WithPagination, Alert, AuthorizesRequests;
     protected $listeners = ['tableRefresh' => '$refresh'];
     // public $search = "";
+    public $currency;
     public $entryFeeType;
     public $exitFeeType;
     public $trade;
@@ -29,53 +30,7 @@ class JournalTable extends Component
     public $tradeFormModal = false;
     public $deleteTradeModal = false;
     public $actions = ["delete","edit"];
-    public $columns = [
-        [
-            "name" => "Instrument",
-            "field" => "instrument",
-            "sortable" => true,
-        ],
-        [
-            "name" => "Entry Date",
-            "field" => "entry_date",
-            "sortable" => false,
-            "format" => ["date_to_human"]
-        ],
-        [
-            "name" => "Exit Date",
-            "field" => "exit_date",
-            "sortable" => false,
-            "format" => ["date_to_human"]
-        ],
-        [
-            "name" => "Gain/Loss",
-            "field" => "gain_loss",
-            "sortable" => false,
-            "format" => ["decimal_to_human"],
-            "align" => 'text-center'
-        ],
-        [
-            "name" => "Setup",
-            "field" => "setup",
-            "sortable" => false,
-        ],
-        [
-            "name" => "Mistake",
-            "field" => "mistake",
-            "sortable" => false,
-        ],
-        [
-            "name" => "Status",
-            "field" => "status",
-            "sortable" => false,
-            "align" => 'text-center'
-        ],
-        [
-            "name" => "Action",
-            "field" => "action",
-            "sortable" => false,
-        ],
-    ];
+    public $columns;
 
     protected $rules = [
         "trade.instrument" => "required",
@@ -95,8 +50,59 @@ class JournalTable extends Component
 
     public function mount()
     {
-        $this->selectedPortfolioId = Crypt::encrypt(current_user()->portfolios->first()->id);
+        $defaultPortfolio = current_user()->portfolios->first();
+        $this->selectedPortfolioId = Crypt::encrypt($defaultPortfolio->id);
+        $this->currency = $defaultPortfolio->currency;
+
         $this->trade = new Trade();
+
+        $this->columns = [
+            [
+                "name" => "Instrument",
+                "field" => "instrument",
+                "sortable" => true,
+            ],
+            [
+                "name" => "Entry Date",
+                "field" => "entry_date",
+                "sortable" => false,
+                "format" => ["date_to_human"]
+            ],
+            [
+                "name" => "Exit Date",
+                "field" => "exit_date",
+                "sortable" => false,
+                "format" => ["date_to_human"]
+            ],
+            [
+                "name" => "Gain/Loss",
+                "field" => "gain_loss",
+                "sortable" => false,
+                "format" => ["decimal_to_human", $this->currency],
+                "align" => 'text-center'
+            ],
+            [
+                "name" => "Setup",
+                "field" => "setup",
+                "sortable" => false,
+            ],
+            [
+                "name" => "Mistake",
+                "field" => "mistake",
+                "sortable" => false,
+            ],
+            [
+                "name" => "Status",
+                "field" => "status",
+                "sortable" => false,
+                "align" => 'text-center'
+            ],
+            [
+                "name" => "Action",
+                "field" => "action",
+                "sortable" => false,
+            ],
+        ];
     }
 
     public function showAddTradeModal()
@@ -110,15 +116,18 @@ class JournalTable extends Component
             ]);
         }
 
+        $this->trade = new Trade();
+        $this->trade->entry_fee = 0;
+        $this->trade->exit_fee = 0;
+        $this->edit = false;
         $this->tab = 0;
         $this->tradeFormModal = true;
     }
 
     public function showEditFormModal($id)
     {
-        $trade = Trade::findOrFail($id);
-
         try {
+            $trade = Trade::findOrFail($id);
             $this->authorize('manage-trade', $trade);
         } catch (\Exception $e) {
             return $this->alert([
@@ -199,11 +208,7 @@ class JournalTable extends Component
         }
 
         $this->trade->save();
-        $this->trade = new Trade();
-        $this->trade->entry_fee = 0;
-        $this->trade->exit_fee = 0;
         $this->tradeFormModal = false;
-        $this->edit = false;
 
         return $this->alert([
             "type" => "success",
@@ -213,8 +218,8 @@ class JournalTable extends Component
 
     public function showDeleteModal($id)
     {
-        $trade = Trade::findOrFail($id);
         try {
+            $trade = Trade::findOrFail($id);
             $this->authorize('manage-trade', $trade);
         } catch (\Exception $e) {
             return $this->alert([
@@ -243,7 +248,6 @@ class JournalTable extends Component
             "type" => "success",
             "message" => "Trade has been successfully deleted."
         ]);
-        $this->trade = new Trade();
         $this->deleteTradeModal = false;
     }
 
@@ -251,6 +255,26 @@ class JournalTable extends Component
     // {
     //     $this->resetPage();
     // }
+
+    public function updatePortfolio()
+    {
+        try {
+            $currency = Portfolio::findOrFail($this->decrypt($this->selectedPortfolioId))->currency;
+            $this->currency =  $currency;
+            $this->exitFeeType = $currency;
+            $this->entryFeeType = $currency;
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function exportPortfolio()
+    {
+        return redirect()->route('user.portfolio.export', $this->selectedPortfolioId);
+    }
 
     public function sortBy($field)
     {

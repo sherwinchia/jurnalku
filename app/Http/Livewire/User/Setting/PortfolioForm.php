@@ -19,7 +19,7 @@ class PortfolioForm extends Component
 
     protected $rules = [
         'portfolio.name'=>'required|string',
-        'portfolio.currency'=>'required|string',
+        'portfolio.currency'=>'required|string|max:4',
     ];
 
     public function mount()
@@ -29,14 +29,15 @@ class PortfolioForm extends Component
 
     public function showBlankFormModal()
     {
+        $this->portfolio = new Portfolio();
+        $this->edit = false;
         $this->formModal = true;
     }
 
     public function showFormModal($encryptedId)
     {
-        $portfolio = Portfolio::findOrFail($this->decrypt($encryptedId));
-
         try {
+            $portfolio = Portfolio::findOrFail($this->decrypt($encryptedId));
             $this->authorize('manage-portfolio', $portfolio);
         } catch (\Exception $e) {
             return $this->alert([
@@ -77,10 +78,7 @@ class PortfolioForm extends Component
         $this->validate();
         $this->portfolio->user_id = current_user()->id;
         $this->portfolio->save();
-
         $this->formModal = false;
-        $this->edit = false;
-        $this->portfolio = new Portfolio();
 
         return $this->alert([
             "type" => "success",
@@ -90,8 +88,8 @@ class PortfolioForm extends Component
 
     public function showDeleteModal($encryptedId)
     {
-        $portfolio = Portfolio::findOrFail($this->decrypt($encryptedId));
         try {
+            $portfolio = Portfolio::findOrFail($this->decrypt($encryptedId));
             $this->authorize('manage-portfolio', $portfolio);
         } catch (\Exception $e) {
             return $this->alert([
@@ -117,13 +115,18 @@ class PortfolioForm extends Component
             ]);
         }
 
-        $portfolio->delete();
-        $this->alert([
-            "type" => "success",
-            "message" => "Portfolio has been successfully deleted."
-        ]);
-
-        $this->portfolio = new Portfolio();
+        if (current_user()->portfolios->count() <= 1) {
+            $this->alert([
+                "type" => "error",
+                "message" => "Failed to delete the portfolio. Each user must have at least one portfolio!"
+            ]);
+        }else {
+            $portfolio->delete();
+            $this->alert([
+                "type" => "success",
+                "message" => "Portfolio has been successfully deleted."
+            ]);
+        }
         $this->deleteModal = false;
     }
 

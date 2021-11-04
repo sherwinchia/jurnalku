@@ -46,7 +46,14 @@ class AuthServiceProvider extends ServiceProvider
 
         //Add portfolio
         Gate::define('add-portfolio', function (User $user) {
-            return $user->subscription_type === "paid" && $user->portfolios->count() < $user->max_portfolio;
+            $subscription = $user->subscription_type;
+            if ($subscription === "paid" && $user->portfolios->count() < $user->max_portfolio) {
+                return true;
+            }
+            if ($subscription === "free" && $user->portfolios->count() < 1) {
+                return true;
+            }
+
         });
 
         //Add portfolio balance

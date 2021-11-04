@@ -70,7 +70,7 @@ class BalanceForm extends Component
 
     public function showDeleteModal($encryptedId)
     {
-        $this->balance = PortfolioBalance::findOrFail($this->decrypt($this->encryptedId));
+        $this->balance = PortfolioBalance::findOrFail($this->decrypt($encryptedId));
         $this->deleteModal = true;
     }
 

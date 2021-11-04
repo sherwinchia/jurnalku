@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::get('journals', [JournalController::class, 'index'])->name('journals.index');
         Route::get('trades/{trade}', [JournalController::class, 'show'])->name('trades.show');
+        Route::get('export/portfolio/{encryptedId}', [JournalController::class, 'export'])->name('portfolio.export');
     });
 });
 
