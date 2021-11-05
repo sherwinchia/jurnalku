@@ -23,7 +23,7 @@ class Trade extends Model
         'stop_loss',
         'entry_fee',
         'exit_fee',
-        'gain_loss',
+        'return',
         'favorite',
         'note',
         'status'

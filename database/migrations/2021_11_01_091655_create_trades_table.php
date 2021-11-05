@@ -28,7 +28,8 @@ class CreateTradesTable extends Migration
             $table->decimal('quantity', 19, 2);
             $table->decimal('entry_fee', 19, 2)->default(0);
             $table->decimal('exit_fee', 19, 2)->default(0);
-            $table->decimal('gain_loss', 19, 2)->nullable();
+            $table->decimal('return', 19, 2)->nullable();
+            $table->decimal('return_percentage', 8, 2)->nullable();
             $table->boolean('favorite')->default(0);
             $table->text('note')->nullable();
             $table->enum('status',['open', 'win', 'lose', 'neutral', 'close'])->default('open');

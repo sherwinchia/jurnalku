@@ -111,13 +111,19 @@ Breadcrumbs::for('admin.promocodes.edit', function (BreadcrumbTrail $trail, $mod
     $trail->push($model->code);
 });
 
-// Journals
-Breadcrumbs::for('user.journals.index', function (BreadcrumbTrail $trail) {
-    $trail->push('Portfolio', route('user.journals.index'));
+//Portfolios
+Breadcrumbs::for('user.portfolios.index', function (BreadcrumbTrail $trail) {
+    $trail->push('Portfolio', route('user.portfolios.index'));
 });
 
-// Journals > Show
-Breadcrumbs::for('user.trades.show', function (BreadcrumbTrail $trail, $model) {
-    $trail->parent('user.journals.index');
+// Portfolios > Show
+Breadcrumbs::for('user.portfolios.show', function (BreadcrumbTrail $trail, $model) {
+    $trail->parent('user.portfolios.index');
+    $trail->push($model->name, route('user.portfolios.show', $model));
+});
+
+// Portfolios > Show > Trade
+Breadcrumbs::for('user.trades.show', function (BreadcrumbTrail $trail, $portfolio, $model) {
+    $trail->parent('user.portfolios.show', $portfolio);
     $trail->push($model->instrument);
 });

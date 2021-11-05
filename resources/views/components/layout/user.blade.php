@@ -56,15 +56,7 @@
             </div>
 
             <!-- Balance stats -->
-            <div class="items-center justify-between p-3 m-2 text-white rounded-md bg-primary-500"
-                :class="{'hidden': !isSidebarOpen, 'lg:flex ': isSidebarOpen}">
-                <span class="text-2xl font-semibold">Rp</span>
-                <div class="flex flex-col text-right">
-                    <span
-                        class="inline-block overflow-hidden text-2xl font-semibold whitespace-nowrap overflow-ellipsis"></span>
-                    <span>Balance</span>
-                </div>
-            </div>
+            <livewire:user.shared.compact-status/>
 
             <!-- Sidebar links -->
             <nav class="flex-1 overflow-hidden hover:overflow-y-auto ">
@@ -75,11 +67,10 @@
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Home</span>
                         </x-ui.navbar-link>
                     </li>
-
                     <li>
-                        <x-ui.navbar-link href="{{ route('user.journals.index') }}" class="{{ request()->is('user/journal*') || request()->is('user/trade*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('user.portfolios.index') }}" class="{{ request()->is('user/portfolio*') || request()->is('user/trade*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.book-open class="w-6 h-6" />
-                            <span :class="{ 'lg:hidden': !isSidebarOpen }">Journal</span>
+                            <span :class="{ 'lg:hidden': !isSidebarOpen }">Portfolio</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>

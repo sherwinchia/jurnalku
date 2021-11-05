@@ -65,46 +65,31 @@ function convert_string_decimal($string)
     return $decimal;
 }
 
-function decimal_to_human($decimal, $currency = false)
+function decimal_to_human($raw, string $currency = null, bool $percentage = false)
 {
-    $new_format = "";
-    $integer = (int) $decimal;
+    $new_format = (float) $raw;
 
-    if ($integer >= 0) {
-        if ($integer < 1000000) {
-            // Anything less than a million
-            $new_format = number_format($integer);
-        } else if ($integer < 1000000000) {
-            // Anything less than a billion
-            $new_format = number_format($integer / 1000000, 2) . ' M';
-        } else if ($integer < 1000000000000) {
-            // At least a billion
-            $new_format = number_format($integer / 1000000000, 2) . ' B';
+    if (isset($currency)) {
+        if (strtolower($currency) === 'rp') {
+            $new_format = number_format($new_format, 0,',','.');
         } else {
-            $new_format = number_format($integer / 1000000000000, 2) . ' T';
+            $new_format = number_format($new_format, 0,',',',');
         }
-    }
-
-    if ($integer < 0) {
-        if ($integer > -1000000) {
-            // Anything less than a million
-            $new_format = number_format($integer);
-        } else if ($integer > -1000000000) {
-            // Anything less than a billion
-            $new_format = number_format($integer / 1000000, 2) . ' M';
-        } else if ($integer > -1000000000000) {
-            // At least a billion
-            $new_format = number_format($integer / 1000000000, 2) . ' B';
-        } else {
-            $new_format = number_format($integer / 1000000000000, 2) . ' T';
-        }
-    }
-
-    if ($currency) {
         $new_format = $currency . $new_format;
+    } elseif ($percentage) {
+        $new_format = number_format($new_format, 2,'.','.') .'%';
+    } else {
+            $new_format = number_format($new_format, 0,'.','.');
     }
 
     return $new_format;
+}
+
+function date_interval(string $exit_date, string $entry_date)
+{
+    $exit = Carbon::parse($exit_date);
+    $entry = Carbon::parse($entry_date);
+    return  $exit->diffInHours($entry).'h';
 }
 
 function remove_uneccessary_character($string, $characters)

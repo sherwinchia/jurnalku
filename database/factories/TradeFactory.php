@@ -39,7 +39,7 @@ class TradeFactory extends Factory
             'stop_loss' => $entry_price - ($entry_price * 00.5),
             'entry_fee' => ($entry_price * 000.5),
             'exit_fee' => ($entry_price * 000.3),
-            'gain_loss' => $exit_price - $entry_price,
+            'return' => $exit_price - $entry_price,
             'favorite' => 0,
             'note' => $this->faker->paragraph()
         ];

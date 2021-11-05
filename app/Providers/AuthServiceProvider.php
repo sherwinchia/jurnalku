@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //Edit, view and delete portfolio
+        //Edit, view, star and delete portfolio
         Gate::define('manage-trade', function (User $user, Trade $trade) {
             return $user->id === $trade->portfolio->user_id;
         });

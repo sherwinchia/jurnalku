@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\PromocodeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\User\HomeController as UserDashboardController;
-use App\Http\Controllers\User\JournalController;
+use App\Http\Controllers\User\PortfolioController;
 use App\Http\Controllers\User\SettingController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,9 +42,9 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:user', 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('home', [UserDashboardController::class, 'index'])->name('home.index');
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-        Route::get('journals', [JournalController::class, 'index'])->name('journals.index');
-        Route::get('trades/{trade}', [JournalController::class, 'show'])->name('trades.show');
-        Route::get('export/portfolio/{encryptedId}', [JournalController::class, 'export'])->name('portfolio.export');
+        Route::resource('portfolios', PortfolioController::class)->only('index','show');
+        Route::get('portfolios/trades/{trade}', [PortfolioController::class, 'showTrade'])->name('trades.show');
+        Route::get('export/portfolio/{portfolio}', [PortfolioController::class, 'export'])->name('portfolio.export');
     });
 });
 

@@ -1,5 +1,6 @@
 <?php
-namespace App\Http\Livewire\User\Journal;
+
+namespace App\Http\Livewire\User\Portfolio;
 
 use App\Helpers\UserSettings;
 use App\Http\Traits\Alert;
@@ -12,16 +13,15 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Gate;
 
-class JournalTable extends Component
+class PortfolioShow extends Component
 {
     use WithPagination, Alert, AuthorizesRequests;
-    protected $listeners = ['tableRefresh' => '$refresh'];
-    // public $search = "";
-    public $currency;
+    protected $listeners = ['component-refresh' => '$refresh'];
+
+    public Portfolio $portfolio;
     public $entryFeeType;
     public $exitFeeType;
     public $trade;
-    public $selectedPortfolioId;
     public $tab = 0;
     public $edit = false;
     public $sortField = "id";
@@ -29,8 +29,6 @@ class JournalTable extends Component
     public $perPage = 10;
     public $tradeFormModal = false;
     public $deleteTradeModal = false;
-    public $actions = ["delete","edit"];
-    public $columns;
 
     protected $rules = [
         "trade.instrument" => "required",
@@ -48,67 +46,16 @@ class JournalTable extends Component
         "trade.mistake" => "nullable",
     ];
 
+
     public function mount()
     {
-        $defaultPortfolio = current_user()->portfolios->first();
-        $this->selectedPortfolioId = Crypt::encrypt($defaultPortfolio->id);
-        $this->currency = $defaultPortfolio->currency;
-
         $this->trade = new Trade();
-
-        $this->columns = [
-            [
-                "name" => "Instrument",
-                "field" => "instrument",
-                "sortable" => true,
-            ],
-            [
-                "name" => "Entry Date",
-                "field" => "entry_date",
-                "sortable" => false,
-                "format" => ["date_to_human"]
-            ],
-            [
-                "name" => "Exit Date",
-                "field" => "exit_date",
-                "sortable" => false,
-                "format" => ["date_to_human"]
-            ],
-            [
-                "name" => "Gain/Loss",
-                "field" => "gain_loss",
-                "sortable" => false,
-                "format" => ["decimal_to_human", $this->currency],
-                "align" => 'text-center'
-            ],
-            [
-                "name" => "Setup",
-                "field" => "setup",
-                "sortable" => false,
-            ],
-            [
-                "name" => "Mistake",
-                "field" => "mistake",
-                "sortable" => false,
-            ],
-            [
-                "name" => "Status",
-                "field" => "status",
-                "sortable" => false,
-                "align" => 'text-center'
-            ],
-            [
-                "name" => "Action",
-                "field" => "action",
-                "sortable" => false,
-            ],
-        ];
     }
 
     public function showAddTradeModal()
     {
         try {
-            $this->authorize('add-trade', Portfolio::findOrFail($this->decrypt($this->selectedPortfolioId)));
+            $this->authorize('add-trade', $this->portfolio);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -153,8 +100,6 @@ class JournalTable extends Component
 
     public function submitTrade()
     {
-        $decrypt_portfolio_id = $this->decrypt($this->selectedPortfolioId);
-
         if ($this->edit) {
             try {
                 $this->authorize('manage-trade', $this->trade);
@@ -167,7 +112,7 @@ class JournalTable extends Component
             }
         } else {
             try {
-                $this->authorize('add-trade', Portfolio::findOrFail($decrypt_portfolio_id));
+                $this->authorize('add-trade', $this->portfolio);
                 $message = 'Trade has been successfully added.';
             } catch (\Exception $e) {
                 return $this->alert([
@@ -179,7 +124,7 @@ class JournalTable extends Component
 
         $this->validate();
 
-        $this->trade->portfolio_id = $decrypt_portfolio_id;
+        $this->trade->portfolio_id = $this->portfolio->id;
 
         if (!isset($this->trade->exit_fee)) {
             $this->trade->exit_fee = 0;
@@ -187,22 +132,25 @@ class JournalTable extends Component
 
         if ($this->entryFeeType == '%') {
             $this->trade->entry_fee = $this->trade->entry_price * $this->trade->quantity * $this->trade->entry_fee / 100;
+            $this->entryFeeType = $this->portfolio->currency;
         }
 
         if ($this->exitFeeType == '%') {
             $this->trade->exit_fee = $this->trade->exit_price * $this->trade->quantity * $this->trade->exit_fee / 100;
+            $this->exitFeeType = $this->portfolio->currency;
         }
 
         if ( isset($this->trade->exit_date) && isset($this->trade->exit_price)) {
-            $this->trade->gain_loss = $this->trade->calculate_net;
+            $this->trade->return = $this->trade->calculate_net;
+            $this->trade->return_percentage = $this->trade->calculate_percentage;
 
-            if ($this->trade->gain_loss > 0) {
+            if ($this->trade->return > 0) {
                 $this->trade->status = "win";
             }
-            if ($this->trade->gain_loss < 0) {
+            if ($this->trade->return < 0) {
                 $this->trade->status = "lose";
             }
-            if ($this->trade->gain_loss == 0) {
+            if ($this->trade->return == 0) {
                 $this->trade->status = "neutral";
             }
         }
@@ -251,18 +199,13 @@ class JournalTable extends Component
         $this->deleteTradeModal = false;
     }
 
-    // public function updatingSearch()
-    // {
-    //     $this->resetPage();
-    // }
-
-    public function updatePortfolio()
+    public function favorite($id)
     {
         try {
-            $currency = Portfolio::findOrFail($this->decrypt($this->selectedPortfolioId))->currency;
-            $this->currency =  $currency;
-            $this->exitFeeType = $currency;
-            $this->entryFeeType = $currency;
+            $trade = Trade::findOrFail($id);
+            $this->authorize('manage-trade', $trade);
+            $trade->favorite = !$trade->favorite;
+            $trade->save();
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -273,7 +216,7 @@ class JournalTable extends Component
 
     public function exportPortfolio()
     {
-        return redirect()->route('user.portfolio.export', $this->selectedPortfolioId);
+        return redirect()->route('user.portfolio.export', $this->portfolio);
     }
 
     public function sortBy($field)
@@ -287,18 +230,6 @@ class JournalTable extends Component
         $this->sortField = $field;
     }
 
-    private function decrypt(string $string)
-    {
-        try {
-            return Crypt::decrypt($string);
-        } catch (\Exception $e) {
-            $this->alert([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ]);
-        }
-    }
-
     public function paginationView()
     {
         return "admin.partials.pagination";
@@ -306,12 +237,9 @@ class JournalTable extends Component
 
     public function render()
     {
-        return view("livewire.user.journal.journal-table", [
-            "trades" => Trade::query()
-                ->where('portfolio_id',"=", $this->decrypt($this->selectedPortfolioId))
-                ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
+        return view('livewire.user.portfolio.portfolio-show', [
+            "trades" => $this->portfolio->trades()->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage),
-            "portfolios" => current_user()->portfolios,
             "settings" => UserSettings::all()
         ]);
     }

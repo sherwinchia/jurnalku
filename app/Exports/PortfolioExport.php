@@ -10,16 +10,16 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class PortfolioExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMapping
 {
-    private $id;
+    private $portfolio;
 
-    public function __construct(int $id)
+    public function __construct(Portfolio $portfolio)
     {
-        $this->id = $id;
+        $this->portfolio = $portfolio;
     }
 
     public function collection()
     {
-        return Portfolio::findOrFail($this->id)->trades->reverse();
+        return $this->portfolio->trades->reverse();
     }
 
     public function map($trade) :array
@@ -29,15 +29,15 @@ class PortfolioExport implements FromCollection, ShouldAutoSize, WithHeadings, W
             ucfirst($trade->status),
             date_to_human($trade->entry_date),
             date_to_human($trade->exit_date),
-            $trade->entry_price,
-            $trade->exit_price,
-            $trade->quantity,
-            $trade->take_profit,
-            $trade->stop_loss,
-            $trade->entry_fee,
-            $trade->exit_fee,
-            $trade->gain_loss,
-            $trade->calculate_percentage,
+            decimal_to_human($trade->entry_price, $this->portfolio->currency),
+            decimal_to_human($trade->exit_price, $this->portfolio->currency),
+            decimal_to_human($trade->quantity),
+            decimal_to_human($trade->take_profit, $this->portfolio->currency),
+            decimal_to_human($trade->stop_loss, $this->portfolio->currency),
+            decimal_to_human($trade->entry_fee, $this->portfolio->currency),
+            decimal_to_human($trade->exit_fee, $this->portfolio->currency),
+            decimal_to_human($trade->return, $this->portfolio->currency),
+            decimal_to_human($trade->calculate_percentage,null,true),
             $trade->setup,
             $trade->mistake,
             $trade->note,
@@ -58,8 +58,8 @@ class PortfolioExport implements FromCollection, ShouldAutoSize, WithHeadings, W
             'Stop Loss',
             'Entry Fee',
             'Exit Fee',
-            'P/L',
-            '%',
+            'Return',
+            'Return (%)',
             'Setup',
             'Mistake',
             'Note'
