@@ -106,7 +106,7 @@
                             </x-ui.table-data>
                             <x-ui.table-data class="{{ isset($trade->return) ? ($trade->return > 0 ? 'text-green-500' : 'text-red-500') : '-' }}">
                                 {{ isset($trade->exit_date) ?  decimal_to_human($trade->return,$trade->portfolio->currency) : '-' }}
-                                {{ isset($trade->exit_date) ?  decimal_to_human($trade->calculate_percentage,null,true) : '-' }}
+                                ({{ isset($trade->exit_date) ?  decimal_to_human($trade->calculate_percentage,null,true) : '-' }})
                             </x-ui.table-data>
                         </x-ui.table-row>
                     </tbody>

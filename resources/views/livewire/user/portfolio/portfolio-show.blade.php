@@ -189,30 +189,6 @@
                                     @enderror
                                 </x-ui.form-section>
 
-                                <x-ui.form-section field="Take Profit" required="true" class="col-span-4 sm:col-span-2">
-                                    <div class="relative flex w-full">
-                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
-                                            {{ $portfolio->currency }}
-                                        </div>
-                                        <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full pl-14" />
-                                    </div>
-                                    @error("trade.take_profit")
-                                    <x-message.validation type="error">{{ $message }}</x-message.validation>
-                                    @enderror
-                                </x-ui.form-section>
-
-                                <x-ui.form-section field="Stop Loss" required="true" class="col-span-4 sm:col-span-2">
-                                    <div class="relative flex w-full">
-                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
-                                            {{ $portfolio->currency }}
-                                        </div>
-                                        <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full pl-14" />
-                                    </div>
-                                    @error("trade.stop_loss")
-                                    <x-message.validation type="error">{{ $message }}</x-message.validation>
-                                    @enderror
-                                </x-ui.form-section>
-
                                 <x-ui.form-section field="Entry Date" required="true" class="col-span-4 sm:col-span-2">
                                     <x-jet-input wire:model.defer="trade.entry_date" type="datetime-local" />
                                     @error("trade.entry_date")
@@ -228,6 +204,44 @@
                                         <x-jet-input wire:model.defer="trade.entry_price" type="number" class="w-full pl-14" />
                                     </div>
                                     @error("trade.entry_price")
+                                    <x-message.validation type="error">{{ $message }}</x-message.validation>
+                                    @enderror
+                                </x-ui.form-section>
+
+                                <x-ui.form-section field="Take Profit" required="true" class="col-span-4 sm:col-span-2">
+                                    <div class="relative flex w-full">
+                                        <x-ui.select wire:model="takeProfitType" class="absolute inset-y-0 left-0 w-20 text-sm">
+                                            <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}</option>
+                                            <option value="%">%</option>
+                                        </x-ui.select>
+                                        <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full" style="padding-left: 5.5rem;"/>
+                                    </div>
+                                    <!-- <div class="relative flex w-full">
+                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                                            {{ $portfolio->currency }}
+                                        </div>
+                                        <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full pl-14" />
+                                    </div> -->
+                                    @error("trade.take_profit")
+                                    <x-message.validation type="error">{{ $message }}</x-message.validation>
+                                    @enderror
+                                </x-ui.form-section>
+
+                                <x-ui.form-section field="Stop Loss" required="true" class="col-span-4 sm:col-span-2">
+                                    <div class="relative flex w-full">
+                                        <x-ui.select wire:model="stopLossType" class="absolute inset-y-0 left-0 w-20 text-sm">
+                                            <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}</option>
+                                            <option value="%">%</option>
+                                        </x-ui.select>
+                                        <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full" style="padding-left: 5.5rem;"/>
+                                    </div>
+                                    <!-- <div class="relative flex w-full">
+                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                                            {{ $portfolio->currency }}
+                                        </div>
+                                        <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full pl-14" />
+                                    </div> -->
+                                    @error("trade.stop_loss")
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>
@@ -342,7 +356,7 @@
 
         <x-jet-dialog-modal wire:model="deleteTradeModal">
             <x-slot name="title">
-                Delete trade
+                Delete Trade
             </x-slot>
 
             <x-slot name="content">

@@ -21,6 +21,8 @@ class PortfolioShow extends Component
     public Portfolio $portfolio;
     public $entryFeeType;
     public $exitFeeType;
+    public $takeProfitType;
+    public $stopLossType;
     public $trade;
     public $tab = 0;
     public $edit = false;
@@ -128,6 +130,16 @@ class PortfolioShow extends Component
 
         if (!isset($this->trade->exit_fee)) {
             $this->trade->exit_fee = 0;
+        }
+
+        if ($this->takeProfitType == '%') {
+            $this->trade->take_profit = $this->trade->entry_price + $this->trade->entry_price * $this->trade->take_profit / 100;
+            $this->takeProfitType = $this->portfolio->currency;
+        }
+
+        if ($this->stopLossType == '%') {
+            $this->trade->stop_loss = $this->trade->entry_price - $this->trade->entry_price * $this->trade->stop_loss / 100;
+            $this->stopLossType = $this->portfolio->currency;
         }
 
         if ($this->entryFeeType == '%') {

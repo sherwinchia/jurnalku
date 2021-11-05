@@ -4,6 +4,7 @@ namespace App\Http\Livewire\User\Portfolio;
 
 use App\Http\Traits\Alert;
 use App\Models\Portfolio;
+use App\Models\PortfolioBalance;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
@@ -17,7 +18,12 @@ class PortfolioIndex extends Component
     public $portfolio;
     public $deleteModal = false;
     public $formModal = false;
+    public $balanceModal = false;
     public $edit = false;
+
+    // Balance
+    public $type;
+    public $amount;
 
     protected $rules = [
         'portfolio.name'=>'required|string',
@@ -48,9 +54,26 @@ class PortfolioIndex extends Component
             ]);
         }
 
+        // $this->balance = new PortfolioBalance();
         $this->portfolio = $portfolio;
         $this->edit = true;
         $this->formModal = true;
+    }
+
+    public function showBalanceModal($id)
+    {
+        try {
+            $portfolio = Portfolio::findOrFail($id);
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+        $this->portfolio = $portfolio;
+        $this->balanceModal = true;
+        $this->amount = null;
+        $this->type = null;
     }
 
     public function submit()
@@ -87,6 +110,37 @@ class PortfolioIndex extends Component
         return $this->alert([
             "type" => "success",
             "message" => $message
+        ]);
+    }
+
+    public function submitBalance()
+    {
+        try {
+            $this->authorize('add-portfolio-balance', $this->portfolio);
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+
+        $data = $this->validate([
+            'type' => 'required',
+            'amount' => 'required|numeric',
+        ]);
+
+        $data['portfolio_id'] = $this->portfolio->id;
+
+        PortfolioBalance::create($data);
+
+        $this->portfolio->balance = $this->portfolio->calculate_balance;
+        $this->portfolio->save();
+
+        $this->balanceModal = false;
+
+        return $this->alert([
+            "type" => "success",
+            "message" => 'Balance has been successfully added.'
         ]);
     }
 
