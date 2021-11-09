@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\Portfolio;
-use App\Models\PortfolioBalance;
 use App\Models\Trade;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -53,17 +52,6 @@ class AuthServiceProvider extends ServiceProvider
             if ($subscription === "free" && $user->portfolios->count() < 1) {
                 return true;
             }
-
-        });
-
-        //Add portfolio balance
-        Gate::define('add-portfolio-balance', function (User $user, Portfolio $portfolio) {
-            return $user->portfolios->contains($portfolio) ;
-        });
-
-        //Delete portfolio balance
-        Gate::define('delete-portfolio-balance', function (User $user, PortfolioBalance $balance) {
-            return $user->portfolios->contains($balance->portfolio) ;
         });
     }
 }

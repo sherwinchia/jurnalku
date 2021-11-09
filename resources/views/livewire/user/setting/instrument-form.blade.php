@@ -1,5 +1,5 @@
 <div>
-    <x-ui.header class="mb-4 font-semibold border-b border-gray-300 ">Instrument</x-ui.header>
+    <x-ui.header class="mb-4 border-b border-gray-300 ">Instrument</x-ui.header>
     <x-jet-button class="mb-2" wire:click="showBlankFormModal" wire:loading.attr="disabled" wire:target="showBlankFormModal">Add
         <span wire:loading wire:target="showBlankFormModal"
             class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">

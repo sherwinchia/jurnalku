@@ -8,8 +8,8 @@ class CompactStatus extends Component
 {
     public function render()
     {
-        return view('livewire.user.shared.compact-status',[
-            'portfolios' => current_user()->portfolios->load('trades','balances')
+        return view('livewire.user.shared.compact-status', [
+            'portfolios' => current_user()->portfolios->load('trades')
         ]);
     }
 }

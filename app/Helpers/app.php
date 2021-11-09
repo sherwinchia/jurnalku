@@ -71,15 +71,15 @@ function decimal_to_human($raw, string $currency = null, bool $percentage = fals
 
     if (isset($currency)) {
         if (strtolower($currency) === 'rp') {
-            $new_format = number_format($new_format, 0,',','.');
+            $new_format = number_format($new_format, 0, ',', '.');
         } else {
-            $new_format = number_format($new_format, 0,',',',');
+            $new_format = number_format($new_format, 0, ',', ',');
         }
         $new_format = $currency . $new_format;
     } elseif ($percentage) {
-        $new_format = number_format($new_format, 2,'.','.') .'%';
+        $new_format = number_format($new_format, 0, '.', '.') . '%';
     } else {
-            $new_format = number_format($new_format, 0,'.','.');
+        $new_format = number_format($new_format, 0, '.', '.');
     }
 
     return $new_format;
@@ -89,7 +89,7 @@ function date_interval(string $exit_date, string $entry_date)
 {
     $exit = Carbon::parse($exit_date);
     $entry = Carbon::parse($entry_date);
-    return  $exit->diffInHours($entry).'h';
+    return  $exit->diffInHours($entry) . 'h';
 }
 
 function remove_uneccessary_character($string, $characters)

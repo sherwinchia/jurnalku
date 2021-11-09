@@ -4,7 +4,6 @@ namespace App\Http\Livewire\User\Portfolio;
 
 use App\Http\Traits\Alert;
 use App\Models\Portfolio;
-use App\Models\PortfolioBalance;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
@@ -13,21 +12,17 @@ class PortfolioIndex extends Component
 {
     use Alert, AuthorizesRequests;
 
-    protected $listeners = ['refreshComponent'=>'$refresh'];
+    protected $listeners = ['refreshComponent' => '$refresh'];
 
     public $portfolio;
     public $deleteModal = false;
     public $formModal = false;
-    public $balanceModal = false;
     public $edit = false;
 
-    // Balance
-    public $type;
-    public $amount;
-
     protected $rules = [
-        'portfolio.name'=>'required|string',
-        'portfolio.currency'=>'required|string|max:4',
+        'portfolio.name' => 'required|string',
+        'portfolio.currency' => 'required|string|max:4',
+        'portfolio.balance' => 'required|numeric|min:1'
     ];
 
     public function mount()
@@ -37,6 +32,15 @@ class PortfolioIndex extends Component
 
     public function showBlankFormModal()
     {
+        try {
+            $this->authorize('add-portfolio');
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+
         $this->portfolio = new Portfolio();
         $this->edit = false;
         $this->formModal = true;
@@ -58,22 +62,6 @@ class PortfolioIndex extends Component
         $this->portfolio = $portfolio;
         $this->edit = true;
         $this->formModal = true;
-    }
-
-    public function showBalanceModal($id)
-    {
-        try {
-            $portfolio = Portfolio::findOrFail($id);
-        } catch (\Exception $e) {
-            return $this->alert([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ]);
-        }
-        $this->portfolio = $portfolio;
-        $this->balanceModal = true;
-        $this->amount = null;
-        $this->type = null;
     }
 
     public function submit()
@@ -113,37 +101,6 @@ class PortfolioIndex extends Component
         ]);
     }
 
-    public function submitBalance()
-    {
-        try {
-            $this->authorize('add-portfolio-balance', $this->portfolio);
-        } catch (\Exception $e) {
-            return $this->alert([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ]);
-        }
-
-        $data = $this->validate([
-            'type' => 'required',
-            'amount' => 'required|numeric',
-        ]);
-
-        $data['portfolio_id'] = $this->portfolio->id;
-
-        PortfolioBalance::create($data);
-
-        $this->portfolio->balance = $this->portfolio->calculate_balance;
-        $this->portfolio->save();
-
-        $this->balanceModal = false;
-
-        return $this->alert([
-            "type" => "success",
-            "message" => 'Balance has been successfully added.'
-        ]);
-    }
-
     public function showDeleteModal($id)
     {
         try {
@@ -178,7 +135,7 @@ class PortfolioIndex extends Component
                 "type" => "error",
                 "message" => "Failed to delete the portfolio. Each user must have at least one portfolio!"
             ]);
-        }else {
+        } else {
             $portfolio->delete();
             $this->alert([
                 "type" => "success",
@@ -193,7 +150,7 @@ class PortfolioIndex extends Component
     public function render()
     {
         return view('livewire.user.portfolio.portfolio-index', [
-            'portfolios' => current_user()->portfolios->load('trades','balances')
+            'portfolios' => current_user()->portfolios->sortBy('id')->load('trades')
         ]);
     }
 }
