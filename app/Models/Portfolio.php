@@ -39,6 +39,21 @@ class Portfolio extends Model
         return $this->trades->where('status', '=', 'lose')->count();
     }
 
+    public function getTotalTradesAttribute()
+    {
+        return $this->trades->count();
+    }
+
+    public function getWinPercentageAttribute()
+    {
+        return $this->total_win / ($this->total_win + $this->total_lose) * 100 . '%';
+    }
+
+    public function getLosePercentageAttribute()
+    {
+        return $this->total_lose / ($this->total_win + $this->total_lose) * 100 . '%';
+    }
+
     public function trades()
     {
         return $this->hasMany('App\Models\Trade');

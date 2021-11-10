@@ -77,7 +77,7 @@ function decimal_to_human($raw, string $currency = null, bool $percentage = fals
         }
         $new_format = $currency . $new_format;
     } elseif ($percentage) {
-        $new_format = number_format($new_format, 0, '.', '.') . '%';
+        $new_format = number_format($new_format, 1, '.', '.') . '%';
     } else {
         $new_format = number_format($new_format, 0, '.', '.');
     }

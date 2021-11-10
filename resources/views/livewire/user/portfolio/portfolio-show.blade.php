@@ -6,7 +6,9 @@
                 <x-ui.select wire:model="perPage">
                     <option value="10">10</option>
                     <option value="15">15</option>
-                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
                 </x-ui.select>
             </x-ui.form-section>
         </div>
@@ -15,7 +17,7 @@
             <x-jet-button wire:click="exportPortfolio" wire:loading.attr="disabled">
                 Export Portfolio
                 <span wire:loading wire:target="exportPortfolio"
-                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
+                class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
                 </span>
             </x-jet-button>
             <x-jet-button wire:click="showAddTradeModal" wire:loading.attr="disabled">
@@ -29,8 +31,12 @@
     <thead>
         <x-ui.table-row>
             <x-ui.table-header>
-                <a wire:click.prevent="sortBy('favorite')" role="button">Favorite</a>
-                @include("admin.partials.sort-icon", ["field"=>'favorite' ])
+                <button class="focus:outline-none" wire:loading.attr="disabled" wire:click.prevent="sortBy('favorite')" role="button">Favorite
+                    @include("admin.partials.sort-icon", ["field"=>'favorite' ])
+                    <span wire:loading wire:target="sortBy('favorite')"
+                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-black rounded-full animate-spin">
+                </button>
+            </span>
             </x-ui.table-header>
             <x-ui.table-header>
                 <a wire:click.prevent="sortBy('instrument')" role="button">Instrument</a>

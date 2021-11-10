@@ -8,14 +8,14 @@
     <x-ui.alt-table class="w-full overflow-y-auto border lg:w-96 max-h-96">
         <thead>
             <x-ui.table-row>
-                <x-ui.table-header>Name</x-ui.table-header>
-                <x-ui.table-header class="text-center">Action</x-ui.table-header>
+                <x-ui.table-header class="">Name</x-ui.table-header>
+                <x-ui.table-header class="text-center ">Action</x-ui.table-header>
             </x-ui.table-row>
         </thead>
         <tbody>
             @foreach($mistakes as $key => $mistake)
             <x-ui.table-row>
-                <x-ui.table-data>{{ ucfirst($mistake) }}</x-ui.table-data>
+                <x-ui.table-data class="">{{ ucfirst($mistake) }}</x-ui.table-data>
                 <x-ui.table-data>
                     <div class="flex justify-center text-gray-700">
                         <a role="button" wire:click="showFormModal('{{$key}}')">

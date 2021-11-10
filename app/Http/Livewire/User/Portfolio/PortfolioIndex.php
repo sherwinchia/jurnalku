@@ -37,7 +37,7 @@ class PortfolioIndex extends Component
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => $e->getMessage()
+                "message" => "You've reached limit number of portfolio."
             ]);
         }
 

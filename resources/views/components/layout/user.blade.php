@@ -54,7 +54,7 @@
                     <x-icon.x class="w-6 h-6" />
                 </button>
             </div>
-            
+
             <!-- Balance stats -->
             {{-- <livewire:user.shared.compact-status/> --}}
 
@@ -221,6 +221,7 @@
     </div>
     <livewire:shared.components.alert />
     @livewireScripts
+    @stack('scripts')
     <script>
         const setup = () => {
             return {

@@ -21,4 +21,18 @@
         </div>
     </div>
     @endforeach
+
+    @push('scripts')
+    <script>
+        const shiftArray = async () => {
+            await new Promise(resolve => setTimeout(()=>{
+                @this.shift();
+            }, 5000));
+        }
+
+        Livewire.on('alert-new-alert', () => {
+            shiftArray();
+        })
+    </script>
+    @endpush
 </div>

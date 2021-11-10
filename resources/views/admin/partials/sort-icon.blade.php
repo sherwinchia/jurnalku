@@ -1,7 +1,7 @@
 @if ($sortField !== $field)
-    <x-icon.sort-descending class="w-4 h-4 inline-block"/>
+    <x-icon.sort-descending class="inline-block w-4 h-4" wire:loading.remove/>
 @elseif($sortAsc)
-    <x-icon.sort-ascending class="w-4 h-4 inline-block"/>
+    <x-icon.sort-ascending class="inline-block w-4 h-4" wire:loading.remove/>
 @else
-    <x-icon.sort-descending class="w-4 h-4 inline-block"/>
+    <x-icon.sort-descending class="inline-block w-4 h-4" wire:loading.remove/>
 @endif

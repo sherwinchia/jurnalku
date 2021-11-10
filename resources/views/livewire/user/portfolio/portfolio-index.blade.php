@@ -8,10 +8,10 @@
     </div>
     <div class="grid grid-cols-8 gap-3">
         @foreach($portfolios as $portfolio)
-        <x-ui.card class="flex col-span-8 overflow-hidden border border-gray-200 md:col-span-4 lg:col-span-2">
-            <a class="flex-grow" href="{{ route('user.portfolios.show', $portfolio->id) }}">
-                <div class="flex flex-col p-4">
-                    <x-ui.header class="font-medium ">{{ $portfolio->name }}</x-ui.header>
+        <x-ui.card class="flex h-40 col-span-8 overflow-hidden border border-gray-200 md:col-span-4 xl:col-span-2">
+            <a class="flex-grow " href="{{ route('user.portfolios.show', $portfolio->id) }}">
+                <div class="flex flex-col h-full p-3 bg-gray-50">
+                    <h3 class="text-sm tracking-widest">{{ $portfolio->name }}</h3>
                     <div class="flex items-end space-x-2 ">
                         <span class="text-lg font-medium tracking-widest">{{ decimal_to_human($portfolio->calculate_balance,$portfolio->currency) }}</span>
                         <div class="flex items-center {{ $portfolio->calculate_growth_percentage != 0 ? ($portfolio->calculate_growth_percentage > 0 ?'text-green-500' : 'text-red-500') : '' }}">
@@ -22,16 +22,21 @@
                             <x-icon.chevron-down class="w-4 h-4"/>
                             @endif
                         </div>
-                       
+                    </div>
+                    <div class="grid grid-cols-3 gap-1 mt-auto text-xs">
+                        <span>Win</span>
+                        <span class="col-span-2"> : {{ decimal_to_human($portfolio->win_percentage,null,true) }}</span>
+                        <span>Lose</span>
+                        <span class="col-span-2"> : {{ decimal_to_human($portfolio->lose_percentage,null,true) }}</span>
                     </div>
                 </div>
             </a>
-            <div class="flex flex-col justify-start px-2 py-6 space-y-4 text-gray-700 bg-gray-50">
+            <div class="flex flex-col justify-end p-2 space-y-2 text-white bg-primary-500">
                 <a class="mx-1 text-lg" role="button" wire:click="showFormModal('{{ $portfolio->id }}')">
-                    <x-icon.pencil-alt class="w-5 h-5" />
+                    <x-icon.pencil-alt class="w-4 h-4" />
                 </a>
                 <a class="mx-1 text-lg" role="button" wire:click="showDeleteModal('{{ $portfolio->id }}')">
-                    <x-icon.trash class="w-5 h-5" />
+                    <x-icon.trash class="w-4 h-4" />
                 </a>
             </div>
         </x-ui.card>

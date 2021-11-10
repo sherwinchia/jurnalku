@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:user', 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('home', [UserDashboardController::class, 'index'])->name('home.index');
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-        Route::resource('portfolios', PortfolioController::class)->only('index','show');
+        Route::resource('portfolios', PortfolioController::class)->only('index', 'show');
         Route::get('portfolios/trades/{trade}', [PortfolioController::class, 'showTrade'])->name('trades.show');
         Route::get('export/portfolio/{portfolio}', [PortfolioController::class, 'export'])->name('portfolio.export');
     });

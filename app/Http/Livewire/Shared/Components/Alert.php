@@ -23,6 +23,12 @@ class Alert extends Component
     public function new($data)
     {
         array_push($this->alerts, $data);
+        return $this->emit('alert-new-alert');
+    }
+
+    public function shift()
+    {
+        array_shift($this->alerts);
     }
 
     public function remove($key)
