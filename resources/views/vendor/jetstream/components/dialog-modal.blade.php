@@ -3,7 +3,7 @@
 <x-jet-modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
     <div class="px-6 py-4">
         @if(isset($title))
-        <div class="py-2 text-lg font-semibold border-b">
+        <div class="flex items-center justify-between py-2 text-lg font-medium border-b">
             {{ $title }}
         </div>
         @endif

@@ -30,8 +30,10 @@
             @else
             <x-ui.table-header>
                 @if(array_key_exists("field", $column) && isset($column["field"]))
-                <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ $column["name"] }}</a>
-                @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                <x-ui.sort-button target-field="{{ $column['field'] }}" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('{{$column['field']}}')">
+                    {{ $column["name"] }}
+                </x-ui.sort-button>
                 @else
                 {{ $column["name"] }}
                 @endif

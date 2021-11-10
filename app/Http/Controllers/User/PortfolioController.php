@@ -25,7 +25,7 @@ class PortfolioController extends Controller
     public function show(Portfolio $portfolio)
     {
         try {
-            $this->authorize('manage-portfolio', $portfolio);
+            $this->authorize('view', $portfolio);
         } catch (\Exception $e) {
             $this->altAlert([
                 "type" => "error",
@@ -36,24 +36,10 @@ class PortfolioController extends Controller
         return view(self::PATH . 'show', compact('portfolio'));
     }
 
-    public function showTrade(Trade $trade)
-    {
-        try {
-            $this->authorize('manage-trade', $trade);
-        } catch (\Exception $e) {
-            $this->altAlert([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ]);
-            return redirect()->route('user.portfolios.index');
-        }
-        return view(self::PATH . 'show-trade', compact('trade'));
-    }
-
     public function export(Portfolio $portfolio)
     {
         try {
-            $this->authorize('manage-portfolio', $portfolio);
+            $this->authorize('export', $portfolio);
             return Excel::download(new PortfolioExport($portfolio), 'portfolio-'.substr(md5(mt_rand()), 0, 7).'.xlsx');
         } catch (\Exception $e) {
             $this->altAlert([

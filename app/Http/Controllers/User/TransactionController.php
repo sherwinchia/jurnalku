@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Alert;
+use App\Models\Transaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,16 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction)
     {
-        return view(self::PATH . 'index');
+
+        try {
+            $this->authorize('view', $transaction);
+        } catch (\Exception $e) {
+            $this->altAlert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+            return redirect()->route('user.transactions.index');
+        }
+        return view(self::PATH . 'show', compact('transaction'));
     }
 }

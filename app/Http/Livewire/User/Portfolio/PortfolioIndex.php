@@ -33,7 +33,7 @@ class PortfolioIndex extends Component
     public function showBlankFormModal()
     {
         try {
-            $this->authorize('add-portfolio');
+            $this->authorize('create', Portfolio::class);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -50,7 +50,7 @@ class PortfolioIndex extends Component
     {
         try {
             $portfolio = Portfolio::findOrFail($id);
-            $this->authorize('manage-portfolio', $portfolio);
+            $this->authorize('update', $portfolio);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -68,7 +68,7 @@ class PortfolioIndex extends Component
     {
         if ($this->edit) {
             try {
-                $this->authorize('manage-portfolio', $this->portfolio);
+                $this->authorize('update', $this->portfolio);
                 $message = 'Portfolio has been successfully updated.';
             } catch (\Exception $e) {
                 return $this->alert([
@@ -78,7 +78,7 @@ class PortfolioIndex extends Component
             }
         } else {
             try {
-                $this->authorize('add-portfolio');
+                $this->authorize('add-portfolio', Porfolio::class);
                 $message = 'Portfolio has been successfully added.';
             } catch (\Exception $e) {
                 return $this->alert([
@@ -105,7 +105,7 @@ class PortfolioIndex extends Component
     {
         try {
             $portfolio = Portfolio::findOrFail($id);
-            $this->authorize('manage-portfolio', $portfolio);
+            $this->authorize('delete', $portfolio);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -122,7 +122,7 @@ class PortfolioIndex extends Component
         $portfolio = $this->portfolio;
 
         try {
-            $this->authorize('manage-portfolio', $portfolio);
+            $this->authorize('delete', $portfolio);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",

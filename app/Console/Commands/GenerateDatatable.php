@@ -104,14 +104,14 @@ class GenerateDatatable extends Command
             <x-ui.table-row>
                 @foreach ($columns as $column)
                     @if ( array_key_exists("sortable", $column) && $column["sortable"] === true)
-                    <x-ui.table-header class="{{ $column[\'align\'] ?? \'\' }}>
-                        <x-ui.sort-button target-field="{{ $column["field"] }}" :sort-field="$sortField" :sort-asc="$sortAsc"
-                            class="font-medium" wire:click.prevent="sortBy(\'{{$column["field"]}}\')">
+                    <x-ui.table-header class="{{ $column[\'align\'] ?? \'\' }}">
+                        <x-ui.sort-button target-field="{{ $column[\'field\'] }}" :sort-field="$sortField" :sort-asc="$sortAsc"
+                            class="font-medium" wire:click.prevent="sortBy(\'{{$column[\'field\']}}\')">
                             {{ $column["name"] }}
                         </x-ui.sort-button>
                     </x-ui.table-header>
                     @else
-                    <x-ui.table-header class="{{ $column[\'align\'] ?? \'\' }}>
+                    <x-ui.table-header class="{{ $column[\'align\'] ?? \'\' }}">
                         {{ $column["name"] }}
                     </x-ui.table-header>
                     @endif
@@ -124,7 +124,7 @@ class GenerateDatatable extends Command
             <x-ui.table-row>
                 @foreach ($columns as $column)
                 @if (array_key_exists("field", $column) && $column["field"] === "action")
-                <x-ui.table-data class="{{ $column[\'align\'] ?? \'\' }}>
+                <x-ui.table-data class="{{ $column[\'align\'] ?? \'\' }}">
                     <div class="flex text-gray-600">
                         @foreach ($actions as $action)
                         @if ($action === "show")
@@ -144,9 +144,9 @@ class GenerateDatatable extends Command
                         @endif
                         @endforeach
                     </div>
-                </x-ui.table-data class="{{ $column[\'align\'] ?? \'\' }}>
+                </x-ui.table-data>
                 @else
-                <x-ui.table-data>
+                <x-ui.table-data class="{{ $column[\'align\'] ?? \'\' }}">
                     @if (array_key_exists("relation", $column) && isset($column["relation"]))
                     @if (array_key_exists("format", $column) && isset($column["format"]))
                     @if (count($column["format"]) > 1)
@@ -166,10 +166,15 @@ class GenerateDatatable extends Command
                     @else
                     {{ $column["format"][0](data_get($' . $model_lowercase . ',$column["field"])) }}
                     @endif
+                    @elseif(array_key_exists("custom", $column) && isset($column["custom"]))
+                    @if($column["field"] == "status")
+                    <x-ui.status type="{{ data_get($transaction,$column[\'field\']) }}">{{ ucfirst(data_get($transaction,$column["field"])) }}</x-ui.status>
+                    @endif
                     @else
                     {{ data_get($' . $model_lowercase . ',$column["field"]) }}
                     @endif
                     @endif
+
                 </x-ui.table-data>
                 @endif
                 @endforeach

@@ -41,7 +41,7 @@ class TransactionTable extends Component
             "name" => "Status",
             "field" => "status",
             "sortable" => true,
-            "custom_component" => '<x-ui.status type="{{ $transaction->status }}">{{ $transaction->status }}</x-ui.status>'
+            "custom" => true,
         ],
         [
             "name" => "Net Total",

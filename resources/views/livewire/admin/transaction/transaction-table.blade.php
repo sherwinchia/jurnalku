@@ -30,8 +30,10 @@
             @else
             <th class="px-6 py-3 text-sm leading-4 tracking-wider text-left border-b-2">
                 @if(array_key_exists("field", $column) && isset($column["field"]))
-                <a wire:click.prevent="sortBy('{{ $column['field'] }}')" role="button">{{ $column["name"] }}</a>
-                @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                <x-ui.sort-button target-field="{{ $column['field'] }}" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('{{$column['field']}}')">
+                    {{ $column["name"] }}
+                </x-ui.sort-button>
                 @else
                 {{ $column["name"] }}
                 @endif
@@ -89,6 +91,10 @@
                 1))) }}
                 @else
                 {{ $column["format"][0](data_get($transaction,$column["field"])) }}
+                @endif
+                @elseif(array_key_exists("custom", $column) && isset($column["custom"]))
+                @if($column['field'] == 'status')
+                <x-ui.status type="{{ data_get($transaction,$column['field']) }}">{{ ucfirst(data_get($transaction,$column["field"])) }}</x-ui.status>
                 @endif
                 @else
                 {{ data_get($transaction,$column["field"]) }}

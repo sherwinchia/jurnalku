@@ -57,7 +57,7 @@ class PortfolioShow extends Component
     public function showAddTradeModal()
     {
         try {
-            $this->authorize('add-trade', $this->portfolio);
+            $this->authorize('create', [Trade::class, $this->portfolio]);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -77,7 +77,7 @@ class PortfolioShow extends Component
     {
         try {
             $trade = Trade::findOrFail($id);
-            $this->authorize('manage-trade', $trade);
+            $this->authorize('update', $trade);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -104,7 +104,7 @@ class PortfolioShow extends Component
     {
         if ($this->edit) {
             try {
-                $this->authorize('manage-trade', $this->trade);
+                $this->authorize('update', $this->trade);
                 $message = 'Trade has been successfully updated.';
             } catch (\Exception $e) {
                 return $this->alert([
@@ -114,7 +114,7 @@ class PortfolioShow extends Component
             }
         } else {
             try {
-                $this->authorize('add-trade', $this->portfolio);
+                $this->authorize('create', [Trade::class, $this->portfolio]);
                 $message = 'Trade has been successfully added.';
             } catch (\Exception $e) {
                 return $this->alert([
@@ -180,7 +180,7 @@ class PortfolioShow extends Component
     {
         try {
             $trade = Trade::findOrFail($id);
-            $this->authorize('manage-trade', $trade);
+            $this->authorize('delete', $trade);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -195,7 +195,7 @@ class PortfolioShow extends Component
     public function deleteTrade()
     {
         try {
-            $this->authorize('manage-trade', $this->trade);
+            $this->authorize('delete', $this->trade);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
@@ -215,7 +215,7 @@ class PortfolioShow extends Component
     {
         try {
             $trade = Trade::findOrFail($id);
-            $this->authorize('manage-trade', $trade);
+            $this->authorize('favorite', $trade);
             $trade->favorite = !$trade->favorite;
             $trade->save();
         } catch (\Exception $e) {

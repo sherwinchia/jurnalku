@@ -9,6 +9,7 @@ use App\Http\Controllers\User\TransactionController as UserTransactionController
 use App\Http\Controllers\User\HomeController as UserDashboardController;
 use App\Http\Controllers\User\PortfolioController;
 use App\Http\Controllers\User\SettingController;
+use App\Http\Controllers\User\TradeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,9 +45,9 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::get('home', [UserDashboardController::class, 'index'])->name('home.index');
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::resource('portfolios', PortfolioController::class)->only('index', 'show');
-        Route::get('portfolios/trades/{trade}', [PortfolioController::class, 'showTrade'])->name('trades.show');
+        Route::resource('trades', TradeController::class)->only( 'show');
         Route::get('export/portfolio/{portfolio}', [PortfolioController::class, 'export'])->name('portfolio.export');
-        Route::resource('purchases', UserTransactionController::class)->only('index', 'show');
+        Route::resource('transactions', UserTransactionController::class)->only('index', 'show');
     });
 });
 

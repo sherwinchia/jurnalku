@@ -197,7 +197,7 @@
                                 </div>
                                 <ul class="flex flex-col p-2 my-2 space-y-1">
                                     <li>
-                                        <a href="{{ route('user.purchases.index') }}"
+                                        <a href="{{ route('user.transactions.index') }}"
                                             class="block px-2 py-1 transition rounded-md hover:bg-gray-100">Purchase
                                             History</a>
                                     </li>
