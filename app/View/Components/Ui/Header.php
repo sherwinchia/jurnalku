@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\ui;
+namespace App\View\Components\Ui;
 
 use Illuminate\View\Component;
 
-class TableData extends Component
+class Header extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class TableData extends Component
      */
     public function render()
     {
-        return view('components.ui.table-data');
+        return view('components.ui.header');
     }
 }

@@ -4,7 +4,7 @@
         <div class="border-l-4 border-{{ $alert['color'] }} flex items-center gap-4 p-2 max-w-md justify-between">
             <div class="flex items-center gap-4">
                 <div class="w-10">
-                    @if($alert['type']=='success')
+                    @if ($alert['type'] == 'success')
                     <x-icon.check-circle class="w-10 h-10 text-{{ $alert['color'] }} pl-2" />
                     @elseif($alert['type']=='warning')
                     <x-icon.exclamation-circle class="w-10 h-10 text-{{ $alert['color'] }} pl-2" />
@@ -17,7 +17,7 @@
                     <p class="text-xs ">{{ $alert['message'] }}</p>
                 </div>
             </div>
-            <x-icon.x wire:click="remove({{ $key }})" class="w-4 h-4 text-gray-400 cursor-pointer"/>
+            <x-icon.x wire:click="remove({{ $key }})" class="w-4 h-4 text-gray-400 cursor-pointer" />
         </div>
     </div>
     @endforeach
@@ -25,7 +25,7 @@
     @push('scripts')
     <script>
         const shiftArray = async () => {
-            await new Promise(resolve => setTimeout(()=>{
+            await new Promise(resolve => setTimeout(() => {
                 @this.shift();
             }, 5000));
         }

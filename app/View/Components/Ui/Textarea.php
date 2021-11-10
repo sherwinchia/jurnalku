@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\ui;
+namespace App\View\Components\Ui;
 
 use Illuminate\View\Component;
 
-class Card extends Component
+class Textarea extends Component
 {
     /**
      * Create a new component instance.
@@ -13,6 +13,7 @@ class Card extends Component
      */
     public function __construct()
     {
+        //
     }
 
     /**
@@ -22,6 +23,6 @@ class Card extends Component
      */
     public function render()
     {
-        return view('components.ui.card');
+        return view('components.ui.textarea');
     }
 }

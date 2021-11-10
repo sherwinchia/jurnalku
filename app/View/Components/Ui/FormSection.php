@@ -1,19 +1,21 @@
 <?php
 
-namespace App\View\Components\ui;
+namespace App\View\Components\Ui;
 
 use Illuminate\View\Component;
 
-class Select extends Component
+class FormSection extends Component
 {
+    public $field, $required;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($field, $required)
     {
-        //
+        $this->field = $field;
+        $this->required = $required;
     }
 
     /**
@@ -23,6 +25,6 @@ class Select extends Component
      */
     public function render()
     {
-        return view('components.ui.select');
+        return view('components.ui.form-section');
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\ui;
+namespace App\View\Components\Ui;
 
 use Illuminate\View\Component;
 
-class AltNavbarLink extends Component
+class AltTable extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class AltNavbarLink extends Component
      */
     public function render()
     {
-        return view('components.ui.alt-navbar-link');
+        return view('components.ui.alt-table');
     }
 }

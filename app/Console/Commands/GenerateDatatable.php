@@ -105,8 +105,10 @@ class GenerateDatatable extends Command
                 @foreach ($columns as $column)
                     @if ( array_key_exists("sortable", $column) && $column["sortable"] === true)
                     <x-ui.table-header class="{{ $column[\'align\'] ?? \'\' }}>
-                        <a wire:click.prevent="sortBy(\'{{ $column[\'field\'] }}\')" role="button">{{ $column["name"] }}</a>
-                        @include("admin.partials.sort-icon", ["field"=>$column["field"] ])
+                        <x-ui.sort-button target-field="{{ $column["field"] }}" :sort-field="$sortField" :sort-asc="$sortAsc"
+                            class="font-medium" wire:click.prevent="sortBy(\'{{$column["field"]}}\')">
+                            {{ $column["name"] }}
+                        </x-ui.sort-button>
                     </x-ui.table-header>
                     @else
                     <x-ui.table-header class="{{ $column[\'align\'] ?? \'\' }}>

@@ -1,19 +1,20 @@
 <?php
 
-namespace App\View\Components\ui;
+namespace App\View\Components\Ui;
 
 use Illuminate\View\Component;
 
-class AltTable extends Component
+class Form extends Component
 {
+    public $heading;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($heading)
     {
-        //
+        $this->heading = $heading;
     }
 
     /**
@@ -23,6 +24,6 @@ class AltTable extends Component
      */
     public function render()
     {
-        return view('components.ui.alt-table');
+        return view('components.ui.form');
     }
 }

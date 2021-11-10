@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PromocodeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\User\TransactionController as UserTransactionController;
 use App\Http\Controllers\User\HomeController as UserDashboardController;
 use App\Http\Controllers\User\PortfolioController;
 use App\Http\Controllers\User\SettingController;
@@ -45,6 +46,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::resource('portfolios', PortfolioController::class)->only('index', 'show');
         Route::get('portfolios/trades/{trade}', [PortfolioController::class, 'showTrade'])->name('trades.show');
         Route::get('export/portfolio/{portfolio}', [PortfolioController::class, 'export'])->name('portfolio.export');
+        Route::resource('purchases', UserTransactionController::class)->only('index', 'show');
     });
 });
 

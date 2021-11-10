@@ -17,7 +17,7 @@
             <x-jet-button wire:click="exportPortfolio" wire:loading.attr="disabled">
                 Export Portfolio
                 <span wire:loading wire:target="exportPortfolio"
-                class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
+                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
                 </span>
             </x-jet-button>
             <x-jet-button wire:click="showAddTradeModal" wire:loading.attr="disabled">
@@ -31,49 +31,63 @@
     <thead>
         <x-ui.table-row>
             <x-ui.table-header>
-                <button class="focus:outline-none" wire:loading.attr="disabled" wire:click.prevent="sortBy('favorite')" role="button">Favorite
-                    @include("admin.partials.sort-icon", ["field"=>'favorite' ])
-                    <span wire:loading wire:target="sortBy('favorite')"
-                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-black rounded-full animate-spin">
-                </button>
-            </span>
+                <x-ui.sort-button target-field="favorite" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('favorite')">
+                    Fav
+                </x-ui.sort-button>
             </x-ui.table-header>
             <x-ui.table-header>
-                <a wire:click.prevent="sortBy('instrument')" role="button">Instrument</a>
-                @include("admin.partials.sort-icon", ["field"=>'instrument' ])
+                <x-ui.sort-button target-field="instrument" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('instrument')">
+                    Instrument
+                </x-ui.sort-button>
             </x-ui.table-header>
             <x-ui.table-header class="text-center">
-                <a wire:click.prevent="sortBy('quantity')" role="button">Quantity</a>
-                @include("admin.partials.sort-icon", ["field"=>'quantity' ])
+                <x-ui.sort-button target-field="quantity" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('quantity')">
+                    Quantity
+                </x-ui.sort-button>
             </x-ui.table-header>
             <x-ui.table-header class="text-center">
-                <a wire:click.prevent="sortBy('entry_date')" role="button">Entry Date</a>
-                @include("admin.partials.sort-icon", ["field"=>'entry_date' ])
+                <x-ui.sort-button target-field="entry_date" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('entry_date')">
+                    Entry Date
+                </x-ui.sort-button>
             </x-ui.table-header>
             <x-ui.table-header class="text-center">
-                <a wire:click.prevent="sortBy('entry_price')" role="button">Entry Price</a>
-                @include("admin.partials.sort-icon", ["field"=>'entry_price' ])
+                <x-ui.sort-button target-field="entry_price" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('entry_price')">
+                    Entry Price
+                </x-ui.sort-button>
             </x-ui.table-header>
             <x-ui.table-header class="text-center">
-                <a wire:click.prevent="sortBy('exit_price')" role="button">Exit Price</a>
-                @include("admin.partials.sort-icon", ["field"=>'favorite' ])
+                <x-ui.sort-button target-field="exit_price" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('exit_price')">
+                    Exit Price
+                </x-ui.sort-button>
             </x-ui.table-header>
             <x-ui.table-header class="text-center">
-                <a wire:click.prevent="sortBy('exit_date')" role="button">Exit Date</a>
-                @include("admin.partials.sort-icon", ["field"=>'exit_date' ])
+                <x-ui.sort-button target-field="exit_date" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('exit_date')">
+                    Exit Date
+                </x-ui.sort-button>
             </x-ui.table-header>
             <x-ui.table-header class="text-center">
-                <a wire:click.prevent="sortBy('return')" role="button">Return ({{ $portfolio->currency }})</a>
-                @include("admin.partials.sort-icon", ["field"=>'return' ])
+                <x-ui.sort-button target-field="return" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('return')">
+                    Return
+                </x-ui.sort-button>
             </x-ui.table-header>
             <x-ui.table-header class="text-center">
-                <a wire:click.prevent="sortBy('return_percentage')" role="button">Return (%)</a>
-                @include("admin.partials.sort-icon", ["field"=>'return_percentage' ])
+                <x-ui.sort-button target-field="return_percentage" :sort-field="$sortField" :sort-asc="$sortAsc"
+                    class="font-medium" wire:click.prevent="sortBy('return_percentage')">
+                    Return (%)
+                </x-ui.sort-button>
             </x-ui.table-header>
-            <x-ui.table-header class="text-center">
+            <x-ui.table-header class="font-medium text-center">
                 Hold Time
             </x-ui.table-header>
-            <x-ui.table-header class="text-center">
+            <x-ui.table-header class="font-medium text-center">
                 Actions
             </x-ui.table-header>
         </x-ui.table-row>
@@ -82,10 +96,24 @@
         @foreach ($trades as $trade)
         <x-ui.table-row>
             <x-ui.table-data class="flex items-center">
-                @if($trade->favorite)
-                <x-icon.solid-star class="w-5 h-5 text-yellow-500 cursor-pointer" wire:click="favorite({{ $trade->id }})"/>
+                @if ($trade->favorite)
+                <button class="flex items-center w-5 h-5 focus:outline-none" wire:loading.attr="disabled"
+                    wire:click="favorite({{ $trade->id }})">
+                    <x-icon.solid-star class="w-5 h-5 text-yellow-500" wire:loading.remove
+                        wire:target="favorite('{{ $trade->id }}')" />
+                    <span wire:loading wire:target="favorite('{{ $trade->id }}')"
+                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-black rounded-full animate-spin">
+                    </span>
+                </button>
                 @else
-                <x-icon.outline-star class="w-5 h-5 cursor-pointer" wire:click="favorite({{ $trade->id }})"/>
+                <button class="flex items-center h-5 focus:outline-none" wire:loading.attr="disabled"
+                    wire:click="favorite({{ $trade->id }})">
+                    <x-icon.outline-star class="w-5 h-5 " wire:loading.remove
+                        wire:target="favorite('{{ $trade->id }}')" />
+                    <span wire:loading wire:target="favorite('{{ $trade->id }}')"
+                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-black rounded-full animate-spin">
+                    </span>
+                </button>
                 @endif
             </x-ui.table-data>
             <x-ui.table-data>
@@ -106,11 +134,13 @@
             <x-ui.table-data class="text-center">
                 {{ isset($trade->exit_date) ? date_to_human($trade->exit_date, 'd/m/Y') : '-' }}
             </x-ui.table-data>
-            <x-ui.table-data class="{{ isset($trade->return) ? ($trade->return > 0 ? 'text-green-500' : 'text-red-500') : '-' }} text-center">
+            <x-ui.table-data
+                class="{{ isset($trade->return) ? ($trade->return > 0 ? 'text-green-500' : 'text-red-500') : '-' }} text-center">
                 {{ isset($trade->exit_date) ? decimal_to_human($trade->return, $portfolio->currency) : '-' }}
             </x-ui.table-data>
-            <x-ui.table-data class="{{ isset($trade->return) ? ($trade->return > 0 ? 'text-green-500' : 'text-red-500') : '-' }} text-center">
-                {{ isset($trade->exit_date) ? decimal_to_human($trade->return_percentage,null,true) : '-' }}
+            <x-ui.table-data
+                class="{{ isset($trade->return) ? ($trade->return > 0 ? 'text-green-500' : 'text-red-500') : '-' }} text-center">
+                {{ isset($trade->exit_date) ? decimal_to_human($trade->return_percentage, null, true) : '-' }}
             </x-ui.table-data>
             <x-ui.table-data class="text-center">
                 {{ isset($trade->exit_date) ? date_interval($trade->exit_date, $trade->entry_date) : '-' }}
@@ -151,11 +181,11 @@
         </div>
         </div>
 
-        <x-jet-dialog-modal  wire:model="tradeFormModal">
+        <x-jet-dialog-modal wire:model="tradeFormModal">
             <x-slot name="title">
                 <div class="flex items-center justify-between">
                     <span>{{ $edit ? 'Update' : 'Add' }} Trade</span>
-                    @if($edit)
+                    @if ($edit)
                     <x-ui.status type="{{ $trade->status }}">{{ ucfirst($trade->status) }}</x-ui.status>
                     @endif
                 </div>
@@ -166,61 +196,66 @@
                         <ul class="flex flex-wrap gap-4 p-0 pb-2">
                             <template x-for="(tab, index) in tabs" :key="index">
                                 <li class="pb-1 cursor-pointer text-md"
-                                    :class="activeTab===index ? 'text-primary-500 border-primary-500 border-b-2' : ''" @click="activeTab = index"
-                                    x-text="tab">
+                                    :class="activeTab===index ? 'text-primary-500 border-primary-500 border-b-2' : ''"
+                                    @click="activeTab = index" x-text="tab">
                                 </li>
                             </template>
                         </ul>
                     </div>
 
                     <div>
-                        <div x-show="activeTab===0" >
+                        <div x-show="activeTab===0">
                             <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
                                 <x-ui.form-section field="Instrument" required="true" class="col-span-4 sm:col-span-2">
                                     <x-ui.select wire:model.lazy="trade.instrument">
                                         <option value="null" disabled>Choose instrument</option>
-                                        @foreach($settings->instruments as $instrument)
+                                        @foreach ($settings->instruments as $instrument)
                                         <option value="{{ $instrument }}">{{ $instrument }}</option>
                                         @endforeach
                                     </x-ui.select>
-                                    @error("trade.instrument")
+                                    @error('trade.instrument')
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>
 
                                 <x-ui.form-section field="Quantity" required="true" class="col-span-4 sm:col-span-2">
                                     <x-jet-input wire:model.defer="trade.quantity" type="number" />
-                                    @error("trade.quantity")
+                                    @error('trade.quantity')
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>
 
                                 <x-ui.form-section field="Entry Date" required="true" class="col-span-4 sm:col-span-2">
                                     <x-jet-input wire:model.defer="trade.entry_date" type="datetime-local" />
-                                    @error("trade.entry_date")
+                                    @error('trade.entry_date')
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>
 
                                 <x-ui.form-section field="Entry Price" required="true" class="col-span-4 sm:col-span-2">
                                     <div class="relative flex w-full">
-                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                                        <div
+                                            class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
                                             {{ $portfolio->currency }}
                                         </div>
-                                        <x-jet-input wire:model.defer="trade.entry_price" type="number" class="w-full pl-14" />
+                                        <x-jet-input wire:model.defer="trade.entry_price" type="number"
+                                            class="w-full pl-14" />
                                     </div>
-                                    @error("trade.entry_price")
+                                    @error('trade.entry_price')
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>
 
                                 <x-ui.form-section field="Take Profit" required="true" class="col-span-4 sm:col-span-2">
                                     <div class="relative flex w-full">
-                                        <x-ui.select wire:model="takeProfitType" class="absolute inset-y-0 left-0 w-20 text-sm">
-                                            <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}</option>
+                                        <x-ui.select wire:model="takeProfitType"
+                                            class="absolute inset-y-0 left-0 w-20 text-sm">
+                                            <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}
+                                            </option>
                                             <option value="%">%</option>
                                         </x-ui.select>
-                                        <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full" style="padding-left: 5.5rem;"/>
+                                        <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full"
+                                            style="padding-left: 5.5rem;" />
                                     </div>
                                     <!-- <div class="relative flex w-full">
                                         <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
@@ -228,18 +263,21 @@
                                         </div>
                                         <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full pl-14" />
                                     </div> -->
-                                    @error("trade.take_profit")
+                                    @error('trade.take_profit')
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>
 
                                 <x-ui.form-section field="Stop Loss" required="true" class="col-span-4 sm:col-span-2">
                                     <div class="relative flex w-full">
-                                        <x-ui.select wire:model="stopLossType" class="absolute inset-y-0 left-0 w-20 text-sm">
-                                            <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}</option>
+                                        <x-ui.select wire:model="stopLossType"
+                                            class="absolute inset-y-0 left-0 w-20 text-sm">
+                                            <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}
+                                            </option>
                                             <option value="%">%</option>
                                         </x-ui.select>
-                                        <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full" style="padding-left: 5.5rem;"/>
+                                        <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full"
+                                            style="padding-left: 5.5rem;" />
                                     </div>
                                     <!-- <div class="relative flex w-full">
                                         <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
@@ -247,20 +285,23 @@
                                         </div>
                                         <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full pl-14" />
                                     </div> -->
-                                    @error("trade.stop_loss")
+                                    @error('trade.stop_loss')
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>
 
                                 <x-ui.form-section field="Entry Fee" required="true" class="col-span-4 sm:col-span-2">
                                     <div class="relative flex w-full">
-                                        <x-ui.select wire:model="entryFeeType" class="absolute inset-y-0 left-0 w-20 text-sm">
-                                            <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}</option>
+                                        <x-ui.select wire:model="entryFeeType"
+                                            class="absolute inset-y-0 left-0 w-20 text-sm">
+                                            <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}
+                                            </option>
                                             <option value="%">%</option>
                                         </x-ui.select>
-                                        <x-jet-input wire:model.defer="trade.entry_fee" type="number" class="w-full" style="padding-left: 5.5rem;"/>
+                                        <x-jet-input wire:model.defer="trade.entry_fee" type="number" class="w-full"
+                                            style="padding-left: 5.5rem;" />
                                     </div>
-                                    @error("trade.entry_fee")
+                                    @error('trade.entry_fee')
                                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                                     @enderror
                                 </x-ui.form-section>
@@ -269,32 +310,41 @@
                         <div x-show="activeTab===1">
                             <div class="col-span-full">
                                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
-                                    <x-ui.form-section field="Exit Date" required="false" class="col-span-4 sm:col-span-2">
+                                    <x-ui.form-section field="Exit Date" required="false"
+                                        class="col-span-4 sm:col-span-2">
                                         <x-jet-input wire:model.defer="trade.exit_date" type="datetime-local" />
-                                        @error("trade.exit_date")
+                                        @error('trade.exit_date')
                                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                                         @enderror
                                     </x-ui.form-section>
-                                    <x-ui.form-section field="Exit Price" required="false" class="col-span-4 sm:col-span-2">
+                                    <x-ui.form-section field="Exit Price" required="false"
+                                        class="col-span-4 sm:col-span-2">
                                         <div class="relative flex w-full">
-                                            <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
                                                 {{ $portfolio->currency }}
                                             </div>
-                                            <x-jet-input wire:model.defer="trade.exit_price" type="number" class="w-full pl-14" />
+                                            <x-jet-input wire:model.defer="trade.exit_price" type="number"
+                                                class="w-full pl-14" />
                                         </div>
-                                        @error("trade.exit_price")
+                                        @error('trade.exit_price')
                                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                                         @enderror
                                     </x-ui.form-section>
-                                    <x-ui.form-section field="Exit Fee" required="true" class="col-span-4 sm:col-span-2">
+                                    <x-ui.form-section field="Exit Fee" required="true"
+                                        class="col-span-4 sm:col-span-2">
                                         <div class="relative flex w-full">
-                                            <x-ui.select wire:model="exitFeeType" class="absolute inset-y-0 left-0 w-20 text-sm">
-                                                <option value="{{ $portfolio->currency }}">{{ $portfolio->currency }}</option>
+                                            <x-ui.select wire:model="exitFeeType"
+                                                class="absolute inset-y-0 left-0 w-20 text-sm">
+                                                <option value="{{ $portfolio->currency }}">
+                                                    {{ $portfolio->currency }}
+                                                </option>
                                                 <option value="%">%</option>
                                             </x-ui.select>
-                                            <x-jet-input wire:model.defer="trade.exit_fee" type="number" class="w-full" style="padding-left: 5.5rem;"/>
+                                            <x-jet-input wire:model.defer="trade.exit_fee" type="number" class="w-full"
+                                                style="padding-left: 5.5rem;" />
                                         </div>
-                                        @error("trade.exit_fee")
+                                        @error('trade.exit_fee')
                                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                                         @enderror
                                     </x-ui.form-section>
@@ -307,11 +357,11 @@
                                     <x-ui.form-section field="Setup" required="false" class="col-span-4 sm:col-span-2">
                                         <x-ui.select wire:model.lazy="trade.setup">
                                             <option value="null" disabled>Choose setup</option>
-                                            @foreach($settings->setups as $setup)
+                                            @foreach ($settings->setups as $setup)
                                             <option value="{{ $setup }}">{{ $setup }}</option>
                                             @endforeach
                                         </x-ui.select>
-                                        @error("trade.setup")
+                                        @error('trade.setup')
                                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                                         @enderror
                                     </x-ui.form-section>
@@ -319,18 +369,18 @@
                                     <x-ui.form-section field="Mistake" required="true" class="col-span-4 sm:col-span-2">
                                         <x-ui.select wire:model.lazy="trade.mistake">
                                             <option value="null" disabled>Choose mistake</option>
-                                            @foreach($settings->mistakes as $mistake)
+                                            @foreach ($settings->mistakes as $mistake)
                                             <option value="{{ $mistake }}">{{ $mistake }}</option>
                                             @endforeach
                                         </x-ui.select>
-                                        @error("trade.mistake")
+                                        @error('trade.mistake')
                                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                                         @enderror
                                     </x-ui.form-section>
 
                                     <x-ui.form-section field="Notes" required="false" class="col-span-full">
                                         <x-ui.textarea wire:model.lazy="trade.note"></x-ui.textarea>
-                                        @error("trade.note")
+                                        @error('trade.note')
                                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                                         @enderror
                                     </x-ui.form-section>
@@ -343,7 +393,7 @@
                             </div>
                         </div>
                     </div>
-                </x-ui.form>
+                    </x-ui.form>
             </x-slot>
 
             <x-slot name="footer">

@@ -1,20 +1,19 @@
 <?php
 
-namespace App\View\Components\ui;
+namespace App\View\Components\Ui;
 
 use Illuminate\View\Component;
 
-class Form extends Component
+class NavbarLink extends Component
 {
-    public $heading;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($heading)
+    public function __construct()
     {
-        $this->heading = $heading;
+        //
     }
 
     /**
@@ -24,6 +23,6 @@ class Form extends Component
      */
     public function render()
     {
-        return view('components.ui.form');
+        return view('components.ui.navbar-link');
     }
 }

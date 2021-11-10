@@ -56,61 +56,80 @@
             </div>
 
             <!-- Balance stats -->
-            {{-- <livewire:user.shared.compact-status/> --}}
+            {{--
+            <livewire:user.shared.compact-status /> --}}
 
             <!-- Sidebar links -->
             <nav class="flex-1 overflow-hidden hover:overflow-y-auto ">
                 <ul class="flex flex-col h-full gap-2 p-2 overflow-y-auto text-lg">
                     <li>
-                        <x-ui.navbar-link href="{{ route('user.home.index') }}" class="{{ request()->is('user/home*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('user.home.index') }}"
+                            class="{{ request()->is('user/home*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.home class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Home</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="{{ route('user.portfolios.index') }}" class="{{ request()->is('user/portfolio*') || request()->is('user/trade*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('user.portfolios.index') }}"
+                            class="{{ request()->is('user/portfolio*') || request()->is('user/trade*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.book-open class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Portfolio</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/trade-analytics*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#"
+                            class="{{ request()->is('user/trade-analytics*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.chart-pie class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Analytics</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/chart-lab*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#"
+                            class="{{ request()->is('user/chart-lab*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.beaker class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Chart Lab</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/simulator*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#"
+                            class="{{ request()->is('user/simulator*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.desktop-computer class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Simulator</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/session*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#"
+                            class="{{ request()->is('user/session*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.cash class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Session</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="#" class="{{ request()->is('user/chart-book*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="#"
+                            class="{{ request()->is('user/chart-book*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.chart-square-bar class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Chart Book</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link class="{{ request()->is('user/notebook*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link
+                            class="{{ request()->is('user/notebook*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.book-open class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Notebook</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>
-                        <x-ui.navbar-link href="{{ route('user.settings.index') }}" class="{{ request()->is('user/settings*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}" x-bind:class="{'justify-center': !isSidebarOpen}">
+                        <x-ui.navbar-link href="{{ route('user.settings.index') }}"
+                            class="{{ request()->is('user/settings*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+                            x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.cog class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Settings</span>
                         </x-ui.navbar-link>
@@ -171,12 +190,17 @@
 
                             <!-- Dropdown card -->
                             <div @click.away="isOpen = false" x-show.transition.opacity="isOpen"
-                                class="absolute w-64 mt-3 transform -translate-x-20 bg-white rounded-md shadow-lg">
+                                class="absolute w-64 mt-3 transform bg-white rounded-md shadow-lg -translate-x-44">
                                 <div class="flex flex-col p-4 space-y-1 font-medium border-b">
                                     <span class="text-gray-800">{{ current_user()->name }}</span>
                                     <span class="text-sm text-gray-400">{{ current_user()->email }}</span>
                                 </div>
                                 <ul class="flex flex-col p-2 my-2 space-y-1">
+                                    <li>
+                                        <a href="{{ route('user.purchases.index') }}"
+                                            class="block px-2 py-1 transition rounded-md hover:bg-gray-100">Purchase
+                                            History</a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('user.profile.show') }}"
                                             class="block px-2 py-1 transition rounded-md hover:bg-gray-100">Edit

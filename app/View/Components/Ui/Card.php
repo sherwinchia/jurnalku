@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\ui;
+namespace App\View\Components\Ui;
 
 use Illuminate\View\Component;
 
-class Header extends Component
+class Card extends Component
 {
     /**
      * Create a new component instance.
@@ -13,7 +13,6 @@ class Header extends Component
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -23,6 +22,6 @@ class Header extends Component
      */
     public function render()
     {
-        return view('components.ui.header');
+        return view('components.ui.card');
     }
 }
