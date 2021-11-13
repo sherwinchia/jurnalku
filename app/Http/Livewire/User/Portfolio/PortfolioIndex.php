@@ -25,11 +25,6 @@ class PortfolioIndex extends Component
         'portfolio.balance' => 'required|numeric|min:1'
     ];
 
-    public function mount()
-    {
-        $this->portfolio = new Portfolio();
-    }
-
     public function showBlankFormModal()
     {
         try {
@@ -78,7 +73,7 @@ class PortfolioIndex extends Component
             }
         } else {
             try {
-                $this->authorize('add-portfolio', Porfolio::class);
+                $this->authorize('create', Portfolio::class);
                 $message = 'Portfolio has been successfully added.';
             } catch (\Exception $e) {
                 return $this->alert([
@@ -109,7 +104,7 @@ class PortfolioIndex extends Component
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => $e->getMessage()
+                "message" => "Failed to delete portfolio. Each user should have at least one portfolio."
             ]);
         }
 
@@ -123,28 +118,19 @@ class PortfolioIndex extends Component
 
         try {
             $this->authorize('delete', $portfolio);
-        } catch (\Exception $e) {
-            return $this->alert([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ]);
-        }
-
-        if (current_user()->portfolios->count() <= 1) {
-            $this->alert([
-                "type" => "error",
-                "message" => "Failed to delete the portfolio. Each user must have at least one portfolio!"
-            ]);
-        } else {
             $portfolio->delete();
             $this->alert([
                 "type" => "success",
                 "message" => "Portfolio has been successfully deleted."
             ]);
+            $this->emitSelf('refreshComponent');
+            $this->deleteModal = false;
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => "Failed to delete portfolio. Each user should have at least one portfolio."
+            ]);
         }
-
-        $this->emitSelf('refreshComponent');
-        $this->deleteModal = false;
     }
 
     public function render()

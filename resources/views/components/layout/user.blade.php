@@ -86,7 +86,7 @@
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Analytics</span>
                         </x-ui.navbar-link>
                     </li>
-                    <li>
+                    <!-- <li>
                         <x-ui.navbar-link href="#"
                             class="{{ request()->is('user/chart-lab*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
                             x-bind:class="{'justify-center': !isSidebarOpen}">
@@ -125,7 +125,7 @@
                             <x-icon.book-open class="w-6 h-6" />
                             <span :class="{ 'lg:hidden': !isSidebarOpen }">Notebook</span>
                         </x-ui.navbar-link>
-                    </li>
+                    </li> -->
                     <li>
                         <x-ui.navbar-link href="{{ route('user.settings.index') }}"
                             class="{{ request()->is('user/settings*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
