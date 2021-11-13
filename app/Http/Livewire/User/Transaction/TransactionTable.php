@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Livewire\User\Transaction;
 
 use App\Http\Traits\Alert;
@@ -12,12 +13,13 @@ use Illuminate\Support\Facades\Crypt;
 class TransactionTable extends Component
 {
     use WithPagination, Alert, AuthorizesRequests;
+
     protected $listeners = ['tableRefresh' => '$refresh'];
     public $search = "";
     public $sortField = "id";
     public $sortAsc = true;
     public $perPage = 10;
-    public $transaction;
+    public $targetTransaction;
     public $detailModal = false;
     public $actions = ["show"];
     public $columns = [
@@ -54,7 +56,6 @@ class TransactionTable extends Component
 
     public function mount()
     {
-        $this->transaction = new Transaction();
     }
 
     public function updatingSearch()
@@ -76,8 +77,9 @@ class TransactionTable extends Component
     public function showDetailModal($id)
     {
         try {
-            $this->transaction = Transaction::findOrFail($id);
-            $this->authorize('view', $this->transaction);
+            $this->targetTransaction = Transaction::findOrFail($id);
+            $this->authorize('view', $this->targetTransaction);
+            $this->detailModal = true;
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",

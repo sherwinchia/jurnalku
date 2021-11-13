@@ -46,12 +46,20 @@ class Portfolio extends Model
 
     public function getWinPercentageAttribute()
     {
-        return $this->total_win / ($this->total_win + $this->total_lose) * 100 . '%';
+        $initial = $this->total_win;
+        if ($initial <= 0) {
+            return 0;
+        }
+        return $initial / ($initial + $this->total_lose) * 100 . '%';
     }
 
     public function getLosePercentageAttribute()
     {
-        return $this->total_lose / ($this->total_win + $this->total_lose) * 100 . '%';
+        $initial = $this->total_lose;
+        if ($initial <= 0) {
+            return 0;
+        }
+        return $initial / ($this->total_win + $initial) * 100 . '%';
     }
 
     public function trades()
