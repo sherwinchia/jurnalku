@@ -26,3 +26,8 @@
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+import "animate.css";
+require('alpinejs');
+
+window.chart = require('chart.js');

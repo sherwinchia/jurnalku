@@ -130,30 +130,6 @@
             </div>
 
             <div class="mb-3">
-              <h5 class="mb-2 font-medium">Buyer Details</h5>
-              <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
-                <div class="">
-                  Name
-                </div>
-                <div class="col-span-2">
-                  {{ $targetTransaction->user->name }}
-                </div>
-                <div class="">
-                  Email
-                </div>
-                <div class="col-span-2">
-                  {{ $targetTransaction->user->email }}
-                </div>
-                <div class="">
-                  Phone Number
-                </div>
-                <div class="col-span-2">
-                  {{ $targetTransaction->user->phone_number }}
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-3">
               <h5 class="mb-2 font-medium">Package Details</h5>
               <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
                 <div class="">
@@ -176,32 +152,29 @@
                 </div>
               </div>
             </div>
-
-            @if ($targetTransaction->status == 'success')
-              <div>
-                <h5 class="mb-2 font-medium">Payment Details</h5>
-                <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
-                  <div class="">
-                    Gross Total
-                  </div>
-                  <div class="col-span-2">
-                    {{ decimal_to_human($targetTransaction->gross_total, 'Rp') }}
-                  </div>
-                  <div class="">
-                    Discount <span class="text-xs italic">({{ $targetTransaction->promoCode->code ?? '' }})</span>
-                  </div>
-                  <div class="col-span-2">
-                    -{{ decimal_to_human($targetTransaction->discount, 'Rp') }}
-                  </div>
-                  <div class="">
-                    Net Total
-                  </div>
-                  <div class="col-span-2">
-                    {{ decimal_to_human($targetTransaction->net_total, 'Rp') }}
-                  </div>
+            <div>
+              <h5 class="mb-2 font-medium">Payment Details</h5>
+              <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
+                <div class="">
+                  Gross Total
+                </div>
+                <div class="col-span-2">
+                  {{ decimal_to_human($targetTransaction->gross_total, 'Rp') }}
+                </div>
+                <div class="">
+                  Discount <span class="text-xs italic">({{ $targetTransaction->promoCode->code ?? '' }})</span>
+                </div>
+                <div class="col-span-2">
+                  -{{ decimal_to_human($targetTransaction->discount, 'Rp') }}
+                </div>
+                <div class="">
+                  Net Total
+                </div>
+                <div class="col-span-2">
+                  {{ decimal_to_human($targetTransaction->net_total, 'Rp') }}
                 </div>
               </div>
-            @endif
+            </div>
           </div>
         </x-slot>
     @endif

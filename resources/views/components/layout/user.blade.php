@@ -63,11 +63,11 @@
             <nav class="flex-1 overflow-hidden hover:overflow-y-auto ">
                 <ul class="flex flex-col h-full gap-2 p-2 overflow-y-auto text-lg">
                     <li>
-                        <x-ui.navbar-link href="{{ route('user.home.index') }}"
+                        <x-ui.navbar-link href="{{ route('user.dashboard.index') }}"
                             class="{{ request()->is('user/home*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
                             x-bind:class="{'justify-center': !isSidebarOpen}">
                             <x-icon.home class="w-6 h-6" />
-                            <span :class="{ 'lg:hidden': !isSidebarOpen }">Home</span>
+                            <span :class="{ 'lg:hidden': !isSidebarOpen }">Dashboard</span>
                         </x-ui.navbar-link>
                     </li>
                     <li>

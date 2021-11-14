@@ -5,9 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
-    const PATH = "user.home.";
+    const PATH = "user.dashboard.";
 
     public function index()
     {

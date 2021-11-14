@@ -13,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens,HasFactory,HasProfilePhoto,Notifiable,TwoFactorAuthenticatable,SoftDeletes;
+    use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -88,6 +88,21 @@ class User extends Authenticatable
     public function setting()
     {
         return $this->hasOne('App\Models\Setting');
+    }
+
+    public function trades()
+    {
+        return $this->hasManyThrough('App\Models\Trade', 'App\Models\Portfolio');
+    }
+
+    public function getTotalWinAttribute()
+    {
+        return $this->trades->where('status', '=', 'win')->count();
+    }
+
+    public function getTotalLoseAttribute()
+    {
+        return $this->trades->where('status', '=', 'lose')->count();
     }
 
     public function getSubscriptionTypeAttribute()

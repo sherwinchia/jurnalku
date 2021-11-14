@@ -255,12 +255,6 @@
                     <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full"
                       style="padding-left: 5.5rem;" />
                   </div>
-                  <!-- <div class="relative flex w-full">
-                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
-                                            {{ $portfolio->currency }}
-                                        </div>
-                                        <x-jet-input wire:model.defer="trade.take_profit" type="number" class="w-full pl-14" />
-                                    </div> -->
                   @error('trade.take_profit')
                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                   @enderror
@@ -276,12 +270,6 @@
                     <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full"
                       style="padding-left: 5.5rem;" />
                   </div>
-                  <!-- <div class="relative flex w-full">
-                                        <div class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
-                                            {{ $portfolio->currency }}
-                                        </div>
-                                        <x-jet-input wire:model.defer="trade.stop_loss" type="number" class="w-full pl-14" />
-                                    </div> -->
                   @error('trade.stop_loss')
                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                   @enderror
@@ -377,11 +365,10 @@
                   </x-ui.form-section>
                 </div>
               </div>
-
-              <div class="col-span-full">
+              <!-- <div class="col-span-full">
                 <x-ui.header class="mb-2 border-b">Screenshots</x-ui.header>
-                <!-- <livewire:image-uploader name="trade.images"> -->
-              </div>
+                <livewire:image-uploader name="trade.images">
+              </div> -->
             </div>
           </div>
           </x-ui.form>

@@ -9,9 +9,10 @@
   </div>
   <div class="grid grid-cols-8 gap-3">
     @foreach ($portfolios as $portfolio)
-      <x-ui.card class="flex h-40 col-span-8 overflow-hidden border border-gray-200 md:col-span-4 xl:col-span-2">
+      <x-ui.card
+        class="flex h-40 col-span-8 overflow-hidden bg-white border border-gray-200 md:col-span-4 xl:col-span-2 hover:shadow-md">
         <a class="flex-grow " href="{{ route('user.portfolios.show', $portfolio->id) }}">
-          <div class="flex flex-col h-full p-3 bg-gray-50">
+          <div class="flex flex-col h-full p-3">
             <h3 class="text-sm tracking-widest">{{ $portfolio->name }}</h3>
             <div class="flex items-end space-x-2 ">
               <span
