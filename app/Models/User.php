@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->role_id == 1 ? true : false;
     }
 
+    public function getIsUserAttribute()
+    {
+        return $this->role_id == 2 ? true : false;
+    }
+
     public function subscription()
     {
         return $this->hasOne('App\Models\Subscription');

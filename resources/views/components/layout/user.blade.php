@@ -44,12 +44,12 @@
             :class="{'-translate-x-full lg:translate-x-0 lg:w-20': !isSidebarOpen}">
             <!-- sidebar header -->
             <div class="flex items-center justify-between p-2" :class="{'lg:justify-center': !isSidebarOpen}">
-                <span
+                <a href="{{ route('user.home.index') }}"
                     class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-widest text-gray-700 uppercase whitespace-nowrap">
                     <x-icon.cash class="inline-block w-8 h-8" /><span :class="{'lg:hidden': !isSidebarOpen}">{{
                         config('app.name')
                         }}</span>
-                </span>
+                </a>
                 <button @click="toggleSidbarMenu()" class="p-2 rounded-md lg:hidden">
                     <x-icon.x class="w-6 h-6" />
                 </button>

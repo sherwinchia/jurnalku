@@ -28,11 +28,11 @@
 </head>
 
 <body class="font-sans antialiased">
-  <div class="container p-3 mx-auto text-gray-700 bg-blue-100">
+  <div class="fixed inset-x-0 top-0 z-50 w-full bg-white">
     <div x-data="{ open: false }"
-      class="flex flex-col px-4 md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-      <div class="flex flex-row items-center justify-between p-4">
-        <a href="#"
+      class="flex flex-col px-4 py-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-0 max-w-7xl">
+      <div class="flex flex-row items-center justify-between">
+        <a href="{{ route('user.home.index') }}"
           class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">{{ config('app.name') }}</a>
         <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
           <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
@@ -48,20 +48,39 @@
       <nav :class="{'flex': open, 'hidden': !open}"
         class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
         <a class="px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#">Home</a>
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#">Pricing</a>
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#">Contact</a>
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#">Login</a>
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#">Sign Up</a>
+          href="#">
+          Home
+        </a>
+        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+          href="#">
+          Pricing
+        </a>
+        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+          href="#">
+          Contact
+        </a>
+        <div class="pl-4 border-r border-gray-300"></div>
+        @guest
+          <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+            href="{{ route('login') }}">
+            Login
+          </a>
+          <a class="px-4 py-2 mt-2 text-sm font-semibold text-white bg-transparent border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 bg-primary-500 focus:outline-none focus:shadow-outline"
+            href="#">
+            Sign Up
+          </a>
+        @endguest
+        @user
+        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+          href="{{ route('user.dashboard.index') }}">
+          Dashboard
+        </a>
+        @enduser
       </nav>
     </div>
   </div>
 
-  <div class="flex h-screen">
+  <div class="flex flex-col mt-20">
     {{ $slot }}
   </div>
   @livewireScripts

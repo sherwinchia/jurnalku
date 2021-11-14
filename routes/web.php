@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['as' => 'user.'], function () {
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('home.index');
 });
 
 

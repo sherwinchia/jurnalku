@@ -15,7 +15,7 @@ class LoginResponse implements LoginResponseContract
         if ($request->wantsJson()) {
             return response()->json(['two_factor' => false]);
         } else {
-            $home = auth()->user()->is_admin ? route('admin.dashboard.index') : route('user.home.index');
+            $home = auth()->user()->is_admin ? route('admin.dashboard.index') : route('user.dashboard.index');
             return redirect()->intended($home);
         }
     }
