@@ -27,7 +27,7 @@
   <script src="{{ mix('js/user.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased">
+<body class="px-6 font-sans antialiased">
   <div class="fixed inset-x-0 top-0 z-50 w-full bg-white">
     <div x-data="{ open: false }"
       class="flex flex-col px-4 py-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-0 max-w-7xl">
@@ -47,32 +47,27 @@
       </div>
       <nav :class="{'flex': open, 'hidden': !open}"
         class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
-        <a class="px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#">
+        <a class="px-4 py-2 mt-2 rounded-lg md:mt-0 md:ml-4" href="#">
           Home
         </a>
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#">
+        <a class="px-4 py-2 mt-2 rounded-lg md:mt-0 md:ml-4" href="#">
           Pricing
         </a>
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="#">
+        <a class="px-4 py-2 mt-2 rounded-lg md:mt-0 md:ml-4" href="#">
           Contact
         </a>
         <div class="pl-4 border-r border-gray-300"></div>
         @guest
-          <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            href="{{ route('login') }}">
+          <a class="px-4 py-2 mt-2 rounded-lg md:mt-0 md:ml-4" href="{{ route('login') }}">
             Login
           </a>
-          <a class="px-4 py-2 mt-2 text-sm font-semibold text-white bg-transparent border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 bg-primary-500 focus:outline-none focus:shadow-outline"
+          <a class="px-4 py-2 mt-2 text-white border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 bg-primary-500"
             href="#">
             Sign Up
           </a>
         @endguest
         @user
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-          href="{{ route('user.dashboard.index') }}">
+        <a class="px-4 py-2 mt-2 text-white border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 bg-primary-500" href="{{ route('user.dashboard.index') }}">
           Dashboard
         </a>
         @enduser
@@ -80,7 +75,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col mt-20">
+  <div class="flex flex-col">
     {{ $slot }}
   </div>
   @livewireScripts
