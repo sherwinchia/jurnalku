@@ -185,9 +185,6 @@
       <x-slot name="title">
         <div class="flex items-center justify-between">
           <span>{{ $edit ? 'Update' : 'Add' }} Trade</span>
-          @if ($edit)
-            <x-ui.status type="{{ $trade->status }}">{{ ucfirst($trade->status) }}</x-ui.status>
-          @endif
         </div>
       </x-slot>
       <x-slot name="content">

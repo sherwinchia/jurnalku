@@ -27,8 +27,8 @@
   <script src="{{ mix('js/user.js') }}" defer></script>
 </head>
 
-<body class="px-6 font-sans antialiased">
-  <div class="fixed inset-x-0 top-0 z-50 w-full bg-white">
+<body class="font-sans antialiased">
+  <div class="fixed inset-x-0 top-0 z-50 w-full bg-white border-b">
     <div x-data="{ open: false }"
       class="flex flex-col px-4 py-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-0 max-w-7xl">
       <div class="flex flex-row items-center justify-between">
@@ -75,7 +75,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col">
+  <div class="flex flex-col text-gray-500">
     {{ $slot }}
   </div>
   @livewireScripts

@@ -4,7 +4,7 @@
     </x-slot>
     <div class="flex-1">
         <x-ui.card class="max-w-xl p-6 mx-auto">
-            <div class="flex items-center justify-between mb-2 border-b border-gray-300">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-gray-300">
                 <x-ui.header>Trade Details</x-ui.header>
                 <x-ui.status type="{{ $trade->status }}">{{ ucfirst($trade->status) }}</x-ui.status>
             </div>
