@@ -17,7 +17,7 @@ class CheckSubscription
     public function handle(Request $request, Closure $next)
     {
         if (!(isset(auth()->user()->subscription) && auth()->user()->subscription_active)) {
-            return redirect()->route('user.profile.show');
+            return redirect()->route('user.billings.index');
         }
         return $next($request);
     }

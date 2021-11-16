@@ -16,7 +16,7 @@ class PromocodeSeeder extends Seeder
     public function run()
     {
         Promocode::create([
-            'code' => get_unique_promocode(),
+            'code' => 'test1',
             'type' => 'percentage',
             'value' => 20,
             'max_discount' => 10000,
@@ -28,11 +28,35 @@ class PromocodeSeeder extends Seeder
         ]);
 
         Promocode::create([
-            'code' => get_unique_promocode(),
+            'code' => 'test2',
             'type' => 'fixed',
             'value' => 10000,
             'max_discount' => null,
             'max_use_count' => 20,
+            'first_time_user' => false,
+            'start_at' => Carbon::now(),
+            'expired_at' => Carbon::now()->addDays(10),
+            'active' => true,
+        ]);
+
+        Promocode::create([
+            'code' => 'test3',
+            'type' => 'fixed',
+            'value' => 1000,
+            'max_discount' => null,
+            'max_use_count' => 0,
+            'first_time_user' => false,
+            'start_at' => Carbon::now()->subDays(20),
+            'expired_at' => Carbon::now()->subDays(10),
+            'active' => true,
+        ]);
+
+        Promocode::create([
+            'code' => 'test4',
+            'type' => 'fixed',
+            'value' => 1000,
+            'max_discount' => 100,
+            'max_use_count' => 0,
             'first_time_user' => false,
             'start_at' => Carbon::now(),
             'expired_at' => Carbon::now()->addDays(10),

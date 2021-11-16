@@ -26,12 +26,12 @@
             <!-- Current Profile Photo -->
             <div class="mt-2" x-show="! photoPreview">
                 <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}"
-                    class="rounded-full h-20 w-20 object-cover">
+                    class="object-cover w-20 h-20 rounded-full">
             </div>
 
             <!-- New Profile Photo Preview -->
             <div class="mt-2" x-show="photoPreview">
-                <span class="block rounded-full w-20 h-20"
+                <span class="block w-20 h-20 rounded-full"
                     x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
                 </span>
             </div>
@@ -53,7 +53,7 @@
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="name" value="{{ __('Name') }}" />
-            <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name"
+            <x-jet-input id="name" type="text" class="block w-full mt-1" wire:model.defer="state.name"
                 autocomplete="name" />
             <x-jet-input-error for="name" class="mt-2" />
         </div>
@@ -61,15 +61,15 @@
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="email" value="{{ __('Email') }}" />
-            <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
+            <x-jet-input id="email" type="email" class="block w-full mt-1" wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
 
         <!-- Phone Number -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="phone_number" value="{{ __('Phone Number') }}" />
-            <div class="flex relative mt-1 w-full">
-                <div class="inset-y-0 left-0 border-r border-gray-300 overflow-hidden absolute flex items-center p-2">
+            <div class="relative flex w-full mt-1">
+                <div class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300">
                     +62</div>
                 <x-jet-input id="phone_number" type="number" class="w-full pl-14"
                     wire:model.defer="state.phone_number" />
@@ -81,14 +81,14 @@
         <!-- Birth date -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="birth_date" value="{{ __('Birth Date') }}" />
-            <x-jet-input id="birth_date" type="date" class="mt-1 block w-full" wire:model.defer="state.birth_date" />
+            <x-jet-input id="birth_date" type="date" class="block w-full mt-1" wire:model.defer="state.birth_date" />
             <x-jet-input-error for="birth_date" class="mt-2" />
         </div>
 
         <!-- Address -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="address" value="{{ __('Address') }}" />
-            <x-ui.textarea id="address" type="text" class="mt-1 block w-full" wire:model.defer="state.address" />
+            <x-ui.textarea id="address" type="text" class="block w-full mt-1" wire:model.defer="state.address" />
             <x-jet-input-error for="address" class="mt-2" />
         </div>
     </x-slot>
@@ -98,7 +98,7 @@
             {{ __('Saved.') }}
         </x-jet-action-message>
 
-        <x-jet-button wire:loading.attr="disabled" wire:target="photo">
+        <x-jet-button  type="submit" wire:loading.attr="disabled" wire:target="photo">
             {{ __('Save') }}
         </x-jet-button>
     </x-slot>

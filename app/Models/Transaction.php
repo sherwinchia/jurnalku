@@ -13,7 +13,7 @@ class Transaction extends Model
         'user_id',
         'package_id',
         'status',
-        'promo_code_id',
+        'promocode_id',
         'gross_total',
         'discount',
         'reference',

@@ -15,15 +15,15 @@
     </div>
     <x-ui.card class="p-4 col-span-full lg:col-span-5">
         @if($section === "general")
-        <livewire:user.setting.general-form>
+        <livewire:user.setting.general-form/>
         @elseif($section === "balance")
-        <livewire:user.setting.balance-form>
+        <livewire:user.setting.balance-form/>
         @elseif($section === "instrument")
-        <livewire:user.setting.instrument-form>
+        <livewire:user.setting.instrument-form/>
         @elseif($section === "setup")
-        <livewire:user.setting.setup-form>
+        <livewire:user.setting.setup-form/>
         @elseif($section === "mistake")
-        <livewire:user.setting.mistake-form>
+        <livewire:user.setting.mistake-form/>
         @endif
     </x-ui.card>
 </div>

@@ -21,4 +21,21 @@ class Promocode extends Model
         'expired_at',
         'active',
     ];
+
+    protected $dates = ['start_at', 'expired_at'];
+
+    public function getStartedAttribute()
+    {
+        return $this->start_at->lte(now());
+    }
+
+    public function getExpiredAttribute()
+    {
+        return now()->gt($this->expired_at);
+    }
+
+    public function getUseCountAttribute()
+    {
+        return Transaction::where('promocode_id', $this->id)->count();
+    }
 }

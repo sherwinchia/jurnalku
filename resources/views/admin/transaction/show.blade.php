@@ -87,7 +87,7 @@
                 <h5 class="text-lg font-semibold ">Payment Details</h5>
                 <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
                     <div class="">
-                        Gross Total
+                        Subtotal
                     </div>
                     <div class="col-span-2">
                         {{ decimal_to_human($transaction->gross_total, "Rp") }}
@@ -99,7 +99,7 @@
                         -{{ decimal_to_human($transaction->discount, "Rp") }}
                     </div>
                     <div class="">
-                        Net Total
+                        Total
                     </div>
                     <div class="col-span-2">
                         {{ decimal_to_human($transaction->net_total, "Rp") }}

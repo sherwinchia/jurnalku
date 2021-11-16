@@ -30,7 +30,7 @@
 <body class="font-sans antialiased">
   <div class="fixed inset-x-0 top-0 z-50 w-full bg-white border-b border-gray-300">
     <div x-data="{ open: false }"
-      class="flex flex-col px-4 py-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-0 max-w-7xl">
+      class="flex flex-col px-4 py-4 mx-auto max-w-7xl md:items-center md:justify-between md:flex-row md:px-6 lg:px-0">
       <div class="flex flex-row items-center justify-between">
         <a href="{{ route('user.home.index') }}"
           class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">{{ ucfirst(config('app.name')) }}</a>
@@ -57,23 +57,11 @@
           <a class="px-2 py-1 mt-2 font-medium rounded-lg md:mt-0 md:ml-4" href="{{ route('login') }}">
             Login
           </a>
-          <a class="px-2 py-1 mt-2 font-medium text-white border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 bg-primary-500"
+          <a class="px-2 py-1 mt-2 font-medium border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 text-primary-500"
             href="{{ route('register') }}">
             Sign Up
           </a>
         @endguest
-        @auth
-          <a class="px-2 py-1 mt-2 font-medium text-white border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 bg-primary-500"
-            href="{{ route('user.dashboard.index') }}">
-            Dashboard
-          </a>
-        @endauth
-        @admin
-        <a class="px-2 py-1 mt-2 font-medium text-white border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 bg-primary-500"
-          href="{{ route('admin.dashboard.index') }}">
-          Admin Panel
-        </a>
-        @endadmin
       </nav>
     </div>
   </div>
@@ -82,8 +70,9 @@
     {{ $slot }}
   </div>
 
-  <footer class="bottom-0 pt-16 pb-8 bg-primary-800">
-    <div class="grid grid-cols-3 gap-12 pb-10 mx-auto text-gray-300 max-w-7xl">
+  <footer class="bottom-0 px-6 pt-16 pb-8 bg-primary-800">
+    <div
+      class="grid grid-cols-1 gap-8 pb-10 mx-auto text-gray-300 max-w-7xl md:gap-10 lg:gap-12 md:grid-cols-2 lg:grid-cols-3">
       <div class="flex flex-col col-span-2 space-y-4">
         <h2 class="text-xl font-medium text-white">{{ ucfirst(config('app.name')) }}</h2>
         <p>
@@ -96,8 +85,8 @@
       <div class="flex flex-col space-y-4">
         <h2 class="text-xl font-medium text-white">Follow Us</h2>
         <div class="flex space-x-4">
-          <a class="flex items-center justify-center w-12 h-12 overflow-hidden bg-white rounded-full" href="#">
-            <x-icon.instagram class="w-6 h-6 text-primary-800"></x-icon.instagram>
+          <a class="flex items-center justify-center w-10 h-10 overflow-hidden bg-white rounded-full" href="#">
+            <x-icon.instagram class="w-5 h-5 text-primary-800"></x-icon.instagram>
           </a>
         </div>
       </div>
