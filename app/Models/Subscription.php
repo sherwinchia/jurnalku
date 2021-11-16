@@ -16,6 +16,8 @@ class Subscription extends Model
         'package_id'
     ];
 
+    protected $dates = ['expired_at'];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

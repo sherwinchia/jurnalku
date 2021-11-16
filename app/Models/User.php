@@ -110,6 +110,11 @@ class User extends Authenticatable
         return $this->trades->where('status', '=', 'lose')->count();
     }
 
+    public function getSubscriptionActiveAttribute()
+    {
+        return $this->subscription->expired_at->gt(now());
+    }
+
     public function getSubscriptionTypeAttribute()
     {
         return $this->subscription->type;

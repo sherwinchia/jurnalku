@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             RoleSeeder::class,
-            UserSeeder::class,
             PackageSeeder::class,
-            SubscriptionSeeder::class,
+            UserSeeder::class,
+            // SubscriptionSeeder::class,
             PromocodeSeeder::class,
             TransactionSeeder::class,
             TradeSeeder::class,

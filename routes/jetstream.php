@@ -19,7 +19,6 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
     }
 
     Route::group(['middleware' => ['auth', 'verified']], function () {
-
         //Admin
         Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::get('profile', [ProfileController::class, 'show'])
@@ -31,10 +30,6 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::get('profile', [UserProfileController::class, 'show'])
                 ->name('profile.show');
         });
-
-        // User & Profile... remove later
-        Route::get('/profile', [UserProfileController::class, 'show'])
-            ->name('profile.show');
 
         // API...
         if (Jetstream::hasApiFeatures()) {

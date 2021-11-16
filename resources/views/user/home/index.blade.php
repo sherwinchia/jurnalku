@@ -20,7 +20,7 @@
   <div class="py-16" style="height: 50vh;">
     <div class="flex flex-col h-full mx-auto lg:flex-row max-w-7xl">
       <div class="flex flex-col items-start justify-center flex-1 pr-20 space-y-4">
-        <h2 class="text-3xl font-semibold text-gray-800">Journal your trade</h2>
+        <h2 class="text-3xl font-semibold text-gray-700">Journal your trade</h2>
         <p class="font-normal">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti aspernatur at laudantium sit error iure
           optio dicta, obcaecati eaque laborum doloribus dolore iste. Minima, sit ad soluta ex eum consequuntur?
@@ -38,7 +38,7 @@
   <div class="py-16" style="height: 50vh;">
     <div class="flex flex-col h-full mx-auto lg:flex-row-reverse max-w-7xl">
       <div class="flex flex-col items-start justify-center flex-1 pl-20 space-y-4">
-        <h2 class="text-3xl font-semibold text-gray-800">Journal your trade</h2>
+        <h2 class="text-3xl font-semibold text-gray-700">Improve</h2>
         <p class="font-normal">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti aspernatur at laudantium sit error iure
           optio dicta, obcaecati eaque laborum doloribus dolore iste. Minima, sit ad soluta ex eum consequuntur?
@@ -59,7 +59,7 @@
       <div class="grid grid-cols-4 gap-10 text-gray-300">
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-            <x-icon.cash class="text-white"></x-icon.cash>
+            <x-icon.emoji-happy class="text-white"></x-icon.emoji-happy>
           </div>
           <h3 class="text-lg font-medium text-white">
             Simple
@@ -71,7 +71,19 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-
+            <x-icon.chart-pie class="text-white"></x-icon.chart-pie>
+          </div>
+          <h3 class="text-lg font-medium text-white">
+            Chart
+          </h3>
+          <p class="text-sm font-normal">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente possimus doloremque quas non,
+            ducimus temporibus pariatur ipsam debitis eum.
+          </p>
+        </div>
+        <div class="flex flex-col space-y-2">
+          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
+            <x-icon.currency-dollar class="text-white"></x-icon.currency-dollar>
           </div>
           <h3 class="text-lg font-medium text-white">
             Currency
@@ -83,43 +95,7 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-
-          </div>
-          <h3 class="text-lg font-medium text-white">
-            Affordable
-          </h3>
-          <p class="text-sm font-normal">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente possimus doloremque quas non,
-            ducimus temporibus pariatur ipsam debitis eum.
-          </p>
-        </div>
-        <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-
-          </div>
-          <h3 class="text-lg font-medium text-white">
-            Non-subscription
-          </h3>
-          <p class="text-sm font-normal">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente possimus doloremque quas non,
-            ducimus temporibus pariatur ipsam debitis eum.
-          </p>
-        </div>
-        <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-
-          </div>
-          <h3 class="text-lg font-medium text-white">
-            Currency
-          </h3>
-          <p class="text-sm font-normal">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente possimus doloremque quas non,
-            ducimus temporibus pariatur ipsam debitis eum.
-          </p>
-        </div>
-        <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-
+            <x-icon.duplicate class="text-white"></x-icon.duplicate>
           </div>
           <h3 class="text-lg font-medium text-white">
             Portfolio
@@ -131,10 +107,22 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-
+            <x-icon.cloud class="text-white"></x-icon.cloud>
           </div>
           <h3 class="text-lg font-medium text-white">
-            Currency
+            Cloud
+          </h3>
+          <p class="text-sm font-normal">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente possimus doloremque quas non,
+            ducimus temporibus pariatur ipsam debitis eum.
+          </p>
+        </div>
+        <div class="flex flex-col space-y-2">
+          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
+            <x-icon.qrcode class="text-white"></x-icon.qrcode>
+          </div>
+          <h3 class="text-lg font-medium text-white">
+            Authentication
           </h3>
           <p class="text-sm font-normal">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente possimus doloremque quas non,
@@ -172,18 +160,29 @@
         </div>
         <div class="flex flex-col items-center justify-center p-4">
           <img class="w-32 h-32" src="{{ asset('images/bitcoin.png') }}" alt="icon">
-          <span class="text-lg font-medium uppercase">Other</span>
+          <span class="text-lg font-medium uppercase">Others</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="py-6 text-gray-700 bg-gray-200">
-    <div class="flex flex-col mx-auto max-w-7xl">
+  <div class="pb-16 text-gray-700" id="pricing">
+    <div class="flex flex-col mx-auto space-y-4 max-w-7xl">
       <h2 class="text-3xl font-semibold text-center">Pricing</h2>
-      <div class="grid w-full max-w-5xl grid-cols-4 gap-10 mx-auto">
-        <div class="col-span-2 p-6 border rounded-lg shadow-lg">asd</div>
-        <div class="col-span-2 p-6 border rounded-lg shadow-lg">asd</div>
+      <div class="grid w-full max-w-5xl grid-cols-3 gap-10 mx-auto">
+        @foreach ($packages as $package)
+          <div class="flex flex-col items-start p-6 border rounded-lg shadow-lg bg-gray-50">
+            <div class="pb-8">
+              <h2 class="text-2xl font-semibold text-primary-500">{{ $package->name }}</h2>
+              <p class="text-sm font-normal">{{ $package->description }}</p>
+              <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
+            </div>
+            <a href="{{ route('register') }}"
+              class="px-2 py-1 font-medium text-white border-2 rounded-lg border-primary-500 bg-primary-500">
+              {{ $package->price == 0 ? 'Try now!' : 'Sign Up' }}
+            </a>
+          </div>
+        @endforeach
       </div>
     </div>
   </div>

@@ -25,7 +25,7 @@ class TransactionFactory extends Factory
         $discount = $this->faker->numberBetween(1000, 4000);
         return [
             'user_id' => $this->faker->numberBetween(2, 100),
-            'package_id' => $this->faker->numberBetween(1, 50),
+            'package_id' => $this->faker->numberBetween(1, 3),
             'status' => $this->faker->randomElement(['pending', 'success', 'fail', 'cancelled']),
             'promocode_id' => $this->faker->numberBetween(1, 2),
             'gross_total' => $gross_total,
