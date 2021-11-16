@@ -1,4 +1,4 @@
-<div class="grid w-full grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3">
+<div class="grid w-full grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3" wire:init="getPaymentMethods">
   @foreach ($packages as $package)
     <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
       <div class="pb-8">
@@ -21,34 +21,34 @@
       Billing Summary
     </x-slot>
     <x-slot name="content">
-      <x-ui.alt-form>
+      <x-ui.alt-form class="pb-2">
         <div class="flex flex-col">
-          <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-300">
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200">
             <div>
-              <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
+              <h2 class="text-lg font-semibold text-primary-500">{{ $package->name }}</h2>
               <p class="text-sm font-normal text-gray-700">{{ $package->description }}</p>
             </div>
             <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
           </div>
           <div class="flex justify-between">
-            <span>Subtotal</span>
+            <span class="text-sm">Subtotal</span>
             <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
           </div>
           @if (isset($discount))
             <div class="flex justify-between">
-              <span>Discount <span class="text-xs italic">({{ $promocode }})</span></span>
+              <span class="text-sm">Discount <span class="text-xs italic">({{ $code }})</span></span>
               <span>{{ decimal_to_human($discount, 'Rp') }}</span>
             </div>
           @endif
           <div class="flex justify-between">
-            <span>Total</span>
+            <span class="text-sm">Total</span>
             <span>{{ decimal_to_human($package->price - $discount, 'Rp') }}</span>
           </div>
           <a class="py-2 text-sm italic cursor-pointer" wire:click="$toggle('inputPromocode')">Have promocode?</a>
           @if ($inputPromocode)
             <x-ui.form-section field="Promocode" required="fasle" class="">
               <div class="relative w-1/2">
-                <x-jet-input wire:model.defer="promocode" type="text" class="w-full pr-24" />
+                <x-jet-input wire:model.defer="code" type="text" class="w-full pr-24" />
                 <x-jet-button class="absolute inset-y-0 right-0" wire:click="applyCode" wire:loading.attr="disabled">
                   Apply
                   <span wire:loading wire:target="applyCode"
@@ -56,13 +56,28 @@
                   </span>
                 </x-jet-button>
               </div>
-              @error('promocode')
+              @error('code')
                 <x-message.validation type="error">{{ $message }}</x-message.validation>
               @enderror
             </x-ui.form-section>
           @endif
         </div>
       </x-ui.alt-form>
+
+      <h2 class="pb-2 mb-2 text-lg font-medium border-b border-gray-300 ">Payment Methods
+      </h2>
+      <div class="flex flex-wrap gap-2 pb-2">
+        <span wire:loading wire:target="getPaymentMethods"
+          class="w-10 h-10 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
+        </span>
+        @foreach ($paymentMethods as $method)
+          <a class="px-3 py-2 border rounded-lg cursor-pointer {{ $selectedPaymentMethod == $method['code'] ? 'border-primary-500' : '' }}"
+            wire:click="selectPaymentMethod('{{ $method['code'] }}')">{{ $method['name'] }}</a>
+        @endforeach
+      </div>
+      @error('selectedPaymentMethod')
+        <x-message.validation type="error">{{ $message }}</x-message.validation>
+      @enderror
     </x-slot>
     <x-slot name="footer">
       <x-jet-secondary-button wire:click="$toggle('packageModal')" wire:loading.attr="disabled">

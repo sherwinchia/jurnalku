@@ -43,9 +43,8 @@ class PromocodeService
         return (float) $discount;
     }
 
-    public function apply(string $code, float $total)
+    public function apply(Promocode $promocode, float $total)
     {
-        $promocode = $this->find($code);
         $this->checkAvailability($promocode, $total);
         return $this->calculate($promocode, $total);
     }

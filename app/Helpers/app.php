@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\PromoCode;
+use App\Models\Transaction;
 
 function current_user()
 {
@@ -106,7 +107,16 @@ function get_unique_promocode($length = 6)
         get_unique_promocode();
     }
 
-    return $code;
+    return  $code;
+}
+function get_unique_merchant_ref($length = 8)
+{
+    $merchant_ref = mt_rand(100000000, 999999999);
+    if (Transaction::where('merchant_ref', $merchant_ref)->exists()) {
+        get_unique_merchant_ref();
+    }
+
+    return 'INV' . $merchant_ref;
 }
 
 function pluralize($quantity, $singular, $plural = null)

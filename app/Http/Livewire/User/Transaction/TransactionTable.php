@@ -6,6 +6,7 @@ use App\Http\Traits\Alert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Transaction;
+use App\Services\TripayService;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Crypt;
@@ -20,12 +21,13 @@ class TransactionTable extends Component
     public $sortAsc = true;
     public $perPage = 10;
     public $targetTransaction;
+    public $transactionDetail = [];
     public $detailModal = false;
     public $actions = ["show"];
     public $columns = [
         [
             "name" => "Reference",
-            "field" => "reference",
+            "field" => "merchant_ref",
             "sortable" => false,
         ],
         [
@@ -54,8 +56,19 @@ class TransactionTable extends Component
         ],
     ];
 
-    public function mount()
+    public function mount($merchant_ref = null)
     {
+        if (isset($merchant_ref)) {
+            try {
+                $transaction = Transaction::where('merchant_ref', $merchant_ref)->firstOrFail();
+                $this->showDetailModal($transaction->id);
+            } catch (\Exception $e) {
+                return $this->alert([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ]);
+            }
+        }
     }
 
     public function updatingSearch()
@@ -80,12 +93,23 @@ class TransactionTable extends Component
             $this->targetTransaction = Transaction::findOrFail($id);
             $this->authorize('view', $this->targetTransaction);
             $this->detailModal = true;
+
+            if ($this->targetTransaction->status == "pending") {
+                $this->getPaymentGuide();
+            }
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
             ]);
         }
+    }
+
+    public function getPaymentGuide()
+    {
+        $tripayService = app(TripayService::class);
+        $payload = $tripayService->getTransactionDetail($this->targetTransaction->reference)->data;
+        $this->transactionDetail = (array) $payload;
     }
 
     public function paginationView()
@@ -96,7 +120,7 @@ class TransactionTable extends Component
     public function render()
     {
         return view("livewire.user.transaction.transaction-table", [
-            "transactions" => current_user()->transactions()->paginate($this->perPage)
+            "transactions" => current_user()->transactions()->latest()->paginate($this->perPage)
         ]);
     }
 }

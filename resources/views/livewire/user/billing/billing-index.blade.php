@@ -17,7 +17,7 @@
     @if ($section === 'topup')
       <livewire:user.billing.buy-form />
     @elseif($section === "history")
-      <livewire:user.transaction.transaction-table />
+      <livewire:user.transaction.transaction-table :merchant_ref="$merchant_ref"/>
     @endif
   </x-ui.card>
 </div>

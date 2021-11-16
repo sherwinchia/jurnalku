@@ -46,13 +46,13 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
             Route::resource('portfolios', PortfolioController::class)->only('index', 'show');
             Route::resource('trades', TradeController::class)->only('show');
             Route::get('export/portfolio/{portfolio}', [PortfolioController::class, 'export'])->name('portfolio.export');
-            Route::resource('transactions', UserTransactionController::class)->only('index', 'show');
             Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         });
+        // Route::get('transactions/{merchant_ref}', [UserTransactionController::class, 'show'])->name('transactions.show');
         Route::get('billings', [BillingController::class, 'index'])->name('billings.index');
     });
 });
 
-
+Route::post('tripay-callback', [UserTransactionController::class, 'handleTripayCallback'])->name('tripay.callback');
 
 require_once __DIR__ . '/jetstream.php';

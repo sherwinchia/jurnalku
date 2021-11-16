@@ -19,7 +19,7 @@ class CreateTransactionsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->foreignId('package_id')->constrained();
-            $table->enum('status', ['pending', 'success', 'fail', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'success', 'fail', 'cancelled', 'expired'])->default('pending');
             $table->foreignId('promocode_id')
                 ->nullable()
                 ->constrained();
@@ -27,7 +27,7 @@ class CreateTransactionsTable extends Migration
             $table->decimal('discount', 19, 2)->default(0);
             $table->decimal('net_total', 19, 2);
             $table->string('reference');
-            $table->string('merchant_ref');
+            $table->string('merchant_ref')->unique();
             $table->timestamps();
         });
     }

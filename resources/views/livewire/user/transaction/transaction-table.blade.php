@@ -110,10 +110,10 @@
           <div class="flex-1">
             <div class="grid grid-cols-1 gap-1 mb-3 lg:grid-cols-3">
               <div class="">
-                ID
+                Ref
               </div>
               <div class="col-span-2">
-                {{ $targetTransaction->reference }}#{{ $targetTransaction->id }}
+                #{{ $targetTransaction->merchant_ref }}
               </div>
               <div class="">
                 Date
@@ -121,60 +121,50 @@
               <div class="col-span-2">
                 {{ date_to_human($targetTransaction->created_at, 'd F Y, h:i A') }}
               </div>
-              <div class="">
-                Latest
+            </div>
+
+            <div class="flex flex-col">
+              <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200">
+                <div>
+                  <h2 class="text-lg font-semibold">{{ $targetTransaction->package->name }}</h2>
+                  <p class="text-sm font-normal text-gray-700">{{ $targetTransaction->package->description }}</p>
+                </div>
+                <span>{{ decimal_to_human($targetTransaction->package->price, 'Rp') }}</span>
               </div>
-              <div class="col-span-2">
-                {{ date_to_human($targetTransaction->updated_at, 'd F Y, h:i A') }}
+              @if (isset($targetTransaction->promocode_id))
+                <div class="flex justify-between">
+                  <span class="text-sm">Subtotal</span>
+                  <span>{{ decimal_to_human($targetTransaction->package->price, 'Rp') }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-sm">Discount <span
+                      class="text-xs italic">({{ $targetTransaction->promocode->code }})</span></span>
+                  <span>{{ decimal_to_human($targetTransaction->discount, 'Rp') }}</span>
+                </div>
+              @endif
+              <div class="flex justify-between">
+                <span class="text-sm">Total</span>
+                <span>{{ decimal_to_human($targetTransaction->package->price - $targetTransaction->discount, 'Rp') }}</span>
               </div>
             </div>
 
-            <div class="mb-3">
-              <h5 class="mb-2 font-medium">Package Details</h5>
-              <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
-                <div class="">
-                  Name
-                </div>
-                <div class="col-span-2">
-                  {{ $targetTransaction->package->name }}
-                </div>
-                <div class="">
-                  Duration
-                </div>
-                <div class="col-span-2">
-                  {{ $targetTransaction->package->duration }}days
-                </div>
-                <div class="">
-                  Price
-                </div>
-                <div class="col-span-2">
-                  {{ decimal_to_human($targetTransaction->package->price, 'Rp') }}
-                </div>
+            @if ($targetTransaction->status == 'pending')
+              <div>
+                <h2>{{ $transactionDetail['payment_name'] }}</h2>
+                @foreach ($transactionDetail['instructions'] as $instruction)
+                  @if (isset($transactionDetail['qr_url']))
+                    <img class="w-24 h-24" src="{{ $transactionDetail['qr_url'] }}" alt="">
+                  @endif
+                  <h3>{{ $instruction->title }}</h3>
+                  <ul>
+                    @foreach ($instruction->steps as $step)
+                      <li>{!! $step !!}</li>
+                    @endforeach
+                  </ul>
+                @endforeach
               </div>
-            </div>
-            <div>
-              <h5 class="mb-2 font-medium">Payment Details</h5>
-              <div class="grid grid-cols-1 gap-1 lg:grid-cols-3">
-                <div class="">
-                  Subtotal
-                </div>
-                <div class="col-span-2">
-                  {{ decimal_to_human($targetTransaction->gross_total, 'Rp') }}
-                </div>
-                <div class="">
-                  Discount <span class="text-xs italic">({{ $targetTransaction->promoCode->code ?? '' }})</span>
-                </div>
-                <div class="col-span-2">
-                  -{{ decimal_to_human($targetTransaction->discount, 'Rp') }}
-                </div>
-                <div class="">
-                  Total
-                </div>
-                <div class="col-span-2">
-                  {{ decimal_to_human($targetTransaction->net_total, 'Rp') }}
-                </div>
-              </div>
-            </div>
+
+            @endif
           </div>
         </x-slot>
     @endif

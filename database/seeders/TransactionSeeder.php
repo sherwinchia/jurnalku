@@ -37,6 +37,6 @@ class TransactionSeeder extends Seeder
             'merchant_ref' => 'TPX1231111130'
         ]);
 
-        Transaction::factory()->count(1000)->create();
+        Transaction::factory()->count(100)->create();
     }
 }
