@@ -33,6 +33,7 @@ class PackageForm extends Component
             $this->buttonText = "Update";
         } else {
             $this->package = new Package();
+            $this->package->active = true;
         }
     }
 

@@ -1,4 +1,5 @@
 <div>
+  <h2 class="pb-2 font-medium lg:text-lg">Purchase History</h2>
   <div>
     <x-ui.table>
       <thead>

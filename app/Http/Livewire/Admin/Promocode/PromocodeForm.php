@@ -54,6 +54,7 @@ class PromocodeForm extends Component
             }
         } else {
             $this->promocode = new Promocode();
+            $this->promocode->active = true;
         }
     }
 

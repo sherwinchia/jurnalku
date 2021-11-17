@@ -1,20 +1,25 @@
-<div class="grid w-full grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3" wire:init="getPaymentMethods">
+<div>
+  <h2 class="pb-2 text-lg font-medium">Select package</h2>
+  @if ($packages->isEmpty())
+    <p class="pb-2">No package available</p>
+  @endif
   @foreach ($packages as $package)
-    <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
-      <div class="pb-8">
-        <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
-        <p class="text-sm font-normal text-gray-700">{{ $package->description }}</p>
-        <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
+    <div class="grid w-full grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3" wire:init="getPaymentMethods">
+      <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
+        <div class="pb-8">
+          <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
+          <p class="text-sm font-normal text-gray-700">{{ $package->description }}</p>
+          <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
+        </div>
+        <x-jet-button wire:click="selectPackage({{ $package->id }})" wire:loading.attr="disabled"
+          class="">
+          Select
+          <span wire:loading wire:target="selectPackage({{ $package->id }})"
+            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
+          </span>
+        </x-jet-button>
       </div>
-      <x-jet-button wire:click="selectPackage({{ $package->id }})" wire:loading.attr="disabled" class="">
-        Select
-        <span wire:loading wire:target="selectPackage({{ $package->id }})"
-          class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-        </span>
-      </x-jet-button>
-    </div>
   @endforeach
-
 
   <x-jet-dialog-modal wire:model="packageModal">
     <x-slot name="title">
@@ -50,7 +55,8 @@
             @if ($inputPromocode)
               <x-ui.form-section field="Promocode" required="fasle" class="">
                 <div class="relative w-full lg:w-1/2">
-                  <x-jet-input wire:model.devounce.500ms="code" wire:input="promoCodeInput" type="text" class="w-full pr-24" />
+                  <x-jet-input wire:model.devounce.500ms="code" wire:input="promoCodeInput" type="text"
+                    class="w-full pr-24" />
                   <x-jet-button class="absolute inset-y-0 right-0" wire:click="applyCode" wire:loading.attr="disabled">
                     Apply
                     <span wire:loading wire:target="applyCode"
