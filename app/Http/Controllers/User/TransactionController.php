@@ -40,7 +40,10 @@ class TransactionController extends Controller
     {
         try {
             $tripayService = app(TripayService::class);
-            $tripayService->handleCallback($request);
+            $valid = $tripayService->handleCallback($request);
+
+            if ($valid) {
+            }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }

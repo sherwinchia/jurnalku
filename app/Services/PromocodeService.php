@@ -35,11 +35,12 @@ class PromocodeService
             $discount = $total * $promocode->value / 100;
         }
         if ($promocode->type == 'fixed') {
-            $discount = $total - $promocode->value;
+            $discount = $promocode->value;
         }
         if (isset($promocode->max_discount) && $discount > $promocode->max_discount) {
             $discount = $promocode->max_discount;
         }
+        if ($discount > $total) $discount = $total;
         return (float) $discount;
     }
 

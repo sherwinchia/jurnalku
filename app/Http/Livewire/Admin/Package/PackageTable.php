@@ -38,8 +38,14 @@ class PackageTable extends Component
             "format" => ["decimal_to_human", "Rp"]
         ],
         [
-            "name" => "Duration",
-            "field" => "duration",
+            "name" => "Type",
+            "field" => "type",
+            "sortable" => true,
+            "format" => ["ucfirst"]
+        ],
+        [
+            "name" => "Value",
+            "field" => "value",
             "sortable" => true,
         ],
         [

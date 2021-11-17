@@ -13,7 +13,8 @@ class Subscription extends Model
         'user_id',
         'type',
         'expired_at',
-        'package_id'
+        'package_id',
+        'max_portfolio'
     ];
 
     protected $dates = ['expired_at'];

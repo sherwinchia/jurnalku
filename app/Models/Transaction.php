@@ -26,9 +26,10 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function package()
+    public function items()
     {
-        return $this->belongsTo('App\Models\Package', 'package_id');
+        return $this->hasMany('App\Models\TransactionPackage');
+        // return $this->belongsTo('App\Models\TransactionPackage', 'package_id');
     }
 
     public function promocode()

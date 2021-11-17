@@ -1,12 +1,13 @@
 <div class="grid grid-cols-6 gap-2">
-  <div class="flex flex-col space-y-2 col-span-full lg:col-span-1">
+  <div class="flex flex-col space-y-4 col-span-full lg:col-span-1">
     <x-ui.card class="p-4">
       <h2>My account</h2>
-      @if(isset(current_user()->subscription))
-      <p class="text-sm text-gray-300">Active until {{ current_user()->subscription->expired_at }}</p>
-      <p class="text-sm text-gray-300">Max portfolio {{ current_user()->max_portfolio }}</p>
+      @if (current_user()->subscription_active)
+        <p class="text-sm text-gray-400">Active until
+          {{ date_to_human(current_user()->subscription->expired_at, 'd M Y') }}</p>
+        <p class="text-sm text-gray-400">Max portfolio {{ current_user()->max_portfolio }}</p>
       @else
-      <p class="text-sm text-gray-300">Account inactive</p>
+        <p class="text-sm text-gray-400">Account inactive</p>
       @endif
     </x-ui.card>
     <x-ui.card class="flex-col hidden overflow-hidden lg:flex">
@@ -26,7 +27,7 @@
     @if ($section === 'topup')
       <livewire:user.billing.buy-form />
     @elseif($section === "history")
-      <livewire:user.transaction.transaction-table :merchant_ref="$merchant_ref"/>
+      <livewire:user.transaction.transaction-table :merchant_ref="$merchant_ref" />
     @endif
   </x-ui.card>
 </div>

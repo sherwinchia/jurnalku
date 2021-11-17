@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\User;
 use App\Models\Setting;
 use App\Models\Portfolio;
+use App\Models\Subscription;
 
 class UserObserver
 {
@@ -26,6 +27,12 @@ class UserObserver
         //default Settings
         Setting::create([
             'user_id' => $user->id
+        ]);
+
+        Subscription::create([
+            'user_id' => $user->id,
+            'type' => 'free',
+            'expired_at' => now(),
         ]);
     }
 

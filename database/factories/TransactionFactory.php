@@ -25,14 +25,13 @@ class TransactionFactory extends Factory
         $discount = $this->faker->numberBetween(1000, 4000);
         return [
             'user_id' => $this->faker->numberBetween(2, 100),
-            'package_id' => $this->faker->numberBetween(1, 3),
             'status' => $this->faker->randomElement(['pending', 'success', 'fail', 'cancelled']),
             'promocode_id' => $this->faker->numberBetween(1, 2),
             'gross_total' => $gross_total,
             'discount' => $discount,
             'net_total' => $gross_total - $discount,
             'reference' => 'INV' . $this->faker->numberBetween(1000000, 9999999),
-            'merchant_ref' => 'TPX' . $this->faker->numberBetween(1000000, 9999999)
+            'merchant_ref' => get_unique_merchant_ref()
         ];
     }
 }

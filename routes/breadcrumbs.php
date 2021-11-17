@@ -73,7 +73,7 @@ Breadcrumbs::for('admin.transactions.index', function (BreadcrumbTrail $trail) {
 // Transactions > Show
 Breadcrumbs::for('admin.transactions.show', function (BreadcrumbTrail $trail, $model) {
     $trail->parent('admin.transactions.index');
-    $trail->push($model->reference);
+    $trail->push($model->merchant_ref);
 });
 
 // Transactions > Create
@@ -85,7 +85,7 @@ Breadcrumbs::for('admin.transactions.create', function (BreadcrumbTrail $trail) 
 // Transactions > Edit
 Breadcrumbs::for('admin.transactions.edit', function (BreadcrumbTrail $trail, $model) {
     $trail->parent('admin.transactions.index');
-    $trail->push($model->reference);
+    $trail->push($model->merchant_ref);
 });
 
 // Promocodes

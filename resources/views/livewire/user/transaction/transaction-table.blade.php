@@ -131,16 +131,19 @@
 
             <div class="flex flex-col pb-6">
               <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200">
-                <div>
-                  <h2 class="font-medium">{{ $targetTransaction->package->name }}</h2>
-                  <p class="text-sm font-normal text-gray-700">{{ $targetTransaction->package->description }}</p>
-                </div>
-                <span>{{ decimal_to_human($targetTransaction->package->price, 'Rp') }}</span>
+                @foreach ($targetTransaction->items as $transactionItem)
+                  <div>
+                    <h2 class="font-medium">{{ data_get($transactionItem, 'package.name', '-') }}</h2>
+                    <p class="text-sm font-normal text-gray-700">
+                      {{ data_get($transactionItem, 'package.description', '-') }}</p>
+                  </div>
+                  <span>{{ decimal_to_human(data_get($transactionItem, 'package.price', ''), 'Rp') }}</span>
+                @endforeach
               </div>
               @if (isset($targetTransaction->promocode_id))
                 <div class="flex justify-between">
                   <span class="text-sm">Subtotal</span>
-                  <span>{{ decimal_to_human($targetTransaction->package->price, 'Rp') }}</span>
+                  <span>{{ decimal_to_human($targetTransaction->gross_total, 'Rp') }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-sm">Discount <span
@@ -150,7 +153,7 @@
               @endif
               <div class="flex justify-between font-medium">
                 <span class="text-sm">Total</span>
-                <span>{{ decimal_to_human($targetTransaction->package->price - $targetTransaction->discount, 'Rp') }}</span>
+                <span>{{ decimal_to_human($targetTransaction->net_total, 'Rp') }}</span>
               </div>
             </div>
 
@@ -192,17 +195,6 @@
                   @endforeach
                 </ul>
               </div>
-              {{-- @foreach ($transactionDetail['instructions'] as $instruction)
-
-                  <h3>{{ $instruction['title'] }}</h3>
-                  <ul>
-                    @foreach ($instruction['steps'] as $step)
-                      <li>{!! $step !!}</li>
-                    @endforeach
-                  </ul>
-                @endforeach --}}
-
-
             @endif
           </div>
         </x-slot>

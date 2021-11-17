@@ -20,7 +20,8 @@ class PackageForm extends Component
         "package.name" => "required|string",
         "package.description" => "required|string",
         "package.price" => "required|numeric|min:0",
-        "package.duration" => "required|integer",
+        "package.value" => "required|integer",
+        "package.type" => "required",
         "package.active" => "boolean"
     ];
 

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Package;
+use App\Models\Subscription;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -72,9 +73,21 @@ class TripayService
         return $response;
     }
 
-    public function requestTransaction(User $user, Package $package, string $method, float $amount)
+    public function requestTransaction(User $user, Package $package, string $method = null, float $amount)
     {
         $merchantRef = get_unique_merchant_ref();
+
+        if ($amount == 0) {
+            $data = new \stdClass();
+            $data->merchant_ref = $merchantRef;
+            $data->amount = 0;
+
+            $response = new \stdClass();
+            $response->success = true;
+            $response->message = "";
+            $response->data = $data;
+            return $response;
+        }
 
         $data = [
             'method'         => $method,
@@ -110,7 +123,6 @@ class TripayService
         $response = curl_exec($curl);
 
         $response = json_decode($response);
-
         $error = curl_error($curl);
 
         curl_close($curl);
@@ -154,18 +166,51 @@ class TripayService
         switch ($data->status) {
             case 'PAID':
                 $transaction->update(['status' => 'success']);
-                return response()->json(['success' => true]);
+                $user = $transaction->user;
+                $subscription = $user->subscription;
+
+                $subscription->update([
+                    'expired_at' => $subscription->addDays($transaction->package->duration),
+                    'type' => 'paid',
+                    'package_id' => $transaction->package_id,
+                ]);
+                return true;
 
             case 'EXPIRED':
                 $transaction->update(['status' => 'expired']);
-                return response()->json(['success' => true]);
+                return true;
 
             case 'FAILED':
                 $transaction->update(['status' => 'fail']);
-                return response()->json(['success' => true]);
+                return true;
 
             default:
                 return 'Unrecognized payment status';
+        }
+    }
+
+    public function updateTransaction($merchantRef)
+    {
+        $transaction = Transaction::where('merchant_ref', $merchantRef)
+            ->where('status', 'pending')
+            ->firstOrFail();
+
+        $transaction->update(['status' => 'success']);
+        $user = $transaction->user;
+        $subscription = $user->subscription;
+
+        foreach ($transaction->items as $transactionItem) {
+            if ($transactionItem->package->type == "duration") {
+                $subscription->update([
+                    'expired_at' => $subscription->expired_at->addDays($transactionItem->package->value),
+                    'type' => 'paid',
+                    'package_id' => $transaction->package_id,
+                ]);
+            } elseif ($transactionItem->package->type == "portfolio") {
+                $subscription->update([
+                    'max_portfolio' => $subscription->max_portfolio + $transactionItem->package->value,
+                ]);
+            }
         }
     }
 }

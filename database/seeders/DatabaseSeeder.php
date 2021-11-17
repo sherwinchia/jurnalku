@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             PromocodeSeeder::class,
             TransactionSeeder::class,
             TradeSeeder::class,
-            SettingSeeder::class,
+            // SettingSeeder::class,
+            TransactionPackageSeeder::class
         ]);
     }
 }

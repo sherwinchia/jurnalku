@@ -16,17 +16,19 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
+                ->nullable()
                 ->constrained()
-                ->onDelete('cascade');
-            $table->foreignId('package_id')->constrained();
+                ->onDelete('set null');
+            // $table->foreignId('package_id')->nullable()->constrained()->onDelete('set null');
             $table->enum('status', ['pending', 'success', 'fail', 'cancelled', 'expired'])->default('pending');
             $table->foreignId('promocode_id')
                 ->nullable()
-                ->constrained();
+                ->constrained()
+                ->onDelete('set null');
             $table->decimal('gross_total', 19, 2);
             $table->decimal('discount', 19, 2)->default(0);
             $table->decimal('net_total', 19, 2);
-            $table->string('reference');
+            $table->string('reference')->nullable();
             $table->string('merchant_ref')->unique();
             $table->timestamps();
         });

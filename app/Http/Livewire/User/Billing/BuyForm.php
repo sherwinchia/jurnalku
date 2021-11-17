@@ -13,12 +13,13 @@ class BuyForm extends Component
 {
     use Alert;
 
+    public $temporaryDiscount;
+    public $temporaryTotal;
     public $selectedPackage;
     public $packages;
     public $code;
     public $packageModal = false;
     public $inputPromocode = false;
-    public $discount;
     public $total;
     public $paymentMethods = [];
     public $selectedPaymentMethod;
@@ -26,11 +27,11 @@ class BuyForm extends Component
 
     protected $rules = [
         "selectedPackage" => "required",
-        "selectedPaymentMethod" => "required",
+        "selectedPaymentMethod" => "required_unless:temporaryTotal,0",
     ];
 
     protected $messages = [
-        'selectedPaymentMethod.required' => 'Please select the payment method.',
+        'selectedPaymentMethod.required_unless' => 'Please select the payment method.',
     ];
 
     public function mount()
@@ -60,6 +61,7 @@ class BuyForm extends Component
 
     public function selectPackage($id)
     {
+        $this->resetPromoCode();
         try {
             $this->selectedPackage = Package::findOrFail($id);
         } catch (\Exception $e) {
@@ -68,6 +70,10 @@ class BuyForm extends Component
                 "message" => "Package not found."
             ]);
         }
+        $this->temporaryTotal = $this->selectedPackage->price;
+        $this->inputPromocode = false;
+        $this->code = null;
+        $this->selectedPaymentMethod = null;
         $this->total = $this->selectedPackage->price;
         $this->packageModal = true;
     }
@@ -79,23 +85,30 @@ class BuyForm extends Component
 
     public function applyCode()
     {
-        $this->discount = null;
-        $this->promoCode = null;
         $this->validate(['code' => 'required']);
+        $this->resetPromoCode();
         try {
             $promocodeService = app(PromocodeService::class);
             $this->promoCode = $promocodeService->find($this->code);
-            $this->discount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price);
+            $this->temporaryDiscount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price);
+            $this->temporaryTotal = $this->selectedPackage->price - $this->temporaryDiscount;
             $this->inputPromocode = false;
         } catch (\Exception $e) {
-            $this->discount = null;
-            $this->promoCode = null;
+            $this->resetPromoCode();
+            $this->temporaryTotal = $this->selectedPackage->price;
             $this->code = null;
             return $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
             ]);
         }
+    }
+
+    public function resetPromoCode()
+    {
+        $this->temporaryDiscount = null;
+        $this->temporaryTotal = null;
+        $this->promoCode = null;
     }
 
     public function checkout()
@@ -110,7 +123,6 @@ class BuyForm extends Component
             }
 
             $net_total = $this->selectedPackage->price - $discount;
-            if ($net_total < 0) $net_total = 0;
 
             $payload = $tripayService->requestTransaction(current_user(), $this->selectedPackage, $this->selectedPaymentMethod, $net_total);
 
@@ -120,14 +132,19 @@ class BuyForm extends Component
 
             $transaction = Transaction::create([
                 'user_id' => current_user()->id,
-                'package_id' => $this->selectedPackage->id,
                 'promocode_id' => $this->promoCode ? $this->promoCode->id : null,
                 'gross_total' => $this->selectedPackage->price,
-                'discount' => $this->discount ?? 0,
-                'reference' => $payload->data->reference,
+                'discount' => $discount,
+                'reference' => $payload->data->reference ?? null,
                 'merchant_ref' => $payload->data->merchant_ref,
-                'net_total' => $net_total
+                'net_total' => $payload->data->amount
             ]);
+            $transaction->items()->create(['package_id' => $this->selectedPackage->id]);
+
+            if ($transaction->net_total == 0) {
+                //development only
+            }
+            $tripayService->updateTransaction($transaction->merchant_ref);
 
             return redirect()->route('user.billings.index', ['section' => 'history', 'merchant_ref' => $transaction->merchant_ref]);
         } catch (\Exception $e) {

@@ -19,7 +19,7 @@ class CreateSubscriptionsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->foreignId('package_id')
-                ->constrained();
+                ->nullable()->constrained()->onDelete('set null');
             $table->timestamp('expired_at');
             $table->integer('max_portfolio')->default(1);
             $table->enum('type', ['free', 'paid']);

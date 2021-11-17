@@ -31,19 +31,20 @@
               </div>
               <span>{{ decimal_to_human($selectedPackage->price, 'Rp') }}</span>
             </div>
-            @if (isset($discount))
+            @if (isset($temporaryDiscount))
               <div class="flex justify-between">
                 <span class="text-sm">Subtotal</span>
                 <span>{{ decimal_to_human($selectedPackage->price, 'Rp') }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-sm">Discount <span class="text-xs italic">({{ $code }})</span></span>
-                <span>{{ decimal_to_human($discount, 'Rp') }}</span>
+                <span>{{ decimal_to_human($temporaryDiscount, 'Rp') }}</span>
               </div>
             @endif
             <div class="flex justify-between font-medium">
               <span class="text-sm">Total</span>
-              <span>{{ decimal_to_human($selectedPackage->price - $discount, 'Rp') }}</span>
+
+              <span>{{ decimal_to_human($temporaryTotal) }}</span>
             </div>
             <a class="py-2 text-sm italic cursor-pointer" wire:click="$toggle('inputPromocode')">Enter promocode</a>
             @if ($inputPromocode)
@@ -65,26 +66,28 @@
           </div>
         </x-ui.alt-form>
 
-        <h2 class="pb-2 font-medium lg:text-lg">
-          Payment Methods
-        </h2>
-        <div class="flex flex-wrap gap-2 pb-2">
-          <span wire:loading wire:target="getPaymentMethods"
-            class="w-10 h-10 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-          </span>
-          @foreach ($paymentMethods as $method)
-            <a class="px-3 flex flex-col w-24 lg:w-36 py-2 border rounded-lg cursor-pointer space-y-2 {{ $selectedPaymentMethod == $method['code'] ? 'border-primary-500' : '' }}"
-              wire:click="selectPaymentMethod('{{ $method['code'] }}')">
-              <img class="object-cover" src="{{ asset('images/development-icon.png') }}" alt="">
-              <span class="text-sm">
-                {{ $method['name'] }}
-              </span>
-            </a>
-          @endforeach
-        </div>
-        @error('selectedPaymentMethod')
-          <x-message.validation type="error">{{ $message }}</x-message.validation>
-        @enderror
+        @if (isset($temporaryTotal) && $temporaryTotal > 0)
+          <h2 class="pb-2 font-medium lg:text-lg">
+            Payment Methods
+          </h2>
+          <div class="flex flex-wrap gap-2 pb-2">
+            <span wire:loading wire:target="getPaymentMethods"
+              class="w-10 h-10 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
+            </span>
+            @foreach ($paymentMethods as $method)
+              <a class="px-3 flex flex-col w-24 lg:w-36 py-2 border rounded-lg cursor-pointer space-y-2 {{ $selectedPaymentMethod == $method['code'] ? 'border-primary-500' : '' }}"
+                wire:click="selectPaymentMethod('{{ $method['code'] }}')">
+                <img class="object-cover" src="{{ asset('images/development-icon.png') }}" alt="">
+                <span class="text-sm">
+                  {{ $method['name'] }}
+                </span>
+              </a>
+            @endforeach
+          </div>
+          @error('selectedPaymentMethod')
+            <x-message.validation type="error">{{ $message }}</x-message.validation>
+          @enderror
+        @endif
       @endif
     </x-slot>
     <x-slot name="footer">

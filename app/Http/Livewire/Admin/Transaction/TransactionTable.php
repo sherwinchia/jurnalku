@@ -120,8 +120,8 @@ class TransactionTable extends Component
                 ->whereHas('user', function ($query) {
                     $query->where("name", "ILIKE", "%{$this->search}%");
                 })
-                ->orWhere('reference','ILIKE', "%{$this->search}%")
-                ->with('user', 'package')
+                ->orWhere('reference', 'ILIKE', "%{$this->search}%")
+                ->with('user', 'items', 'items.package')
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)
         ]);

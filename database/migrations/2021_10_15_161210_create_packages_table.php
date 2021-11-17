@@ -19,8 +19,9 @@ class CreatePackagesTable extends Migration
             $table->id();
             $table->string('name', 60);
             $table->text('description');
-            $table->decimal('price',19,2);
-            $table->integer('duration');
+            $table->decimal('price', 19, 2);
+            $table->integer('value');
+            $table->enum('type', ['duration', 'portfolio']);
             $table->boolean('active')->default(false);
             $table->timestamps();
             $table->softDeletes();

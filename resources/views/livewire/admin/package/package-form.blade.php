@@ -13,9 +13,19 @@
                 <x-message.validation type="error">{{ $message }}</x-message.validation>
                 @enderror
             </x-ui.form-section>
-            <x-ui.form-section field="Duration" required="true">
-                <x-jet-input wire:model.defer="package.duration" type="number" />
-                @error('package.duration')
+            <x-ui.form-section field="Type" required="true">
+                <x-ui.select wire:model.defer="package.type">
+                    <option value="null" disabled>Choose one type</option>
+                    <option value="duration">Duration</option>
+                    <option value="portfolio">Portfolio</option>
+                </x-ui.select>
+                @error('package.type')
+                <x-message.validation type="error">{{ $message }}</x-message.validation>
+                @enderror
+            </x-ui.form-section>
+            <x-ui.form-section field="Value" required="true">
+                <x-jet-input wire:model.defer="package.value" type="number" />
+                @error('package.value')
                 <x-message.validation type="error">{{ $message }}</x-message.validation>
                 @enderror
             </x-ui.form-section>

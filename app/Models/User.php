@@ -124,4 +124,8 @@ class User extends Authenticatable
     {
         return $this->subscription->max_portfolio;
     }
+    public function getPortfolioCountAttribute()
+    {
+        return $this->portfolios->count();
+    }
 }
