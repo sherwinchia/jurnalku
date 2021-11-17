@@ -114,17 +114,17 @@
         </x-slot>
         <x-slot name="content">
           <div class="flex-1">
-            <div class="grid grid-cols-1 gap-1 pb-6 mb-3 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-1 pb-6 mb-3 lg:grid-cols-5">
               <div class="">
                 Ref
               </div>
-              <div class="col-span-2">
+              <div class="col-span-4">
                 #{{ $targetTransaction->merchant_ref }}
               </div>
               <div class="">
                 Date
               </div>
-              <div class="col-span-2">
+              <div class="col-span-4">
                 {{ date_to_human($targetTransaction->created_at, 'd F Y, h:i A') }}
               </div>
             </div>

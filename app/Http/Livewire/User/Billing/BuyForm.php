@@ -13,7 +13,7 @@ class BuyForm extends Component
 {
     use Alert;
 
-    public $package;
+    public $selectedPackage;
     public $packages;
     public $code;
     public $packageModal = false;
@@ -25,7 +25,7 @@ class BuyForm extends Component
     public $promoCode;
 
     protected $rules = [
-        "package" => "required",
+        "selectedPackage" => "required",
         "selectedPaymentMethod" => "required",
     ];
 
@@ -61,14 +61,14 @@ class BuyForm extends Component
     public function selectPackage($id)
     {
         try {
-            $this->package = Package::findOrFail($id);
+            $this->selectedPackage = Package::findOrFail($id);
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
                 "message" => "Package not found."
             ]);
         }
-        $this->total = $this->package->price;
+        $this->total = $this->selectedPackage->price;
         $this->packageModal = true;
     }
 
@@ -85,9 +85,11 @@ class BuyForm extends Component
         try {
             $promocodeService = app(PromocodeService::class);
             $this->promoCode = $promocodeService->find($this->code);
-            $this->discount = $promocodeService->apply($this->promoCode, $this->package->price);
+            $this->discount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price);
             $this->inputPromocode = false;
         } catch (\Exception $e) {
+            $this->discount = null;
+            $this->promoCode = null;
             $this->code = null;
             return $this->alert([
                 "type" => "error",
@@ -104,12 +106,13 @@ class BuyForm extends Component
             $tripayService = app(TripayService::class);
             $discount = 0;
             if (isset($this->promoCode)) {
-                $discount = $promocodeService->apply($this->promoCode, $this->package->price);
+                $discount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price);
             }
 
-            $net_total = $this->package->price - $discount;
+            $net_total = $this->selectedPackage->price - $discount;
+            if ($net_total < 0) $net_total = 0;
 
-            $payload = $tripayService->requestTransaction(current_user(), $this->package, $this->selectedPaymentMethod, $net_total);
+            $payload = $tripayService->requestTransaction(current_user(), $this->selectedPackage, $this->selectedPaymentMethod, $net_total);
 
             if (!$payload->success) {
                 throw new \Exception($payload->message);
@@ -117,9 +120,9 @@ class BuyForm extends Component
 
             $transaction = Transaction::create([
                 'user_id' => current_user()->id,
-                'package_id' => $this->package->id,
+                'package_id' => $this->selectedPackage->id,
                 'promocode_id' => $this->promoCode ? $this->promoCode->id : null,
-                'gross_total' => $this->package->price,
+                'gross_total' => $this->selectedPackage->price,
                 'discount' => $this->discount ?? 0,
                 'reference' => $payload->data->reference,
                 'merchant_ref' => $payload->data->merchant_ref,

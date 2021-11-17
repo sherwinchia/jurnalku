@@ -33,7 +33,6 @@ class TripayService
         if (!empty($error)) {
             throw new \Exception($error);
         }
-
         return $response;
     }
 

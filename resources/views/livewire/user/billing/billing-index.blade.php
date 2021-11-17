@@ -5,12 +5,12 @@
         class="{{ $section === 'topup' ? 'text-primary-500 border-l-4 bg-gray-50' : '' }}">Top Up
       </x-ui.alt-navbar-link>
       <x-ui.alt-navbar-link wire:click="changeSection('history')"
-        class="{{ $section === 'history' ? 'text-primary-500 border-l-4 bg-gray-50' : '' }}">History
+        class="{{ $section === 'history' ? 'text-primary-500 border-l-4 bg-gray-50' : '' }}">Purchase History
       </x-ui.alt-navbar-link>
     </x-ui.card>
     <x-ui.select wire:model="section" class="block w-full lg:hidden">
       <option value="topup">Top Up</option>
-      <option value="history">History</option>
+      <option value="history">Purchase History</option>
     </x-ui.select>
   </div>
   <x-ui.card class="p-4 col-span-full lg:col-span-5">
