@@ -5,8 +5,10 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Alert;
 use App\Models\Transaction;
+use App\Services\TripayService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -34,8 +36,13 @@ class TransactionController extends Controller
         return view(self::PATH . 'show', compact('transaction'));
     }
 
-    public function handleTripayCallback()
+    public function handleTripayCallback(Request $request)
     {
-        # code...
+        try {
+            $tripayService = app(TripayService::class);
+            $tripayService->handleCallback($request);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 }
