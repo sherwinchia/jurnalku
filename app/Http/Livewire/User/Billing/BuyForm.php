@@ -79,15 +79,16 @@ class BuyForm extends Component
 
     public function applyCode()
     {
+        $this->discount = null;
+        $this->promoCode = null;
         $this->validate(['code' => 'required']);
         try {
             $promocodeService = app(PromocodeService::class);
             $this->promoCode = $promocodeService->find($this->code);
             $this->discount = $promocodeService->apply($this->promoCode, $this->package->price);
+            $this->inputPromocode = false;
         } catch (\Exception $e) {
             $this->code = null;
-            $this->promoCode = null;
-            $this->discount = null;
             return $this->alert([
                 "type" => "error",
                 "message" => $e->getMessage()
@@ -102,7 +103,7 @@ class BuyForm extends Component
             $promocodeService = app(PromocodeService::class);
             $tripayService = app(TripayService::class);
             $discount = 0;
-            if (isset($this->code)) {
+            if (isset($this->promoCode)) {
                 $discount = $promocodeService->apply($this->promoCode, $this->package->price);
             }
 

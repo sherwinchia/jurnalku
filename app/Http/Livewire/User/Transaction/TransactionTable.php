@@ -110,6 +110,12 @@ class TransactionTable extends Component
         $tripayService = app(TripayService::class);
         $payload = $tripayService->getTransactionDetail($this->targetTransaction->reference)->data;
         $this->transactionDetail = (array) $payload;
+        $this->transactionDetail['order_items'] = array_map(function ($obj) {
+            return (array) $obj;
+        }, $this->transactionDetail['order_items']);
+        $this->transactionDetail['instructions'] = array_map(function ($obj) {
+            return (array) $obj;
+        }, $this->transactionDetail['instructions']);
     }
 
     public function paginationView()

@@ -29,8 +29,13 @@
                   <div class="flex text-gray-600">
                     @foreach ($actions as $action)
                       @if ($action === 'show')
-                        <a class="mx-1 text-lg" role="button" wire:click="showDetailModal({{ $transaction->id }})">
-                          <x-icon.eye class="w-5 h-5" />
+                        <a class="flex items-center justify-center mx-1 text-lg" role="button"
+                          wire:click="showDetailModal({{ $transaction->id }})">
+                          <x-icon.eye class="w-5 h-5" wire:loading.remove
+                            wire:target="showDetailModal({{ $transaction->id }})" />
+                          <span wire:loading wire:target="showDetailModal({{ $transaction->id }})"
+                            class="w-4 h-4 ml-2 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+                          </span>
                         </a>
                       @elseif ($action === "edit")
                         <a class="mx-1 text-lg" role="button"
@@ -99,6 +104,7 @@
         </div>
       </x-slot>
     </x-ui.table>
+
     @if (isset($targetTransaction))
       <x-jet-dialog-modal wire:model="detailModal">
         <x-slot name="title">
@@ -108,7 +114,7 @@
         </x-slot>
         <x-slot name="content">
           <div class="flex-1">
-            <div class="grid grid-cols-1 gap-1 mb-3 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-1 pb-6 mb-3 lg:grid-cols-3">
               <div class="">
                 Ref
               </div>
@@ -123,10 +129,10 @@
               </div>
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col pb-6">
               <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200">
                 <div>
-                  <h2 class="text-lg font-semibold">{{ $targetTransaction->package->name }}</h2>
+                  <h2 class="font-medium">{{ $targetTransaction->package->name }}</h2>
                   <p class="text-sm font-normal text-gray-700">{{ $targetTransaction->package->description }}</p>
                 </div>
                 <span>{{ decimal_to_human($targetTransaction->package->price, 'Rp') }}</span>
@@ -142,27 +148,60 @@
                   <span>{{ decimal_to_human($targetTransaction->discount, 'Rp') }}</span>
                 </div>
               @endif
-              <div class="flex justify-between">
+              <div class="flex justify-between font-medium">
                 <span class="text-sm">Total</span>
                 <span>{{ decimal_to_human($targetTransaction->package->price - $targetTransaction->discount, 'Rp') }}</span>
               </div>
             </div>
 
             @if ($targetTransaction->status == 'pending')
-              <div>
-                <h2>{{ $transactionDetail['payment_name'] }}</h2>
-                @foreach ($transactionDetail['instructions'] as $instruction)
-                  @if (isset($transactionDetail['qr_url']))
-                    <img class="w-24 h-24" src="{{ $transactionDetail['qr_url'] }}" alt="">
-                  @endif
-                  <h3>{{ $instruction->title }}</h3>
+              <h2 class="pb-2 font-medium lg:text-lg">Payment Guides</h2>
+              <div class="mx-auto bg-white border border-gray-200" x-data="{selected:null}">
+                <ul class="shadow-box">
+                  @foreach ($transactionDetail['instructions'] as $instruction)
+                    <li class="relative border-b border-gray-200">
+                      <button type="button"
+                        class="w-full px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        @click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
+                        <div class="flex items-center justify-between">
+                          <span>
+                            {{-- Title here --}}
+                            {{ $instruction['title'] }}
+                          </span>
+                          <x-icon.chevron-down class="w-4 h-4 transform"
+                            x-bind:class="selected == {{ $loop->iteration }} ? 'rotate-180' : ''" />
+                        </div>
+                      </button>
+                      <div class="relative overflow-hidden transition-all duration-700 max-h-0" style=""
+                        x-ref="containner{{ $loop->iteration }}"
+                        x-bind:style="selected == {{ $loop->iteration }} ? 'max-height: ' + $refs.containner{{ $loop->iteration }}.scrollHeight + 'px' : ''">
+                        <div class="p-6">
+                          {{-- Content here --}}
+                          @if (isset($transactionDetail['qr_url']))
+                            <img class="mx-auto mb-4 w-28 h-28" src="{{ $transactionDetail['qr_url'] }}" alt="">
+                          @endif
+                          <div class="grid grid-cols-12">
+                            @foreach ($instruction['steps'] as $step)
+                              <div class="col-span-1">{{ $loop->iteration }}.</div>
+                              <div class="col-span-11 text-left">{!! $step !!}</div>
+                            @endforeach
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  @endforeach
+                </ul>
+              </div>
+              {{-- @foreach ($transactionDetail['instructions'] as $instruction)
+
+                  <h3>{{ $instruction['title'] }}</h3>
                   <ul>
-                    @foreach ($instruction->steps as $step)
+                    @foreach ($instruction['steps'] as $step)
                       <li>{!! $step !!}</li>
                     @endforeach
                   </ul>
-                @endforeach
-              </div>
+                @endforeach --}}
+
 
             @endif
           </div>
