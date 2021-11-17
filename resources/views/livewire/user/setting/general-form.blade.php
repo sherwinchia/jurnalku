@@ -1,5 +1,5 @@
 <div>
-  <x-ui.header class="mb-4 border-b border-gray-300">General</x-ui.header>
+  <x-ui.header class="pb-2 mb-4 border-b border-gray-300">General</x-ui.header>
   <x-ui.alt-form wire:submit.prevent="submit">
 
     <x-ui.form-section field="Public Page" required="true">

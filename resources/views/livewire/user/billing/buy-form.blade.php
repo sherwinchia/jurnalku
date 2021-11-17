@@ -1,5 +1,5 @@
 <div>
-  <h2 class="pb-2 text-lg font-medium">Select package</h2>
+  <x-ui.header class="pb-2 mb-4 border-b border-gray-300">Select Package</x-ui.header>
   @if ($packages->isEmpty())
     <p class="pb-2">No package available</p>
   @endif
