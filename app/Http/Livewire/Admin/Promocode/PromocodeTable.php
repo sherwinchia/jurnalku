@@ -36,6 +36,7 @@ class PromocodeTable extends Component
             "name" => "Type",
             "field" => "type",
             "sortable" => true,
+            "format" => ["ucfirst"]
         ],
         [
             "name" => "Active",

@@ -18,7 +18,7 @@ class UserShow extends Component
     public function render()
     {
         return view('livewire.admin.user.user-show', [
-            'transactions' => $this->user->transactions()->with('package')->orderBy('created_at', 'desc')->paginate(10),
+            'transactions' => $this->user->transactions()->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 }

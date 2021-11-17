@@ -50,7 +50,7 @@
             @if ($inputPromocode)
               <x-ui.form-section field="Promocode" required="fasle" class="">
                 <div class="relative w-full lg:w-1/2">
-                  <x-jet-input wire:model.defer="code" type="text" class="w-full pr-24" />
+                  <x-jet-input wire:model.devounce.500ms="code" wire:input="promoCodeInput" type="text" class="w-full pr-24" />
                   <x-jet-button class="absolute inset-y-0 right-0" wire:click="applyCode" wire:loading.attr="disabled">
                     Apply
                     <span wire:loading wire:target="applyCode"

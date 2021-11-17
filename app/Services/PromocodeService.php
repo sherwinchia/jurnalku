@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Promocode;
+use App\Models\User;
 
 class PromocodeService
 {
@@ -15,8 +16,12 @@ class PromocodeService
         }
     }
 
-    public function checkAvailability(Promocode $promocode, float $total)
+    public function checkAvailability(Promocode $promocode, float $total, User $user)
     {
+        if ($promocode->first_time_user && $user->transactions->contains('promocode_id', $promocode->id)) {
+            throw new \Exception("You've used this promocode.");
+        }
+
         if (!($promocode->started && !$promocode->expired)) {
             throw new \Exception("Promocode has expired.");
         }
@@ -44,9 +49,9 @@ class PromocodeService
         return (float) $discount;
     }
 
-    public function apply(Promocode $promocode, float $total)
+    public function apply(Promocode $promocode, float $total, User $user)
     {
-        $this->checkAvailability($promocode, $total);
+        $this->checkAvailability($promocode, $total, $user);
         return $this->calculate($promocode, $total);
     }
 }

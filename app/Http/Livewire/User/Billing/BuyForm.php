@@ -78,6 +78,11 @@ class BuyForm extends Component
         $this->packageModal = true;
     }
 
+    public function promoCodeInput()
+    {
+        $this->code = strtoupper($this->code);
+    }
+
     public function selectPaymentMethod(string $code)
     {
         $this->selectedPaymentMethod = $code;
@@ -90,7 +95,7 @@ class BuyForm extends Component
         try {
             $promocodeService = app(PromocodeService::class);
             $this->promoCode = $promocodeService->find($this->code);
-            $this->temporaryDiscount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price);
+            $this->temporaryDiscount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price, current_user());
             $this->temporaryTotal = $this->selectedPackage->price - $this->temporaryDiscount;
             $this->inputPromocode = false;
         } catch (\Exception $e) {
@@ -119,7 +124,7 @@ class BuyForm extends Component
             $tripayService = app(TripayService::class);
             $discount = 0;
             if (isset($this->promoCode)) {
-                $discount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price);
+                $discount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price, current_user());
             }
 
             $net_total = $this->selectedPackage->price - $discount;

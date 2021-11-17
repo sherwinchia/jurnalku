@@ -37,11 +37,13 @@ class UserTable extends Component
             "name" => "Role",
             "relation" => "role.name",
             "sortable" => false,
+            "format" => ["ucfirst"]
         ],
         [
             "name" => "Subscription",
             "relation" => "subscription.type",
             "sortable" => false,
+            "format" => ["ucfirst"]
         ],
         [
             "name" => "Expiry",

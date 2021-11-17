@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::resource('packages', PackageController::class)->only('index', 'edit', 'create');
         Route::resource('promocodes', PromocodeController::class)->only('index', 'edit', 'create');
         // Route::resource('subscriptions', SubscriptionController::class)->name('*', 'subscription')->only('show','index');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     });
 
     Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function () {
@@ -47,6 +48,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
             Route::resource('trades', TradeController::class)->only('show');
             Route::get('export/portfolio/{portfolio}', [PortfolioController::class, 'export'])->name('portfolio.export');
             Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+            Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard.index');
         });
         // Route::get('transactions/{merchant_ref}', [UserTransactionController::class, 'show'])->name('transactions.show');
         Route::get('billings', [BillingController::class, 'index'])->name('billings.index');
