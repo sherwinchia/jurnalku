@@ -72,7 +72,7 @@ class PortfolioPolicy
      */
     public function delete(User $user, Portfolio $portfolio)
     {
-        return $user->id === $portfolio->user_id && $user->portfolios->count() > 1;
+        return $user->id === $portfolio->user_id;
     }
 
     /**

@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
+use stdClass;
+
 class TradeAnalyticsService
 {
     private $trades;
     private $balance = 0;
-    private $totalTrades;
-    private $totalWin;
-    private $totalLose;
 
     public function __construct($trades, int $balance)
     {
@@ -59,6 +58,34 @@ class TradeAnalyticsService
     public function getBalanceGrowth()
     {
         return $this->balance + $this->trades->sum('return');
+    }
+
+    public function getWinCount()
+    {
+        return $this->filterTrade('win')->count();
+    }
+
+    public function getLoseCount()
+    {
+        return $this->filterTrade('lose')->count();
+    }
+
+    public function getTradeCount()
+    {
+        return $this->tradesP->count();
+    }
+
+    public function getWinLossPercentage()
+    {
+        $win = $this->filterTrade('win')->count() / ($this->filterTrade('win')->count() + $this->filterTrade('lose')->count()) * 100;
+        $lose = 100 - $win;
+
+        $data = [
+            "win" => $win,
+            "lose" => $lose
+        ];
+
+        return (object) $data;
     }
 
     public function getBalanceGrowthPercentage()

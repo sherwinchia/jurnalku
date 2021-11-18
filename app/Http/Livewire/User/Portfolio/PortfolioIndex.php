@@ -104,7 +104,8 @@ class PortfolioIndex extends Component
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => "Failed to delete portfolio. Each user should have at least one portfolio."
+                "message" => $e->getMessage()
+                // "message" => "Failed to delete portfolio. Each user should have at least one portfolio."
             ]);
         }
 

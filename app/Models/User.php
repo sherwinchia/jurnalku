@@ -100,16 +100,6 @@ class User extends Authenticatable
         return $this->hasManyThrough('App\Models\Trade', 'App\Models\Portfolio');
     }
 
-    public function getTotalWinAttribute()
-    {
-        return $this->trades->where('status', '=', 'win')->count();
-    }
-
-    public function getTotalLoseAttribute()
-    {
-        return $this->trades->where('status', '=', 'lose')->count();
-    }
-
     public function getSubscriptionActiveAttribute()
     {
         return $this->subscription->expired_at->gt(now());

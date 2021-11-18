@@ -6,7 +6,7 @@
       <img src="{{ asset('images/landing-background.jpg') }}" alt="background"
         class="absolute inset-0 z-0 object-cover w-full h-full">
       <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-800 to-black opacity-80"></div>
-      <div class="z-20 max-w-4xl p-4 mx-auto my-4 space-y-4 text-center">
+      <div class="z-20 max-w-4xl p-8 mx-auto my-4 space-y-4 text-center">
         <h1 class="text-2xl font-semibold text-white md:text-4xl lg:text-5xl ">The only <span
             class="text-primary-500">trade
             journal</span>
@@ -23,7 +23,7 @@
 
   <div class="px-4 pt-8 pb-8 lg:py-16" style="height: 50vh;">
     <div class="flex flex-col h-full mx-auto lg:flex-row max-w-7xl">
-      <div class="flex flex-col items-start justify-center flex-1 pr-20 space-y-4">
+      <div class="flex flex-col items-start justify-center flex-1 pb-4 pr-20 space-y-4 md:pb-0">
         <h2 class="text-xl font-semibold text-gray-700 md:text-2xl lg:text-3xl">Journal your trade</h2>
         <p class="font-normal">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti aspernatur at laudantium sit error iure
@@ -41,7 +41,7 @@
 
   <div class="px-4 pb-8 lg:py-16" style="height: 50vh;">
     <div class="flex flex-col h-full mx-auto lg:flex-row-reverse max-w-7xl">
-      <div class="flex flex-col items-start justify-center flex-1 pl-0 space-y-4 lg:pl-20">
+      <div class="flex flex-col items-start justify-center flex-1 pb-4 pl-0 space-y-4 lg:pl-20 md:pb-0">
         <h2 class="text-xl font-semibold text-gray-700 md:text-2xl lg:text-3xl">Improve</h2>
         <p class="font-normal">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti aspernatur at laudantium sit error iure
@@ -137,7 +137,7 @@
     </div>
   </div>
 
-  <div class="px-4 py-24 text-gray-700 bg-gray-50">
+  <div class="px-4 py-8 text-gray-700 md:py-24 bg-gray-50">
     <div class="flex flex-col mx-auto lg:flex-row max-w-7xl">
       <div class="flex flex-col items-start justify-center flex-1">
         <h2 class="text-xl font-semibold md:text-2xl lg:text-3xl">Works with different kinds of trading instrument</h2>
@@ -172,7 +172,7 @@
 
   <div class="px-4 pb-16 text-gray-700 bg-gray-50" id="pricing">
     <div class="flex flex-col mx-auto space-y-4 max-w-7xl">
-      <h2 class="text-xl font-semibold text-center md:text-2xl lg:text-3xl">Pricing</h2>
+      <h2 class="text-xl font-semibold md:text-center md:text-2xl lg:text-3xl">Pricing</h2>
       <div class="grid w-full max-w-5xl grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3">
         @foreach ($packages as $package)
           <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">

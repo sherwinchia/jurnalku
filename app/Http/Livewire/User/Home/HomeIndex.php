@@ -10,8 +10,8 @@ use Livewire\Component;
 
 class HomeIndex extends Component
 {
-    public $portfolios = [];
-    public $trades = [];
+    public $portfolios;
+    public $trades;
     public $performance = [
         'win' => null,
         'lose' => null
@@ -19,10 +19,10 @@ class HomeIndex extends Component
 
     public function mount()
     {
-        $trades = current_user()->trades;
-        $balance = current_user()->portfolios->sum('balance');
-        $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => $trades, 'balance' => $balance]);
-        dd($tradeAnalyticsService->getBestTradeReturn(), $tradeAnalyticsService->getWorstTradeReturn(), $tradeAnalyticsService->getBestTradeReturnPercentage(), $tradeAnalyticsService->getWorstTradeReturnPercentage(), $tradeAnalyticsService->getBalanceGrowth(), $tradeAnalyticsService->getBalanceGrowthPercentage());
+        // $trades = current_user()->trades;
+        // $balance = current_user()->portfolios->sum('balance');
+        // $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => $trades, 'balance' => $balance]);
+        // dd($tradeAnalyticsService->getWinLossPercentage()->win);
     }
 
     public function loadData()
@@ -31,10 +31,7 @@ class HomeIndex extends Component
 
         $this->trades = current_user()->trades()->latest()->take(10)->get();
 
-        $this->performance = [
-            'win' => current_user()->total_win,
-            'lose' => current_user()->total_lose,
-        ];
+        $this->performance = [];
     }
 
     public function render()
