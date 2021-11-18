@@ -4,6 +4,7 @@ namespace App\Http\Livewire\User\Home;
 
 use App\Models\Trade;
 use App\Models\Portfolio;
+use App\Services\TradeAnalyticsService;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Livewire\Component;
 
@@ -15,6 +16,14 @@ class HomeIndex extends Component
         'win' => null,
         'lose' => null
     ];
+
+    public function mount()
+    {
+        $trades = current_user()->trades;
+        $balance = current_user()->portfolios->sum('balance');
+        $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => $trades, 'balance' => $balance]);
+        dd($tradeAnalyticsService->getBestTradeReturn(), $tradeAnalyticsService->getWorstTradeReturn(), $tradeAnalyticsService->getBestTradeReturnPercentage(), $tradeAnalyticsService->getWorstTradeReturnPercentage(), $tradeAnalyticsService->getBalanceGrowth(), $tradeAnalyticsService->getBalanceGrowthPercentage());
+    }
 
     public function loadData()
     {

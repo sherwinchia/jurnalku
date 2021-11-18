@@ -19,6 +19,7 @@ class CreateTradesTable extends Migration
             $table->string('instrument');
             $table->string('setup')->nullable();
             $table->string('mistake')->nullable();
+            $table->enum('type', ['long', 'short'])->default('long');
             $table->timestamp('entry_date');
             $table->timestamp('exit_date')->nullable();
             $table->decimal('entry_price', 19, 2);
@@ -32,7 +33,7 @@ class CreateTradesTable extends Migration
             $table->decimal('return_percentage', 8, 2)->nullable();
             $table->boolean('favorite')->default(0);
             $table->text('note')->nullable();
-            $table->enum('status',['open', 'win', 'lose', 'neutral', 'close'])->default('open');
+            $table->enum('status', ['open', 'win', 'lose', 'neutral', 'close'])->default('open');
             $table->timestamps();
         });
     }
