@@ -12,17 +12,37 @@ class HomeIndex extends Component
 {
     public $portfolios;
     public $trades;
-    public $performance = [
-        'win' => null,
-        'lose' => null
+    public $data = [
+        [
+            'x' => 'Abigail',
+            'y' => 5
+        ],
+        [
+            'x' => 'Lucy',
+            'y' => 10
+        ],
     ];
 
     public function mount()
     {
-        // $trades = current_user()->trades;
-        // $balance = current_user()->portfolios->sum('balance');
-        // $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => $trades, 'balance' => $balance]);
-        // dd($tradeAnalyticsService->getWinLossPercentage()->win);
+    }
+
+
+    public function changeData()
+    {
+        $this->data =
+            [
+                [
+                    'x' => 'Abigail',
+                    'y' => 12
+                ],
+                [
+                    'x' => 'Lucy',
+                    'y' => 1
+                ],
+            ];
+
+        $this->emit('changeData');
     }
 
     public function loadData()

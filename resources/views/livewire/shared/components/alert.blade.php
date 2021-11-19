@@ -23,7 +23,7 @@
   @endforeach
 
   @push('scripts')
-    <script>
+    <script type="text/javascript">
       const shiftArray = async () => {
         await new Promise(resolve => setTimeout(() => {
           @this.shift();

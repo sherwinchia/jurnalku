@@ -50,6 +50,9 @@
         <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 font-medium md:mt-0 md:ml-4">
           Home
         </a>
+        <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 font-medium md:mt-0 md:ml-4">
+          Blog
+        </a>
         <a href="{{ route('user.home.index') . '#pricing' }}" class="px-2 py-1 mt-2 font-medium md:mt-0 md:ml-4">
           Pricing
         </a>
@@ -96,6 +99,7 @@
     </div>
   </footer>
   @livewireScripts
+  <script src="{{ mix('js/alpine.js') }}"></script>
   @stack('scripts')
 </body>
 

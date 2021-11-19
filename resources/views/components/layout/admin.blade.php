@@ -210,7 +210,8 @@
     </div>
     <livewire:shared.components.alert />
     @livewireScripts
-    <script>
+    <script type="text/javascript" src="{{ mix('js/alpine.js') }}"></script>
+    <script type="text/javascript">
         const setup = () => {
             return {
                 isSidebarOpen: false,

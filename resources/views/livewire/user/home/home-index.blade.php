@@ -1,6 +1,8 @@
 <div class="grid grid-cols-1 gap-8 mt-6 sm:grid-cols-2 lg:grid-cols-3" wire:init="loadData">
-  <x-ui.card class="col-span-3 p-4 ">
+  <x-ui.card class="col-span-3 p-4 pb-10 h-96" wire:ignore>
     Performance Chart
+    <a wire:click="changeData">changeData</a>
+    <canvas id="myChart"></canvas>
   </x-ui.card>
   <x-ui.card class="col-span-1 p-4 bg-blue-200">
     Profit Calendar
@@ -58,7 +60,40 @@
       </div>
     </x-ui.card>
   @endif
-  <script>
 
+  <script type="text/javascript">
+    document.addEventListener('livewire:load', function() {
+      console.log(@this.data);
+      const ctx = document.getElementById('myChart');
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: 'Balance growth per day',
+            data: @this.data,
+            backgroundColor: [
+              fullConfig.theme.colors.primary[500],
+            ],
+            borderWidth: 1,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      Livewire.on('changeData', () => {
+        myChart.data.datasets[0].data = @this.data;
+        myChart.update();
+      })
+    })
   </script>
+
 </div>

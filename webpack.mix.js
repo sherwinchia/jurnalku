@@ -27,6 +27,8 @@ mix.js('resources/js/user/app.js', 'public/js/user.js')
         postCss: [tailwindcss('./tailwind.config.js')],
     });
 
+mix.js('resources/js/alpine.js', 'public/js/alpine.js');
+
 // mix.js('resources/js/app.js', 'public/js')
 //     .postCss('resources/css/app.css', 'public/css', [
 //         require('postcss-import'),

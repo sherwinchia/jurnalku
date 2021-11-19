@@ -28,6 +28,9 @@
 // });
 
 import "animate.css";
-require('alpinejs');
+import resolveConfig from 'tailwindcss/resolveConfig';
+import tailwindConfig from '../../tailwind.config';
 
-window.chart = require('chart.js');
+window.fullConfig = resolveConfig(tailwindConfig);
+// console.log(fullConfig.theme.colors);
+// window.Chart = require('chart.js');
