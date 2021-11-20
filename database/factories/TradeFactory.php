@@ -23,15 +23,16 @@ class TradeFactory extends Factory
     public function definition()
     {
         $entry_price = $this->faker->randomFloat(1, 80, 100);
-        $exit_price = (rand(0,1) == 1) ? $entry_price + $this->faker->randomFloat(1, 5, 20) : $entry_price - $this->faker->randomFloat(1, 5, 20);
+        $exit_price = (rand(0, 1) == 1) ? $entry_price + $this->faker->randomFloat(1, 5, 20) : $entry_price - $this->faker->randomFloat(1, 5, 20);
 
         return [
-            'portfolio_id' => $this->faker->numberBetween(1, 4),
+            'portfolio_id' => 2,
             'entry_date' => Carbon::now(),
             'exit_date' => Carbon::now()->addDays($this->faker->numberBetween(1, 14)),
-            'instrument' => $this->faker->randomElement(['AAPL','GOTO','GOGL','FB','BBCA','TLKM','JAGO']),
-            'mistake' => $this->faker->randomElement(['FOMO','Emotional Trading','Guessing','Quick CL','Avoid Plan']),
-            'setup' => $this->faker->randomElement(['Breakout','Pullback','MA Bounce','Fibonacci']),
+            'instrument' => $this->faker->randomElement(['AAPL', 'GOTO', 'GOGL', 'FB', 'BBCA', 'TLKM', 'JAGO']),
+            'mistake' => $this->faker->randomElement(['FOMO', 'Emotional Trading', 'Guessing', 'Quick CL', 'Avoid Plan']),
+            'setup' => $this->faker->randomElement(['Breakout', 'Pullback', 'MA Bounce', 'Fibonacci']),
+            'status' => $this->faker->randomElement(['win', 'lose']),
             'quantity' => $this->faker->numberBetween(1, 20),
             'entry_price' => $entry_price,
             'exit_price' => $exit_price,

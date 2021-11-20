@@ -1,7 +1,6 @@
 <div class="grid grid-cols-1 gap-8 mt-6 sm:grid-cols-2 lg:grid-cols-3" wire:init="loadData">
   <x-ui.card class="col-span-3 p-4 pb-10 h-96" wire:ignore>
     Performance Chart
-    <a wire:click="changeData">changeData</a>
     <canvas id="myChart"></canvas>
   </x-ui.card>
   <x-ui.card class="col-span-1 p-4 bg-blue-200">

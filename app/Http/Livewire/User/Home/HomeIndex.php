@@ -12,46 +12,25 @@ class HomeIndex extends Component
 {
     public $portfolios;
     public $trades;
-    public $data = [
-        [
-            'x' => 'Abigail',
-            'y' => 5
-        ],
-        [
-            'x' => 'Lucy',
-            'y' => 10
-        ],
-    ];
+    public $performanceData = [];
 
     public function mount()
     {
+        $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => current_user()->trades, 'balance' => current_user()->total_balance]);
+        dd($tradeAnalyticsService->getRangeNetProfit());
     }
 
-
-    public function changeData()
+    public function initData()
     {
-        $this->data =
-            [
-                [
-                    'x' => 'Abigail',
-                    'y' => 12
-                ],
-                [
-                    'x' => 'Lucy',
-                    'y' => 1
-                ],
-            ];
-
-        $this->emit('changeData');
     }
 
     public function loadData()
     {
-        $this->portfolios = current_user()->portfolios;
+        // $this->portfolios = current_user()->portfolios;
 
-        $this->trades = current_user()->trades()->latest()->take(10)->get();
+        // $this->trades = current_user()->trades()->latest()->take(10)->get();
 
-        $this->performance = [];
+        // $this->performance = [];
     }
 
     public function render()

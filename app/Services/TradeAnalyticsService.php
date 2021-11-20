@@ -72,7 +72,7 @@ class TradeAnalyticsService
 
     public function getTradeCount()
     {
-        return $this->tradesP->count();
+        return $this->trades->count();
     }
 
     public function getWinLossPercentage()
@@ -95,6 +95,16 @@ class TradeAnalyticsService
             return 0;
         }
         return ($this->getBalanceGrowth() - $initial)  / $initial * 100;
+    }
+
+    public function getRangeNetProfit()
+    {
+        $data = array();
+        $rawData = $this->trades->whereIn('status', ['win', 'lose'])->groupBy(function ($item) {
+            return $item->entry_date->format('d M y');
+        });;
+
+        dd($rawData);
     }
 
     private function filterTrade(string $status)

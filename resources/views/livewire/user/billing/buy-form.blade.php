@@ -3,10 +3,10 @@
   @if ($packages->isEmpty())
     <p class="pb-2">No package available</p>
   @endif
-  @foreach ($packages as $package)
-    <div class="grid w-full grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3" wire:init="getPaymentMethods">
-      <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
-        <div class="pb-8">
+  <div class="grid w-full grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3" wire:init="getPaymentMethods">
+    @foreach ($packages as $package)
+      <div class="flex flex-col items-start col-span-1 p-6 bg-white border rounded-lg shadow-lg">
+        <div class="pb-8 ">
           <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
           <p class="text-sm font-normal text-gray-700">{{ $package->description }}</p>
           <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
@@ -19,8 +19,8 @@
           </span>
         </x-jet-button>
       </div>
-  @endforeach
-
+    @endforeach
+  </div>
   <x-jet-dialog-modal wire:model="packageModal">
     <x-slot name="title">
       Billing Summary

@@ -75,6 +75,30 @@ class User extends Authenticatable
         return $this->role_id == 2 ? true : false;
     }
 
+    public function getSubscriptionActiveAttribute()
+    {
+        return $this->subscription->expired_at->gt(now());
+    }
+
+    public function getSubscriptionTypeAttribute()
+    {
+        return $this->subscription->type;
+    }
+
+    public function getMaxPortfolioAttribute()
+    {
+        return $this->subscription->max_portfolio;
+    }
+    public function getPortfolioCountAttribute()
+    {
+        return $this->portfolios->count();
+    }
+
+    public function getTotalBalanceAttribute()
+    {
+        return $this->portfolios->sum('balance');
+    }
+
     public function subscription()
     {
         return $this->hasOne('App\Models\Subscription');
@@ -98,24 +122,5 @@ class User extends Authenticatable
     public function trades()
     {
         return $this->hasManyThrough('App\Models\Trade', 'App\Models\Portfolio');
-    }
-
-    public function getSubscriptionActiveAttribute()
-    {
-        return $this->subscription->expired_at->gt(now());
-    }
-
-    public function getSubscriptionTypeAttribute()
-    {
-        return $this->subscription->type;
-    }
-
-    public function getMaxPortfolioAttribute()
-    {
-        return $this->subscription->max_portfolio;
-    }
-    public function getPortfolioCountAttribute()
-    {
-        return $this->portfolios->count();
     }
 }
