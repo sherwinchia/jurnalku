@@ -27,7 +27,7 @@ class TradeFactory extends Factory
 
         return [
             'portfolio_id' => 2,
-            'entry_date' => Carbon::now(),
+            'entry_date' => Carbon::now()->subDays($this->faker->numberBetween(0, 14)),
             'exit_date' => Carbon::now()->addDays($this->faker->numberBetween(1, 14)),
             'instrument' => $this->faker->randomElement(['AAPL', 'GOTO', 'GOGL', 'FB', 'BBCA', 'TLKM', 'JAGO']),
             'mistake' => $this->faker->randomElement(['FOMO', 'Emotional Trading', 'Guessing', 'Quick CL', 'Avoid Plan']),

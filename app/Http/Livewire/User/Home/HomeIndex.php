@@ -10,27 +10,40 @@ use Livewire\Component;
 
 class HomeIndex extends Component
 {
+    public Portfolio $portfolio;
+    public $selectedPortfolio;
     public $portfolios;
     public $trades;
-    public $performanceData = [];
+    public $chartData = [];
 
     public function mount()
     {
-        $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => current_user()->trades, 'balance' => current_user()->total_balance]);
-        dd($tradeAnalyticsService->getRangeNetProfit());
+        $this->portfolios = current_user()->portfolios->load('trades');
+        $this->trades = current_user()->trades()->latest()->take(10)->get();
+        $this->portfolio = $this->portfolios->first();
+        // dd($this->portfolio);
     }
 
     public function initData()
     {
+        $this->updateChart();
+    }
+
+    public function updateChart()
+    {
+        $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => $this->portfolio->trades, 'balance' => $this->portfolio->balance]);
+        $this->chartData = $tradeAnalyticsService->getTotalBalanceGrowthPercentage();
+        $this->emit('changeData');
+    }
+
+    public function changePortfolio()
+    {
+        $this->portfolio = Portfolio::findOrFail($this->selectedPortfolio);
+        $this->updateChart();
     }
 
     public function loadData()
     {
-        // $this->portfolios = current_user()->portfolios;
-
-        // $this->trades = current_user()->trades()->latest()->take(10)->get();
-
-        // $this->performance = [];
     }
 
     public function render()

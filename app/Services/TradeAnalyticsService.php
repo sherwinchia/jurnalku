@@ -17,7 +17,7 @@ class TradeAnalyticsService
 
     public function getNetProfit()
     {
-        return $this->filterTrade('win')->sum('return') + $this->filterTrade('lose')->sum('return');
+        return $this->netProfit($this->trades);
     }
 
     public function getProfitFactor()
@@ -55,11 +55,6 @@ class TradeAnalyticsService
         return $this->trades->min('return_percentage');
     }
 
-    public function getBalanceGrowth()
-    {
-        return $this->balance + $this->trades->sum('return');
-    }
-
     public function getWinCount()
     {
         return $this->filterTrade('win')->count();
@@ -78,33 +73,76 @@ class TradeAnalyticsService
     public function getWinLossPercentage()
     {
         $win = $this->filterTrade('win')->count() / ($this->filterTrade('win')->count() + $this->filterTrade('lose')->count()) * 100;
-        $lose = 100 - $win;
 
         $data = [
             "win" => $win,
-            "lose" => $lose
+            "lose" => 100 - $win
         ];
 
-        return (object) $data;
+        return $data;
+    }
+
+    public function getBalanceGrowth()
+    {
+        return $this->balanceGrowth($this->trades);
     }
 
     public function getBalanceGrowthPercentage()
     {
-        $initial = $this->balance;
-        if ($initial <= 0) {
-            return 0;
-        }
-        return ($this->getBalanceGrowth() - $initial)  / $initial * 100;
+        return $this->balanceGrowthPercentage($this->balanceGrowth($this->trades));
     }
 
     public function getRangeNetProfit()
     {
         $data = array();
-        $rawData = $this->trades->whereIn('status', ['win', 'lose'])->groupBy(function ($item) {
-            return $item->entry_date->format('d M y');
+        $rawDatas = $this->trades->whereIn('status', ['win', 'lose'])->groupBy(function ($item) {
+            return $item->entry_date->format('d/m/y');
         });;
 
-        dd($rawData);
+        foreach ($rawDatas as $key => $rawData) {
+            $tempData = [
+                'x' => $key,
+                'y' => $this->netProfit($rawData)
+            ];
+            array_push($data, $tempData);
+        }
+        return $data;
+    }
+
+    public function getTotalBalanceGrowthPercentage()
+    {
+        $data = array();
+        $rawDatas = $this->trades->whereIn('status', ['win', 'lose'])->groupBy(function ($item) {
+            return $item->entry_date->format('d/m/y');
+        });;
+
+        foreach ($rawDatas as $key => $rawData) {
+            $tempData = [
+                'x' => $key,
+                'y' => $this->balanceGrowthPercentage($this->balanceGrowth($rawData))
+            ];
+            array_push($data, $tempData);
+        }
+        return $data;
+    }
+
+    private function balanceGrowth($trades)
+    {
+        return $this->balance + $trades->sum('return');
+    }
+
+    private function balanceGrowthPercentage($balance)
+    {
+        $initial = $this->balance;
+        if ($initial <= 0) {
+            return 0;
+        }
+        return ($balance - $initial)  / $initial * 100;
+    }
+
+    private function netProfit($trades)
+    {
+        return $trades->whereIn('status', ['win', 'lose'])->sum('return');
     }
 
     private function filterTrade(string $status)

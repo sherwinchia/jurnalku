@@ -14,6 +14,8 @@ class TradeSeeder extends Seeder
      */
     public function run()
     {
+        Trade::truncate();
+
         Trade::factory()->count(200)->create();
     }
 }
