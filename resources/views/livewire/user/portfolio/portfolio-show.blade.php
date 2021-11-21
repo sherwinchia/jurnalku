@@ -342,7 +342,7 @@
                     @enderror
                   </x-ui.form-section>
 
-                  <x-ui.form-section field="Mistake" required="true" class="col-span-4 sm:col-span-2">
+                  <x-ui.form-section field="Mistake" required="false" class="col-span-4 sm:col-span-2">
                     <x-ui.select wire:model.lazy="trade.mistake">
                       <option value="null" disabled>Choose mistake</option>
                       @foreach ($settings->mistakes as $mistake)

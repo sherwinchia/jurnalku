@@ -77,8 +77,8 @@
             </x-ui.navbar-link>
           </li>
           <li>
-            <x-ui.navbar-link href="#"
-              class="{{ request()->is('user/trade-analytics*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+            <x-ui.navbar-link href="{{ route('user.analytics.index') }}"
+              class="{{ request()->is('user/analytics*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.chart-pie class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">Analytics</span>
@@ -144,6 +144,7 @@
               </svg>
             </button>
           </div>
+          <span class="">{{ date_to_human(now(), 'd F Y') }}</span>
 
           <!-- Navbar right -->
           {{-- <div class="relative flex items-center space-x-3">

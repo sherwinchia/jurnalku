@@ -33,7 +33,7 @@
     </x-ui.card>
     @if (isset($portfolios) && !$portfolios->isEmpty())
       <x-ui.card class="p-4">
-        <span class="font-medium">Portfolio</span>
+        <div class="pb-2 font-medium">Portfolio</div>
         <div class="flex flex-col space-y-2">
           @foreach ($portfolios as $portfolio)
             <a href="{{ route('user.portfolios.show', $portfolio->id) }}">
@@ -63,9 +63,9 @@
       </x-ui.card>
     @endif
     @if (isset($trades) && !$trades->isEmpty())
-      <x-ui.card class="p-4 overflow-y-auto h-96 ">
-        <span class="font-medium">Recent Trades</span>
-        <div class="flex flex-col space-y-2">
+      <x-ui.card class="p-4">
+        <div class="pb-2 font-medium">Recent Trades</div>
+        <div class="flex flex-col space-y-2 overflow-y-auto h-96 ">
           @foreach ($trades as $trade)
             <a href="{{ route('user.trades.show', $trade->id) }}">
               <x-ui.card class="flex items-center justify-between p-4">

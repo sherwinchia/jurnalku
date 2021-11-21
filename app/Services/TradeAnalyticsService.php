@@ -70,18 +70,6 @@ class TradeAnalyticsService
         return $this->trades->count();
     }
 
-    public function getWinLossPercentage()
-    {
-        $win = $this->filterTrade('win')->count() / ($this->filterTrade('win')->count() + $this->filterTrade('lose')->count()) * 100;
-
-        $data = [
-            "win" => $win,
-            "lose" => 100 - $win
-        ];
-
-        return $data;
-    }
-
     public function getBalanceGrowth()
     {
         return $this->balanceGrowth($this->trades);
@@ -90,6 +78,25 @@ class TradeAnalyticsService
     public function getBalanceGrowthPercentage()
     {
         return $this->balanceGrowthPercentage($this->balanceGrowth($this->trades));
+    }
+
+    public function getWinLossPercentage()
+    {
+        $win = $this->filterTrade('win')->count() / ($this->filterTrade('win')->count() + $this->filterTrade('lose')->count()) * 100;
+
+        $data = [
+            [
+                'x' => 'Win',
+                'y' => $win
+            ],
+            [
+                'x' => 'Lose',
+                'y' => 100 - $win
+            ]
+        ];
+        $data = [$win, 100 - $win];
+
+        return $data;
     }
 
     public function getRangeNetProfit()
