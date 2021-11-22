@@ -150,3 +150,14 @@ function date_to_datetime_local($value)
 {
     return Carbon::parse($value)->format('Y-m-d\TH:i');
 }
+
+function profit_factor_color(int $profit_factor)
+{
+    if ($profit_factor <= 1) {
+        return 'text-red-400';
+    } elseif ($profit_factor >= 1.1 && $profit_factor <= 1.5) {
+        return 'text-yellow-400';
+    } elseif ($profit_factor >= 1.51) {
+        return 'text-green-400';
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Portfolio;
 use stdClass;
 
 class TradeAnalyticsService
@@ -34,12 +35,46 @@ class TradeAnalyticsService
 
     public function getPercentProfitable()
     {
-        return $this->filterTrade('win')->count() / $this->trades->whereIn('status', ['win', 'lose'])->count() * 100;
+        $winCount = $this->filterTrade('win')->count();
+        $winLoseCount = $this->trades->whereIn('status', ['win', 'lose'])->count();
+
+        if ($winCount < 1 || $winLoseCount < 1) {
+            return 0;
+        }
+
+        return $winCount / $winLoseCount * 100;
     }
 
     public function getAverageTradeNetProfit()
     {
-        return $this->getNetProfit() / $this->trades->whereIn('status', ['win', 'lose'])->count();
+        $winLoseCount = $this->trades->whereIn('status', ['win', 'lose'])->count();
+
+        if ($winLoseCount < 1) {
+            return 0;
+        }
+        return $this->getNetProfit() / $winLoseCount;
+    }
+
+    public function getAverageWinner()
+    {
+        $sum = $this->filterTrade('win')->sum('return');
+        $count = $this->filterTrade('win')->count();
+        // dd($sum, $count);
+        if ($count < 1) {
+            return 0;
+        }
+        return $sum / $count;
+    }
+
+    public function getAverageLoser()
+    {
+        $sum = $this->filterTrade('lose')->sum('return');
+        $count = $this->filterTrade('lose')->count();
+        // dd($sum, $count);
+        if ($count == 0) {
+            return 0;
+        }
+        return $sum / $count;
     }
 
     public function getBestTradeReturn()
@@ -84,13 +119,22 @@ class TradeAnalyticsService
             'percent_profitable' => $this->getPercentProfitable(),
             'average_trade_net_profit' => $this->getAverageTradeNetProfit(),
             'trade_count' => $this->getTradeCount(),
-            'net_profit' => $this->getNetProfit()
+            'net_profit' => $this->getNetProfit(),
+            'longest_win_streaks' => $this->getLongestWinStreaks(),
+            'longest_lose_streaks' => $this->getLongestLoseStreaks(),
+            'average_winner' => $this->getAverageWinner(),
+            'average_loser' => $this->getAverageLoser(),
         ];
     }
 
     public function getWinLossPercentage()
     {
-        $win = $this->filterTrade('win')->count() / ($this->filterTrade('win')->count() + $this->filterTrade('lose')->count()) * 100;
+        $winCount = $this->filterTrade('win')->count();
+        $loseCount = $this->filterTrade('lose')->count();
+        if ($winCount + $loseCount == 0) {
+            return 0;
+        }
+        $win = $winCount / ($winCount + $loseCount) * 100;
 
         $data = [
             [
@@ -110,9 +154,12 @@ class TradeAnalyticsService
     public function getRangeNetProfit()
     {
         $data = array();
-        $rawDatas = $this->trades->whereIn('status', ['win', 'lose'])->groupBy(function ($item) {
-            return $item->entry_date->format('d/m/y');
+        $trades = $this->trades->whereIn('status', ['win', 'lose']);
+        $format = $trades->count() > 90 ? 'd/m' : 'd/m/y';
+        $rawDatas = $trades->groupBy(function ($item) use ($format) {
+            return $item->entry_date->format($format);
         });;
+
 
         foreach ($rawDatas as $key => $rawData) {
             $tempData = [
@@ -139,6 +186,43 @@ class TradeAnalyticsService
             array_push($data, $tempData);
         }
         return $data;
+    }
+
+    public function getLongestWinStreaks()
+    {
+        $currentStreak = 0;
+        $longestStreak = 0;
+
+        foreach ($this->trades->whereIn('status', ['win', 'lose']) as $trade) {
+            if (!($trade->status == "win")) {
+                $currentStreak = 0;
+                continue;
+            }
+            $currentStreak++;
+            if ($currentStreak > $longestStreak) {
+                $longestStreak = $currentStreak;
+            }
+        }
+        return $longestStreak;
+    }
+
+    public function getLongestLoseStreaks()
+    {
+        $currentStreak = 0;
+        $longestStreak = 0;
+
+        foreach ($this->trades->whereIn('status', ['win', 'lose']) as $trade) {
+            if (!($trade->status == "lose")) {
+                $currentStreak = 0;
+                continue;
+            }
+            $currentStreak++;
+            if ($currentStreak > $longestStreak) {
+                $longestStreak = $currentStreak;
+            }
+        }
+
+        return $longestStreak;
     }
 
     private function balanceGrowth($trades)
