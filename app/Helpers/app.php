@@ -66,21 +66,21 @@ function convert_string_decimal($string)
     return $decimal;
 }
 
-function decimal_to_human($raw, string $currency = null, bool $percentage = false)
+function decimal_to_human($raw, string $currency = null, bool $percentage = false, int $decimal = 0)
 {
     $new_format = (float) $raw;
 
     if (isset($currency)) {
         if (strtolower($currency) === 'rp') {
-            $new_format = number_format($new_format, 0, ',', '.');
+            $new_format = number_format($new_format, $decimal, ',', '.');
         } else {
-            $new_format = number_format($new_format, 0, ',', ',');
+            $new_format = number_format($new_format, $decimal, ',', ',');
         }
         $new_format = $currency . $new_format;
     } elseif ($percentage) {
-        $new_format = number_format($new_format, 1, '.', '.') . '%';
+        $new_format = number_format($new_format, $decimal, '.', '.') . '%';
     } else {
-        $new_format = number_format($new_format, 0, '.', '.');
+        $new_format = number_format($new_format, $decimal, '.', '.');
     }
 
     return $new_format;

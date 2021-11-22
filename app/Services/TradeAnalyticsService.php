@@ -22,12 +22,19 @@ class TradeAnalyticsService
 
     public function getProfitFactor()
     {
-        return $this->filterTrade('win')->sum('return')  / abs($this->filterTrade('lose')->sum('return'));
+        $win = $this->filterTrade('win')->sum('return');
+        $lose = abs($this->filterTrade('lose')->sum('return'));
+
+        if ($win < 1 || $lose < 1) {
+            return 0;
+        }
+
+        return $win / $lose;
     }
 
     public function getPercentProfitable()
     {
-        return $this->filterTrade('win')->count() / $this->trades->whereIn('status', ['win', 'lose'])->count();
+        return $this->filterTrade('win')->count() / $this->trades->whereIn('status', ['win', 'lose'])->count() * 100;
     }
 
     public function getAverageTradeNetProfit()
@@ -37,22 +44,12 @@ class TradeAnalyticsService
 
     public function getBestTradeReturn()
     {
-        return $this->trades->max('return');
+        return $this->trades->sortByDesc('return')->first();
     }
 
     public function getWorstTradeReturn()
     {
-        return $this->trades->min('return');
-    }
-
-    public function getBestTradeReturnPercentage()
-    {
-        return $this->trades->max('return_percentage');
-    }
-
-    public function getWorstTradeReturnPercentage()
-    {
-        return $this->trades->min('return_percentage');
+        return $this->trades->sortBy('return')->first();
     }
 
     public function getWinCount()
@@ -78,6 +75,17 @@ class TradeAnalyticsService
     public function getBalanceGrowthPercentage()
     {
         return $this->balanceGrowthPercentage($this->balanceGrowth($this->trades));
+    }
+
+    public function getEssentialsData()
+    {
+        return [
+            'profit_factor' => $this->getProfitFactor(),
+            'percent_profitable' => $this->getPercentProfitable(),
+            'average_trade_net_profit' => $this->getAverageTradeNetProfit(),
+            'trade_count' => $this->getTradeCount(),
+            'net_profit' => $this->getNetProfit()
+        ];
     }
 
     public function getWinLossPercentage()
