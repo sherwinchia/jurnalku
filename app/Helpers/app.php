@@ -146,9 +146,9 @@ function get_boolean_value($value)
     }
 }
 
-function date_to_datetime_local($value)
+function format_string_date($value, $format = 'Y-m-d\TH:i')
 {
-    return Carbon::parse($value)->format('Y-m-d\TH:i');
+    return Carbon::parse($value)->format($format);
 }
 
 function profit_factor_color(int $profit_factor)

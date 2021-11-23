@@ -230,8 +230,9 @@
       Livewire.on('updateData', () => {
 
         let netProfitData = @this.netProfitData;
+        netProfitChart.data.labels = []
         netProfitChart.data.datasets[0].data = netProfitData;
-        console.log(netProfitChart.data.datasets);
+
         netProfitChart.data.datasets[0].backgroundColor = netProfitData.map((value) => value.y > 0 ?
           fullConfig.theme.colors.green[400] : fullConfig.theme.colors.red[400]);
         netProfitChart.update();

@@ -26,12 +26,11 @@ class Trade extends Model
         'return',
         'favorite',
         'note',
-        'status'
+        'status',
+        'return_percentage'
     ];
 
     protected $dates = [
-        'entry_date',
-        'exit_date',
         'created_at',
         'updated_at'
     ];

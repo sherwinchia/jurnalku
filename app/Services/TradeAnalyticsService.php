@@ -155,10 +155,15 @@ class TradeAnalyticsService
     {
         $data = array();
         $trades = $this->trades->whereIn('status', ['win', 'lose']);
-        $format = $trades->count() > 90 ? 'd/m' : 'd/m/y';
-        $rawDatas = $trades->groupBy(function ($item) use ($format) {
-            return $item->entry_date->format($format);
+        $rawDatas = $trades->groupBy(function ($item) {
+            return format_string_date($item->entry_date, 'd/m/y');
         });;
+
+        if ($rawDatas->count() > 30) {
+            $rawDatas = $trades->groupBy(function ($item) {
+                return format_string_date($item->entry_date, 'm/y');
+            });;
+        }
 
 
         foreach ($rawDatas as $key => $rawData) {
@@ -171,22 +176,22 @@ class TradeAnalyticsService
         return $data;
     }
 
-    public function getTotalBalanceGrowthPercentage()
-    {
-        $data = array();
-        $rawDatas = $this->trades->whereIn('status', ['win', 'lose'])->groupBy(function ($item) {
-            return $item->entry_date->format('d/m/y');
-        });;
+    // public function getTotalBalanceGrowthPercentage()
+    // {
+    //     $data = array();
+    //     $rawDatas = $this->trades->whereIn('status', ['win', 'lose'])->groupBy(function ($item) {
+    //         return $item->entry_date->format('d/m/y');
+    //     });;
 
-        foreach ($rawDatas as $key => $rawData) {
-            $tempData = [
-                'x' => $key,
-                'y' => $this->balanceGrowthPercentage($this->balanceGrowth($rawData))
-            ];
-            array_push($data, $tempData);
-        }
-        return $data;
-    }
+    //     foreach ($rawDatas as $key => $rawData) {
+    //         $tempData = [
+    //             'x' => $key,
+    //             'y' => $this->balanceGrowthPercentage($this->balanceGrowth($rawData))
+    //         ];
+    //         array_push($data, $tempData);
+    //     }
+    //     return $data;
+    // }
 
     public function getLongestWinStreaks()
     {

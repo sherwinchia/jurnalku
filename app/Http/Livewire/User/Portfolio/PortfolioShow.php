@@ -26,7 +26,7 @@ class PortfolioShow extends Component
     public $trade;
     public $tab = 0;
     public $edit = false;
-    public $sortField = "created_at";
+    public $sortField = "entry_date";
     public $sortAsc = false;
     public $perPage = 10;
     public $tradeFormModal = false;
@@ -84,18 +84,18 @@ class PortfolioShow extends Component
                 "message" => $e->getMessage()
             ]);
         }
-
         $this->edit = true;
         $this->tab = 1;
 
         $this->trade = $trade;
 
         if (isset($this->trade->entry_date)) {
-            $this->trade->entry_date = date_to_datetime_local($this->trade->entry_date);
+            $this->trade->entry_date = format_string_date($this->trade->entry_date);
         }
         if (isset($this->trade->exit_date)) {
-            $this->trade->exit_date = date_to_datetime_local($this->trade->exit_date);
+            $this->trade->exit_date = format_string_date($this->trade->exit_date);
         }
+
 
         $this->tradeFormModal = true;
     }
@@ -155,7 +155,7 @@ class PortfolioShow extends Component
         if (isset($this->trade->exit_date) && isset($this->trade->exit_price)) {
             $this->trade->return = $this->trade->calculate_net;
             $this->trade->return_percentage = $this->trade->calculate_percentage;
-
+            // dd($this->trade->exit_date);
             if ($this->trade->return > 0) {
                 $this->trade->status = "win";
             }

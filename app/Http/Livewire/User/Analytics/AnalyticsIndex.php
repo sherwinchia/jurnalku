@@ -11,11 +11,10 @@ class AnalyticsIndex extends Component
     public Portfolio $portfolio;
     public string $currency;
     public $trades;
-    // public $filteredTrades;
+
     public $selectedPortfolio;
     public $portfolios;
     public $netProfitData;
-    public $balanceGrowthData;
     public $winLoseData;
     public $essentialsData;
     public $winStreaks;
@@ -26,7 +25,7 @@ class AnalyticsIndex extends Component
     public $bestTradePercentage;
     public $worstTradePercentage;
 
-    public $filter = 'All';
+    public $filter = '7D';
 
     public function mount()
     {
@@ -46,7 +45,6 @@ class AnalyticsIndex extends Component
 
         $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => $trades, 'balance' => $this->portfolio->balance]);
         $this->netProfitData = $tradeAnalyticsService->getRangeNetProfit();
-        $this->balanceGrowthData = $tradeAnalyticsService->getTotalBalanceGrowthPercentage();
         $this->winLoseData = $tradeAnalyticsService->getWinLossPercentage();
         $this->bestTradeReturn = $tradeAnalyticsService->getBestTradeReturn();
         $this->worstTradeReturn = $tradeAnalyticsService->getWorstTradeReturn();
@@ -63,34 +61,35 @@ class AnalyticsIndex extends Component
     public function filterTrades()
     {
         $trades = $this->portfolio->trades->sortBy('entry_date');
+        // dd($trades);
 
         switch ($this->filter) {
             case '7D':
-                return $trades->where('entry_date', '>=', now()->subDays(7));
+                return $trades->where('entry_date', '<=', now()->endOfWeek())->where('entry_date', '>=', now()->startOfWeek());
                 break;
 
             case '1M':
-                return $trades->where('entry_date', '>=', now()->subDays(30));
+                return $trades->where('entry_date', '<=', now()->endOfMonth())->where('entry_date', '>=', now()->startOfMonth());
                 break;
 
             case '3M':
-                return $trades->where('entry_date', '>=', now()->subDays(90));
+                return $trades->where('entry_date', '<=', now()->endOfMonth())->where('entry_date', '>=', now()->startOfMonth()->subMonths(2));
                 break;
 
             case '6M':
-                return $trades->where('entry_date', '>=', now()->subDays(180));
+                return $trades->where('entry_date', '<=', now()->endOfMonth())->where('entry_date', '>=', now()->startOfMonth()->subMonth(5));
                 break;
 
             case '1Y':
-                return $trades->where('entry_date', '>=', now()->subDays(360));
+                return $trades->where('entry_date', '<=', now()->endOfYear())->where('entry_date', '>=', now()->startOfYear());
                 break;
 
             case '2Y':
-                return $trades->where('entry_date', '>=', now()->subDays(720));
+                return $trades->where('entry_date', '<=', now()->endOfYear())->where('entry_date', '>=', now()->startOfYear()->subYears(1));
                 break;
 
             case '3Y':
-                return $trades->where('entry_date', '>=', now()->subDays(1080));
+                return $trades->where('entry_date', '<=', now()->endOfYear())->where('entry_date', '>=', now()->startOfYear()->subYears(2));
                 break;
 
             case 'All':

@@ -32,7 +32,7 @@ class HomeIndex extends Component
     public function updateChart()
     {
         $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => $this->portfolio->trades, 'balance' => $this->portfolio->balance]);
-        $this->chartData = $tradeAnalyticsService->getTotalBalanceGrowthPercentage();
+        $this->chartData = $tradeAnalyticsService->getRangeNetProfit();
         $this->emit('changeData');
     }
 
