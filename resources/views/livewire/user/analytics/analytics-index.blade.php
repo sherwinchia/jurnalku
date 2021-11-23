@@ -71,46 +71,89 @@
     </div>
   </div>
   <div class="grid grid-cols-4 gap-2 pb-6 lg:grid-cols-8 lg:gap-6">
-    @if ($essentialsData)
-      <x-ui.card class="col-span-2 p-4">
-        <x-ui.header class="pb-4 font-medium">Total Net Profit</x-ui.header>
+    <x-ui.card class="col-span-2 p-4">
+      <x-ui.header class="pb-4 font-medium">
+        Total Net Profit
+        <span wire:loading wire:target="initData"
+          class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+        </span>
+      </x-ui.header>
+      @if (isset($essentialsData['net_profit']))
         <span
           class="font-medium {{ $essentialsData['net_profit'] > 0 ? 'text-green-400' : 'text-red-400' }}">{{ decimal_to_human($essentialsData['net_profit'], $currency, false) }}</span>
-      </x-ui.card>
-      <x-ui.card class="col-span-2 p-4">
-        <x-ui.header class="pb-4 font-medium">Average Trade Net Profit</x-ui.header>
+      @endif
+    </x-ui.card>
+    <x-ui.card class="col-span-2 p-4">
+      <x-ui.header class="pb-4 font-medium">
+        Average Trade Net Profit
+        <span wire:loading wire:target="initData"
+          class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+        </span>
+      </x-ui.header>
+      @if (isset($essentialsData['average_trade_net_profit']))
         <span
           class="font-medium {{ $essentialsData['average_trade_net_profit'] > 0 ? 'text-green-400' : 'text-red-400' }}">{{ decimal_to_human($essentialsData['average_trade_net_profit'], $currency, false, 2) }}</span>
-      </x-ui.card>
-      <x-ui.card class="col-span-2 p-4">
-        <x-ui.header class="pb-4 font-medium">Profit Factor</x-ui.header>
+      @endif
+    </x-ui.card>
+    <x-ui.card class="col-span-2 p-4">
+      <x-ui.header class="pb-4 font-medium">
+        Profit Factor
+        <span wire:loading wire:target="initData"
+          class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+        </span>
+      </x-ui.header>
+      @if (isset($essentialsData['profit_factor']))
         <span
           class="font-medium {{ profit_factor_color($essentialsData['profit_factor']) }}">{{ decimal_to_human($essentialsData['profit_factor'], '', false, 2) }}</span>
-      </x-ui.card>
-      <x-ui.card class="col-span-2 p-4">
-        <x-ui.header class="pb-4 font-medium">Total Trade</x-ui.header>
+      @endif
+    </x-ui.card>
+    <x-ui.card class="col-span-2 p-4">
+      <x-ui.header class="pb-4 font-medium">
+        Total Trade
+        <span wire:loading wire:target="initData"
+          class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+        </span>
+      </x-ui.header>
+      @if (isset($essentialsData['trade_count']))
         <span class="font-medium">{{ decimal_to_human($essentialsData['trade_count'], '', false) }}</span>
-      </x-ui.card>
+      @endif
+    </x-ui.card>
 
-    @endif
   </div>
 
   <div class="grid grid-cols-1 gap-0 lg:gap-6 lg:grid-cols-6 xl:grid-cols-8" wire:init="initData">
     <div
       class="grid content-start grid-cols-1 gap-6 pb-6 lg:col-span-4 xl:col-span-6 sm:grid-cols-2 lg:grid-cols-6 lg:pb-0">
       <x-ui.card class="col-span-3 p-4 pb-16" style="height:40vh;" wire:ignore>
-        <x-ui.header class="pb-4 font-medium">Net Profit</x-ui.header>
+        <x-ui.header class="pb-4 font-medium">
+          Net Profit
+          <span wire:loading wire:target="initData"
+            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+          </span>
+        </x-ui.header>
         <canvas id="netProfitChart"></canvas>
+
       </x-ui.card>
       <x-ui.card class="col-span-3 p-4 pb-16" style="height:40vh;" wire:ignore>
-        <x-ui.header class="pb-4 font-medium">Win Ratio</x-ui.header>
+        <x-ui.header class="pb-4 font-medium">
+          Win Ratio
+          <span wire:loading wire:target="initData"
+            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+          </span>
+        </x-ui.header>
         <canvas class="p-8" id="winLoseChart"></canvas>
+
       </x-ui.card>
     </div>
 
     <div class="grid content-start grid-cols-1 gap-6 lg:col-span-2 xl:col-span-2">
       <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
-        <x-ui.header class="pb-2 font-medium">Biggest Winner/Loser</x-ui.header>
+        <x-ui.header class="pb-2 font-medium">
+          Biggest Winner/Loser
+          <span wire:loading wire:target="initData"
+            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+          </span>
+        </x-ui.header>
         @if (isset($bestTradeReturn) && isset($worstTradeReturn))
           <a href="{{ route('user.trades.show', $bestTradeReturn->id) }}">
             <x-ui.card class="flex justify-between p-4">
@@ -128,8 +171,13 @@
       </x-ui.card>
 
       <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
+        <x-ui.header class="pb-2 font-medium">
+          Longest Streaks
+          <span wire:loading wire:target="initData"
+            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+          </span>
+        </x-ui.header>
         @if (isset($essentialsData))
-          <x-ui.header class="pb-2 font-medium">Longest Streaks</x-ui.header>
           <div class="flex justify-between">
             <span>Win</span>
             <span class="font-medium text-green-400">{{ $essentialsData['longest_win_streaks'] }}</span>
@@ -142,8 +190,13 @@
       </x-ui.card>
 
       <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
+        <x-ui.header class="pb-2 font-medium">
+          Average Winner
+          <span wire:loading wire:target="initData"
+            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+          </span>
+        </x-ui.header>
         @if (isset($essentialsData))
-          <x-ui.header class="pb-2 font-medium">Average Winner</x-ui.header>
           <div class="flex justify-between">
             <span>Win</span>
             <span

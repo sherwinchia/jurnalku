@@ -126,7 +126,7 @@ class TransactionTable extends Component
     public function render()
     {
         return view("livewire.user.transaction.transaction-table", [
-            "transactions" => current_user()->transactions()->latest()->paginate($this->perPage)
+            "transactions" => current_user()->transactions(['id', 'merchant_ref', 'created_at', 'net_total', 'status'])->latest()->paginate($this->perPage)
         ]);
     }
 }

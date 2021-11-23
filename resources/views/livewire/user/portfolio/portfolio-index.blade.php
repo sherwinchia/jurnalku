@@ -14,31 +14,6 @@
         <a class="flex-grow " href="{{ route('user.portfolios.show', $portfolio->id) }}">
           <div class="flex flex-col h-full p-3">
             <h3 class="text-sm tracking-widest">{{ $portfolio->name }}</h3>
-            <div class="flex items-end space-x-2 ">
-              <span
-                class="text-lg font-medium tracking-widest">{{ decimal_to_human($portfolio->analytics->getBalanceGrowth(), $portfolio->currency) }}</span>
-              <div
-                class="flex items-center {{ $portfolio->analytics->getBalanceGrowthPercentage() != 0 ? ($portfolio->analytics->getBalanceGrowthPercentage() > 0 ? 'text-green-500' : 'text-red-500') : '' }}">
-                <span
-                  class="text-sm">{{ decimal_to_human($portfolio->analytics->getBalanceGrowthPercentage(), null, true) }}</span>
-                @if ($portfolio->analytics->getBalanceGrowthPercentage() > 0)
-                  <x-icon.chevron-up class="w-4 h-4" />
-                @elseif($portfolio->analytics->getBalanceGrowthPercentage()
-                  < 0) <x-icon.chevron-down class="w-4 h-4" />
-                @endif
-              </div>
-            </div>
-            <div class="grid grid-cols-4 gap-1 mt-auto text-xs">
-              <span>Total Trade</span>
-              <span class="col-span-3"> :
-                {{ decimal_to_human($portfolio->analytics->getTradeCount(), null) }}</span>
-              <span>Win</span>
-              <span class="col-span-3"> :
-                {{ decimal_to_human($portfolio->analytics->getWinCount(), null) }}</span>
-              <span>Lose</span>
-              <span class="col-span-3"> :
-                {{ decimal_to_human($portfolio->analytics->getLoseCount(), null) }}</span>
-            </div>
           </div>
         </a>
         <div

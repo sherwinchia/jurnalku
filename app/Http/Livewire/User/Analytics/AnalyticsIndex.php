@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\User\Analytics;
 
 use App\Models\Portfolio;
+use App\Models\Trade;
 use App\Services\TradeAnalyticsService;
 use Livewire\Component;
 
@@ -60,8 +61,11 @@ class AnalyticsIndex extends Component
 
     public function filterTrades()
     {
-        $trades = $this->portfolio->trades->sortBy('entry_date');
-        // dd($trades);
+        $trades = $this->portfolio->trades(['return', 'return_percentage', 'status', 'entry_date', 'id'])->latest('entry_date')->get();
+
+        // $trades = Trade::select(['return', 'return_percentage', 'status', 'entry_date', 'id'])->where('portfolio_id', $this->portfolio->id)->orderBy('entry_date')->get();
+
+        // dd($trades->first());
 
         switch ($this->filter) {
             case '7D':

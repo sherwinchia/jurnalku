@@ -27,9 +27,12 @@ class Portfolio extends Model
         return $this->tradeAnalyticsService;
     }
 
-    public function trades()
+    public function trades(array $fields = null)
     {
-        return $this->hasMany('App\Models\Trade');
+        if ($fields == null) {
+            return $this->hasMany('App\Models\Trade');
+        }
+        return $this->hasMany('App\Models\Trade')->select($fields);
     }
 
     public function user()

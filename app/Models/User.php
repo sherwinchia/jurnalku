@@ -27,7 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'role_id',
         'phone_number',
         'address',
-        'birth_date'
+        'birth_date',
+        'slug'
     ];
 
     /**
@@ -104,9 +105,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Models\Subscription');
     }
 
-    public function transactions()
+    public function transactions(array $fields = null)
     {
-        return $this->hasMany('App\Models\Transaction');
+        if ($fields == null) {
+            return $this->hasMany('App\Models\Transaction');
+        }
+        return $this->hasMany('App\Models\Transaction')->select($fields);
     }
 
     public function portfolios()
@@ -119,8 +123,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Models\Setting');
     }
 
-    public function trades()
+    public function trades(array $fields = null)
     {
-        return $this->hasManyThrough('App\Models\Trade', 'App\Models\Portfolio');
+        if ($fields == null) {
+            return $this->hasManyThrough('App\Models\Trade', 'App\Models\Portfolio');
+        }
+        return $this->hasManyThrough('App\Models\Trade', 'App\Models\Portfolio')->select($fields);
+        // return $this->hasManyThrough('App\Models\Trade', 'App\Models\Portfolio');
     }
 }

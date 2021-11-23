@@ -11,16 +11,15 @@ use Livewire\Component;
 class HomeIndex extends Component
 {
     public Portfolio $portfolio;
-    public $selectedPortfolio;
     public $portfolios;
     public $trades;
-    public $chartData = [];
 
     public function mount()
     {
-        $this->portfolios = current_user()->portfolios->load('trades');
+        // $this->portfolios = current_user()->portfolios->load('trades');
         $this->trades = current_user()->trades()->latest()->take(10)->get();
-        $this->portfolio = $this->portfolios->first();
+        // dd($this->trades);
+        // $this->portfolio = $this->portfolios->first();
         // dd($this->portfolio);
     }
 

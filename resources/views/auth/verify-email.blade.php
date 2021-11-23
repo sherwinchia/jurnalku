@@ -1,4 +1,4 @@
-<x-layout.landing>
+<x-layout.blank>
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
@@ -34,4 +34,4 @@
             </form>
         </div>
     </x-jet-authentication-card>
-</x-layout.landing>
+</x-layout.blank>

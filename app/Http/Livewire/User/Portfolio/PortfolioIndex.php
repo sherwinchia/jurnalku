@@ -137,7 +137,7 @@ class PortfolioIndex extends Component
     public function render()
     {
         return view('livewire.user.portfolio.portfolio-index', [
-            'portfolios' => current_user()->portfolios->sortBy('id')->load('trades')
+            'portfolios' => current_user()->portfolios->sortBy('id')
         ]);
     }
 }
