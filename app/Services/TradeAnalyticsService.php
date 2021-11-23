@@ -165,7 +165,6 @@ class TradeAnalyticsService
             });;
         }
 
-
         foreach ($rawDatas as $key => $rawData) {
             $tempData = [
                 'x' => $key,

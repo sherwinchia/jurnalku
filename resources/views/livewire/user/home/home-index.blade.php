@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 gap-0 lg:gap-6 lg:grid-cols-6 xl:grid-cols-8" wire:init="initData">
   <div
-    class="grid content-start grid-cols-1 gap-6 pb-6 lg:col-span-4 xl:col-span-6 sm:grid-cols-2 lg:grid-cols-3 lg:pb-0">
-    <x-ui.card class="col-span-3 p-4 pb-16" style="height: 50vh;" wire:ignore>
+    class="col-span-full lg:col-span-6">
+    <!-- <x-ui.card class="col-span-3 p-4 pb-16" style="height: 50vh;" wire:ignore>
       <div class="flex items-center space-x-4">
         <x-ui.select wire:model="selectedPortfolio" wire:change="changePortfolio">
           @foreach ($portfolios as $portfolio)
@@ -11,13 +11,9 @@
         <span>Growth Chart</span>
       </div>
       <canvas id="performanceChart"></canvas>
-    </x-ui.card>
-    {{-- <x-ui.card class="col-span-1 p-4 bg-blue-200">
-      Profit Calendar
-    </x-ui.card>
-    <x-ui.card class="col-span-2 p-4 bg-blue-200">
-      Win Loss
-    </x-ui.card> --}}
+    </x-ui.card> -->
+    
+    <livewire:user.analytics.analytics-index/>
   </div>
 
   <div class="grid grid-cols-1 gap-6 lg:col-span-2 xl:col-span-2">
@@ -81,38 +77,4 @@
       </x-ui.card>
     @endif
   </div>
-
-  <script type="text/javascript">
-    document.addEventListener('livewire:load', function() {
-      const ctx = document.getElementById('performanceChart');
-      const performanceChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          datasets: [{
-            label: 'Balance Growth (%)',
-            data: @this.performanceData,
-            backgroundColor: [
-              fullConfig.theme.colors.primary[500],
-            ],
-            borderWidth: 3,
-            fill: false
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-        }
-      });
-
-      Livewire.on('changeData', () => {
-        performanceChart.data.datasets[0].data = @this.chartData;
-        performanceChart.update();
-      })
-    })
-  </script>
 </div>

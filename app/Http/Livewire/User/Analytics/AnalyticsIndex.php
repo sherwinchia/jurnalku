@@ -25,7 +25,7 @@ class AnalyticsIndex extends Component
     public $bestTradePercentage;
     public $worstTradePercentage;
 
-    public $filter = '7D';
+    public $filter = 'All';
 
     public function mount()
     {

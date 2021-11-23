@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     });
 
-    Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function () {
+    Route::group(['middleware' => ['auth','verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::group(['middleware' => 'subscribe'], function () {
             Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard.index');
             Route::resource('portfolios', PortfolioController::class)->only('index', 'show');

@@ -26,20 +26,6 @@ class HomeIndex extends Component
 
     public function initData()
     {
-        $this->updateChart();
-    }
-
-    public function updateChart()
-    {
-        $tradeAnalyticsService = app(TradeAnalyticsService::class, ['trades' => $this->portfolio->trades, 'balance' => $this->portfolio->balance]);
-        $this->chartData = $tradeAnalyticsService->getRangeNetProfit();
-        $this->emit('changeData');
-    }
-
-    public function changePortfolio()
-    {
-        $this->portfolio = Portfolio::findOrFail($this->selectedPortfolio);
-        $this->updateChart();
     }
 
     public function loadData()
