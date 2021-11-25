@@ -61,11 +61,9 @@ class AnalyticsIndex extends Component
 
     public function filterTrades()
     {
-        $trades = $this->portfolio->trades(['return', 'return_percentage', 'status', 'entry_date', 'id'])->latest('entry_date')->get();
+        $trades = $this->portfolio->trades(['return', 'return_percentage', 'status', 'entry_date', 'id', 'instrument'])->latest('entry_date')->get();
 
         // $trades = Trade::select(['return', 'return_percentage', 'status', 'entry_date', 'id'])->where('portfolio_id', $this->portfolio->id)->orderBy('entry_date')->get();
-
-        // dd($trades->first());
 
         switch ($this->filter) {
             case '7D':
