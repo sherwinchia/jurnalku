@@ -27,8 +27,8 @@
   <script src="{{ mix('js/user.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased">
-  <div class="fixed inset-x-0 top-0 z-50 w-full bg-white border-b border-gray-300">
+<body class="font-sans antialiased bg-gray-50">
+  <div class="w-full ">
     <div x-data="{ open: false }"
       class="flex flex-col px-4 py-4 mx-auto max-w-7xl md:items-center md:justify-between md:flex-row md:px-6 lg:px-0">
       <div class="flex flex-row items-center justify-between">
@@ -75,7 +75,7 @@
 
   <footer class="bottom-0 px-6 pt-16 pb-8 bg-primary-800">
     <div
-      class="grid grid-cols-1 gap-8 pb-10 mx-auto text-gray-300 max-w-7xl md:gap-10 lg:gap-12 md:grid-cols-2 lg:grid-cols-3">
+      class="grid grid-cols-1 gap-8 pb-10 mx-auto text-gray-300 max-w-7xl md:gap-10 lg:gap-12 md:grid-cols-2 lg:grid-cols-4">
       <div class="flex flex-col col-span-2 space-y-4">
         <h2 class="text-xl font-medium text-white">{{ ucfirst(config('app.name')) }}</h2>
         <p>
@@ -83,6 +83,16 @@
           doloremque amet ea? Similique vitae, magni quam aliquam, repellendus quas delectus illo aliquid nesciunt,
           iusto voluptas.
         </p>
+
+      </div>
+      <div class="flex flex-col col-span-2 space-y-4 lg:col-span-1">
+        <h2 class="text-xl font-medium text-white">About</h2>
+        <ul>
+          <li>Blog</li>
+          <li>FAQ</li>
+          <li>Terms of Service</li>
+          <li>Privacy Policy</li>
+        </ul>
 
       </div>
       <div class="flex flex-col space-y-4">
@@ -94,7 +104,7 @@
         </div>
       </div>
     </div>
-    <div class="font-medium text-center text-gray-300">
+    <div class="font-medium text-center text-gray-300 col-span-full">
       Copyright {{ now()->year }} {{ ucfirst(config('app.name')) }} - All Rights Reserved.
     </div>
   </footer>

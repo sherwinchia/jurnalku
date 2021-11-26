@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
             'phone_number' => '6281295552928',
             'password' => bcrypt('secret'),
             'role_id' => 1,
-            'slug' => generate_user_slug()
+            'slug' => generate_user_slug(),
+            'email_verified_at' => now()
         ]);
 
         User::create([

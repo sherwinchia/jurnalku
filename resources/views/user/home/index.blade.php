@@ -1,7 +1,7 @@
 <x-layout.landing>
   <div class="px-4">
     <div
-      class="relative flex flex-col items-center justify-center w-full mx-auto mt-20 overflow-hidden border lg:mt-28 rounded-xl max-w-7xl"
+      class="relative flex flex-col items-center justify-center w-full mx-auto mt-4 overflow-hidden border lg:mt-6 rounded-xl max-w-7xl"
       style="height: 60vh;">
       <img src="{{ asset('images/landing-background.jpg') }}" alt="background"
         class="absolute inset-0 z-0 object-cover w-full h-full">
@@ -60,7 +60,7 @@
   <div class="px-4 py-16 bg-gradient-to-r from-primary-600 to-primary-700">
     <div class="flex flex-col h-full mx-auto max-w-7xl">
       <h2 class="mb-10 text-xl font-semibold text-white md:text-2xl lg:text-3xl">Why {{ config('app.name') }}</h2>
-      <div class="grid grid-cols-1 gap-10 text-gray-300 md:grid-cols-2 lg:grid-cols-4">
+      <div class="grid grid-cols-1 gap-10 text-gray-200 md:grid-cols-2 lg:grid-cols-4">
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
             <x-icon.emoji-happy class="text-white"></x-icon.emoji-happy>
@@ -137,7 +137,7 @@
     </div>
   </div>
 
-  <div class="px-4 py-8 text-gray-700 md:py-24 bg-gray-50">
+  <div class="px-4 py-8 text-gray-700 md:py-24">
     <div class="flex flex-col mx-auto lg:flex-row max-w-7xl">
       <div class="flex flex-col items-start justify-center flex-1">
         <h2 class="text-xl font-semibold md:text-2xl lg:text-3xl">Works with different kinds of trading instrument</h2>
@@ -170,7 +170,7 @@
     </div>
   </div>
 
-  <div class="px-4 pb-16 text-gray-700 bg-gray-50" id="pricing">
+  <div class="px-4 pb-16 text-gray-700" id="pricing">
     <div class="flex flex-col mx-auto space-y-4 max-w-7xl">
       <h2 class="text-xl font-semibold md:text-center md:text-2xl lg:text-3xl">Pricing</h2>
       <div class="grid w-full max-w-5xl grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3">

@@ -175,23 +175,6 @@ class TradeAnalyticsService
         return $data;
     }
 
-    // public function getTotalBalanceGrowthPercentage()
-    // {
-    //     $data = array();
-    //     $rawDatas = $this->trades->whereIn('status', ['win', 'lose'])->groupBy(function ($item) {
-    //         return $item->entry_date->format('d/m/y');
-    //     });;
-
-    //     foreach ($rawDatas as $key => $rawData) {
-    //         $tempData = [
-    //             'x' => $key,
-    //             'y' => $this->balanceGrowthPercentage($this->balanceGrowth($rawData))
-    //         ];
-    //         array_push($data, $tempData);
-    //     }
-    //     return $data;
-    // }
-
     public function getLongestWinStreaks()
     {
         $currentStreak = 0;
