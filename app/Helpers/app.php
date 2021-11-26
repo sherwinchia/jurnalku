@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\PromoCode;
 use App\Models\Transaction;
+use App\Models\User;
 
 function current_user()
 {
@@ -160,4 +161,22 @@ function profit_factor_color(int $profit_factor)
     } elseif ($profit_factor >= 1.51) {
         return 'text-green-400';
     }
+}
+
+function generate_user_slug($length = 12)
+{
+    // $slug = strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 6));
+
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $slug = '';
+    for ($i = 0; $i < $length; $i++) {
+        $slug .= $characters[rand(0, $charactersLength - 1)];
+    }
+
+    if (User::where('slug', $slug)->exists()) {
+        generate_user_slug();
+    }
+
+    return $slug;
 }

@@ -42,14 +42,14 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     });
 
-    Route::group(['middleware' => ['auth','verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
+    Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
         Route::group(['middleware' => 'subscribe'], function () {
             Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard.index');
             Route::resource('portfolios', PortfolioController::class)->only('index', 'show');
             Route::resource('trades', TradeController::class)->only('show');
             Route::get('export/portfolio/{portfolio}', [PortfolioController::class, 'export'])->name('portfolio.export');
             Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-            Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+            // Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
         });
         Route::get('billings', [BillingController::class, 'index'])->name('billings.index');
     });

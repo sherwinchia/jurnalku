@@ -41,6 +41,12 @@
                 <x-message.validation type="error">{{ $message }}</x-message.validation>
                 @enderror
             </x-ui.form-section>
+            <x-ui.form-section field="Display" required="true">
+                <x-jet-input wire:model.defer="package.display" type="checkbox" class="w-6 h-6" />
+                @error('package.display')
+                <x-message.validation type="error">{{ $message }}</x-message.validation>
+                @enderror
+            </x-ui.form-section>
 
             <x-slot name="actions">
                 <x-jet-button type="submit">{{ $buttonText }}</x-jet-button>

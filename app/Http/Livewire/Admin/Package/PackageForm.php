@@ -22,7 +22,8 @@ class PackageForm extends Component
         "package.price" => "required|numeric|min:0",
         "package.value" => "required|integer",
         "package.type" => "required",
-        "package.active" => "boolean"
+        "package.active" => "boolean",
+        "package.display" => "boolean"
     ];
 
     public function mount($model = null)

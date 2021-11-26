@@ -99,20 +99,18 @@
           @if ($trade->favorite)
             <button class="flex items-center w-5 h-5 focus:outline-none" wire:loading.attr="disabled"
               wire:click="favorite({{ $trade->id }})">
-              <x-icon.solid-star class="w-5 h-5 text-yellow-500" wire:loading.remove
-                wire:target="favorite('{{ $trade->id }}')" />
-              <span wire:loading wire:target="favorite('{{ $trade->id }}')"
+              <x-icon.solid-star class="w-5 h-5 text-yellow-500" wire:target="favorite('{{ $trade->id }}')" />
+              {{-- <span wire:loading wire:target="favorite('{{ $trade->id }}')"
                 class="w-3 h-3 ml-2 border-t-2 border-b-2 border-black rounded-full animate-spin">
-              </span>
+              </span> --}}
             </button>
           @else
             <button class="flex items-center h-5 focus:outline-none" wire:loading.attr="disabled"
               wire:click="favorite({{ $trade->id }})">
-              <x-icon.outline-star class="w-5 h-5 " wire:loading.remove
-                wire:target="favorite('{{ $trade->id }}')" />
-              <span wire:loading wire:target="favorite('{{ $trade->id }}')"
+              <x-icon.outline-star class="w-5 h-5 " wire:target="favorite('{{ $trade->id }}')" />
+              {{-- <span wire:loading wire:target="favorite('{{ $trade->id }}')"
                 class="w-3 h-3 ml-2 border-t-2 border-b-2 border-black rounded-full animate-spin">
-              </span>
+              </span> --}}
             </button>
           @endif
         </x-ui.table-data>

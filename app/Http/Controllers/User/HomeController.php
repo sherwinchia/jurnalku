@@ -21,7 +21,8 @@ class HomeController extends Controller
                 return redirect()->route('user.dashboard.index');
             }
         }
-        $packages = Package::where('active', true)->get();
+        $packages = Package::where('active', true)->where('display', true)->get();
+
         return view(self::PATH . 'index', compact('packages'));
     }
 }

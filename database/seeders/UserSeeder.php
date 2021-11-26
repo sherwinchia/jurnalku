@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.com',
             'phone_number' => '6281295552928',
             'password' => bcrypt('secret'),
-            'role_id' => 1
+            'role_id' => 1,
+            'slug' => generate_user_slug()
         ]);
 
         User::create([
@@ -27,7 +28,8 @@ class UserSeeder extends Seeder
             'email' => 'user@user.com',
             'phone_number' => '6281295552921',
             'password' => bcrypt('secret'),
-            'role_id' => 2
+            'role_id' => 2,
+            'slug' => generate_user_slug()
         ]);
 
         User::factory()->count(100)->create();

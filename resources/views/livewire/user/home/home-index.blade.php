@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 gap-0 lg:gap-6 lg:grid-cols-6 xl:grid-cols-8" wire:init="initData">
-  <div class="col-span-full lg:col-span-6">
+  <div class="col-span-full lg:col-span-full">
     {{-- <x-ui.card class="col-span-3 p-4 pb-16" style="height: 50vh;" wire:ignore>
       <div class="flex items-center space-x-4">
         <x-ui.select wire:model="selectedPortfolio" wire:change="changePortfolio">
@@ -12,10 +12,9 @@
       <canvas id="performanceChart"></canvas>
     </x-ui.card> --}}
 
-    <!-- <livewire:user.analytics.analytics-index/> -->
+    <livewire:user.analytics.analytics-index />
   </div>
-
-  <div class="grid grid-cols-1 gap-6 lg:col-span-2 xl:col-span-2">
+  {{-- <div class="grid grid-cols-1 gap-6 lg:col-span-2 xl:col-span-2">
     <x-ui.card class="p-4">
       <h2>{{ current_user()->name }}</h2>
       @if (current_user()->subscription_active)
@@ -75,5 +74,5 @@
         </div>
       </x-ui.card>
     @endif
-  </div>
+  </div> --}}
 </div>

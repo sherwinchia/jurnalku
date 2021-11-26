@@ -23,6 +23,7 @@ class CreatePackagesTable extends Migration
             $table->integer('value');
             $table->enum('type', ['duration', 'portfolio']);
             $table->boolean('active')->default(false);
+            $table->boolean('display')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

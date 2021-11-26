@@ -47,17 +47,17 @@
       </div>
       <nav :class="{'flex': open, 'hidden': !open}"
         class="flex-col items-start flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row md:items-center ">
-        <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 font-medium md:mt-0 md:ml-4">
+        {{-- <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
           Home
-        </a>
-        <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 font-medium md:mt-0 md:ml-4">
-          Blog
-        </a>
-        <a href="{{ route('user.home.index') . '#pricing' }}" class="px-2 py-1 mt-2 font-medium md:mt-0 md:ml-4">
+        </a> --}}
+        <a href="{{ route('user.home.index') . '#pricing' }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
           Pricing
         </a>
+        <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
+          Blog
+        </a>
         @guest
-          <a class="px-2 py-1 mt-2 font-medium rounded-lg md:mt-0 md:ml-4" href="{{ route('login') }}">
+          <a class="px-2 py-1 mt-2 rounded-lg md:mt-0 md:ml-4" href="{{ route('login') }}">
             Login
           </a>
           <a class="px-2 py-1 mt-2 font-medium border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 text-primary-500"

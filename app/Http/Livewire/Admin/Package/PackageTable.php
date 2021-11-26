@@ -55,6 +55,12 @@ class PackageTable extends Component
             "format" => ["get_boolean_value"]
         ],
         [
+            "name" => "Display",
+            "field" => "display",
+            "sortable" => true,
+            "format" => ["get_boolean_value"]
+        ],
+        [
             "name" => "Action",
             "field" => "action",
             "sortable" => false,

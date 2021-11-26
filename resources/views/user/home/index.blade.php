@@ -175,17 +175,34 @@
       <h2 class="text-xl font-semibold md:text-center md:text-2xl lg:text-3xl">Pricing</h2>
       <div class="grid w-full max-w-5xl grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3">
         @foreach ($packages as $package)
-          <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
-            <div class="pb-8">
-              <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
-              <p class="text-sm font-normal">{{ $package->description }}</p>
-              <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
+          @if ($package->price >= 1)
+            <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
+              <div class="pb-8">
+                <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
+                <p class="text-sm font-normal">{{ $package->description }}</p>
+                <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
+              </div>
+              <a href="{{ route('register') }}"
+                class="px-2 py-1 font-medium text-white border-2 rounded-lg border-primary-500 bg-primary-500">
+                {{ $package->price == 0 ? 'Try now!' : 'Sign Up' }}
+              </a>
             </div>
-            <a href="{{ route('register') }}"
-              class="px-2 py-1 font-medium text-white border-2 rounded-lg border-primary-500 bg-primary-500">
-              {{ $package->price == 0 ? 'Try now!' : 'Sign Up' }}
-            </a>
-          </div>
+          @endif
+        @endforeach
+        @foreach ($packages as $package)
+          @if ($package->price < 1)
+            <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
+              <div class="pb-8">
+                <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
+                <p class="text-sm font-normal">{{ $package->description }}</p>
+                <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
+              </div>
+              <a href="{{ route('register') }}"
+                class="px-2 py-1 font-medium text-white border-2 rounded-lg border-primary-500 bg-primary-500">
+                {{ $package->price == 0 ? 'Try now!' : 'Sign Up' }}
+              </a>
+            </div>
+          @endif
         @endforeach
       </div>
     </div>
