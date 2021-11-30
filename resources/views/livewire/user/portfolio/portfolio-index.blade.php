@@ -13,7 +13,8 @@
         class="flex h-40 col-span-8 overflow-hidden bg-white border border-gray-200 md:col-span-4 xl:col-span-2 hover:shadow-md">
         <a class="flex-grow " href="{{ route('user.portfolios.show', $portfolio->id) }}">
           <div class="flex flex-col h-full p-3">
-            <h3 class="text-sm tracking-widest">{{ $portfolio->name }}</h3>
+            <h3 class="pb-1 text-lg font-semibold tracking-widest">{{ $portfolio->name }}</h3>
+            <p class="text-sm">{{ $portfolio->description }}</p>
           </div>
         </a>
         <div
@@ -77,6 +78,12 @@
           <x-ui.form-section field="Balance" required="true" class="col-span-4 sm:col-span-2">
             <x-jet-input wire:model.defer="portfolio.balance" type="number" class="" />
             @error('portfolio.balance')
+              <x-message.validation type="error">{{ $message }}</x-message.validation>
+            @enderror
+          </x-ui.form-section>
+          <x-ui.form-section field="Description" required="true" class="col-span-full">
+            <x-ui.textarea wire:model.defer="portfolio.description" class="" />
+            @error('portfolio.description')
               <x-message.validation type="error">{{ $message }}</x-message.validation>
             @enderror
           </x-ui.form-section>

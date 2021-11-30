@@ -208,4 +208,5 @@
     </x-jet-dialog-modal>
   </div>
 
+  <x-ui.loading />
 </div>

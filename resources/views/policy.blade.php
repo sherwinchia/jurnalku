@@ -1,4 +1,4 @@
-<x-layout.landing>
+<x-layout.blank>
     <div class="pt-4 bg-gray-100">
         <div class="flex flex-col items-center min-h-screen pt-6 sm:pt-0">
             <div>
@@ -10,4 +10,4 @@
             </div>
         </div>
     </div>
-</x-layout.landing>
+</x-layout.blank>

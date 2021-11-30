@@ -21,6 +21,7 @@ class PortfolioIndex extends Component
 
     protected $rules = [
         'portfolio.name' => 'required|string',
+        'portfolio.description' => 'nullable',
         'portfolio.currency' => 'required|string|max:4',
         'portfolio.balance' => 'required|numeric|min:1'
     ];

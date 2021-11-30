@@ -16,7 +16,8 @@ class Portfolio extends Model
         'user_id',
         'name',
         'currency',
-        'balance'
+        'balance',
+        'description'
     ];
 
     public function getAnalyticsAttribute()

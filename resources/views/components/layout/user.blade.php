@@ -213,6 +213,7 @@
         {{ $slot }}
       </main>
     </div>
+
   </div>
   <livewire:shared.components.alert />
   @livewireScripts

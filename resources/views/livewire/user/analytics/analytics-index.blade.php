@@ -209,10 +209,10 @@
           </div>
         @endif
       </x-ui.card>
-
-
     </div>
   </div>
+  <x-ui.loading />
+
 
   <script type="text/javascript">
     document.addEventListener('livewire:load', function() {
