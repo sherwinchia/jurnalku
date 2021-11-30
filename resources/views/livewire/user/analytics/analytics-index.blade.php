@@ -70,165 +70,127 @@
       </div>
     </div>
   </div>
-  <div class="grid grid-cols-4 gap-2 pb-6 lg:grid-cols-8 lg:gap-6">
-    <x-ui.card class="col-span-2 p-4">
-      <x-ui.header class="pb-4 font-medium">
-        Total Net Profit
-        <span wire:loading wire:target="initData"
-          class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-        </span>
-      </x-ui.header>
-      @if (isset($essentialsData['net_profit']))
-        <span
-          class="font-medium {{ text_color($essentialsData['net_profit']) }}">{{ decimal_to_human($essentialsData['net_profit'], $currency, false) }}</span>
-      @endif
-    </x-ui.card>
-    <x-ui.card class="col-span-2 p-4">
-      <x-ui.header class="pb-4 font-medium">
-        Average Trade Net Profit
-        <span wire:loading wire:target="initData"
-          class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-        </span>
-      </x-ui.header>
-      @if (isset($essentialsData['average_trade_net_profit']))
-        <span
-          class="font-medium {{ text_color($essentialsData['average_trade_net_profit']) }}">{{ decimal_to_human($essentialsData['average_trade_net_profit'], $currency, false, 2) }}</span>
-      @endif
-    </x-ui.card>
-    <x-ui.card class="col-span-2 p-4">
-      <x-ui.header class="pb-4 font-medium">
-        Profit Factor
-        <span wire:loading wire:target="initData"
-          class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-        </span>
-      </x-ui.header>
-      @if (isset($essentialsData['profit_factor']))
-        <span
-          class="font-medium {{ text_color($essentialsData['profit_factor']) }}">{{ decimal_to_human($essentialsData['profit_factor'], '', false, 2) }}</span>
-      @endif
-    </x-ui.card>
-    <x-ui.card class="col-span-2 p-4">
-      <x-ui.header class="pb-4 font-medium">
-        Total Trade
-        <span wire:loading wire:target="initData"
-          class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-        </span>
-      </x-ui.header>
-      @if (isset($essentialsData['trade_count']))
-        <span class="font-medium">{{ decimal_to_human($essentialsData['trade_count'], '', false) }}</span>
-      @endif
-    </x-ui.card>
 
-  </div>
+  <div class="grid grid-cols-1 gap-2 lg:grid-cols-4 lg:gap-6" wire:init="initData">
+    <div class="grid grid-cols-1 gap-2 col-span-full lg:col-span-3 lg:grid-cols-3 lg:gap-6">
+      <div class="grid grid-cols-1 gap-2 col-span-full lg:grid-cols-3 lg:gap-6">
+        <x-ui.card class="p-4 ">
+          <x-ui.header class="pb-4 font-medium">
+            Total Net Profit
+          </x-ui.header>
+          @if (isset($essentialsData['net_profit']))
+            <span
+              class="font-medium {{ text_color($essentialsData['net_profit']) }}">{{ decimal_to_human($essentialsData['net_profit'], $currency, false) }}</span>
+          @endif
+        </x-ui.card>
+        <x-ui.card class="p-4 ">
+          <x-ui.header class="pb-4 font-medium">
+            Average Trade Net Profit
+          </x-ui.header>
+          @if (isset($essentialsData['average_trade_net_profit']))
+            <span
+              class="font-medium {{ text_color($essentialsData['average_trade_net_profit']) }}">{{ decimal_to_human($essentialsData['average_trade_net_profit'], $currency, false, 2) }}</span>
+          @endif
+        </x-ui.card>
+        <x-ui.card class="p-4 ">
+          <x-ui.header class="pb-4 font-medium">
+            Profit Factor
+          </x-ui.header>
+          @if (isset($essentialsData['profit_factor']))
+            <span
+              class="font-medium {{ text_color($essentialsData['profit_factor']) }}">{{ decimal_to_human($essentialsData['profit_factor'], '', false, 2) }}</span>
+          @endif
+        </x-ui.card>
+      </div>
 
-  <div class="grid grid-cols-1 gap-0 lg:gap-6 lg:grid-cols-6 xl:grid-cols-8" wire:init="initData">
-    <div
-      class="grid content-start grid-cols-1 gap-6 pb-6 lg:col-span-4 xl:col-span-6 sm:grid-cols-2 lg:grid-cols-6 lg:pb-0">
-      {{-- <x-ui.card class="col-span-3 p-4 pb-16" style="height:40vh;" wire:ignore>
-        <x-ui.header class="pb-4 font-medium">
-          Net Profit
-          <span wire:loading wire:target="initData"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
-        </x-ui.header>
-        <canvas id="netProfitChart"></canvas>
-      </x-ui.card> --}}
-      {{-- <x-ui.card class="col-span-3 p-4 pb-16" style="height:40vh;" wire:ignore>
-        <x-ui.header class="pb-4 font-medium">
-          Win Ratio
-          <span wire:loading wire:target="initData"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
-        </x-ui.header>
-        <canvas class="p-8" id="winLoseChart"></canvas>
-      </x-ui.card> --}}
+      <div class=" col-span-full lg:col-span-2">
+        Recent trades
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos distinctio autem repellendus totam facilis
+        consequatur laudantium. Esse eligendi iure dicta sequi odio. Id placeat sunt molestias perferendis qui saepe
+        reiciendis.
+      </div>
+
+      <div class="flex flex-col space-y-2 col-span-full lg:col-span-1 lg:space-y-6">
+        <x-ui.card class="col-span-2 p-4">
+          <x-ui.header class="pb-4 font-medium">
+            Total Trade
+          </x-ui.header>
+          @if (isset($essentialsData['trade_count']))
+            <span class="font-medium">{{ decimal_to_human($essentialsData['trade_count'], '', false) }}</span>
+          @endif
+        </x-ui.card>
+        <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
+          <x-ui.header class="pb-2 font-medium">
+            Biggest Winner/Loser
+          </x-ui.header>
+          @if (isset($bestTradeReturn) && isset($worstTradeReturn))
+            <a href="{{ route('user.trades.show', $bestTradeReturn->id) }}">
+              <x-ui.card class="flex justify-between p-4">
+                <span>{{ $bestTradeReturn->instrument }}</span>
+                <span class="text-green-400">{{ decimal_to_human($bestTradeReturn->return, $currency) }}</span>
+              </x-ui.card>
+            </a>
+            <a href="{{ route('user.trades.show', $worstTradeReturn->id) }}">
+              <x-ui.card class="flex justify-between p-4">
+                <span>{{ $worstTradeReturn->instrument }}</span>
+                <span class="text-red-400">{{ decimal_to_human($worstTradeReturn->return, $currency) }}</span>
+              </x-ui.card>
+            </a>
+          @endif
+        </x-ui.card>
+
+        <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
+          <x-ui.header class="pb-2 font-medium">
+            Longest Streaks
+          </x-ui.header>
+          @if (isset($essentialsData))
+            <div class="flex justify-between">
+              <span>Win</span>
+              <span class="font-medium text-green-400">{{ $essentialsData['longest_win_streaks'] }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Lose</span>
+              <span class="font-medium text-red-400">{{ $essentialsData['longest_lose_streaks'] }}</span>
+            </div>
+          @endif
+        </x-ui.card>
+
+        <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
+          <x-ui.header class="pb-2 font-medium">
+            Average Winner
+          </x-ui.header>
+          @if (isset($essentialsData))
+            <div class="flex justify-between">
+              <span>Win</span>
+              <span
+                class="font-medium text-green-400">{{ decimal_to_human($essentialsData['average_winner'], $currency, false, 2) }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Lose</span>
+              <span
+                class="font-medium text-red-400">{{ decimal_to_human($essentialsData['average_loser'], $currency, false, 2) }}</span>
+            </div>
+          @endif
+        </x-ui.card>
+      </div>
     </div>
-
-    <div class="grid content-start grid-cols-1 gap-6 lg:col-span-2 xl:col-span-2">
-      <x-ui.card class="col-span-3 p-4" wire:ignore>
+    <div class="flex flex-col col-span-1 space-y-2 lg:space-y-6">
+      <x-ui.card class="p-4 " wire:ignore>
         <x-ui.header class="pb-4 font-medium">
           Net Profit
-          <span wire:loading wire:target="initData"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
         </x-ui.header>
         <canvas id="netProfitChart"></canvas>
       </x-ui.card>
 
-      <x-ui.card class="col-span-3 p-4 pb-16" style="height:40vh;" wire:ignore>
+      <x-ui.card class="p-4 pb-16 " style="height:40vh;" wire:ignore>
         <x-ui.header class="pb-4 font-medium">
           Win Ratio
-          <span wire:loading wire:target="initData"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
         </x-ui.header>
         <canvas class="p-8" id="winLoseChart"></canvas>
-      </x-ui.card>
-
-      <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
-        <x-ui.header class="pb-2 font-medium">
-          Biggest Winner/Loser
-          <span wire:loading wire:target="initData"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
-        </x-ui.header>
-        @if (isset($bestTradeReturn) && isset($worstTradeReturn))
-          <a href="{{ route('user.trades.show', $bestTradeReturn->id) }}">
-            <x-ui.card class="flex justify-between p-4">
-              <span>{{ $bestTradeReturn->instrument }}</span>
-              <span class="text-green-400">{{ decimal_to_human($bestTradeReturn->return, $currency) }}</span>
-            </x-ui.card>
-          </a>
-          <a href="{{ route('user.trades.show', $worstTradeReturn->id) }}">
-            <x-ui.card class="flex justify-between p-4">
-              <span>{{ $worstTradeReturn->instrument }}</span>
-              <span class="text-red-400">{{ decimal_to_human($worstTradeReturn->return, $currency) }}</span>
-            </x-ui.card>
-          </a>
-        @endif
-      </x-ui.card>
-
-      <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
-        <x-ui.header class="pb-2 font-medium">
-          Longest Streaks
-          <span wire:loading wire:target="initData"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
-        </x-ui.header>
-        @if (isset($essentialsData))
-          <div class="flex justify-between">
-            <span>Win</span>
-            <span class="font-medium text-green-400">{{ $essentialsData['longest_win_streaks'] }}</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Lose</span>
-            <span class="font-medium text-red-400">{{ $essentialsData['longest_lose_streaks'] }}</span>
-          </div>
-        @endif
-      </x-ui.card>
-
-      <x-ui.card class="flex flex-col col-span-2 p-4 space-y-2 text-sm">
-        <x-ui.header class="pb-2 font-medium">
-          Average Winner
-          <span wire:loading wire:target="initData"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
-        </x-ui.header>
-        @if (isset($essentialsData))
-          <div class="flex justify-between">
-            <span>Win</span>
-            <span
-              class="font-medium text-green-400">{{ decimal_to_human($essentialsData['average_winner'], $currency, false, 2) }}</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Lose</span>
-            <span
-              class="font-medium text-red-400">{{ decimal_to_human($essentialsData['average_loser'], $currency, false, 2) }}</span>
-          </div>
-        @endif
       </x-ui.card>
     </div>
   </div>
+
   <x-ui.loading />
 
 
