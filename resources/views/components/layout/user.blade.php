@@ -46,16 +46,14 @@
       <div class="flex items-center justify-between p-2" :class="{'lg:justify-center': !isSidebarOpen}">
         <a href="{{ route('user.home.index') }}"
           class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-widest text-gray-700 uppercase whitespace-nowrap">
-          <x-icon.cash class="inline-block w-8 h-8" /><span :class="{'lg:hidden': !isSidebarOpen}"
-            class="{'lg:hidden': !isSidebarOpen}">{{ config('app.name') }}</span>
+          <img class="w-8 h-8 lg:w-10 lg:h-10" src="{{ asset('images/logo.png') }}" alt="logo">
+          <span :class="{'lg:hidden': !isSidebarOpen}" class="{'lg:hidden': !isSidebarOpen}">{{ config('app.name') }}
+          </span>
         </a>
         <button @click="toggleSidbarMenu()" class="p-2 rounded-md lg:hidden">
           <x-icon.x class="w-6 h-6" />
         </button>
       </div>
-
-      <!-- Balance stats -->
-      {{-- <livewire:user.shared.compact-status /> --}}
 
       <!-- Sidebar links -->
       <nav class="flex justify-between flex-1 overflow-hidden hover:overflow-y-auto">
@@ -134,8 +132,8 @@
         <div class="flex items-center justify-between p-2">
           <!-- Navbar left -->
           <div class="flex items-center space-x-3">
-            <span class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden"
-              class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden"> {{ config('app.name') }}</span>
+            {{-- <span class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden"
+              class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden"> {{ config('app.name') }}</span> --}}
             <!-- Toggle sidebar button -->
             <button @click="toggleSidbarMenu()" class="p-2 rounded-md focus:outline-none focus:ring">
               <svg class="w-4 h-4 text-gray-600" :class="{'transform transition-transform -rotate-180': isSidebarOpen}"
