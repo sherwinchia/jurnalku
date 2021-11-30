@@ -71,17 +71,21 @@
 
       @if ($transaction->status == 'success')
         <div class="flex flex-col">
-          @if (isset($transaction->promocode_id))
+          @if ($transaction->discount > 0)
             <div class="flex justify-between">
               <span class="text-sm">Subtotal</span>
               <span>{{ decimal_to_human($transaction->gross_total, 'Rp') }}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-sm">Discount <span
-                  class="text-xs italic">({{ $transaction->promocode->code }})</span></span>
+              <span class="text-sm">Discount
+                @if (data_get($transaction, 'promocode.code') != '')
+                  <span class="text-xs italic">({{ data_get($transaction, 'promocode.code') }})</span>
+                @endif
+              </span>
               <span>{{ decimal_to_human($transaction->discount, 'Rp') }}</span>
             </div>
           @endif
+
           <div class="flex justify-between font-medium">
             <span class="text-sm">Total</span>
             <span>{{ decimal_to_human($transaction->net_total, 'Rp') }}</span>

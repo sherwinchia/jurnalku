@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,16 +23,16 @@ class Promocode extends Model
         'active',
     ];
 
-    protected $dates = ['start_at', 'expired_at'];
+    // protected $dates = ['start_at', 'expired_at'];
 
     public function getStartedAttribute()
     {
-        return $this->start_at->lte(now());
+        return Carbon::parse($this->start_at)->lte(now());
     }
 
     public function getExpiredAttribute()
     {
-        return now()->gt($this->expired_at);
+        return now()->gt(Carbon::parse($this->expired_at));
     }
 
     public function getUseCountAttribute()

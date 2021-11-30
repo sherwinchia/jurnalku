@@ -40,8 +40,8 @@ class PromocodeForm extends Component
             $this->edit = true;
             $this->promocode = $model;
             $this->button_text = "Update";
-            $this->promocode->start_at = date_to_datetime_local($this->promocode->start_at);
-            $this->promocode->expired_at = date_to_datetime_local($this->promocode->expired_at);
+            $this->promocode->start_at = format_string_date($this->promocode->start_at);
+            $this->promocode->expired_at = format_string_date($this->promocode->expired_at);
 
             if (isset($this->promocode->max_use_count)) {
                 $this->limited_use = true;

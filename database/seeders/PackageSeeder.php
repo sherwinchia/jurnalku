@@ -20,7 +20,8 @@ class PackageSeeder extends Seeder
             'price' => 39900,
             'value' => 7,
             'active' => true,
-            'type' => 'duration'
+            'type' => 'duration',
+            'display' => true
         ]);
         Package::create([
             'name' => 'One Month',
@@ -28,7 +29,8 @@ class PackageSeeder extends Seeder
             'price' => 99900,
             'value' => 30,
             'active' => true,
-            'type' => 'duration'
+            'type' => 'duration',
+            'display' => true
         ]);
         Package::create([
             'name' => 'Free Trial',
@@ -36,7 +38,8 @@ class PackageSeeder extends Seeder
             'price' => 0,
             'value' => 7,
             'active' => true,
-            'type' => 'duration'
+            'type' => 'duration',
+            'display' => true
         ]);
         Package::create([
             'name' => 'One Portfolio',
@@ -44,7 +47,8 @@ class PackageSeeder extends Seeder
             'price' => 5000,
             'value' => 1,
             'active' => true,
-            'type' => 'portfolio'
+            'type' => 'portfolio',
+            'display' => false
         ]);
         // Package::factory()->count(50)->create();
     }

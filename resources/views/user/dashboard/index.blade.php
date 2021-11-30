@@ -1,4 +1,8 @@
 <x-layout.user header="Home">
-  {{-- <livewire:user.home.home-index/> --}}
-  <livewire:user.analytics.analytics-index />
+    @if (!current_user()->portfolios->isEmpty())
+      <livewire:user.analytics.analytics-index />
+      @else
+      <span class="text-lg text-semibold">No portfolio available.</span>
+    @endif
+
 </x-layout.user>

@@ -16,6 +16,6 @@ class TradeSeeder extends Seeder
     {
         Trade::truncate();
 
-        Trade::factory()->count(500)->create();
+        Trade::factory()->count(2000)->create();
     }
 }

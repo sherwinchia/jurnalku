@@ -81,7 +81,7 @@
               <x-message.validation type="error">{{ $message }}</x-message.validation>
             @enderror
           </x-ui.form-section>
-          <x-ui.form-section field="Description" required="true" class="col-span-full">
+          <x-ui.form-section field="Description" required="false" class="col-span-full">
             <x-ui.textarea wire:model.defer="portfolio.description" class="" />
             @error('portfolio.description')
               <x-message.validation type="error">{{ $message }}</x-message.validation>

@@ -16,7 +16,7 @@
           The only trade journal you need to track all of your trading. Simple and intuitive design make it easy for
           newcomer to utilize the platform. {{ config('app.name') }} is suitable for all type of investment.
         </p>
-        <x-jet-button class=" lg:text-lg">Get Started</x-jet-button>
+        <a href="{{ route('register') }}" class="lg:text-lg">Get Started</a>
       </div>
     </div>
   </div>

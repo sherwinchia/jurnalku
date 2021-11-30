@@ -141,17 +141,22 @@
                   <span>{{ decimal_to_human(data_get($transactionItem, 'package.price', ''), 'Rp') }}</span>
                 @endforeach
               </div>
-              @if (isset($targetTransaction->promocode_id))
-                <div class="flex justify-between">
-                  <span class="text-sm">Subtotal</span>
-                  <span>{{ decimal_to_human($targetTransaction->gross_total, 'Rp') }}</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-sm">Discount <span
-                      class="text-xs italic">({{ $targetTransaction->promocode->code }})</span></span>
-                  <span>{{ decimal_to_human($targetTransaction->discount, 'Rp') }}</span>
-                </div>
-              @endif
+
+          @if ($targetTransaction->discount > 0)
+            <div class="flex justify-between">
+              <span class="text-sm">Subtotal</span>
+              <span>{{ decimal_to_human($targetTransaction->gross_total, 'Rp') }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm">Discount
+                @if (data_get($targetTransaction, 'promocode.code') != '')
+                  <span class="text-xs italic">({{ data_get($targetTransaction, 'promocode.code') }})</span>
+                @endif
+              </span>
+              <span>{{ decimal_to_human($targetTransaction->discount, 'Rp') }}</span>
+            </div>
+          @endif
+              
               <div class="flex justify-between font-medium">
                 <span class="text-sm">Total</span>
                 <span>{{ decimal_to_human($targetTransaction->net_total, 'Rp') }}</span>
