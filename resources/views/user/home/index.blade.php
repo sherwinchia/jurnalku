@@ -170,7 +170,7 @@
     </div>
   </div>
 
-  <div class="px-4 pb-16 text-gray-700" id="pricing">
+  <div class="px-4 py-8 text-gray-700" id="pricing">
     <div class="flex flex-col mx-auto space-y-4 max-w-7xl">
       <h2 class="text-xl font-semibold md:text-center md:text-2xl lg:text-3xl">Pricing</h2>
       <div class="grid w-full max-w-5xl grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3">
@@ -204,6 +204,78 @@
             </div>
           @endif
         @endforeach
+      </div>
+    </div>
+  </div>
+
+  <div class="px-4 pt-16 pb-16 text-gray-700" id="faq">
+    <div class="flex flex-col mx-auto space-y-4 max-w-7xl">
+      <h2 class="text-xl font-semibold md:text-center md:text-2xl lg:text-3xl">Frequently Asked Questions</h2>
+      <div class="mx-auto" x-data="{selected:1}">
+        <ul class="flex flex-col max-w-4xl space-y-4">
+          <li class="relative border ">
+            <button type="button"
+              class="w-full px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-primary-500"
+              @click="selected !== 1 ? selected = 1 : selected = null">
+              <div class="flex items-center justify-between">
+                <span class="max-w-3xl">
+                  {{-- Title here --}}
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio mollitia ullam eligendi. Quia vero
+                  aliquid est. Magni maxime architecto consequatur mollitia aspernatur officiis! Nostrum nisi reiciendis
+                  aliquam quae blanditiis perferendis.
+                </span>
+                <x-icon.chevron-down class="w-4 h-4 transform" x-bind:class="selected == 1 ? 'rotate-180' : ''" />
+              </div>
+            </button>
+            <div class="relative overflow-hidden transition-all duration-700 max-h-0" style="" x-ref="containner1"
+              x-bind:style="selected == 1 ? 'max-height: ' + $refs.containner1.scrollHeight + 'px' : ''">
+              <div class="p-6">
+                {{-- Content here --}}
+                content
+              </div>
+            </div>
+          </li>
+          <li class="relative border">
+            <button type="button"
+              class="w-full px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-primary-500"
+              @click="selected !== 2 ? selected = 2 : selected = null">
+              <div class="flex items-center justify-between">
+                <span class="max-w-3xl">
+                  {{-- Title here --}}
+                  Title
+                </span>
+                <x-icon.chevron-down class="w-4 h-4 transform" x-bind:class="selected == 2 ? 'rotate-180' : ''" />
+              </div>
+            </button>
+            <div class="relative overflow-hidden transition-all duration-700 max-h-0" style="" x-ref="containner2"
+              x-bind:style="selected == 2 ? 'max-height: ' + $refs.containner2.scrollHeight + 'px' : ''">
+              <div class="p-6">
+                {{-- Content here --}}
+                content
+              </div>
+            </div>
+          </li>
+          <li class="relative border">
+            <button type="button"
+              class="w-full px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-primary-500"
+              @click="selected !== 3 ? selected = 3 : selected = null">
+              <div class="flex items-center justify-between">
+                <span class="max-w-3xl">
+                  {{-- Title here --}}
+                  Title
+                </span>
+                <x-icon.chevron-down class="w-4 h-4 transform" x-bind:class="selected == 3 ? 'rotate-180' : ''" />
+              </div>
+            </button>
+            <div class="relative overflow-hidden transition-all duration-700 max-h-0" style="" x-ref="containner3"
+              x-bind:style="selected == 3 ? 'max-height: ' + $refs.containner3.scrollHeight + 'px' : ''">
+              <div class="p-6">
+                {{-- Content here --}}
+                content
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

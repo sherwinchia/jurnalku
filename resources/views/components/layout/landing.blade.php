@@ -89,7 +89,7 @@
         <h2 class="text-xl font-medium text-white">About</h2>
         <ul class="flex flex-col space-y-1">
           <li><a href="#">Blog</a></li>
-          <li><a href="#">FAQ</a></li>
+          <li><a href="{{ route('user.home.index') . '#faq' }}">FAQ</a></li>
           <li><a href="{{ route('terms.show') }}">Terms of Service</a></li>
           <li><a href="{{ route('policy.show') }}">Privacy Policy</a></li>
         </ul>

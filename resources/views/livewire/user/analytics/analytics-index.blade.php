@@ -104,10 +104,12 @@
       </div>
 
       <div class=" col-span-full lg:col-span-2">
-        Recent trades
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos distinctio autem repellendus totam facilis
-        consequatur laudantium. Esse eligendi iure dicta sequi odio. Id placeat sunt molestias perferendis qui saepe
-        reiciendis.
+        <x-ui.card class="col-span-2 p-4">
+          <x-ui.header class="pb-4 font-medium">
+            Recent trades
+          </x-ui.header>
+
+        </x-ui.card>
       </div>
 
       <div class="flex flex-col space-y-2 col-span-full lg:col-span-1 lg:space-y-6">
