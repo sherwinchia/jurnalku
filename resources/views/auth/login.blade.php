@@ -1,7 +1,7 @@
-<x-layout.landing>
+<x-layout.blank>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <img class="w-12 h-12 lg:w-16 lg:h-16" src="{{ asset('images/logo.png') }}" alt="logo">
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -45,4 +45,4 @@
             </div>
         </form>
     </x-jet-authentication-card>
-</x-layout.landing>
+</x-layout.blank>

@@ -6,17 +6,23 @@
       <img src="{{ asset('images/landing-background.jpg') }}" alt="background"
         class="absolute inset-0 z-0 object-cover w-full h-full">
       <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-800 to-black opacity-80"></div>
-      <div class="z-20 max-w-4xl p-8 mx-auto my-4 space-y-4 text-center">
-        <h1 class="text-2xl font-semibold text-white md:text-4xl lg:text-5xl ">The only <span
-            class="text-primary-500">trade
-            journal</span>
-          you
-          need.</h1>
+      <div class="z-20 flex flex-col max-w-4xl p-8 mx-auto my-4 space-y-6 text-center">
+        <h1 class="text-2xl font-semibold text-white md:text-4xl lg:text-5xl ">The only
+          <span class="text-primary-500">
+            trading journal
+          </span>
+          you need.
+        </h1>
         <p class="leading-6 text-gray-300 lg:text-lg">
           The only trade journal you need to track all of your trading. Simple and intuitive design make it easy for
           newcomer to utilize the platform. {{ config('app.name') }} is suitable for all type of investment.
         </p>
-        <a href="{{ route('register') }}" class="lg:text-lg">Get Started</a>
+        <div>
+          <a href="{{ route('register') }}"
+            class="p-3 font-semibold text-white uppercase border rounded-lg lg:text-lg border-primary-500 bg-primary-500">
+            Try now
+          </a>
+        </div>
       </div>
     </div>
   </div>

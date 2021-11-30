@@ -33,7 +33,9 @@
       class="flex flex-col px-4 py-4 mx-auto max-w-7xl md:items-center md:justify-between md:flex-row md:px-6 lg:px-0">
       <div class="flex flex-row items-center justify-between">
         <a href="{{ route('user.home.index') }}"
-          class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">{{ ucfirst(config('app.name')) }}</a>
+          class="text-lg tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
+          <img class="w-12 h-12 lg:w-16 lg:h-16" src="{{ asset('images/logo.png') }}" alt="logo">
+        </a>
         <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
           <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
             <path x-show="!open" fill-rule="evenodd"
@@ -46,7 +48,7 @@
         </button>
       </div>
       <nav :class="{'flex': open, 'hidden': !open}"
-        class="flex-col items-start flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row md:items-center ">
+        class="flex-col items-start flex-grow hidden pb-4 text-lg md:pb-0 md:flex md:justify-end md:flex-row md:items-center">
         {{-- <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
           Home
         </a> --}}
