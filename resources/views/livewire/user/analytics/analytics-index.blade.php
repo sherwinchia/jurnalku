@@ -109,6 +109,57 @@
             Recent trades
           </x-ui.header>
 
+          <x-ui.table>
+            <thead>
+              <x-ui.table-row>
+                <x-ui.table-header>
+                  Instrument
+                </x-ui.table-header>
+                <x-ui.table-header class="text-center">
+                  Quantity
+                </x-ui.table-header>
+                <x-ui.table-header class="text-center">
+                  Entry Date
+                </x-ui.table-header>
+                <x-ui.table-header class="text-center">
+                  Entry Price
+                </x-ui.table-header>
+                <x-ui.table-header class="text-center">
+                  Return
+                </x-ui.table-header>
+                <x-ui.table-header class="text-center">
+                  Action
+                </x-ui.table-header>
+              </x-ui.table-row>
+            </thead>
+            <tbody>
+              @foreach ($recentTrades as $trade)
+                <x-ui.table-row>
+                  <x-ui.table-data>
+                    {{ $trade->instrument }}
+                  </x-ui.table-data>
+                  <x-ui.table-data class="text-center">
+                    {{ decimal_to_human($trade->quantity) }}
+                  </x-ui.table-data>
+                  <x-ui.table-data class="text-center">
+                    {{ date_to_human($trade->entry_date, 'd/m/Y') }}
+                  </x-ui.table-data>
+                  <x-ui.table-data class="text-center">
+                    {{ decimal_to_human($trade->entry_price, $portfolio->currency) }}
+                  </x-ui.table-data>
+                  <x-ui.table-data
+                    class="{{ isset($trade->return) ? ($trade->return > 0 ? 'text-green-500' : 'text-red-500') : '-' }} text-center">
+                    {{ isset($trade->exit_date) ? decimal_to_human($trade->return, $portfolio->currency) : '-' }}
+                  </x-ui.table-data>
+                  <x-ui.table-data class="text-center">
+                    <a class="" role="button" href="{{ route('user.trades.show', $trade->id) }}">
+                      <x-icon.eye class="w-4 h-4 mx-auto " />
+                    </a>
+                  </x-ui.table-data>
+                </x-ui.table-row>
+              @endforeach
+            </tbody>
+          </x-ui.table>
         </x-ui.card>
       </div>
 

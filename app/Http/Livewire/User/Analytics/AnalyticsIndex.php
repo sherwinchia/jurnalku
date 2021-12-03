@@ -26,6 +26,8 @@ class AnalyticsIndex extends Component
     public $bestTradePercentage;
     public $worstTradePercentage;
 
+    public $recentTrades = [];
+
     public $filter = 'All';
 
     public function mount()
@@ -50,6 +52,9 @@ class AnalyticsIndex extends Component
         $this->bestTradeReturn = $tradeAnalyticsService->getBestTradeReturn();
         $this->worstTradeReturn = $tradeAnalyticsService->getWorstTradeReturn();
         $this->essentialsData = $tradeAnalyticsService->getEssentialsData();
+
+        $this->recentTrades = $this->portfolio->trades()->latest()->take(10)->get();
+
         $this->emit('updateData');
     }
 
@@ -61,9 +66,7 @@ class AnalyticsIndex extends Component
 
     public function filterTrades()
     {
-        $trades = $this->portfolio->trades(['return', 'return_percentage', 'status', 'entry_date', 'id', 'instrument'])->latest('entry_date')->get();
-
-        // $trades = Trade::select(['return', 'return_percentage', 'status', 'entry_date', 'id'])->where('portfolio_id', $this->portfolio->id)->orderBy('entry_date')->get();
+        $trades = $this->portfolio->trades(['return', 'return_percentage', 'status', 'entry_date', 'id', 'instrument'])->orderBy('entry_date', 'asc')->get();
 
         switch ($this->filter) {
             case '7D':

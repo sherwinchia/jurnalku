@@ -157,7 +157,7 @@ class TradeAnalyticsService
         $trades = $this->trades->whereIn('status', ['win', 'lose']);
         $rawDatas = $trades->groupBy(function ($item) {
             return format_string_date($item->entry_date, 'd/m/y');
-        });;
+        });
 
         if ($rawDatas->count() > 30) {
             $rawDatas = $trades->groupBy(function ($item) {

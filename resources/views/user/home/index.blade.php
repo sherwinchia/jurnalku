@@ -39,7 +39,7 @@
       <div class="flex-1">
         <div class="relative h-full overflow-hidden border rounded-lg shadow-lg">
           <img src="{{ asset('images/jurnalku-dashboard.png') }}" alt=""
-            class="absolute object-none object-right-top w-full h-full">
+            class="absolute object-cover object-left-top w-full h-full">
         </div>
       </div>
     </div>
@@ -56,8 +56,8 @@
       </div>
       <div class="flex-1">
         <div class="relative h-full overflow-hidden border rounded-lg shadow-lg">
-          <img src="{{ asset('images/jurnalku-dashboard.png') }}" alt=""
-            class="absolute object-none object-left-top w-full h-full">
+          <img src="{{ asset('images/jurnalku-trades.png') }}" alt=""
+            class="absolute object-cover object-left-top w-full h-full">
         </div>
       </div>
     </div>
