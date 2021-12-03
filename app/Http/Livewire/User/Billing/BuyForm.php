@@ -147,9 +147,8 @@ class BuyForm extends Component
             $transaction->items()->create(['package_id' => $this->selectedPackage->id]);
 
             if ($transaction->net_total == 0) {
-                //development only
+                $tripayService->updateTransaction($transaction->merchant_ref);
             }
-            $tripayService->updateTransaction($transaction->merchant_ref);
 
             return redirect()->route('user.billings.index', ['section' => 'history', 'merchant_ref' => $transaction->merchant_ref]);
         } catch (\Exception $e) {

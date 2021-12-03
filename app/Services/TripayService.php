@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class TripayService
 {
     const TRIPAY_URL = 'https://tripay.co.id/api-sandbox/';
+
     private $apiKey;
     private $privateKey;
     private $merchantCode;

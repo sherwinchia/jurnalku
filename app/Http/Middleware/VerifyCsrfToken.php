@@ -11,5 +11,7 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
-    protected $except = [];
+    protected $except = [
+        "http://5c1b-180-242-192-29.ngrok.io/tripay-callback",
+    ];
 }

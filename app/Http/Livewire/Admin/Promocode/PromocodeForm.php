@@ -54,6 +54,7 @@ class PromocodeForm extends Component
             }
         } else {
             $this->promocode = new Promocode();
+            $this->promocode->first_time_user = false;
             $this->promocode->active = true;
         }
     }
@@ -78,7 +79,7 @@ class PromocodeForm extends Component
                 "promocode.min_spending" => "nullable|required_if:min_spending,true|numeric|min:0",
                 "promocode.max_discount" => "nullable|required_if:discount_limit,true|numeric|min:0",
                 "promocode.max_use_count" => "nullable|required_if:limited_use,true|numeric",
-                "promocode.first_time_user" => "nullable|boolean",
+                "promocode.first_time_user" => "boolean",
                 "promocode.start_at" => "required|date",
                 "promocode.expired_at" => "required|date",
                 "promocode.active" => "nullable|boolean",
@@ -100,7 +101,14 @@ class PromocodeForm extends Component
             $this->promocode->max_discount = (int) $this->promocode->value;
         }
 
-        $this->promocode->save();
+        try {
+            $this->promocode->save();
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
 
         if ($this->edit) {
             return $this->alert([
