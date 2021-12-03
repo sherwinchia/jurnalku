@@ -57,6 +57,11 @@ class PromocodeTable extends Component
             "format" => ["date_to_human", "d F Y"]
         ],
         [
+            "name" => "Use Count",
+            "relation" => "use_count",
+            "sortable" => false,
+        ],
+        [
             "name" => "Action",
             "field" => "action",
             "sortable" => false,

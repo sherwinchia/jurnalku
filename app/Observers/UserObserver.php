@@ -18,11 +18,11 @@ class UserObserver
     public function created(User $user)
     {
         //default Portfolio
-        Portfolio::create([
-            'user_id' => $user->id,
-            'name' => 'Default',
-            'currency' => 'Rp',
-        ]);
+        // Portfolio::create([
+        //     'user_id' => $user->id,
+        //     'name' => 'Default',
+        //     'currency' => 'Rp',
+        // ]);
 
         //default Settings
         Setting::create([

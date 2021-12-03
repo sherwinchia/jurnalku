@@ -13,11 +13,11 @@
   <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> -->
 
   <!--Favicon-->
-  <!-- <link rel="icon" type='image/x-icon' href="{{ asset('images/brand/favicon.ico') }}">
+  {{-- <link rel="icon" type='image/x-icon' href="{{ asset('images/brand/favicon.ico') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/brand/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/brand/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/brand/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('images/brand/site.webmanifest') }}">  -->
+    <link rel="manifest" href="{{ asset('images/brand/site.webmanifest') }}"> --}}
 
   <!-- Styles -->
   <link rel="stylesheet" href="{{ mix('css/user.css') }}">
@@ -105,11 +105,11 @@
               <x-icon.user class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">Profile</span>
             </x-ui.navbar-link>
+          </li>
 
         </ul>
       </nav>
       <!-- Sidebar footer -->
-
       <div class="flex-shrink-0 p-2 border-t max-h-14">
         <form method="POST" action="{{ route('logout') }}">
           @csrf
@@ -143,53 +143,6 @@
             </button>
           </div>
           <span class="">{{ date_to_human(now(), 'd F Y') }}</span>
-
-          <!-- Navbar right -->
-          {{-- <div class="relative flex items-center space-x-3">
-            <!-- Name button-->
-            <div class="relative" x-data="{ isOpen: false }">
-              <button @click="isOpen = !isOpen"
-                class="flex items-center gap-2 px-3 py-2 rounded-lg focus:outline-none focus:ring">
-                <span>{{ current_user()->name }}</span>
-                <svg class="w-4 h-4" :class="{'transform transition-transform rotate-180': isOpen}" fill="none"
-                  stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-
-              <!-- Dropdown card -->
-              <div @click.away="isOpen = false" x-show.transition.opacity="isOpen"
-                class="absolute w-64 mt-3 transform bg-white rounded-md shadow-lg -translate-x-44">
-                <div class="flex flex-col p-4 space-y-1 font-medium border-b">
-                  <span class="text-gray-800">{{ current_user()->name }}</span>
-                  <span class="text-sm text-gray-400">{{ current_user()->email }}</span>
-                </div>
-                <ul class="flex flex-col p-2 my-2 space-y-1">
-                  <li>
-                    <a href="{{ route('user.transactions.index') }}"
-                      class="block px-2 py-1 transition rounded-md hover:bg-gray-100">Purchase
-                      History</a>
-                  </li>
-                  <li>
-                    <a href="{{ route('user.profile.show') }}"
-                      class="block px-2 py-1 transition rounded-md hover:bg-gray-100">Edit
-                      Profile</a>
-                  </li>
-                  <li>
-                    <form class="px-2 py-1 transition rounded-md hover:bg-gray-100" method="POST"
-                      action="{{ route('logout') }}">
-                      @csrf
-                      <button class="w-full text-left focus:outline-none" onclick="event.preventDefault();
-                                                            this.closest('form').submit();">
-                        {{ __('Logout') }}
-                      </button>
-                    </form>
-                  </li>
-                </ul>
-
-              </div>
-            </div>
-          </div> --}}
         </div>
       </header>
       <!-- Main content -->

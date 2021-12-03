@@ -8,26 +8,32 @@
     </x-jet-button>
   </div>
   <div class="grid grid-cols-8 gap-3">
-    @foreach ($portfolios as $portfolio)
-      <x-ui.card
-        class="flex h-40 col-span-8 overflow-hidden bg-white border border-gray-200 md:col-span-4 xl:col-span-2 hover:shadow-md">
-        <a class="flex-grow " href="{{ route('user.portfolios.show', $portfolio->id) }}">
-          <div class="flex flex-col h-full p-3">
-            <h3 class="pb-1 text-lg font-semibold tracking-widest">{{ $portfolio->name }}</h3>
-            <p class="text-sm">{{ $portfolio->description }}</p>
+    @if ($portfolios->isEmpty())
+      <div class="col-span-full">
+        <x-ui.header>No portfolio available.</x-ui.header>
+      </div>
+    @else
+      @foreach ($portfolios as $portfolio)
+        <x-ui.card
+          class="flex h-40 col-span-8 overflow-hidden bg-white border border-gray-200 md:col-span-4 xl:col-span-2 hover:shadow-md">
+          <a class="flex-grow " href="{{ route('user.portfolios.show', $portfolio->id) }}">
+            <div class="flex flex-col h-full p-3">
+              <h3 class="pb-1 text-lg font-semibold tracking-widest">{{ $portfolio->name }}</h3>
+              <p class="text-sm">{{ $portfolio->description }}</p>
+            </div>
+          </a>
+          <div
+            class="flex flex-col justify-end p-2 space-y-2 text-white bg-gradient-to-tr from-primary-500 to-primary-300">
+            <a class="mx-1 text-lg" role="button" wire:click="showFormModal('{{ $portfolio->id }}')">
+              <x-icon.pencil-alt class="w-4 h-4" />
+            </a>
+            <a class="mx-1 text-lg" role="button" wire:click="showDeleteModal('{{ $portfolio->id }}')">
+              <x-icon.trash class="w-4 h-4" />
+            </a>
           </div>
-        </a>
-        <div
-          class="flex flex-col justify-end p-2 space-y-2 text-white bg-gradient-to-tr from-primary-500 to-primary-300">
-          <a class="mx-1 text-lg" role="button" wire:click="showFormModal('{{ $portfolio->id }}')">
-            <x-icon.pencil-alt class="w-4 h-4" />
-          </a>
-          <a class="mx-1 text-lg" role="button" wire:click="showDeleteModal('{{ $portfolio->id }}')">
-            <x-icon.trash class="w-4 h-4" />
-          </a>
-        </div>
-      </x-ui.card>
-    @endforeach
+        </x-ui.card>
+      @endforeach
+    @endif
   </div>
   @if ($deleteModal === true)
     <x-jet-dialog-modal wire:model="deleteModal">

@@ -2,7 +2,7 @@
     @if (!current_user()->portfolios->isEmpty())
       <livewire:user.analytics.analytics-index />
       @else
-      <span class="text-lg text-semibold">No portfolio available.</span>
+      <x-ui.header>No portfolio available.</x-ui.header>
     @endif
 
 </x-layout.user>
