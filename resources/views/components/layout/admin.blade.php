@@ -24,7 +24,8 @@
   @livewireStyles
 
   <!-- Scripts -->
-  <script src="{{ mix('js/admin.js') }}" defer></script>
+  <script src="{{ asset('js/chartjs.js') }}"></script>
+  <script src="{{ mix('js/admin.js') }}"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -171,6 +172,7 @@
   <livewire:shared.components.alert />
   @livewireScripts
   <script type="text/javascript" src="{{ mix('js/alpine.js') }}"></script>
+  @stack('scripts')
   <script type="text/javascript">
     const setup = () => {
       return {

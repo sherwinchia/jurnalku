@@ -168,7 +168,7 @@
   </div>
   <livewire:shared.components.alert />
   @livewireScripts
-  <script src="{{ mix('js/alpine.js') }}"></script>
+  <script type="text/javascript"  src="{{ mix('js/alpine.js') }}"></script>
   @stack('scripts')
   <script>
     const setup = () => {
