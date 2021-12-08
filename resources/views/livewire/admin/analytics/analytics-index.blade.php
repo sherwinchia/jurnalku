@@ -7,7 +7,9 @@
       </x-ui.header>
       @if ($usersData)
         <span class="font-medium ">{{ $usersData['total_users'] }}
-          <span class="text-green-400">(+{{ $usersData['new_users'] }})</span>
+          @if ($usersData['new_users'] > 0)
+            <span class="text-green-400">(+{{ $usersData['new_users'] }})</span>
+          @endif
         </span>
       @endif
     </div>
@@ -23,7 +25,9 @@
       </x-ui.header>
       @if ($transactionsData)
         <span class="font-medium ">{{ $transactionsData['total_transactions'] }}
-          <span class="text-green-400">(+{{ $transactionsData['new_transactions'] }})</span>
+          @if ($transactionsData['new_transactions'] > 0)
+            <span class="text-green-400">(+{{ $transactionsData['new_transactions'] }})</span>
+          @endif
         </span>
       @endif
     </div>

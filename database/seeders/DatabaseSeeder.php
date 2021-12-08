@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Portfolio;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,17 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         $this->call([
+            AppSettingSeeder::class,
             RoleSeeder::class,
             PackageSeeder::class,
             UserSeeder::class,
-            // SubscriptionSeeder::class,
+            PortfolioSeeder::class,
             PromocodeSeeder::class,
             TransactionSeeder::class,
             TradeSeeder::class,
-            // SettingSeeder::class,
-            TransactionPackageSeeder::class
+            TransactionPackageSeeder::class,
         ]);
     }
 }

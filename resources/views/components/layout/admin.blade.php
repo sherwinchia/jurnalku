@@ -97,7 +97,7 @@
             </x-ui.navbar-link>
           </li>
           <li>
-            <x-ui.navbar-link href="#"
+            <x-ui.navbar-link href="{{ route('admin.settings.index') }}"
               class="{{ request()->is('admin/setting*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.cog class="w-6 h-6" />

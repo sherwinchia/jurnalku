@@ -21,7 +21,7 @@ class AnalyticsIndex extends Component
 
     public function updateChart()
     {
-        $appAnalyticsService = app(AppAnalyticsService::class, ['transactions' => Transaction::where('status', 'success')->latest()->get(), 'users' => User::where('role_id', '!=', 1)->latest()->get()]);
+        $appAnalyticsService = app(AppAnalyticsService::class, ['transactions' => Transaction::where('status', 'success')->latest()->get(['id', 'net_total', 'merchant_ref', 'updated_at']), 'users' => User::where('role_id', '!=', 1)->latest()->get(['id', 'name'])]);
         $this->usersData = $appAnalyticsService->getUsersData();
         $this->transactionsData = $appAnalyticsService->getTransactionsData();
         $this->totalRevenue = $appAnalyticsService->getTotalRevenue();

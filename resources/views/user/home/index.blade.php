@@ -1,4 +1,8 @@
 <x-layout.landing>
+  @if ($promotionBanner['active'])
+    {!! $promotionBanner['html'] !!}
+  @endif
+
   <div class="px-4">
     <div
       class="relative flex flex-col items-center justify-center w-full mx-auto mt-4 overflow-hidden border lg:mt-6 rounded-xl max-w-7xl"

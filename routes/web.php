@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PromocodeController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\User\AnalyticsController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\User\TransactionController as UserTransactionController
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\PortfolioController;
-use App\Http\Controllers\User\SettingController;
+use App\Http\Controllers\User\SettingController as UserSettingController;
 use App\Http\Controllers\User\TradeController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::resource('transactions', TransactionController::class)->only('index', 'show');
         Route::resource('packages', PackageController::class)->only('index', 'edit', 'create');
         Route::resource('promocodes', PromocodeController::class)->only('index', 'edit', 'create');
+        Route::resource('settings', SettingController::class)->only('index');
         // Route::resource('subscriptions', SubscriptionController::class)->name('*', 'subscription')->only('show','index');
     });
 
@@ -47,7 +49,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
             Route::resource('portfolios', PortfolioController::class)->only('index', 'show');
             Route::resource('trades', TradeController::class)->only('show');
             Route::get('export/portfolio/{portfolio}', [PortfolioController::class, 'export'])->name('portfolio.export');
-            Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+            Route::get('settings', [UserSettingController::class, 'index'])->name('settings.index');
             // Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
         });
         Route::get('billings', [BillingController::class, 'index'])->name('billings.index');

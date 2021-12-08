@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\AppSetting;
 use App\Models\User;
 use App\Models\Setting;
 use App\Models\Portfolio;
@@ -17,22 +18,21 @@ class UserObserver
      */
     public function created(User $user)
     {
-        //default Portfolio
-        // Portfolio::create([
-        //     'user_id' => $user->id,
-        //     'name' => 'Default',
-        //     'currency' => 'Rp',
-        // ]);
-
-        //default Settings
         Setting::create([
             'user_id' => $user->id
         ]);
 
+        $freeDays = 0;
+        $appSetting = AppSetting::where('name', 'trial')->first();
+        $appSettingData = json_decode($appSetting->data, true);
+        if ($appSettingData['active']) {
+            $freeDays = $appSettingData['duration'];
+        }
+
         Subscription::create([
             'user_id' => $user->id,
             'type' => 'free',
-            'expired_at' => now(),
+            'expired_at' => now()->addDays($freeDays),
         ]);
     }
 
