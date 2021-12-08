@@ -95,12 +95,13 @@ class TransactionTable extends Component
             $this->detailModal = true;
 
             if ($this->targetTransaction->status == "pending") {
+                $this->transactionDetail = [];
                 $this->getPaymentGuide();
             }
         } catch (\Exception $e) {
             return $this->alert([
                 "type" => "error",
-                "message" => $e->getMessage()
+                "message" => "No payment guides found."
             ]);
         }
     }

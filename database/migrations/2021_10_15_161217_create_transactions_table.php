@@ -30,6 +30,7 @@ class CreateTransactionsTable extends Migration
             $table->decimal('net_total', 19, 2);
             $table->string('reference')->nullable();
             $table->string('merchant_ref')->unique();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

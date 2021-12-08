@@ -122,6 +122,7 @@ class BuyForm extends Component
         try {
             $promocodeService = app(PromocodeService::class);
             $tripayService = app(TripayService::class);
+
             $discount = 0;
             if (isset($this->promoCode)) {
                 $discount = $promocodeService->apply($this->promoCode, $this->selectedPackage->price, current_user());

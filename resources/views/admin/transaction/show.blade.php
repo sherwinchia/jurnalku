@@ -16,6 +16,12 @@
           Ref
         </div>
         <div class="col-span-2">
+          {{ $transaction->reference }}
+        </div>
+        <div class="">
+          Merchant Ref
+        </div>
+        <div class="col-span-2">
           {{ $transaction->merchant_ref }}#{{ $transaction->id }}
         </div>
         <div class="">
@@ -30,6 +36,14 @@
         <div class="col-span-2">
           {{ date_to_human($transaction->updated_at, 'd F Y, h:i A') }}
         </div>
+        @if ($transaction->note)
+          <div class="">
+            Note
+          </div>
+          <div class="col-span-2">
+            {{ $transaction->note }}
+          </div>
+        @endif
       </div>
 
       <div class="mb-3">
@@ -61,8 +75,8 @@
           @foreach ($transaction->items as $transactionItem)
             <div>
               <h2 class="font-medium">{{ data_get($transactionItem, 'package.name', '-') }}</h2>
-              <p class="text-sm font-normal text-gray-700">
-                {{ data_get($transactionItem, 'package.description', '-') }}</p>
+              {{-- <p class="text-sm font-normal text-gray-700">
+                {{ data_get($transactionItem, 'package.description', '-') }}</p> --}}
             </div>
             <span>{{ decimal_to_human(data_get($transactionItem, 'package.price', ''), 'Rp') }}</span>
           @endforeach

@@ -17,7 +17,8 @@ class Transaction extends Model
         'discount',
         'reference',
         'merchant_ref',
-        'net_total'
+        'net_total',
+        'note'
     ];
 
     public function user()

@@ -65,7 +65,7 @@
         @foreach ($usersData['latest_users'] as $key => $user)
           <a href="{{ route('admin.users.show', $user->id) }}">
             <x-ui.card class="flex p-4 card">
-              <span class="pr-2">{{ $key }}.</span>
+              <span class="pr-2">{{ $key+1 }}.</span>
               <span>{{ $user->name }}</span>
             </x-ui.card>
           </a>
@@ -84,10 +84,13 @@
         @foreach ($transactionsData['latest_transactions'] as $key => $transaction)
           <a href="{{ route('admin.transactions.show', $transaction->id) }}">
             <x-ui.card class="flex p-4 card">
-              <span class="pr-2">{{ $key }}.</span>
+              <span class="pr-2">{{ $key+1 }}.</span>
               <div class="flex justify-between flex-1">
                 <span>{{ $transaction->merchant_ref }}</span>
-                <span>{{ decimal_to_human($transaction->net_total, 'Rp') }}</span>
+                <div class="flex items-center space-x-4">
+                  <x-ui.status type="{{ $transaction->status }}">{{ ucfirst($transaction->status) }}</x-ui.status>
+                  <span>{{ decimal_to_human($transaction->net_total, 'Rp') }}</span>
+                </div>
               </div>
             </x-ui.card>
           </a>

@@ -6,6 +6,7 @@ use App\Http\Traits\Alert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Transaction;
+use App\Services\TripayService;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 
@@ -18,8 +19,12 @@ class TransactionTable extends Component
     public $sortAsc = false;
     public $perPage = 10;
     public $modalVisible = false;
+    public $editModalVisiblity = false;
     public $encryptedId;
-    public $actions = ["show"];
+    public $actions = ["show", "edit"];
+
+    public $transactionNote;
+    public $transactionStatus;
 
     public $columns = [
         [
@@ -82,6 +87,49 @@ class TransactionTable extends Component
     {
         $this->modalVisible = true;
         $this->encryptedId = $id;
+    }
+
+    public function showEditModal($id)
+    {
+        try {
+            $this->transaction = Transaction::findOrFail($id);
+            $this->transactionNote = $this->transaction->note;
+            $this->transactionStatus = $this->transaction->status;
+            $this->editModalVisiblity = true;
+        } catch (\Exception $e) {
+            $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function submit()
+    {
+        $rawData = $this->validate([
+            'transactionStatus' => 'required',
+            'transactionNote' => 'nullable'
+        ]);
+
+        try {
+            $this->transaction->update([
+                'note' => $rawData['transactionNote']
+            ]);
+
+            $tripayService = app(TripayService::class);
+            $tripayService->updateTransaction($this->transaction->merchant_ref, $rawData['transactionStatus']);
+        } catch (\Exception $e) {
+            return $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+        $this->transaction = null;
+        $this->editModalVisiblity = false;
+        return $this->alert([
+            "type" => "success",
+            "message" => "Transaction has been successfully updated."
+        ]);
     }
 
     public function delete()

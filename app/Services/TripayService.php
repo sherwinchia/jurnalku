@@ -170,11 +170,19 @@ class TripayService
                 $user = $transaction->user;
                 $subscription = $user->subscription;
 
-                $subscription->update([
-                    'expired_at' => $subscription->addDays($transaction->package->duration),
-                    'type' => 'paid',
-                    'package_id' => $transaction->package_id,
-                ]);
+                foreach ($transaction->items as $transactionItem) {
+                    if ($transactionItem->package->type == "duration") {
+                        $subscription->update([
+                            'expired_at' => $subscription->expired_at->addDays($transactionItem->package->value),
+                            'type' => 'paid',
+                            'package_id' => $transaction->package_id,
+                        ]);
+                    } elseif ($transactionItem->package->type == "portfolio") {
+                        $subscription->update([
+                            'max_portfolio' => $subscription->max_portfolio + $transactionItem->package->value,
+                        ]);
+                    }
+                }
                 return true;
 
             case 'EXPIRED':
@@ -190,27 +198,29 @@ class TripayService
         }
     }
 
-    public function updateTransaction($merchantRef)
+    public function updateTransaction($merchantRef, $status = "success")
     {
         $transaction = Transaction::where('merchant_ref', $merchantRef)
             ->where('status', 'pending')
             ->firstOrFail();
 
-        $transaction->update(['status' => 'success']);
-        $user = $transaction->user;
-        $subscription = $user->subscription;
+        $transaction->update(['status' => $status]);
+        if ($status == "success") {
+            $user = $transaction->user;
+            $subscription = $user->subscription;
 
-        foreach ($transaction->items as $transactionItem) {
-            if ($transactionItem->package->type == "duration") {
-                $subscription->update([
-                    'expired_at' => $subscription->expired_at->addDays($transactionItem->package->value),
-                    'type' => 'paid',
-                    'package_id' => $transaction->package_id,
-                ]);
-            } elseif ($transactionItem->package->type == "portfolio") {
-                $subscription->update([
-                    'max_portfolio' => $subscription->max_portfolio + $transactionItem->package->value,
-                ]);
+            foreach ($transaction->items as $transactionItem) {
+                if ($transactionItem->package->type == "duration") {
+                    $subscription->update([
+                        'expired_at' => $subscription->expired_at->addDays($transactionItem->package->value),
+                        'type' => 'paid',
+                        'package_id' => $transaction->package_id,
+                    ]);
+                } elseif ($transactionItem->package->type == "portfolio") {
+                    $subscription->update([
+                        'max_portfolio' => $subscription->max_portfolio + $transactionItem->package->value,
+                    ]);
+                }
             }
         }
     }

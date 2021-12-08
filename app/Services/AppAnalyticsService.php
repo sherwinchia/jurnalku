@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Transaction;
 use stdClass;
 
 class AppAnalyticsService
@@ -77,7 +78,8 @@ class AppAnalyticsService
 
     public function getLatestTransactions()
     {
-        if (isset($this->transactions)) return $this->transactions->take(5);
+        // if (isset($this->transactions)) return $this->transactions->take(5);
+        return Transaction::latest()->get(['id', 'net_total', 'merchant_ref', 'updated_at', 'status'])->take(5);
     }
 
     public function getTotalRevenue()

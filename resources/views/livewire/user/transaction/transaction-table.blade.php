@@ -135,35 +135,35 @@
                 @foreach ($targetTransaction->items as $transactionItem)
                   <div>
                     <h2 class="font-medium">{{ data_get($transactionItem, 'package.name', '-') }}</h2>
-                    <p class="text-sm font-normal text-gray-700">
-                      {{ data_get($transactionItem, 'package.description', '-') }}</p>
+                    {{-- <p class="text-sm font-normal text-gray-700">
+                      {{ data_get($transactionItem, 'package.description', '-') }}</p> --}}
                   </div>
                   <span>{{ decimal_to_human(data_get($transactionItem, 'package.price', ''), 'Rp') }}</span>
                 @endforeach
               </div>
 
-          @if ($targetTransaction->discount > 0)
-            <div class="flex justify-between">
-              <span class="text-sm">Subtotal</span>
-              <span>{{ decimal_to_human($targetTransaction->gross_total, 'Rp') }}</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-sm">Discount
-                @if (data_get($targetTransaction, 'promocode.code') != '')
-                  <span class="text-xs italic">({{ data_get($targetTransaction, 'promocode.code') }})</span>
-                @endif
-              </span>
-              <span>{{ decimal_to_human($targetTransaction->discount, 'Rp') }}</span>
-            </div>
-          @endif
-              
+              @if ($targetTransaction->discount > 0)
+                <div class="flex justify-between">
+                  <span class="text-sm">Subtotal</span>
+                  <span>{{ decimal_to_human($targetTransaction->gross_total, 'Rp') }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-sm">Discount
+                    @if (data_get($targetTransaction, 'promocode.code') != '')
+                      <span class="text-xs italic">({{ data_get($targetTransaction, 'promocode.code') }})</span>
+                    @endif
+                  </span>
+                  <span>{{ decimal_to_human($targetTransaction->discount, 'Rp') }}</span>
+                </div>
+              @endif
+
               <div class="flex justify-between font-medium">
                 <span class="text-sm">Total</span>
                 <span>{{ decimal_to_human($targetTransaction->net_total, 'Rp') }}</span>
               </div>
             </div>
 
-            @if ($targetTransaction->status == 'pending')
+            @if ($targetTransaction->status == 'pending' && isset($transactionDetail['instructions']))
               <h2 class="pb-2 font-medium lg:text-lg">Payment Guides</h2>
               <div class="mx-auto bg-white border border-gray-200" x-data="{selected:null}">
                 <ul class="shadow-box">

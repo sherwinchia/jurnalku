@@ -8,7 +8,7 @@
       <div class="flex flex-col items-start col-span-1 p-6 bg-white border rounded-lg shadow-lg">
         <div class="pb-8 ">
           <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
-          <p class="text-sm font-normal text-gray-700">{{ $package->description }}</p>
+          <p class="text-sm font-normal text-gray-700">{!! $package->description !!}</p>
           <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
         </div>
         <x-jet-button wire:click="selectPackage({{ $package->id }})" wire:loading.attr="disabled"
@@ -32,7 +32,7 @@
             <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200">
               <div>
                 <h2 class="font-medium">{{ $selectedPackage->name }}</h2>
-                <p class="text-sm font-normal text-gray-700">{{ $selectedPackage->description }}</p>
+                {{-- <p class="text-sm font-normal text-gray-700">{{ $selectedPackage->description }}</p> --}}
               </div>
               <span>{{ decimal_to_human($selectedPackage->price, 'Rp') }}</span>
             </div>
