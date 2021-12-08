@@ -26,6 +26,10 @@ class PackageForm extends Component
         "package.display" => "boolean"
     ];
 
+    protected $listeners = [
+        'updateData'
+    ];
+
     public function mount($model = null)
     {
         if (isset($model)) {
@@ -36,6 +40,12 @@ class PackageForm extends Component
             $this->package = new Package();
             $this->package->active = true;
         }
+    }
+
+    public function updateData($data)
+    {
+        $this->package->description = $data;
+        $this->submit();
     }
 
     public function submit()

@@ -189,7 +189,7 @@
             <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
               <div class="pb-8">
                 <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
-                <p class="text-sm font-normal">{{ $package->description }}</p>
+                <p class="text-sm font-normal">{!! $package->description !!}</p>
                 <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
               </div>
               <a href="{{ route('register') }}"
@@ -204,7 +204,7 @@
             <div class="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg">
               <div class="pb-8">
                 <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
-                <p class="text-sm font-normal">{{ $package->description }}</p>
+                <p class="text-sm font-normal">{!! $package->description !!}</p>
                 <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
               </div>
               <a href="{{ route('register') }}"

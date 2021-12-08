@@ -21,6 +21,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="{{ mix('css/admin.css') }}">
+  @stack('styles')
   @livewireStyles
 
   <!-- Scripts -->
