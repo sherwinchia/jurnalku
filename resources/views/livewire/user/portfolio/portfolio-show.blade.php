@@ -196,12 +196,12 @@
             <div x-show="activeTab===0">
               <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
                 <x-ui.form-section field="Instrument" required="true" class="col-span-4 sm:col-span-2">
-                  <x-ui.select wire:model.lazy="trade.instrument">
-                    <option value="null" disabled>Choose instrument</option>
+                  <x-jet-input wire:model.defer="trade.instrument" type="text" list="instruments" />
+                  <datalist id="instruments">
                     @foreach ($settings->instruments as $instrument)
                       <option value="{{ $instrument }}">{{ $instrument }}</option>
                     @endforeach
-                  </x-ui.select>
+                  </datalist>
                   @error('trade.instrument')
                     <x-message.validation type="error">{{ $message }}</x-message.validation>
                   @enderror
@@ -323,24 +323,24 @@
               <div class="col-span-full">
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
                   <x-ui.form-section field="Setup" required="false" class="col-span-4 sm:col-span-2">
-                    <x-ui.select wire:model.lazy="trade.setup">
-                      <option value="null" disabled>Choose setup</option>
+                    <x-jet-input wire:model.defer="trade.setup" type="text" list="setups" />
+                    <datalist id="setups">
                       @foreach ($settings->setups as $setup)
                         <option value="{{ $setup }}">{{ $setup }}</option>
                       @endforeach
-                    </x-ui.select>
+                    </datalist>
                     @error('trade.setup')
                       <x-message.validation type="error">{{ $message }}</x-message.validation>
                     @enderror
                   </x-ui.form-section>
 
                   <x-ui.form-section field="Mistake" required="false" class="col-span-4 sm:col-span-2">
-                    <x-ui.select wire:model.lazy="trade.mistake">
-                      <option value="null" disabled>Choose mistake</option>
+                    <x-jet-input wire:model.defer="trade.mistake" type="text" list="mistakes" />
+                    <datalist id="mistakes">
                       @foreach ($settings->mistakes as $mistake)
                         <option value="{{ $mistake }}">{{ $mistake }}</option>
                       @endforeach
-                    </x-ui.select>
+                    </datalist>
                     @error('trade.mistake')
                       <x-message.validation type="error">{{ $message }}</x-message.validation>
                     @enderror

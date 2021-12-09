@@ -7,6 +7,7 @@ use App\Http\Traits\Alert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Portfolio;
+use App\Models\Setting;
 use App\Models\Trade;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -26,7 +27,7 @@ class PortfolioShow extends Component
     public $trade;
     public $tab = 0;
     public $edit = false;
-    public $sortField = "entry_date";
+    public $sortField = "id";
     public $sortAsc = false;
     public $perPage = 10;
     public $tradeFormModal = false;
@@ -167,6 +168,19 @@ class PortfolioShow extends Component
             }
         }
 
+        if (isset($this->trade->instrument)) {
+            $this->trade->instrument = strtoupper($this->trade->instrument);
+            $this->updateSettings($this->trade->instrument, 'instrument');
+        }
+        if (isset($this->trade->setup)) {
+            $this->trade->setup = strtoupper($this->trade->setup);
+            $this->updateSettings($this->trade->setup, 'setup');
+        }
+        if (isset($this->trade->mistake)) {
+            $this->trade->mistake = strtoupper($this->trade->mistake);
+            $this->updateSettings($this->trade->mistake, 'mistake');
+        }
+
         $this->trade->save();
         $this->tradeFormModal = false;
 
@@ -174,6 +188,39 @@ class PortfolioShow extends Component
             "type" => "success",
             "message" => $message
         ]);
+    }
+
+    public function updateSettings(string $string, string $type): void
+    {
+        $settings =  UserSettings::all();
+
+        $arrayData = [];
+
+        if ($type == "instrument") {
+            $arrayData = (array) $settings->instruments;
+        } elseif ($type == "setup") {
+            $arrayData = (array) $settings->setups;
+        } elseif ($type == "mistake") {
+            $arrayData = (array) $settings->mistakes;
+        }
+
+        if (!in_array($string, $arrayData)) {
+            array_push($arrayData, $string);
+        }
+
+        $settings = Setting::find(current_user()->id);
+        $settings_data = json_decode($settings->data);
+
+        if ($type == "instrument") {
+            $settings_data->instruments = (object) $arrayData;
+        } elseif ($type == "setup") {
+            $settings_data->setups = (object) $arrayData;
+        } elseif ($type == "mistake") {
+            $settings_data->mistakes = (object) $arrayData;
+        }
+
+        $settings->data = json_encode($settings_data);
+        $settings->save();
     }
 
     public function showDeleteModal($id)

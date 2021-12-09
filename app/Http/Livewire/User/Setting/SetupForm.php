@@ -44,7 +44,7 @@ class SetupForm extends Component
     public function submit()
     {
         $this->validate();
-
+        $this->setup = strtoupper($this->setup);
         if ($this->edit) {
             $this->setups[$this->modalId] = $this->setup;
             $message = "Setup has been successfully updated.";

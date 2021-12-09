@@ -44,7 +44,7 @@ class MistakeForm extends Component
     public function submit()
     {
         $this->validate();
-
+        $this->mistake = strtoupper($this->mistake);
         if ($this->edit) {
             $this->mistakes[$this->modalId] = $this->mistake;
             $message = "Mistake has been successfully updated.";

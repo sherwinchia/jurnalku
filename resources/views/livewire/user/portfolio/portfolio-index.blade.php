@@ -7,7 +7,7 @@
       </span>
     </x-jet-button>
   </div>
-  <div class="grid grid-cols-8 gap-3">
+  <div class="grid grid-cols-8 gap-6">
     @if ($portfolios->isEmpty())
       <div class="col-span-full">
         <x-ui.header>No portfolio available.</x-ui.header>
