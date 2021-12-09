@@ -46,7 +46,7 @@
       <!-- sidebar header -->
       <div class="flex items-center justify-between p-2" :class="{'lg:justify-center': !isSidebarOpen}">
         <a href="{{ route('user.home.index') }}"
-          class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-widest text-gray-700 uppercase dark:gray-500 whitespace-nowrap">
+          class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-widest uppercase dark:gray-500 whitespace-nowrap">
           <img class="w-8 h-8 lg:w-10 lg:h-10" src="{{ asset('images/logo.png') }}" alt="logo">
           <span :class="{'lg:hidden': !isSidebarOpen}" class="{'lg:hidden': !isSidebarOpen}">{{ config('app.name') }}
           </span>
@@ -136,7 +136,7 @@
             {{-- <span class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden"
               class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden"> {{ config('app.name') }}</span> --}}
             <!-- Toggle sidebar button -->
-            <button x-on:click="toggleSidbarMenu()" class="p-2 rounded-md focus:outline-none focus:ring">
+            <button x-on:click="toggleSidbarMenu()" class="dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
               <svg class="w-4 h-4 " :class="{'transform transition-transform -rotate-180': isSidebarOpen}"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
@@ -145,7 +145,7 @@
           </div>
           <span class="">{{ date_to_human(now(), 'd F Y') }}</span>
           <button x-on:click="toggleDarkMode()" type="button"
-            class=" dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+            class=" dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
             <svg id="theme-toggle-dark-icon" class="w-5 h-5 " fill="currentColor" viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg">
               <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>

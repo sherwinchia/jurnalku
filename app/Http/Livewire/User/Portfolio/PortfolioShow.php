@@ -34,7 +34,7 @@ class PortfolioShow extends Component
     public $deleteTradeModal = false;
 
     protected $rules = [
-        "trade.instrument" => "required",
+        "trade.instrument" => "required|alpha_num",
         "trade.entry_date" => "required",
         "trade.exit_date" => "after:trade.entry_date|nullable",
         "trade.entry_price" => "required|numeric|min:1",
@@ -45,8 +45,8 @@ class PortfolioShow extends Component
         "trade.exit_fee" => "required_with:trade.exit_date|numeric|min:0|nullable",
         "trade.quantity" => "required|numeric|min:0",
         "trade.note" => "nullable|string",
-        "trade.setup" => "nullable",
-        "trade.mistake" => "nullable",
+        "trade.setup" => "nullable|alpha_num",
+        "trade.mistake" => "nullable|alpha_num",
     ];
 
 
