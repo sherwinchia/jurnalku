@@ -36,8 +36,7 @@
       <div class="flex flex-col items-start justify-center flex-1 pb-4 pr-20 space-y-4 md:pb-0">
         <h2 class="text-xl font-semibold text-gray-700 md:text-2xl lg:text-3xl">Journal your trade</h2>
         <p class="font-normal">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti aspernatur at laudantium sit error iure
-          optio dicta, obcaecati eaque laborum doloribus dolore iste. Minima, sit ad soluta ex eum consequuntur?
+          Track every single trade
         </p>
       </div>
       <div class="flex-1">

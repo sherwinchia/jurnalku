@@ -1,11 +1,11 @@
 <div>
-    <x-ui.header class="pb-2 mb-4 border-b border-gray-300 ">Mistake</x-ui.header>
+    <x-ui.header class="pb-2 mb-4 border-b border-gray-300 dark:border-gray-600">Mistake</x-ui.header>
     <x-jet-button class="mb-2" wire:click="showBlankFormModal" wire:loading.attr="disabled" wire:target="showBlankFormModal">Add
         <span wire:loading wire:target="showBlankFormModal"
             class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
         </span>
     </x-jet-button>
-    <x-ui.alt-table class="w-full overflow-y-auto border lg:w-96 max-h-96">
+    <x-ui.alt-table class="w-full overflow-y-auto border dark:border-gray-600 lg:w-96 max-h-96">
         <thead>
             <x-ui.table-row>
                 <x-ui.table-header class="">Name</x-ui.table-header>
@@ -17,7 +17,7 @@
             <x-ui.table-row>
                 <x-ui.table-data class="">{{ ucfirst($mistake) }}</x-ui.table-data>
                 <x-ui.table-data>
-                    <div class="flex justify-center text-gray-700">
+                    <div class="flex justify-center">
                         <a role="button" wire:click="showFormModal('{{$key}}')">
                             <x-icon.pencil-alt class="w-5 h-5 mx-auto" />
                         </a>

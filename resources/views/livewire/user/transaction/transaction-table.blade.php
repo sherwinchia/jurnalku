@@ -27,7 +27,7 @@
             @foreach ($columns as $column)
               @if (array_key_exists('field', $column) && $column['field'] === 'action')
                 <x-ui.table-data class="{{ $column['align'] ?? '' }}">
-                  <div class="flex text-gray-600">
+                  <div class="flex">
                     @foreach ($actions as $action)
                       @if ($action === 'show')
                         <a class="flex items-center justify-center mx-1 text-lg" role="button"
@@ -35,7 +35,7 @@
                           <x-icon.eye class="w-5 h-5" wire:loading.remove
                             wire:target="showDetailModal({{ $transaction->id }})" />
                           <span wire:loading wire:target="showDetailModal({{ $transaction->id }})"
-                            class="w-4 h-4 ml-2 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
+                            class="w-4 h-4 ml-2 border-t-2 border-b-2 border-gray-700 rounded-full dark:border-gray-400 animate-spin">
                           </span>
                         </a>
                       @elseif ($action === "edit")
@@ -131,7 +131,7 @@
             </div>
 
             <div class="flex flex-col pb-6">
-              <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200">
+              <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200 dark:border-gray-600">
                 @foreach ($targetTransaction->items as $transactionItem)
                   <div>
                     <h2 class="font-medium">{{ data_get($transactionItem, 'package.name', '-') }}</h2>
@@ -165,10 +165,10 @@
 
             @if ($targetTransaction->status == 'pending' && isset($transactionDetail['instructions']))
               <h2 class="pb-2 font-medium lg:text-lg">Payment Guides</h2>
-              <div class="mx-auto bg-white border border-gray-200" x-data="{selected:null}">
+              <div class="mx-auto bg-white border border-gray-200 dark:bg-dark-100 dark:border-gray-600" x-data="{selected:null}">
                 <ul class="shadow-box">
                   @foreach ($transactionDetail['instructions'] as $instruction)
-                    <li class="relative border-b border-gray-200">
+                    <li class="relative border-b border-gray-200 dark:border-gray-600">
                       <button type="button"
                         class="w-full px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-primary-500"
                         @click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">

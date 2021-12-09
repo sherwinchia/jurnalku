@@ -5,10 +5,10 @@
   @endif
   <div class="grid w-full grid-cols-1 gap-10 mx-auto md:grid-cols-2 lg:grid-cols-3" wire:init="getPaymentMethods">
     @foreach ($packages as $package)
-      <div class="flex flex-col items-start col-span-1 p-6 bg-white border rounded-lg shadow-lg">
+      <div class="flex flex-col items-start col-span-1 p-6 bg-white border rounded-lg shadow-lg dark:bg-dark-100 dark:border-gray-600">
         <div class="pb-8 ">
           <h2 class="text-xl font-semibold lg:text-2xl text-primary-500">{{ $package->name }}</h2>
-          <p class="text-sm font-normal text-gray-700">{!! $package->description !!}</p>
+          <p class="text-sm font-normal">{!! $package->description !!}</p>
           <span>{{ decimal_to_human($package->price, 'Rp') }}</span>
         </div>
         <x-jet-button wire:click="selectPackage({{ $package->id }})" wire:loading.attr="disabled"
@@ -29,7 +29,7 @@
       @if (isset($selectedPackage))
         <x-ui.alt-form class="pb-2">
           <div class="flex flex-col">
-            <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-200 dark:border-gray-600">
               <div>
                 <h2 class="font-medium">{{ $selectedPackage->name }}</h2>
                 {{-- <p class="text-sm font-normal text-gray-700">{{ $selectedPackage->description }}</p> --}}
@@ -81,7 +81,7 @@
               class="w-10 h-10 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
             </span>
             @foreach ($paymentMethods as $method)
-              <a class="px-3 flex flex-col w-24 lg:w-36 py-2 border rounded-lg cursor-pointer space-y-2 {{ $selectedPaymentMethod == $method['code'] ? 'border-primary-500' : '' }}"
+              <a class="px-3 flex flex-col w-24 lg:w-36 py-2 border dark:border-gray-600 rounded-lg cursor-pointer space-y-2 {{ $selectedPaymentMethod == $method['code'] ? 'border-primary-500 dark:border-primary-500' : '' }}"
                 wire:click="selectPaymentMethod('{{ $method['code'] }}')">
                 <img class="object-cover" src="{{ asset('images/development-icon.png') }}" alt="">
                 <span class="text-sm">

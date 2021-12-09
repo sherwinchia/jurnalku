@@ -15,7 +15,7 @@
     @else
       @foreach ($portfolios as $portfolio)
         <x-ui.card
-          class="flex h-40 col-span-8 overflow-hidden bg-white border border-gray-200 md:col-span-4 xl:col-span-2 hover:shadow-md">
+          class="flex h-40 col-span-8 overflow-hidden bg-white border border-gray-200 dark:border-gray-600 md:col-span-4 xl:col-span-2 hover:shadow-md">
           <a class="flex-grow " href="{{ route('user.portfolios.show', $portfolio->id) }}">
             <div class="flex flex-col h-full p-3">
               <h3 class="pb-1 text-lg font-semibold tracking-widest">{{ $portfolio->name }}</h3>
@@ -23,7 +23,7 @@
             </div>
           </a>
           <div
-            class="flex flex-col justify-end p-2 space-y-2 text-white bg-gradient-to-tr from-primary-500 to-primary-300">
+            class="flex flex-col justify-end p-2 space-y-2 text-white bg-gradient-to-tr from-primary-500 to-primary-300 dark:text-gray-200">
             <a class="mx-1 text-lg" role="button" wire:click="showFormModal('{{ $portfolio->id }}')">
               <x-icon.pencil-alt class="w-4 h-4" />
             </a>

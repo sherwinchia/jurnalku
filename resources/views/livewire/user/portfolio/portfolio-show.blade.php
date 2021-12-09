@@ -138,7 +138,7 @@
           {{ isset($trade->exit_date) ? date_interval($trade->exit_date, $trade->entry_date) : '-' }}
         </x-ui.table-data>
         <x-ui.table-data>
-          <div class="flex justify-center text-gray-700">
+          <div class="flex justify-center">
             <a class="mx-1 text-lg" role="button" href="{{ route('user.trades.show', $trade->id) }}">
               <x-icon.eye class="w-5 h-5" />
             </a>
@@ -181,7 +181,7 @@
       </x-slot>
       <x-slot name="content">
         <x-ui.alt-form method="POST" x-data="{activeTab: {{ $tab }}, tabs: ['Entry','Exit','Extra']}">
-          <div class="bg-white">
+          <div class="">
             <ul class="flex flex-wrap gap-4 p-0 pb-2">
               <template x-for="(tab, index) in tabs" :key="index">
                 <li class="pb-1 cursor-pointer text-md"
@@ -224,7 +224,7 @@
                 <x-ui.form-section field="Entry Price" required="true" class="col-span-4 sm:col-span-2">
                   <div class="relative flex w-full">
                     <div
-                      class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                      class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300 dark:border-gray-600">
                       {{ $portfolio->currency }}
                     </div>
                     <x-jet-input wire:model.defer="trade.entry_price" type="number" class="w-full pl-14" />
@@ -292,7 +292,7 @@
                   <x-ui.form-section field="Exit Price" required="false" class="col-span-4 sm:col-span-2">
                     <div class="relative flex w-full">
                       <div
-                        class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300">
+                        class="absolute inset-y-0 left-0 flex items-center justify-center w-12 p-2 overflow-hidden text-sm border-r border-gray-300 dark:border-gray-600">
                         {{ $portfolio->currency }}
                       </div>
                       <x-jet-input wire:model.defer="trade.exit_price" type="number" class="w-full pl-14" />

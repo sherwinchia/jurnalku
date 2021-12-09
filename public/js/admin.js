@@ -1560,6 +1560,7 @@ module.exports = {
     enabled: "development" === 'production',
     content: ['./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php', './vendor/laravel/jetstream/**/*.blade.php', './storage/framework/views/*.php', './resources/views/**/*.blade.php']
   },
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -1578,6 +1579,7 @@ module.exports = {
         hover: '#ECEFF3',
         base: '#fcfdff',
         dark: {
+          50: '#42464c',
           100: '#27292C',
           200: '#202125',
           300: '#15161A'
@@ -1592,7 +1594,8 @@ module.exports = {
   variants: {
     textColor: ['responsive', 'hover', 'focus', 'group-hover'],
     extend: {
-      opacity: ['disabled']
+      opacity: ['disabled'],
+      textColor: ['dark']
     }
   },
   plugins: [__webpack_require__(/*! @tailwindcss/forms */ "./node_modules/@tailwindcss/forms/src/index.js"), __webpack_require__(/*! @tailwindcss/typography */ "./node_modules/@tailwindcss/typography/src/index.js")]

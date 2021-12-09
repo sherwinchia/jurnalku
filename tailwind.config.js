@@ -11,6 +11,8 @@ module.exports = {
       ]
     },
 
+    darkMode:"class",
+
     theme: {
         extend: {
           colors:{
@@ -29,6 +31,7 @@ module.exports = {
             hover:'#ECEFF3',
             base:'#fcfdff',
             dark:{
+              50:'#42464c',
               100:'#27292C',
               200:'#202125',
               300:'#15161A',
@@ -46,6 +49,7 @@ module.exports = {
         textColor:['responsive', 'hover', 'focus', 'group-hover'],
         extend: {
             opacity: ['disabled'],
+            textColor: ['dark'],
         },
     },
 

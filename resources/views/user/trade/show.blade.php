@@ -1,12 +1,17 @@
-<x-layout.user >
+<x-layout.user>
     <x-slot name="breadcrumbs">
         {{ Breadcrumbs::render('user.trades.show', $trade->portfolio, $trade) }}
     </x-slot>
     <div class="flex-1">
         <x-ui.card class="max-w-xl p-6 mx-auto">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-gray-300">
+            <div
+                class="flex items-center justify-between pb-2 mb-2 border-b border-gray-300  dark:border-gray-600"
+            >
                 <x-ui.header>Trade Details</x-ui.header>
-                <x-ui.status type="{{ $trade->status }}">{{ ucfirst($trade->status) }}</x-ui.status>
+                <x-ui.status
+                    type="{{ $trade->status }}"
+                    >{{ ucfirst($trade->status) }}</x-ui.status
+                >
             </div>
 
             <div class="grid grid-cols-4 gap-1 mb-3 md:grid-cols-3">
@@ -44,20 +49,27 @@
                 <x-ui.alt-table class="relative w-full">
                     <thead>
                         <x-ui.table-row>
-                            <x-ui.table-data class="sticky left-0 bg-gray-50 ">
-
+                            <x-ui.table-data
+                                class="sticky left-0 bg-gray-10 dark:bg-dark-50"
+                            >
                             </x-ui.table-data>
-                            <x-ui.table-data class="font-semibold bg-gray-50">
+                            <x-ui.table-data
+                                class="font-semibold bg-gray-10 dark:bg-dark-50"
+                            >
                                 Entry
                             </x-ui.table-data>
-                            <x-ui.table-data class="font-semibold bg-gray-50">
+                            <x-ui.table-data
+                                class="font-semibold bg-gray-10 dark:bg-dark-50"
+                            >
                                 Exit
                             </x-ui.table-data>
                         </x-ui.table-row>
                     </thead>
                     <tbody>
                         <x-ui.table-row>
-                            <x-ui.table-data class="sticky left-0 bg-gray-50">
+                            <x-ui.table-data
+                                class="sticky left-0 bg-gray-10 dark:bg-dark-50"
+                            >
                                 Date
                             </x-ui.table-data>
                             <x-ui.table-data>
@@ -68,7 +80,9 @@
                             </x-ui.table-data>
                         </x-ui.table-row>
                         <x-ui.table-row>
-                            <x-ui.table-data class="sticky left-0 bg-gray-50">
+                            <x-ui.table-data
+                                class="sticky left-0 bg-gray-10 dark:bg-dark-50"
+                            >
                                 Time
                             </x-ui.table-data>
                             <x-ui.table-data>
@@ -79,7 +93,9 @@
                             </x-ui.table-data>
                         </x-ui.table-row>
                         <x-ui.table-row>
-                            <x-ui.table-data class="sticky left-0 bg-gray-50">
+                            <x-ui.table-data
+                                class="sticky left-0 bg-gray-10 dark:bg-dark-50"
+                            >
                                 Price
                             </x-ui.table-data>
                             <x-ui.table-data>
@@ -90,7 +106,9 @@
                             </x-ui.table-data>
                         </x-ui.table-row>
                         <x-ui.table-row>
-                            <x-ui.table-data class="sticky left-0 bg-gray-50">
+                            <x-ui.table-data
+                                class="sticky left-0 bg-gray-10 dark:bg-dark-50"
+                            >
                                 Fee
                             </x-ui.table-data>
                             <x-ui.table-data>
@@ -101,12 +119,20 @@
                             </x-ui.table-data>
                         </x-ui.table-row>
                         <x-ui.table-row>
-                            <x-ui.table-data class="sticky left-0 bg-gray-50">
+                            <x-ui.table-data
+                                class="sticky left-0 bg-gray-10 dark:bg-dark-50"
+                            >
                                 Return
                             </x-ui.table-data>
-                            <x-ui.table-data class="{{ isset($trade->return) ? ($trade->return > 0 ? 'text-green-500' : 'text-red-500') : '-' }}">
+                            <x-ui.table-data
+                                class="{{ isset($trade->return) ? ($trade->return > 0 ? 'text-green-500' : 'text-red-500') : '-' }}"
+                            >
                                 {{ isset($trade->exit_date) ?  decimal_to_human($trade->return,$trade->portfolio->currency) : '-' }}
-                                ({{ isset($trade->exit_date) ?  decimal_to_human($trade->return_percentage,null,true) : '-' }})
+                                ({{ isset($trade->exit_date) ?  decimal_to_human($trade->return_percentage,null,true) : '-'
+
+
+
+                                }})
                             </x-ui.table-data>
                         </x-ui.table-row>
                     </tbody>
@@ -140,8 +166,6 @@
             <!-- <div class="grid grid-cols-4 gap-1 mb-3 md:grid-cols-3">
                 Screenshot here
             </div> -->
-
         </x-ui.card>
     </div>
-
 </x-layout.user>
