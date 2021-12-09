@@ -14,9 +14,7 @@
         <div class="flex items-center">
             <x-jet-button wire:click="createPackage" wire:loading.attr="disabled">
                 Create
-                <span wire:loading wire:target="createPackage"
-                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                </span>
+                <x-ui.loading-indicator wire:target="createPackage" />
             </x-jet-button>
         </div>
         @endif
@@ -49,8 +47,8 @@
         <x-ui.table-row>
             @foreach ($columns as $column)
             @if (array_key_exists("field", $column) && $column["field"] === "action")
-            <x-ui.table-data class="px-6 py-4 text-sm leading-5 text-black border-b whitespace-nowrap">
-                <div class="flex justify-center text-gray-600">
+            <x-ui.table-data>
+                <div class="flex justify-center">
                     @foreach ($actions as $action)
                     @if ($action === "show")
                     <a class="mx-1 text-lg" role="button" href="{{ route('admin.packages.show', $package->id)
@@ -71,7 +69,7 @@
                 </div>
             </x-ui.table-data>
             @else
-            <x-ui.table-data class="px-6 py-4 text-sm leading-5 text-black border-b whitespace-nowrap">
+            <x-ui.table-data>
                 @if (array_key_exists("relation", $column) && isset($column["relation"]))
                 @if (array_key_exists("format", $column) && isset($column["format"]))
                 @if (count($column["format"]) > 1)
@@ -136,9 +134,7 @@
 
                 <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
                     Delete
-                    <span wire:loading wire:target="delete"
-                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                    </span>
+                    <x-ui.loading-indicator wire:target="delete" />
                 </x-jet-danger-button>
             </x-slot>
         </x-jet-dialog-modal>

@@ -6,7 +6,7 @@
                     <x-jet-input wire:model.debounce.500ms="promocode.code" wire:input="codeInput" type="text"
                         class="w-full pr-8 sm:pr-32" />
                     <button wire:click.prevent="generateCode"
-                        class="absolute inset-y-0 right-0 w-6 overflow-hidden border border-gray-300 rounded-r sm:w-28 focus:outline-none">
+                        class="absolute inset-y-0 right-0 w-6 overflow-hidden border border-gray-300 rounded-r dark:border-gray-600 sm:w-28 focus:outline-none">
                         Random</button>
                 </div>
                 @error("promocode.code")
@@ -51,7 +51,7 @@
                 @if($promocode->type == "percentage")
                 <div class="grid grid-cols-1 col-span-4 gap-4 sm:grid-cols-4">
                     <x-ui.form-section field="Discount Limit" required="true" class="col-span-full sm:col-span-2 ">
-                        <x-jet-input wire:model.lazy="discount_limit" type="checkbox" />
+                        <x-jet-input wire:model.lazy="discount_limit" type="checkbox" class="w-6 h-6" />
                         @error("discount_limit")
                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                         @enderror
@@ -70,7 +70,7 @@
 
                 <div class="grid grid-cols-1 col-span-4 gap-4 sm:grid-cols-4">
                     <x-ui.form-section field="Limited Use" required="false" class="col-span-full sm:col-span-2 ">
-                        <x-jet-input wire:model.lazy="limited_use" type="checkbox" />
+                        <x-jet-input wire:model.lazy="limited_use" type="checkbox" class="w-6 h-6" />
                         @error("limited_use")
                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                         @enderror
@@ -88,7 +88,7 @@
 
                 <div class="grid grid-cols-1 col-span-4 gap-4 sm:grid-cols-4">
                     <x-ui.form-section field="Min Spending" required="false" class="col-span-full sm:col-span-2">
-                        <x-jet-input wire:model.lazy="min_spending" type="checkbox" />
+                        <x-jet-input wire:model.lazy="min_spending" type="checkbox" class="w-6 h-6" />
                         @error("min_spending")
                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                         @enderror
@@ -106,14 +106,14 @@
 
                 <div class="grid grid-cols-1 gap-4 col-span-full">
                     <x-ui.form-section field="First Time User" required="false" class="col-span-1">
-                        <x-jet-input wire:model.defer="promocode.first_time_user" type="checkbox" />
+                        <x-jet-input wire:model.defer="promocode.first_time_user" type="checkbox" class="w-6 h-6" />
                         @error("promocode.first_time_user")
                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                         @enderror
                     </x-ui.form-section>
 
                     <x-ui.form-section field="Active" required="false" class="col-span-1">
-                        <x-jet-input wire:model.defer="promocode.active" type="checkbox" />
+                        <x-jet-input wire:model.defer="promocode.active" type="checkbox" class="w-6 h-6" />
                         @error("promocode.active")
                         <x-message.validation type="error">{{ $message }}</x-message.validation>
                         @enderror

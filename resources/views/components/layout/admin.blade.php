@@ -30,7 +30,8 @@
 </head>
 
 <body class="font-sans antialiased">
-  <div class="flex h-screen overflow-y-hidden bg-white" x-data="setup()" x-init="init()" x-cloak>
+  <div class="flex h-screen overflow-y-hidden text-gray-700 bg-white dark:bg-dark-200 dark:text-gray-400"
+    x-data="setup()" x-init="init()" x-cloak>
     <!-- Sidebar backdrop -->
     <div x-show.in.out.opacity="isSidebarOpen" class="fixed inset-0 z-10 bg-black bg-opacity-20 lg:hidden"
       style="backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)"></div>
@@ -41,25 +42,25 @@
       x-transition:enter-end="translate-x-0 opacity-100 ease-out" x-transition:leave="transition transform duration-300"
       x-transition:leave-start="translate-x-0 opacity-100 ease-out"
       x-transition:leave-end="-translate-x-full opacity-0 ease-in"
-      class="fixed inset-y-0 z-10 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform bg-white border-r shadow-lg lg:z-auto lg:static lg:shadow-none"
+      class="fixed inset-y-0 z-10 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform bg-white border-r shadow-lg dark:border-gray-600 dark:bg-dark-200 lg:z-auto lg:static lg:shadow-none"
       :class="{'-translate-x-full lg:translate-x-0 lg:w-20': !isSidebarOpen}">
       <!-- sidebar header -->
       <div class="flex items-center justify-between p-2" :class="{'lg:justify-center': !isSidebarOpen}">
         <a href="{{ route('user.home.index') }}"
-          class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-wider text-gray-700 uppercase whitespace-nowrap">
+          class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap">
           <img class="w-8 h-8 lg:w-10 lg:h-10" src="{{ asset('images/logo.png') }}" alt="logo">
           <span :class="{'lg:hidden': !isSidebarOpen}">{{ config('app.name') }}</span>
         </a>
-        <button @click="toggleSidbarMenu()" class="p-2 rounded-md lg:hidden">
+        <button x-on:click="toggleSidebarMenu()" class="p-2 rounded-md lg:hidden">
           <x-icon.x class="w-6 h-6" />
         </button>
       </div>
       <!-- Sidebar links -->
-      <nav class="flex-1 overflow-hidden text-gray-700 hover:overflow-y-auto">
+      <nav class="flex-1 overflow-hidden hover:overflow-y-auto">
         <ul class="flex flex-col w-full h-full gap-2 p-2 overflow-hidden text-lg">
           <li>
             <x-ui.navbar-link href="{{ route('admin.dashboard.index') }}"
-              class="{{ request()->is('admin/dashboard*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+              class="{{ request()->is('admin/dashboard*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.home class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">Dashboard</span>
@@ -67,7 +68,7 @@
           </li>
           <li>
             <x-ui.navbar-link href="{{ route('admin.users.index') }}"
-              class="{{ request()->is('admin/users*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+              class="{{ request()->is('admin/users*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.users class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">User</span>
@@ -75,7 +76,7 @@
           </li>
           <li>
             <x-ui.navbar-link href="{{ route('admin.transactions.index') }}"
-              class="{{ request()->is('admin/transactions*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+              class="{{ request()->is('admin/transactions*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.cash class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">Transaction</span>
@@ -83,7 +84,7 @@
           </li>
           <li>
             <x-ui.navbar-link href="{{ route('admin.packages.index') }}"
-              class="{{ request()->is('admin/packages*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+              class="{{ request()->is('admin/packages*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.archive class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">Package</span>
@@ -91,7 +92,7 @@
           </li>
           <li>
             <x-ui.navbar-link href="{{ route('admin.promocodes.index') }}"
-              class="{{ request()->is('admin/promocodes*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+              class="{{ request()->is('admin/promocodes*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.ticket class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">Promocode</span>
@@ -99,7 +100,7 @@
           </li>
           <li>
             <x-ui.navbar-link href="{{ route('admin.settings.index') }}"
-              class="{{ request()->is('admin/setting*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+              class="{{ request()->is('admin/setting*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.cog class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">Setting</span>
@@ -107,7 +108,7 @@
           </li>
           <li class="mt-auto">
             <x-ui.navbar-link href=" {{ route('admin.profile.show') }}"
-              class="{{ request()->is('admin/profile*') ? 'bg-gray-50 text-primary-500 border-l-4' : 'text-gray-700' }}"
+              class="{{ request()->is('admin/profile*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
               <x-icon.user class="w-6 h-6" />
               <span :class="{ 'lg:hidden': !isSidebarOpen }">Profile</span>
@@ -116,11 +117,11 @@
         </ul>
       </nav>
       <!-- Sidebar footer -->
-      <div class="flex-shrink-0 p-2 border-t max-h-14">
+      <div class="flex-shrink-0 p-2 border-t dark:border-gray-600 max-h-14">
         <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button onclick="event.preventDefault(); this.closest('form').submit();"
-            class="flex items-center justify-center w-full px-4 py-2 space-x-1 bg-gray-100 border rounded-md focus:outline-none focus:ring">
+            class="flex items-center justify-center w-full px-4 py-2 space-x-1 bg-gray-100 border rounded-md dark:bg-dark-100 dark:border-transparent focus:outline-none focus:ring">
             <span>
               <x-icon.logout class="w-5 h-5" />
             </span>
@@ -134,24 +135,31 @@
 
     <div class="flex flex-col flex-1 h-full overflow-hidden">
       <!-- Navbar -->
-      <header class="flex-shrink-0 text-gray-700 border-b">
+      <header class="flex-shrink-0 border-b dark:border-gray-600">
         <div class="flex items-center justify-between p-2">
           <!-- Navbar left -->
           <div class="flex items-center space-x-3">
             <span
               class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden">{{ config('app.name') }}</span>
             <!-- Toggle sidebar button -->
-            <button @click="toggleSidbarMenu()" class="p-2 rounded-md focus:outline-none focus:ring">
-              <svg class="w-4 h-4 text-gray-600" :class="{'transform transition-transform -rotate-180': isSidebarOpen}"
+            <button x-on:click="toggleSidebarMenu()"
+              class="p-2 text-sm rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700">
+              <svg class="w-5 h-5" :class="{'transform transition-transform -rotate-180': isSidebarOpen}"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
               </svg>
             </button>
           </div>
+          <span class="">{{ date_to_human(now(), 'd F Y') }}</span>
+          <button x-on:click="toggleDarkMode()" type="button"
+            class=" dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+            <x-icon.moon id="theme-toggle-dark-icon" class="w-5 h-5"/>
+            <x-icon.sun id="theme-toggle-light-icon" class="w-5 h-5 "/>
+          </button>
         </div>
       </header>
       <!-- Main content -->
-      <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-auto bg-gray-50">
+      <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-auto bg-gray-50 dark:bg-dark-200">
         <!-- Breadcrumbs -->
         @if (isset($breadcrumbs))
           <div class="mb-4">
@@ -161,7 +169,7 @@
         <!-- Main content header -->
         @if (isset($header))
           <div
-            class="flex flex-col items-start justify-between pb-4 mb-4 space-y-4 border-b lg:items-center lg:space-y-0 lg:flex-row">
+            class="flex flex-col items-start justify-between pb-4 mb-4 space-y-4 border-b dark:border-gray-600 lg:items-center lg:space-y-0 lg:flex-row">
             <h1 class="text-lg font-medium whitespace-nowrap">{{ $header }}</h1>
           </div>
         @endif
@@ -178,14 +186,41 @@
     const setup = () => {
       return {
         isSidebarOpen: false,
+        isDarkMode: false,
         init() {
           if (localStorage.getItem('sidebar') === null) localStorage.setItem('sidebar', true);
           this.isSidebarOpen = localStorage.getItem('sidebar') === 'true';
+
+          if (localStorage.getItem('dark-mode') === null) localStorage.setItem('dark-mode', false);
+          this.isDarkMode = localStorage.getItem('dark-mode') === 'true';
+          this.toggleHtmlDarkClass();
         },
-        toggleSidbarMenu() {
+        toggleSidebarMenu() {
           this.isSidebarOpen = !this.isSidebarOpen;
           localStorage.setItem('sidebar', this.isSidebarOpen);
         },
+        toggleDarkMode() {
+          this.isDarkMode = !this.isDarkMode;
+          localStorage.setItem('dark-mode', this.isDarkMode);
+
+          this.toggleHtmlDarkClass();
+        },
+        toggleHtmlDarkClass() {
+          const html = document.querySelector("html");
+          this.isDarkMode ? html.classList.add("dark") : html.classList.remove("dark");
+
+          let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+          let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+          // Change the icons inside the button based on previous settings
+          if (this.isDarkMode) {
+            themeToggleLightIcon.classList.add('hidden');
+            themeToggleDarkIcon.classList.remove('hidden');
+          } else {
+            themeToggleLightIcon.classList.remove('hidden');
+            themeToggleDarkIcon.classList.add('hidden');
+          }
+        }
       }
     }
   </script>

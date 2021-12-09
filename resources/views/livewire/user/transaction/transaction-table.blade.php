@@ -34,9 +34,7 @@
                           wire:click="showDetailModal({{ $transaction->id }})">
                           <x-icon.eye class="w-5 h-5" wire:loading.remove
                             wire:target="showDetailModal({{ $transaction->id }})" />
-                          <span wire:loading wire:target="showDetailModal({{ $transaction->id }})"
-                            class="w-4 h-4 ml-2 border-t-2 border-b-2 border-gray-700 rounded-full dark:border-gray-400 animate-spin">
-                          </span>
+                            <x-ui.loading-indicator wire:target="showDetailModal({{ $transaction->id }})" />
                         </a>
                       @elseif ($action === "edit")
                         <a class="mx-1 text-lg" role="button"

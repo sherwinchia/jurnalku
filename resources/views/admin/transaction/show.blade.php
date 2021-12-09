@@ -4,7 +4,7 @@
   </x-slot>
   <div class="flex-1">
     <x-ui.card class="max-w-2xl p-6 mx-auto ">
-      <div class="flex items-center justify-between pb-2 mb-2 border-b border-gray-300">
+      <div class="flex items-center justify-between pb-2 mb-2 border-b border-gray-300 dark:border-gray-600">
         <x-ui.header>Transaction Details</x-ui.header>
         <div class="p-1">
           <x-ui.status type="{{ $transaction->status }}">{{ ucfirst($transaction->status) }}</x-ui.alert>
@@ -71,7 +71,7 @@
       </div>
 
       <div class="mb-3">
-        <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-300">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-300 dark:border-gray-600">
           @foreach ($transaction->items as $transactionItem)
             <div>
               <h2 class="font-medium">{{ data_get($transactionItem, 'package.name', '-') }}</h2>

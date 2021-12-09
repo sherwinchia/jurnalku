@@ -93,9 +93,7 @@ class GenerateDatatable extends Command
             <div class="flex items-center">
                 <x-jet-button wire:click="create' . $model . '" wire:loading.attr="disabled">
                     Create
-                    <span wire:loading wire:target="create' . $model . '"
-                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                    </span>
+                    <x-ui.loading-indicator wire:target="' . $model . '"/>
                 </x-jet-button>
             </div>
             @endif
@@ -125,7 +123,7 @@ class GenerateDatatable extends Command
                 @foreach ($columns as $column)
                 @if (array_key_exists("field", $column) && $column["field"] === "action")
                 <x-ui.table-data class="{{ $column[\'align\'] ?? \'\' }}">
-                    <div class="flex text-gray-600">
+                    <div class="flex">
                         @foreach ($actions as $action)
                         @if ($action === "show")
                         <a class="mx-1 text-lg" role="button" href="{{ route(\'admin.' . $pluralize_model . '.show\', $' . $model_lowercase . '->id)
@@ -216,9 +214,7 @@ class GenerateDatatable extends Command
 
                     <x-jet-danger-button class="ml-2" wire:click="$toggle(\'modalVisible\')" wire:loading.attr="disabled">
                         Delete
-                        <span wire:loading wire:target="delete"
-                            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                        </span>
+                        <x-ui.loading-indicator wire:target="delete"/>
                     </x-jet-danger-button>
                 </x-slot>
             </x-jet-dialog-modal>
@@ -226,7 +222,7 @@ class GenerateDatatable extends Command
     </x-ui.table>';
 
         $controller_content = '<?php
-namespace App\Http\Livewire\\'.$folder_uppercase.'\\' . $model . ';
+namespace App\Http\Livewire\\' . $folder_uppercase . '\\' . $model . ';
 
 use App\Http\Traits\Alert;
 use Livewire\Component;
@@ -318,7 +314,7 @@ class ' . $model . 'Table extends Component
 
     public function render()
     {
-        return view("livewire.'.$folder.'.' . $model_lowercase . '.' . $model_lowercase . '-table", [
+        return view("livewire.' . $folder . '.' . $model_lowercase . '.' . $model_lowercase . '-table", [
             "' . $pluralize_model . '" => ' . $model . '::query()
                 ->where("' . $identifier . '", "ILIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")

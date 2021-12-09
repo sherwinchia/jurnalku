@@ -16,15 +16,11 @@
     <div class="flex items-center gap-2">
       <x-jet-button wire:click="exportPortfolio" wire:loading.attr="disabled">
         Export Portfolio
-        <span wire:loading wire:target="exportPortfolio"
-          class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-        </span>
+        <x-ui.loading-indicator wire:target="exportPortfolio" />
       </x-jet-button>
       <x-jet-button wire:click="showAddTradeModal" wire:loading.attr="disabled">
         Add Trade
-        <span wire:loading wire:target="showAddTradeModal"
-          class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-        </span>
+        <x-ui.loading-indicator wire:target="showAddTradeModal" />
       </x-jet-button>
     </div>
   </x-slot>
@@ -370,9 +366,7 @@
 
         <x-jet-button class="ml-2" wire:click="submitTrade" wire:loading.attr="disabled">
           {{ $edit ? 'Update' : 'Add' }}
-          <span wire:loading wire:target="submitTrade"
-            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="submitTrade" />
         </x-jet-button>
       </x-slot>
     </x-jet-dialog-modal>
@@ -393,9 +387,7 @@
 
         <x-jet-danger-button class="ml-2" wire:click="deleteTrade" wire:loading.attr="disabled">
           Delete
-          <span wire:loading wire:target="deleteTrade"
-            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="deleteTrade" />
         </x-jet-danger-button>
       </x-slot>
     </x-jet-dialog-modal>

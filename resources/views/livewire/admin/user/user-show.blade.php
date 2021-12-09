@@ -1,7 +1,7 @@
 <div class="flex-1">
   <x-ui.card class="w-full p-6 mx-auto">
-    <div class="">
-      <x-ui.header class="pb-2 text-lg font-semibold border-b border-gray-200">User Details</x-ui.header>
+    <div class="mb-4">
+      <x-ui.header class="pb-2 text-lg font-semibold border-b border-gray-200 dark:border-gray-600">User Details</x-ui.header>
       <div class="flex flex-col pt-2 mb-2 lg:flex-row">
         <div class="w-1/2">
           <div class="grid grid-cols-1 gap-2 lg:grid-cols-3">
@@ -57,7 +57,7 @@
     </div>
 
 
-    <x-ui.header class="text-lg font-semibold border-b border-gray-200">Transactions</x-ui.header>
+    <x-ui.header class="pb-2 mb-2 text-lg font-semibold border-b border-gray-200 dark:border-gray-600">Transactions</x-ui.header>
     <x-ui.table>
       <thead>
         <x-ui.table-row>
@@ -87,7 +87,7 @@
               <x-ui.status type="{{ $transaction->status }}">{{ ucfirst($transaction->status) }}</x-ui.status>
             </x-ui.table-data>
             <x-ui.table-data>
-              <div class="flex text-gray-600">
+              <div class="flex">
                 <a class="mx-1 text-lg" role="button"
                   href="{{ route('admin.transactions.show', $transaction->id) }}">
                   <x-icon.eye class="w-5 h-5" />

@@ -11,9 +11,7 @@
 
     <div>
       <x-jet-button type="submit" wire:loading.attr="disabled" disabled>Update
-        <span wire:loading wire:target="submit"
-          class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-        </span>
+        <x-ui.loading-indicator wire:target="submit" />
       </x-jet-button>
     </div>
   </x-ui.alt-form>

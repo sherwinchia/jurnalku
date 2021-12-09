@@ -1,9 +1,7 @@
 <div>
     <x-ui.header class="mb-4 font-semibold border-b border-gray-300">Portfolio</x-ui.header>
     <x-jet-button class="mb-2" wire:click="showBlankFormModal" wire:loading.attr="disabled" wire:target="showBlankFormModal">Add
-        <span wire:loading wire:target="showBlankFormModal"
-            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-        </span>
+        <x-ui.loading-indicator wire:target="showBlankFormModal" />
     </x-jet-button>
     <x-ui.alt-table class="w-full overflow-y-auto border lg:w-96 max-h-96">
         <thead>
@@ -49,9 +47,7 @@
 
             <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
                 Delete
-                <span wire:loading wire:target="delete"
-                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                </span>
+                <x-ui.loading-indicator wire:target="delete" />
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>
@@ -87,9 +83,7 @@
 
             <x-jet-button class="ml-2" wire:click="submit" wire:loading.attr="disabled">
                 {{ $edit ? 'Update' : 'Add' }}
-                <span wire:loading wire:target="submit"
-                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                </span>
+                <x-ui.loading-indicator wire:target="submit" />
             </x-jet-button>
         </x-slot>
     </x-jet-dialog-modal>

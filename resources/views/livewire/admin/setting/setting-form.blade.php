@@ -17,9 +17,7 @@
         <div class="col-span-4">
           <x-jet-button type="submit" wire:loading.attr="disabled" wire:target="submitTrial">
             Update
-            <span wire:loading wire:target="submitTrial"
-              class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-            </span>
+            <x-ui.loading-indicator wire:target="submitTrial" />
           </x-jet-button>
         </div>
       </div>
@@ -55,9 +53,7 @@
         <div class="col-span-4">
           <x-jet-button type="submit" wire:loading.attr="disabled" wire:target="submitPromotionBanner">
             Update
-            <span wire:loading wire:target="submitPromotionBanner"
-              class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-            </span>
+            <x-ui.loading-indicator wire:target="submitPromotionBanner" />
           </x-jet-button>
         </div>
       </div>

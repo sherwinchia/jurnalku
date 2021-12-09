@@ -14,58 +14,42 @@
         <button wire:click="changeFilter('7D')"
           class="px-3 py-1 border border-gray-300 dark:bg-dark-100 dark:border-gray-600 rounded-md focus:outline-none flex items-center {{ $filter == '7D' ? 'border-primary-500' : '' }}">
           <span wire:loading.remove wire:target="changeFilter('7D')">7D</span>
-          <span wire:loading wire:target="changeFilter('7D')"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="changeFilter('7D')" />
         </button>
         <button wire:click="changeFilter('1M')"
           class="px-3 py-1 border border-gray-300 dark:bg-dark-100 dark:border-gray-600 rounded-md focus:outline-none flex items-center {{ $filter == '1M' ? 'border-primary-500' : '' }}">
           <span wire:loading.remove wire:target="changeFilter('1M')">1M</span>
-          <span wire:loading wire:target="changeFilter('1M')"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="changeFilter('1M')" />
         </button>
         <button wire:click="changeFilter('3M')"
           class="px-3 py-1 border border-gray-300 dark:bg-dark-100 dark:border-gray-600 rounded-md focus:outline-none flex items-center {{ $filter == '3M' ? 'border-primary-500' : '' }}">
           <span wire:loading.remove wire:target="changeFilter('3M')">3M</span>
-          <span wire:loading wire:target="changeFilter('3M')"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="changeFilter('3M')" />
         </button>
         <button wire:click="changeFilter('6M')"
           class="px-3 py-1 border border-gray-300 dark:bg-dark-100 dark:border-gray-600 rounded-md focus:outline-none flex items-center {{ $filter == '6M' ? 'border-primary-500' : '' }}">
           <span wire:loading.remove wire:target="changeFilter('6M')">6M</span>
-          <span wire:loading wire:target="changeFilter('6M')"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="changeFilter('6M')" />
         </button>
         <button wire:click="changeFilter('1Y')"
           class="px-3 py-1 border border-gray-300 dark:bg-dark-100 dark:border-gray-600 rounded-md focus:outline-none flex items-center {{ $filter == '1Y' ? 'border-primary-500' : '' }}">
           <span wire:loading.remove wire:target="changeFilter('1Y')">1Y</span>
-          <span wire:loading wire:target="changeFilter('1Y')"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="changeFilter('1Y')" />
         </button>
         <button wire:click="changeFilter('2Y')"
           class="px-3 py-1 border border-gray-300 dark:bg-dark-100 dark:border-gray-600 rounded-md focus:outline-none flex items-center {{ $filter == '2Y' ? 'border-primary-500' : '' }}">
           <span wire:loading.remove wire:target="changeFilter('2Y')">2Y</span>
-          <span wire:loading wire:target="changeFilter('2Y')"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="changeFilter('2Y')" />
         </button>
         <button wire:click="changeFilter('3Y')"
           class="px-3 py-1 border border-gray-300 dark:bg-dark-100 dark:border-gray-600 rounded-md focus:outline-none flex items-center {{ $filter == '3Y' ? 'border-primary-500' : '' }}">
           <span wire:loading.remove wire:target="changeFilter('3Y')">3Y</span>
-          <span wire:loading wire:target="changeFilter('3Y')"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="changeFilter('3Y')" />
         </button>
         <button wire:click="changeFilter('All')"
           class="px-3 py-1 border border-gray-300 dark:bg-dark-100 dark:border-gray-600 rounded-md focus:outline-none flex items-center {{ $filter == 'All' ? 'border-primary-500' : '' }}">
           <span wire:loading.remove wire:target="changeFilter('All')">All</span>
-          <span wire:loading wire:target="changeFilter('All')"
-            class="w-4 h-4 border-t-2 border-b-2 border-gray-700 rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="changeFilter('All')" />
         </button>
       </div>
     </div>

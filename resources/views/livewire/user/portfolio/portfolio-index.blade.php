@@ -2,9 +2,7 @@
   <div class="flex justify-end">
     <x-jet-button class="mb-2 " wire:click="showBlankFormModal" wire:loading.attr="disabled"
       wire:target="showBlankFormModal">Add Portfolio
-      <span wire:loading wire:target="showBlankFormModal"
-        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-      </span>
+      <x-ui.loading-indicator wire:target="showBlankFormModal" />
     </x-jet-button>
   </div>
   <div class="grid grid-cols-8 gap-6">
@@ -54,9 +52,7 @@
 
         <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
           Delete
-          <span wire:loading wire:target="delete"
-            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="delete" />
         </x-jet-danger-button>
       </x-slot>
     </x-jet-dialog-modal>
@@ -103,9 +99,7 @@
 
       <x-jet-button class="ml-2" wire:click="submit" wire:loading.attr="disabled">
         {{ $edit ? 'Update' : 'Add' }}
-        <span wire:loading wire:target="submit"
-          class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-        </span>
+        <x-ui.loading-indicator wire:target="submit" />
       </x-jet-button>
     </x-slot>
   </x-jet-dialog-modal>

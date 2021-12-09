@@ -17,7 +17,7 @@
             <p class="text-xs ">{{ $alert['message'] }}</p>
           </div>
         </div>
-        <x-icon.x wire:click="remove({{ $key }})" class="w-4 text-gray-700 h-4cursor-pointer dark:text-gray-400" />
+        <x-icon.x wire:click="remove({{ $key }})" class="w-4 h-4 text-gray-700 cursor-pointer dark:text-gray-400" />
       </div>
     </div>
   @endforeach

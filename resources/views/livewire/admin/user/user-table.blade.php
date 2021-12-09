@@ -14,9 +14,7 @@
         <div class="flex items-center">
             <x-jet-button wire:click="createUser" wire:loading.attr="disabled">
                 Create
-                <span wire:loading wire:target="createUser"
-                    class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                </span>
+                <x-ui.loading-indicator wire:target="createUser"/>
             </x-jet-button>
         </div>
         @endif
@@ -50,7 +48,7 @@
             @foreach ($columns as $column)
             @if (array_key_exists("field", $column) && $column["field"] === "action")
             <x-ui.table-data>
-                <div class="flex justify-center text-gray-600">
+                <div class="flex justify-center">
                     @foreach ($actions as $action)
                     @if ($action === "show")
                     <a class="mx-1 text-lg" role="button" href="{{ route('admin.users.show', $user->id)
@@ -136,9 +134,7 @@
 
                 <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
                     Delete
-                    <span wire:loading wire:target="delete"
-                        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                    </span>
+                    <x-ui.loading-indicator wire:target="delete"/>
                 </x-jet-danger-button>
             </x-slot>
         </x-jet-dialog-modal>

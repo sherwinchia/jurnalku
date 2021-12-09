@@ -35,9 +35,9 @@
             </x-ui.form-section>
 
             <x-ui.form-section field="Phone Number" required="false">
-                <div class="flex relative">
+                <div class="relative flex">
                     <div
-                        class="inset-y-0 left-0 border-r border-gray-300 overflow-hidden absolute flex items-center p-2">
+                        class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300">
                         +62</div>
                     <x-jet-input class="w-full pl-14" wire:model.defer="user.phone_number" type="number" />
                 </div>
@@ -74,7 +74,9 @@
             </x-ui.form-section>
 
             <x-slot name="actions">
-                <x-jet-button type="submit">{{ $buttonText }}</x-jet-button>
+                <x-jet-button type="submit">{{ $buttonText }}
+                    <x-ui.loading-indicator wire:target="submit"/>
+                </x-jet-button>
             </x-slot>
         </x-ui.form>
     </x-ui.card>

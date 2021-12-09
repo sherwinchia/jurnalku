@@ -13,9 +13,7 @@
       <div class="flex items-center">
         <x-jet-button wire:click="createPromocode" wire:loading.attr="disabled">
           Create
-          <span wire:loading wire:target="createPromocode"
-            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="createPromocode" />
         </x-jet-button>
       </div>
     @endif
@@ -49,7 +47,7 @@
         @foreach ($columns as $column)
           @if (array_key_exists('field', $column) && $column['field'] === 'action')
             <x-ui.table-data>
-              <div class="flex text-gray-600">
+              <div class="flex "">
                 @foreach ($actions as $action)
                   @if ($action === 'show')
                     <a class="mx-1 text-lg" role="button"
@@ -134,9 +132,7 @@
 
         <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
           Delete
-          <span wire:loading wire:target="delete"
-            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="delete" />
         </x-jet-danger-button>
       </x-slot>
     </x-jet-dialog-modal>

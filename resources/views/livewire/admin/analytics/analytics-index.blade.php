@@ -52,7 +52,7 @@
     <x-ui.header class="pb-4 font-medium">
       Revenue Chart
     </x-ui.header>
-    <canvas id="revenueChart"></canvas>
+    <canvas id="revenueChart" wire:ignore></canvas>
   </x-ui.card>
 
   {{-- Recent Registered User --}}
@@ -89,7 +89,7 @@
                 <span>{{ $transaction->merchant_ref }}</span>
                 <div class="flex items-center space-x-4">
                   <x-ui.status type="{{ $transaction->status }}">{{ ucfirst($transaction->status) }}</x-ui.status>
-                  <span>{{ decimal_to_human($transaction->net_total, 'Rp') }}</span>
+                  <span class="w-24 text-right">{{ decimal_to_human($transaction->net_total, 'Rp') }}</span>
                 </div>
               </div>
             </x-ui.card>

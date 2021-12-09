@@ -14,9 +14,7 @@
         <x-jet-button wire:click="selectPackage({{ $package->id }})" wire:loading.attr="disabled"
           class="">
           Select
-          <span wire:loading wire:target="selectPackage({{ $package->id }})"
-            class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-          </span>
+          <x-ui.loading-indicator wire:target="selectPackage({{ $package->id }})" />
         </x-jet-button>
       </div>
     @endforeach
@@ -59,9 +57,7 @@
                     class="w-full pr-24" />
                   <x-jet-button class="absolute inset-y-0 right-0" wire:click="applyCode" wire:loading.attr="disabled">
                     Apply
-                    <span wire:loading wire:target="applyCode"
-                      class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-                    </span>
+                    <x-ui.loading-indicator wire:target="applyCode" />
                   </x-jet-button>
                 </div>
                 @error('code')
@@ -77,9 +73,7 @@
             Payment Methods
           </h2>
           <div class="flex flex-wrap gap-2 pb-2">
-            <span wire:loading wire:target="getPaymentMethods"
-              class="w-10 h-10 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-            </span>
+            <x-ui.loading-indicator wire:target="getPaymentMethods" />
             @foreach ($paymentMethods as $method)
               <a class="px-3 flex flex-col w-24 lg:w-36 py-2 border dark:border-gray-600 rounded-lg cursor-pointer space-y-2 {{ $selectedPaymentMethod == $method['code'] ? 'border-primary-500 dark:border-primary-500' : '' }}"
                 wire:click="selectPaymentMethod('{{ $method['code'] }}')">
@@ -103,9 +97,7 @@
 
       <x-jet-button class="ml-2" wire:click="checkout" wire:loading.attr="disabled">
         Checkout
-        <span wire:loading wire:target="checkout"
-          class="w-3 h-3 ml-2 border-t-2 border-b-2 border-white rounded-full animate-spin">
-        </span>
+        <x-ui.loading-indicator wire:target="checkout" />
       </x-jet-button>
     </x-slot>
   </x-jet-dialog-modal>

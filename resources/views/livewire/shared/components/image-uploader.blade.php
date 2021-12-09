@@ -49,9 +49,7 @@
       {{ $multiple ? 'multiple' : null }} x-on:livewire-upload-finish="$wire.uploadImages()">
 
     <div class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center">
-      <span wire:loading wire:target="images"
-        class="w-16 h-16 ml-2 border-t-2 border-b-2 border-black rounded-full animate-spin">
-      </span>
+      <x-ui.loading-indicator wire:target="images" class="w-16 h-16" />
       <p wire:loading.remove wire:target="images" class="text-gray-400">
         @if ($multiple)
           Drop files anywhere to upload

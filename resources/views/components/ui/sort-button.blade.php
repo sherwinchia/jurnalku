@@ -12,7 +12,6 @@
         wire:target="sortBy('{{ $targetField }}')" />
     @endif
 
-    <span wire:loading wire:target="sortBy('{{ $targetField }}')"
-        class="w-3 h-3 ml-2 border-t-2 border-b-2 border-black rounded-full animate-spin">
-    </span>
+    <x-ui.loading-indicator wire:target="sortBy('{{ $targetField }}')" />
+    
 </button>
