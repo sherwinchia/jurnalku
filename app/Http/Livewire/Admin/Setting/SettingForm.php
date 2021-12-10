@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class SettingForm extends Component
 {
-    public $section = "policy";
+    public $section = "trial";
 
     public function changeSection(string $section)
     {

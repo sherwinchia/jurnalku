@@ -1,6 +1,3 @@
-@push('styles')
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-@endpush
 <div class="flex-1">
   <x-ui.card class="w-full max-w-xl mx-auto" x-data="quillComponent()"
     x-init="setDefaults('{{ data_get($package, 'description') }}')">

@@ -21,6 +21,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="{{ mix('css/admin.css') }}">
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   @stack('styles')
   @livewireStyles
 

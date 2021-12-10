@@ -12,7 +12,9 @@ class PrivacyPolicyController extends Controller
 
     public function show()
     {
-        $policy = json_decode(AppSetting::where('name', 'policy')->firstOrFail()->data);
-        return view(self::PATH . 'show', compact('policy'));
+        $appSetting = AppSetting::where('name', 'policy')->firstOrFail();
+        $updated_at = date_to_human($appSetting->updated_at, 'd/m/Y');
+        $policy = json_decode($appSetting->data);
+        return view(self::PATH . 'show', compact('policy', 'updated_at'));
     }
 }

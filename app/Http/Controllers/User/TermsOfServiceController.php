@@ -12,7 +12,9 @@ class TermsOfServiceController extends Controller
 
     public function show()
     {
-        $terms = json_decode(AppSetting::where('name', 'terms')->firstOrFail()->data);
-        return view(self::PATH . 'show', compact('terms'));
+        $appSetting = AppSetting::where('name', 'terms')->firstOrFail();
+        $updated_at = date_to_human($appSetting->updated_at, 'd/m/Y');
+        $terms = json_decode($appSetting->data);
+        return view(self::PATH . 'show', compact('terms', 'updated_at'));
     }
 }
