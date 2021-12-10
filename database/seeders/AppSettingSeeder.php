@@ -30,5 +30,13 @@ class AppSettingSeeder extends Seeder
                 'duration' => 14
             ])
         ]);
+        AppSetting::create([
+            'name' => 'policy',
+            'data' => json_encode('')
+        ]);
+        AppSetting::create([
+            'name' => 'terms',
+            'data' => json_encode('')
+        ]);
     }
 }

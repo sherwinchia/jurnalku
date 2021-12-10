@@ -6,7 +6,6 @@ use Livewire\Component;
 
 class SettingForm extends Component
 {
-
     public $section = "general";
 
     public function changeSection(string $section)

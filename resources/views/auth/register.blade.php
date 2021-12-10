@@ -55,7 +55,7 @@
                 {!! __('I agree to the :terms_of_service and :privacy_policy', [
     'terms_of_service' =>
         '<a target="_blank" href="' .
-        route('terms.show') .
+        route('user.terms.show') .
         '"
                                 class="text-sm text-gray-600 underline hover:text-gray-900">' .
         __('Terms of
@@ -63,7 +63,7 @@
         '</a>',
     'privacy_policy' =>
         '<a target="_blank" href="' .
-        route('policy.show') .
+        route('user.policy.show') .
         '"
                                 class="text-sm text-gray-600 underline hover:text-gray-900">' .
         __('Privacy

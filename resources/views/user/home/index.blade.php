@@ -23,7 +23,7 @@
         </p>
         <div>
           <a href="{{ route('register') }}"
-            class="p-3 font-semibold text-white uppercase border rounded-lg lg:text-lg border-primary-500 bg-primary-500">
+            class="px-4 py-2 mt-2 text-lg font-medium text-white rounded-lg bg-primary-500 md:mt-0 md:ml-4">
             Try now
           </a>
         </div>
@@ -68,11 +68,11 @@
 
   <div class="px-4 py-16 bg-gradient-to-r from-primary-600 to-primary-700">
     <div class="flex flex-col h-full mx-auto max-w-7xl">
-      <h2 class="mb-10 text-xl font-semibold text-white md:text-2xl lg:text-3xl">Why {{ config('app.name') }}</h2>
+      <h2 class="mb-10 text-xl font-semibold text-white md:text-2xl lg:text-3xl">Why {{ ucfirst(config('app.name') ) }}</h2>
       <div class="grid grid-cols-1 gap-10 text-gray-200 md:grid-cols-2 lg:grid-cols-4">
         <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-            <x-icon.emoji-happy class="text-white"></x-icon.emoji-happy>
+          <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
+            <x-icon.emoji-happy class="text-white"/>
           </div>
           <h3 class="font-medium text-white lg:text-lg">
             Simple
@@ -83,8 +83,8 @@
           </p>
         </div>
         <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-            <x-icon.chart-pie class="text-white"></x-icon.chart-pie>
+          <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
+            <x-icon.chart-pie class="text-white"/>
           </div>
           <h3 class="font-medium text-white lg:text-lg">
             Chart
@@ -95,8 +95,8 @@
           </p>
         </div>
         <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-            <x-icon.currency-dollar class="text-white"></x-icon.currency-dollar>
+          <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
+            <x-icon.currency-dollar class="text-white"/>
           </div>
           <h3 class="font-medium text-white lg:text-lg">
             Currency
@@ -107,8 +107,8 @@
           </p>
         </div>
         <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-            <x-icon.duplicate class="text-white"></x-icon.duplicate>
+          <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
+            <x-icon.duplicate class="text-white"/>
           </div>
           <h3 class="font-medium text-white lg:text-lg">
             Portfolio
@@ -119,10 +119,10 @@
           </p>
         </div>
         <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-            <x-icon.cloud class="text-white"></x-icon.cloud>
+          <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
+            <x-icon.cloud class="text-white"/>
           </div>
-          <h3 class="font-medium text-white lg:text-lg">
+          <h3 class="font-medium lg:text- text-whitelg">
             Cloud
           </h3>
           <p class="text-sm font-normal">
@@ -131,11 +131,23 @@
           </p>
         </div>
         <div class="flex flex-col space-y-2">
-          <div class="w-12 h-12 p-2 rounded-lg shadow-md bg-primary-500">
-            <x-icon.qrcode class="text-white"></x-icon.qrcode>
+          <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
+            <x-icon.qrcode class="text-white"/>
           </div>
-          <h3 class="font-medium text-white lg:text-lg">
+          <h3 class="font-medium lg:text-l text-whiteg">
             Authentication
+          </h3>
+          <p class="text-sm font-normal">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente possimus doloremque quas non,
+            ducimus temporibus pariatur ipsam debitis eum.
+          </p>
+        </div>
+        <div class="flex flex-col space-y-2">
+          <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
+            <x-icon.moon class="text-white"/>
+          </div>
+          <h3 class="font-medium lg:text text-white-lg">
+            Dark Mode
           </h3>
           <p class="text-sm font-normal">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sapiente possimus doloremque quas non,

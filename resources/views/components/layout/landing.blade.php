@@ -2,9 +2,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   @yield('meta-content')
 
   <title>{{ config('app.name', 'Laravel') }}</title>
@@ -20,7 +20,7 @@
     <link rel="manifest" href="{{ asset('images/brand/site.webmanifest') }}">  -->
 
   <!-- Styles -->
-  <link rel="stylesheet" href="{{ mix('css/user.css') }}">
+  <link rel="stylesheet" href="{{ mix('css/user.css') }}" />
   @livewireStyles
 
   <!-- Scripts -->
@@ -28,15 +28,15 @@
 </head>
 
 <body class="font-sans antialiased bg-gray-50">
-  <div class="w-full ">
+  <div class="w-full">
     <div x-data="{ open: false }"
       class="flex flex-col px-4 py-4 mx-auto max-w-7xl md:items-center md:justify-between md:flex-row md:px-6 lg:px-0">
       <div class="flex flex-row items-center justify-between">
         <a href="{{ route('user.home.index') }}"
           class="text-lg tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
-          <img class="w-12 h-12 lg:w-16 lg:h-16" src="{{ asset('images/logo.png') }}" alt="logo">
+          <img class="w-12 h-12 lg:w-16 lg:h-16" src="{{ asset('images/logo.png') }}" alt="logo" />
         </a>
-        <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
+        <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" x-on:click="open = !open">
           <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
             <path x-show="!open" fill-rule="evenodd"
               d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
@@ -49,9 +49,12 @@
       </div>
       <nav :class="{'flex': open, 'hidden': !open}"
         class="flex-col items-start flex-grow hidden pb-4 text-lg md:pb-0 md:flex md:justify-end md:flex-row md:items-center">
-        {{-- <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
-          Home
-        </a> --}}
+        {{-- <a
+                        href="{{ route('user.home.index') }}"
+                        class="px-2 py-1 mt-2 md:mt-0 md:ml-4"
+                    >
+                        Home
+                    </a> --}}
         <a href="{{ route('user.home.index') . '#pricing' }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
           Pricing
         </a>
@@ -62,7 +65,7 @@
           <a class="px-2 py-1 mt-2 rounded-lg md:mt-0 md:ml-4" href="{{ route('login') }}">
             Login
           </a>
-          <a class="px-2 py-1 mt-2 font-medium border-2 rounded-lg border-primary-500 md:mt-0 md:ml-4 text-primary-500"
+          <a class="px-4 py-2 mt-2 font-medium text-white rounded-lg bg-primary-500 md:mt-0 md:ml-4"
             href="{{ route('register') }}">
             Sign Up
           </a>
@@ -79,35 +82,44 @@
     <div
       class="grid grid-cols-1 gap-8 pb-10 mx-auto text-gray-300 max-w-7xl md:gap-10 lg:gap-12 md:grid-cols-2 lg:grid-cols-4">
       <div class="flex flex-col col-span-2 space-y-4">
-        <h2 class="text-xl font-medium text-white">{{ ucfirst(config('app.name')) }}</h2>
+        <h2 class="text-xl font-medium text-white">
+          {{ ucfirst(config('app.name')) }}
+        </h2>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum minima id rerum exercitationem harum,
-          doloremque amet ea? Similique vitae, magni quam aliquam, repellendus quas delectus illo aliquid nesciunt,
-          iusto voluptas.
+          Lorem ipsum dolor, sit amet consectetur adipisicing
+          elit. Eum minima id rerum exercitationem harum,
+          doloremque amet ea? Similique vitae, magni quam aliquam,
+          repellendus quas delectus illo aliquid nesciunt, iusto
+          voluptas.
         </p>
-
       </div>
       <div class="flex flex-col col-span-2 space-y-4 lg:col-span-1">
         <h2 class="text-xl font-medium text-white">About</h2>
         <ul class="flex flex-col space-y-1">
           <li><a href="#">Blog</a></li>
-          <li><a href="{{ route('user.home.index') . '#faq' }}">FAQ</a></li>
-          <li><a href="{{ route('terms.show') }}">Terms of Service</a></li>
-          <li><a href="{{ route('policy.show') }}">Privacy Policy</a></li>
+          <li>
+            <a href="{{ route('user.home.index') . '#faq' }}">FAQ</a>
+          </li>
+          <li>
+            <a href="{{ route('user.terms.show') }}">Terms of Service</a>
+          </li>
+          <li>
+            <a href="{{ route('user.policy.show') }}">Privacy Policy</a>
+          </li>
         </ul>
-
       </div>
       <div class="flex flex-col space-y-4">
         <h2 class="text-xl font-medium text-white">Follow Us</h2>
         <div class="flex space-x-4">
-          <a class="flex items-center justify-center w-10 h-10 overflow-hidden bg-white rounded-full" href="#">
+          <a class="flex items-center justify-center w-10 h-10 overflow-hidden bg-white rounded-full " href="#">
             <x-icon.instagram class="w-5 h-5 text-primary-800"></x-icon.instagram>
           </a>
         </div>
       </div>
     </div>
     <div class="font-medium text-center text-gray-300 col-span-full">
-      Copyright {{ now()->year }} {{ ucfirst(config('app.name')) }} - All Rights Reserved.
+      Copyright {{ now()->year }} {{ ucfirst(config('app.name')) }} -
+      All Rights Reserved.
     </div>
   </footer>
   @livewireScripts
