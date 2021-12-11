@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\User\AnalyticsController;
 use App\Http\Controllers\User\BillingController;
+use App\Http\Controllers\User\BlogController as UserBlogController;
 use App\Http\Controllers\User\TransactionController as UserTransactionController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\HomeController;
@@ -30,8 +31,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['as' => 'user.'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
+    Route::resource('blogs', UserBlogController::class)->only('index');
+    Route::get('blogs/{slug}', [UserBlogController::class, "show"])->name('blogs.show');
 });
 
+Route::post('tripay-callback', [UserTransactionController::class, 'handleTripayCallback'])->name('tripay.callback');
 
 Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -58,6 +62,5 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     });
 });
 
-Route::post('tripay-callback', [UserTransactionController::class, 'handleTripayCallback'])->name('tripay.callback');
 
 require_once __DIR__ . '/jetstream.php';

@@ -28,7 +28,7 @@ class GenerateController extends Command
      */
     public function __construct(Filesystem $files)
     {
-        $this->files=$files;
+        $this->files = $files;
         parent::__construct();
     }
 
@@ -54,11 +54,11 @@ class GenerateController extends Command
         $content = '<?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Models\\'.$model.';
+use App\Models\\' . $model . ';
 
-class '.$model.'Controller extends Controller{
+class ' . $model . 'Controller extends Controller{
 
-    const PATH = "admin.'.$model_lowercase.'.";
+    const PATH = "admin.' . $model_lowercase . '.";
 
     public function index()
     {
@@ -70,20 +70,21 @@ class '.$model.'Controller extends Controller{
         return view(self::PATH . "create");
     }
 
-    public function show('.$model.' $'.$model_lowercase.')
+    public function show(' . $model . ' $' . $model_lowercase . ')
     {
-        return view(self::PATH . "show", compact("'.$model_lowercase.'"));
+        return view(self::PATH . "show", compact("' . $model_lowercase . '"));
     }
 
-    public function edit('.$model.' $'.$model_lowercase.')
+    public function edit(' . $model . ' $' . $model_lowercase . ')
     {
-        return view(self::PATH . "edit", compact("'.$model_lowercase.'"));
+        return view(self::PATH . "edit", compact("' . $model_lowercase . '"));
     }
 }
         ';
-        
+
         $this->files->put($app_path . '/Http/Controllers/Admin/' . $model . 'Controller.php', $content);
-  
-        return $this->info($model . "Controller.php has been generated ✌️");
+
+        $this->info($model . "Controller.php has been generated.");
+        return $this->info($app_path . '/Http/Controllers/Admin/' . $model . 'Controller.php');
     }
 }

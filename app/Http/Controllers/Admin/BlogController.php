@@ -1,12 +1,10 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 
-class BlogController extends Controller
-{
+class BlogController extends Controller{
+
     const PATH = "admin.blog.";
 
     public function index()
@@ -29,3 +27,4 @@ class BlogController extends Controller
         return view(self::PATH . "edit", compact("blog"));
     }
 }
+        

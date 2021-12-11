@@ -65,23 +65,23 @@ class GenerateView extends Command
             return $this->error('⚠️ ' . $file_path . '/show.blade.php file already exist');
         }
 
-        $index_content = '<x-layout.admin>
-            <livewire:admin.' . $model_lowercase . '.' . $model_lowercase . '-table>
-</x-layout.admin>';
+        $index_content = '<x-layout.' . strtolower($path_array[0]) . '>
+            <livewire:' . strtolower($path_array[0]) . '.' . $model_lowercase . '.' . $model_lowercase . '-table>
+</x-layout.' . strtolower($path_array[0]) . '>';
 
-        $create_content = '<x-layout.admin>
-            <livewire:admin.' . $model_lowercase . '.' . $model_lowercase . '-form />
-</x-layout.admin>
+        $create_content = '<x-layout.' . strtolower($path_array[0]) . '>
+            <livewire:' . strtolower($path_array[0]) . '.' . $model_lowercase . '.' . $model_lowercase . '-form />
+</x-layout.' . strtolower($path_array[0]) . '>
     ';
 
-        $edit_content = '<x-layout.admin>
-            <livewire:admin.' . $model_lowercase . '.' . $model_lowercase . '-form :model="$' . $model_lowercase . '" />
-</x-layout.admin>
+        $edit_content = '<x-layout.' . strtolower($path_array[0]) . '>
+            <livewire:' . strtolower($path_array[0]) . '.' . $model_lowercase . '.' . $model_lowercase . '-form :model="$' . $model_lowercase . '" />
+</x-layout.' . strtolower($path_array[0]) . '>
     ';
 
-        $show_content = '<x-layout.admin>
-            <livewire:admin.' . $model_lowercase . '.' . $model_lowercase . '-show :model="$' . $model_lowercase . '"/>
-</x-layout.admin>
+        $show_content = '<x-layout.' . strtolower($path_array[0]) . '>
+            <livewire:' . strtolower($path_array[0]) . '.' . $model_lowercase . '.' . $model_lowercase . '-show :model="$' . $model_lowercase . '"/>
+</x-layout.' . strtolower($path_array[0]) . '>
     ';
 
         if (str_contains($type, 'c')) {

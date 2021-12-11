@@ -58,7 +58,7 @@
         <a href="{{ route('user.home.index') . '#pricing' }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
           Pricing
         </a>
-        <a href="{{ route('user.home.index') }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
+        <a href="{{ route('user.blogs.index') }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
           Blog
         </a>
         @guest
@@ -96,7 +96,7 @@
       <div class="flex flex-col col-span-2 space-y-4 lg:col-span-1">
         <h2 class="text-xl font-medium text-white">About</h2>
         <ul class="flex flex-col space-y-1">
-          <li><a href="#">Blog</a></li>
+          <li><a href="{{ route('user.blogs.index') }}">Blog</a></li>
           <li>
             <a href="{{ route('user.home.index') . '#faq' }}">FAQ</a>
           </li>

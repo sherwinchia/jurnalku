@@ -15,7 +15,7 @@ class Blog extends Model
         'slug',
         'body',
         'read_minutes',
-        'publish_date',
+        'published_at',
         'published'
     ];
 }

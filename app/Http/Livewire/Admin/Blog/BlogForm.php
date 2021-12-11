@@ -23,7 +23,7 @@ class BlogForm extends Component
         "blog.slug" => "required|regex:/^[a-z0-9-]+$/|unique:blogs,slug",
         "blog.body" => "required",
         "blog.read_minutes" => "required",
-        "blog.publish_date" => "required",
+        "blog.published_at" => "required",
         "blog.published" => "required|boolean"
     ];
 
@@ -34,10 +34,11 @@ class BlogForm extends Component
         if (isset($model)) {
             $this->edit = true;
             $this->blog = $model;
-            $this->blog->published = 0;
+            $this->blog->published_at = format_string_date($this->blog->published_at);
             $this->buttonText = "Update";
         } else {
             $this->blog = new Blog();
+            $this->blog->published = 0;
         }
     }
 
@@ -82,7 +83,7 @@ class BlogForm extends Component
                 "blog.slug" => "required|regex:/^[a-z0-9-]+$/|unique:blogs,slug," . $this->blog->id,
                 "blog.body" => "required",
                 "blog.read_minutes" => "required",
-                "blog.publish_date" => "required",
+                "blog.published_at" => "required",
                 "blog.published" => "required|boolean"
             ]);
         }

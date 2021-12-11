@@ -14,7 +14,7 @@ class BlogTable extends Component
     use WithPagination, Alert;
     protected $listeners = ['tableRefresh' => '$refresh'];
     public $search = "";
-    public $sortField = "id";
+    public $sortField = "created_at";
     public $sortAsc = true;
     public $perPage = 10;
     public $modalVisible = false;
@@ -32,8 +32,8 @@ class BlogTable extends Component
             "sortable" => true,
         ],
         [
-            "name" => "Publish Date",
-            "field" => "publish_date",
+            "name" => "Published At",
+            "field" => "published_at",
             "sortable" => true,
             "format" => ["date_to_human", "d F Y"],
         ],
@@ -111,7 +111,7 @@ class BlogTable extends Component
     {
         return view("livewire.admin.blog.blog-table", [
             "blogs" => Blog::query()
-                ->where("id", "ILIKE", "%{$this->search}%")
+                ->where("title", "ILIKE", "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortAsc ? "asc" : "desc")
                 ->paginate($this->perPage)
         ]);

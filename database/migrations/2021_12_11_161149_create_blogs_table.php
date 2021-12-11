@@ -20,7 +20,7 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->longText('body');
             $table->string('read_minutes')->nullable();
-            $table->string('publish_date');
+            $table->string('published_at');
             $table->boolean('published')->default(0);
             $table->timestamps();
         });

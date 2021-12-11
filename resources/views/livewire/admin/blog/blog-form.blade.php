@@ -24,9 +24,9 @@
           @enderror
         </x-ui.form-section>
 
-        <x-ui.form-section field="Publish Date " required="true" class="col-span-3">
-          <x-jet-input wire:model.defer="blog.publish_date" type="datetime-local" />
-          @error('blog.publish_date')
+        <x-ui.form-section field="Published At " required="true" class="col-span-3">
+          <x-jet-input wire:model.defer="blog.published_at" type="datetime-local" />
+          @error('blog.published_at')
             <x-message.validation type="error">{{ $message }}</x-message.validation>
           @enderror
         </x-ui.form-section>
