@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PromocodeController;
@@ -36,6 +37,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::resource('users', UserController::class)->only('index', 'create', 'edit', 'show');
+        Route::resource('blogs', BlogController::class)->only('index', 'create', 'edit', 'show');
         Route::resource('transactions', TransactionController::class)->only('index', 'show');
         Route::resource('packages', PackageController::class)->only('index', 'edit', 'create');
         Route::resource('promocodes', PromocodeController::class)->only('index', 'edit', 'create');

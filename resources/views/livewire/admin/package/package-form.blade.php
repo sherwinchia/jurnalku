@@ -1,7 +1,7 @@
 <div class="flex-1">
   <x-ui.card class="w-full max-w-xl mx-auto" x-data="quillComponent()"
-    x-init="setDefaults('{{ data_get($package, 'description') }}')">
-    <x-ui.form wire:submit.prevent="submit" heading="{{ $buttonText }} Package" method="POST">
+    x-init="setDefaults(`{{ data_get($package, 'description') }}`)">
+    <x-ui.form heading="{{ $buttonText }} Package">
       <x-ui.form-section field="Name" required="true">
         <x-jet-input wire:model.defer="package.name" type="text" />
         @error('package.name')
@@ -70,7 +70,54 @@
         setDefaults(data) {
           let container = document.getElementById('quillEditor');
           quill = new Quill(container, {
-            theme: 'snow'
+            theme: 'snow',
+            modules: {
+              toolbar: [
+                ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+                ['blockquote', 'code-block'],
+                [{
+                  'header': 1
+                }, {
+                  'header': 2
+                }], // custom button values
+                [{
+                  'list': 'ordered'
+                }, {
+                  'list': 'bullet'
+                }],
+                [{
+                  'script': 'sub'
+                }, {
+                  'script': 'super'
+                }], // superscript/subscript
+                [{
+                  'indent': '-1'
+                }, {
+                  'indent': '+1'
+                }], // outdent/indent
+                [{
+                  'direction': 'rtl'
+                }], // text direction
+                [{
+                  'size': ['small', false, 'large', 'huge']
+                }], // custom dropdown
+                [{
+                  'header': [1, 2, 3, 4, 5, 6, false]
+                }],
+                [{
+                  'color': []
+                }, {
+                  'background': []
+                }], // dropdown with defaults from theme
+                [{
+                  'font': []
+                }],
+                [{
+                  'align': []
+                }],
+                ['clean']
+              ]
+            }
           });
           quill.root.innerHTML = data;
           let _this = this;

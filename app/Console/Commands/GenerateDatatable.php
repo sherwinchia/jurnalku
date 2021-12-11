@@ -93,7 +93,7 @@ class GenerateDatatable extends Command
             <div class="flex items-center">
                 <x-jet-button wire:click="create' . $model . '" wire:loading.attr="disabled">
                     Create
-                    <x-ui.loading-indicator wire:target="' . $model . '"/>
+                    <x-ui.loading-indicator wire:target="create' . $model . '"/>
                 </x-jet-button>
             </div>
             @endif

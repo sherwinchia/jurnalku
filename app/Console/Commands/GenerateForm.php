@@ -115,11 +115,11 @@ class GenerateForm extends Command
         <x-ui.card class="w-full max-w-xl mx-auto">
         <x-ui.form wire:submit.prevent="submit" heading="{{ $buttonText }} ' . $model . '" method="POST">
         ' . $input_sections . '   
-        </x-ui.form>
-
         <x-slot name="actions">
             <x-jet-button type="submit">{{ $buttonText }}</x-jet-button>
         </x-slot>
+        </x-ui.form>
+
     </x-ui.card>
 </div>';
 

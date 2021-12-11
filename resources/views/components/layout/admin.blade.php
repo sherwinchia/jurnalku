@@ -100,6 +100,14 @@
             </x-ui.navbar-link>
           </li>
           <li>
+            <x-ui.navbar-link href="{{ route('admin.blogs.index') }}"
+              class="{{ request()->is('admin/blogs*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
+              x-bind:class="{'justify-center': !isSidebarOpen}">
+              <x-icon.book-open class="w-6 h-6" />
+              <span :class="{ 'lg:hidden': !isSidebarOpen }">Blog</span>
+            </x-ui.navbar-link>
+          </li>
+          <li>
             <x-ui.navbar-link href="{{ route('admin.settings.index') }}"
               class="{{ request()->is('admin/setting*') ? 'bg-gray-50 dark:bg-dark-100 text-primary-500 border-l-4' : '' }}"
               x-bind:class="{'justify-center': !isSidebarOpen}">
@@ -154,8 +162,8 @@
           <span class="">{{ date_to_human(now(), 'd F Y') }}</span>
           <button x-on:click="toggleDarkMode()" type="button"
             class=" dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
-            <x-icon.moon id="theme-toggle-dark-icon" class="w-5 h-5"/>
-            <x-icon.sun id="theme-toggle-light-icon" class="w-5 h-5 "/>
+            <x-icon.moon id="theme-toggle-dark-icon" class="w-5 h-5" />
+            <x-icon.sun id="theme-toggle-light-icon" class="w-5 h-5 " />
           </button>
         </div>
       </header>

@@ -37,7 +37,8 @@ class AppAnalyticsService
     {
         return [
             'total_users' => $this->getTotalUsers(),
-            'new_users' => $this->getMonthlyNewUsers(),
+            'monthly_users' => $this->getMonthlyUsers(),
+            'daily_users' => $this->getDailyUsers(),
             'latest_users' => $this->getLatestUsers()
         ];
     }
@@ -46,7 +47,8 @@ class AppAnalyticsService
     {
         return [
             'total_transactions' => $this->getTotalTransactions(),
-            'new_transactions' => $this->getMonthlyNewTransactions(),
+            'monthly_transactions' => $this->getMonthlyTransactions(),
+            'daily_transactions' => $this->getDailyTransactions(),
             'latest_transactions' => $this->getLatestTransactions()
         ];
     }
@@ -56,9 +58,14 @@ class AppAnalyticsService
         if (isset($this->users)) return $this->users->count();
     }
 
-    public function getMonthlyNewUsers()
+    public function getMonthlyUsers()
     {
         if (isset($this->users)) return $this->users->where('created_at', '<=', now()->endOfMonth())->where('created_at', '>=', now()->startOfMonth())->count();
+    }
+
+    public function getDailyUsers()
+    {
+        if (isset($this->users)) return $this->users->where('created_at', '<=', now()->endOfDay())->where('created_at', '>=', now()->startOfDay())->count();
     }
 
     public function getLatestUsers()
@@ -71,9 +78,14 @@ class AppAnalyticsService
         if (isset($this->transactions)) return $this->transactions->count();
     }
 
-    public function getMonthlyNewTransactions()
+    public function getMonthlyTransactions()
     {
         if (isset($this->transactions)) return $this->transactions->where('created_at', '<=', now()->endOfMonth())->where('created_at', '>=', now()->startOfMonth())->count();
+    }
+
+    public function getDailyTransactions()
+    {
+        if (isset($this->transactions)) return $this->transactions->where('created_at', '<=', now()->endOfDay())->where('created_at', '>=', now()->startOfDay())->count();
     }
 
     public function getLatestTransactions()

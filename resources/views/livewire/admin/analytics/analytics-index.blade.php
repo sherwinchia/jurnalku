@@ -7,8 +7,8 @@
       </x-ui.header>
       @if ($usersData)
         <span class="font-medium ">{{ $usersData['total_users'] }}
-          @if ($usersData['new_users'] > 0)
-            <span class="text-green-400">(+{{ $usersData['new_users'] }})</span>
+          @if ($usersData['monthly_users'] > 0)
+            <span class="text-green-400">(+{{ $usersData['monthly_users'] }})</span>
           @endif
         </span>
       @endif
@@ -25,8 +25,8 @@
       </x-ui.header>
       @if ($transactionsData)
         <span class="font-medium ">{{ $transactionsData['total_transactions'] }}
-          @if ($transactionsData['new_transactions'] > 0)
-            <span class="text-green-400">(+{{ $transactionsData['new_transactions'] }})</span>
+          @if ($transactionsData['monthly_transactions'] > 0)
+            <span class="text-green-400">(+{{ $transactionsData['monthly_transactions'] }})</span>
           @endif
         </span>
       @endif
@@ -65,7 +65,7 @@
         @foreach ($usersData['latest_users'] as $key => $user)
           <a href="{{ route('admin.users.show', $user->id) }}">
             <x-ui.card class="flex p-4 card">
-              <span class="pr-2">{{ $key+1 }}.</span>
+              <span class="pr-2">{{ $key + 1 }}.</span>
               <span>{{ $user->name }}</span>
             </x-ui.card>
           </a>
@@ -84,12 +84,12 @@
         @foreach ($transactionsData['latest_transactions'] as $key => $transaction)
           <a href="{{ route('admin.transactions.show', $transaction->id) }}">
             <x-ui.card class="flex p-4 card">
-              <span class="pr-2">{{ $key+1 }}.</span>
+              <span class="pr-2">{{ $key + 1 }}.</span>
               <div class="flex justify-between flex-1">
                 <span>{{ $transaction->merchant_ref }}</span>
                 <div class="flex items-center space-x-4">
                   <x-ui.status type="{{ $transaction->status }}">{{ ucfirst($transaction->status) }}</x-ui.status>
-                  <span class="w-24 text-right">{{ decimal_to_human($transaction->net_total, 'Rp') }}</span>
+                  <span class="w-32 text-right ">{{ decimal_to_human($transaction->net_total, 'Rp') }}</span>
                 </div>
               </div>
             </x-ui.card>

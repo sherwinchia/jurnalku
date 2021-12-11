@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="px-4 pt-8 pb-8 lg:py-16" style="height: 50vh;">
+  <div class="px-4 pt-8 pb-8 lg:py-16 " style="height: 50vh;">
     <div class="flex flex-col h-full mx-auto lg:flex-row max-w-7xl">
       <div class="flex flex-col items-start justify-center flex-1 pb-4 pr-20 space-y-4 md:pb-0">
         <h2 class="text-xl font-semibold text-gray-700 md:text-2xl lg:text-3xl">Journal your trade</h2>
@@ -48,7 +48,7 @@
     </div>
   </div>
 
-  <div class="px-4 pb-8 lg:py-16" style="height: 50vh;">
+  <div class="px-4 pb-8 lg:py-16 " style="height: 50vh;">
     <div class="flex flex-col h-full mx-auto lg:flex-row-reverse max-w-7xl">
       <div class="flex flex-col items-start justify-center flex-1 pb-4 pl-0 space-y-4 lg:pl-20 md:pb-0">
         <h2 class="text-xl font-semibold text-gray-700 md:text-2xl lg:text-3xl">Improve</h2>
@@ -68,11 +68,12 @@
 
   <div class="px-4 py-16 bg-gradient-to-r from-primary-600 to-primary-700">
     <div class="flex flex-col h-full mx-auto max-w-7xl">
-      <h2 class="mb-10 text-xl font-semibold text-white md:text-2xl lg:text-3xl">Why {{ ucfirst(config('app.name') ) }}</h2>
+      <h2 class="mb-10 text-xl font-semibold text-white md:text-2xl lg:text-3xl">Why
+        {{ ucfirst(config('app.name')) }}</h2>
       <div class="grid grid-cols-1 gap-10 text-gray-200 md:grid-cols-2 lg:grid-cols-4">
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
-            <x-icon.emoji-happy class="text-white"/>
+            <x-icon.emoji-happy class="text-white" />
           </div>
           <h3 class="font-medium text-white lg:text-lg">
             Simple
@@ -84,7 +85,7 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
-            <x-icon.chart-pie class="text-white"/>
+            <x-icon.chart-pie class="text-white" />
           </div>
           <h3 class="font-medium text-white lg:text-lg">
             Chart
@@ -96,7 +97,7 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
-            <x-icon.currency-dollar class="text-white"/>
+            <x-icon.currency-dollar class="text-white" />
           </div>
           <h3 class="font-medium text-white lg:text-lg">
             Currency
@@ -108,7 +109,7 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
-            <x-icon.duplicate class="text-white"/>
+            <x-icon.duplicate class="text-white" />
           </div>
           <h3 class="font-medium text-white lg:text-lg">
             Portfolio
@@ -120,7 +121,7 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
-            <x-icon.cloud class="text-white"/>
+            <x-icon.cloud class="text-white" />
           </div>
           <h3 class="font-medium lg:text- text-whitelg">
             Cloud
@@ -132,7 +133,7 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
-            <x-icon.qrcode class="text-white"/>
+            <x-icon.qrcode class="text-white" />
           </div>
           <h3 class="font-medium lg:text-l text-whiteg">
             Authentication
@@ -144,7 +145,7 @@
         </div>
         <div class="flex flex-col space-y-2">
           <div class="w-12 h-12 p-2 mb-1 text-white rounded-lg shadow-md bg-primary-500">
-            <x-icon.moon class="text-white"/>
+            <x-icon.moon class="text-white" />
           </div>
           <h3 class="font-medium lg:text text-white-lg">
             Dark Mode
