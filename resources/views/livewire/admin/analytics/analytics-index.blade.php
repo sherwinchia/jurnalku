@@ -13,8 +13,7 @@
         </span>
       @endif
     </div>
-
-    <x-icon.user class="w-16 h-16 text-primary-500"></x-icon.user>
+    <x-icon.users class="w-16 h-16 text-primary-500"></x-icon.users>
   </x-ui.card>
 
   {{-- Total Transations --}}

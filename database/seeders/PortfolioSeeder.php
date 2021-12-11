@@ -15,7 +15,7 @@ class PortfolioSeeder extends Seeder
     public function run()
     {
         Portfolio::create([
-            'user_id' => 2,
+            'user_id' => 3,
             'name' => 'Test',
             'currency' => 'Rp',
             'balance' => 500000,

@@ -74,12 +74,17 @@ class BlogTable extends Component
 
     public function delete()
     {
-        $id = $this->decrypt($this->encryptedId);
-        if (isset($id)) {
+        try {
+            $id = Crypt::decrypt($this->encryptedId);
             Blog::find($id)->delete();
             $this->alert([
                 "type" => "success",
                 "message" => "Blog has been successfully deleted."
+            ]);
+        } catch (\Exception $e) {
+            $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
             ]);
         }
         $this->modalVisible = false;

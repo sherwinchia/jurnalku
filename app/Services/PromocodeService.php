@@ -25,7 +25,7 @@ class PromocodeService
         if (!($promocode->started && !$promocode->expired)) {
             throw new \Exception("Promocode has expired.");
         }
-        if ($promocode->use_count < $promocode->max_use_count) {
+        if (isset($promocode->max_use_count) && ($promocode->use_count >= $promocode->max_use_count)) {
             throw new \Exception("Promocode has reached the limit usage.");
         }
         if ($total < $promocode->min_spending) {

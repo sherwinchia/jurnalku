@@ -1,18 +1,18 @@
 <x-jet-form-section submit="updateProfileInformation">
-    <x-slot name="title">
-        {{ __('Profile Information') }}
-    </x-slot>
+  <x-slot name="title">
+    {{ __('Profile Information') }}
+  </x-slot>
 
-    <x-slot name="description">
-        {{ __('Update your account\'s profile information and email address.') }}
-    </x-slot>
+  <x-slot name="description">
+    {{ __('Update your account\'s profile information and email address.') }}
+  </x-slot>
 
-    <x-slot name="form">
-        <!-- Profile Photo -->
-        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
-            <!-- Profile Photo File Input -->
-            <input type="file" class="hidden" wire:model="photo" x-ref="photo" x-on:change="
+  <x-slot name="form">
+    <!-- Profile Photo -->
+    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+      <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
+        <!-- Profile Photo File Input -->
+        <input type="file" class="hidden" wire:model="photo" x-ref="photo" x-on:change="
                                     photoName = $refs.photo.files[0].name;
                                     const reader = new FileReader();
                                     reader.onload = (e) => {
@@ -21,85 +21,84 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
 
-            <x-jet-label for="photo" value="{{ __('Photo') }}" />
+        <x-jet-label for="photo" value="{{ __('Photo') }}" />
 
-            <!-- Current Profile Photo -->
-            <div class="mt-2" x-show="! photoPreview">
-                <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}"
-                    class="object-cover w-20 h-20 rounded-full">
-            </div>
-
-            <!-- New Profile Photo Preview -->
-            <div class="mt-2" x-show="photoPreview">
-                <span class="block w-20 h-20 rounded-full"
-                    x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
-                </span>
-            </div>
-
-            <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
-                {{ __('Select A New Photo') }}
-            </x-jet-secondary-button>
-
-            @if ($this->user->profile_photo_path)
-            <x-jet-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
-                {{ __('Remove Photo') }}
-            </x-jet-secondary-button>
-            @endif
-
-            <x-jet-input-error for="photo" class="mt-2" />
+        <!-- Current Profile Photo -->
+        <div class="mt-2" x-show="! photoPreview">
+          <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}"
+            class="object-cover w-20 h-20 rounded-full">
         </div>
+
+        <!-- New Profile Photo Preview -->
+        <div class="mt-2" x-show="photoPreview">
+          <span class="block w-20 h-20 rounded-full"
+            x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
+          </span>
+        </div>
+
+        <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+          {{ __('Select A New Photo') }}
+        </x-jet-secondary-button>
+
+        @if ($this->user->profile_photo_path)
+          <x-jet-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
+            {{ __('Remove Photo') }}
+          </x-jet-secondary-button>
         @endif
 
-        <!-- Name -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Name') }}" />
-            <x-jet-input id="name" type="text" class="block w-full mt-1" wire:model.defer="state.name"
-                autocomplete="name" />
-            <x-jet-input-error for="name" class="mt-2" />
-        </div>
+        <x-jet-input-error for="photo" class="mt-2" />
+      </div>
+    @endif
 
-        <!-- Email -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="email" value="{{ __('Email') }}" />
-            <x-jet-input id="email" type="email" class="block w-full mt-1" wire:model.defer="state.email" />
-            <x-jet-input-error for="email" class="mt-2" />
-        </div>
+    <!-- Name -->
+    <div class="col-span-6 sm:col-span-4">
+      <x-jet-label for="name" value="{{ __('Name') }}" />
+      <x-jet-input id="name" type="text" class="block w-full mt-1" wire:model.defer="state.name" autocomplete="name" />
+      <x-jet-input-error for="name" class="mt-2" />
+    </div>
 
-        <!-- Phone Number -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="phone_number" value="{{ __('Phone Number') }}" />
-            <div class="relative flex w-full mt-1">
-                <div class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300">
-                    +62</div>
-                <x-jet-input id="phone_number" type="number" class="w-full pl-14"
-                    wire:model.defer="state.phone_number" />
-            </div>
+    <!-- Email -->
+    <div class="col-span-6 sm:col-span-4">
+      <x-jet-label for="email" value="{{ __('Email') }}" />
+      <x-jet-input id="email" type="email" class="block w-full mt-1" wire:model.defer="state.email" />
+      <x-jet-input-error for="email" class="mt-2" />
+    </div>
 
-            <x-jet-input-error for="phone_number" class="mt-2" />
-        </div>
+    <!-- Phone Number -->
+    <div class="col-span-6 sm:col-span-4">
+      <x-jet-label for="phone_number" value="{{ __('Phone Number') }}" />
+      <div class="relative flex w-full mt-1">
+        <div
+          class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300 dark:border-gray-600">
+          +62</div>
+        <x-jet-input id="phone_number" type="number" class="w-full pl-14" wire:model.defer="state.phone_number" />
+      </div>
 
-        <!-- Birth date -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="birth_date" value="{{ __('Birth Date') }}" />
-            <x-jet-input id="birth_date" type="date" class="block w-full mt-1" wire:model.defer="state.birth_date" />
-            <x-jet-input-error for="birth_date" class="mt-2" />
-        </div>
+      <x-jet-input-error for="phone_number" class="mt-2" />
+    </div>
 
-        <!-- Address -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="address" value="{{ __('Address') }}" />
-            <x-ui.textarea id="address" type="text" class="block w-full mt-1" wire:model.defer="state.address" />
-            <x-jet-input-error for="address" class="mt-2" />
-        </div>
-    </x-slot>
+    <!-- Birth date -->
+    <div class="col-span-6 sm:col-span-4">
+      <x-jet-label for="birth_date" value="{{ __('Birth Date') }}" />
+      <x-jet-input id="birth_date" type="date" class="block w-full mt-1" wire:model.defer="state.birth_date" />
+      <x-jet-input-error for="birth_date" class="mt-2" />
+    </div>
 
-    <x-slot name="actions">
-        <x-jet-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
-        </x-jet-action-message>
+    <!-- Address -->
+    <div class="col-span-6 sm:col-span-4">
+      <x-jet-label for="address" value="{{ __('Address') }}" />
+      <x-ui.textarea id="address" type="text" class="block w-full mt-1" wire:model.defer="state.address" />
+      <x-jet-input-error for="address" class="mt-2" />
+    </div>
+  </x-slot>
 
-        <x-jet-button  type="submit" wire:loading.attr="disabled" wire:target="photo">
-            {{ __('Save') }}
-        </x-jet-button>
-    </x-slot>
+  <x-slot name="actions">
+    <x-jet-action-message class="mr-3" on="saved">
+      {{ __('Saved.') }}
+    </x-jet-action-message>
+
+    <x-jet-button type="submit" wire:loading.attr="disabled" wire:target="photo">
+      {{ __('Save') }}
+    </x-jet-button>
+  </x-slot>
 </x-jet-form-section>

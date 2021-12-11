@@ -128,7 +128,7 @@
           Cancel
         </x-jet-secondary-button>
 
-        <x-jet-danger-button class="ml-2" wire:click="$toggle('modalVisible')" wire:loading.attr="disabled">
+        <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
           Delete
           <x-ui.loading-indicator wire:target="delete" />
         </x-jet-danger-button>

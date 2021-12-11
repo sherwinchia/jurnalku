@@ -15,6 +15,8 @@ class PromocodeSeeder extends Seeder
      */
     public function run()
     {
+        Promocode::truncate();
+
         Promocode::create([
             'code' => strtoupper('test1'),
             'type' => 'percentage',
@@ -59,6 +61,18 @@ class PromocodeSeeder extends Seeder
             'max_discount' => 500,
             'max_use_count' => 0,
             'first_time_user' => true,
+            'start_at' => Carbon::now(),
+            'expired_at' => Carbon::now()->addDays(10),
+            'active' => true,
+        ]);
+
+        Promocode::create([
+            'code' => strtoupper('free'),
+            'type' => 'percentage',
+            'value' => 100,
+            'max_discount' => null,
+            'max_use_count' => 1000,
+            'first_time_user' => false,
             'start_at' => Carbon::now(),
             'expired_at' => Carbon::now()->addDays(10),
             'active' => true,

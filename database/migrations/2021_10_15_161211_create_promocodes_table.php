@@ -22,8 +22,8 @@ class CreatePromocodesTable extends Migration
             $table->decimal('max_discount', 19, 2)->nullable();
             $table->integer('max_use_count')->nullable();
             $table->boolean('first_time_user')->default(false);
-            $table->timestamp('start_at')->nullable();
-            $table->timestamp('expired_at')->nullable();
+            $table->timestamp('start_at');
+            $table->timestamp('expired_at');
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

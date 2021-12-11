@@ -212,7 +212,7 @@ class GenerateDatatable extends Command
                         Cancel
                     </x-jet-secondary-button>
 
-                    <x-jet-danger-button class="ml-2" wire:click="$toggle(\'modalVisible\')" wire:loading.attr="disabled">
+                    <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
                         Delete
                         <x-ui.loading-indicator wire:target="delete"/>
                     </x-jet-danger-button>
@@ -280,13 +280,20 @@ class ' . $model . 'Table extends Component
     public function delete()
     {
         $id = $this->decrypt($this->encryptedId);
-        if (isset($id)) {
+        try {
+            $id = Crypt::decrypt($this->encryptedId);
             ' . $model . '::find($id)->delete();
             $this->alert([
                 "type" => "success",
                 "message" => "' . $model . ' has been successfully deleted."
             ]);
+        } catch (\Exception $e) {
+            $this->alert([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ]);
         }
+
         $this->modalVisible = false;
     }
 

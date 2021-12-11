@@ -26,7 +26,7 @@ class AppSettingSeeder extends Seeder
         AppSetting::create([
             'name' => 'trial',
             'data' => json_encode([
-                'active' => 0,
+                'active' => 1,
                 'duration' => 14
             ])
         ]);
