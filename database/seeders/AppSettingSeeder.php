@@ -14,6 +14,8 @@ class AppSettingSeeder extends Seeder
      */
     public function run()
     {
+        AppSetting::truncate();
+
         AppSetting::create([
             'name' => 'promotion_banner',
             'data' => json_encode([
@@ -37,6 +39,16 @@ class AppSettingSeeder extends Seeder
         AppSetting::create([
             'name' => 'terms',
             'data' => json_encode('')
+        ]);
+
+        AppSetting::create([
+            'name' => 'faq',
+            'data' => json_encode([
+                [
+                    "question" => "this is question?",
+                    "answer" => "yup this is answer"
+                ]
+            ])
         ]);
     }
 }

@@ -26,6 +26,8 @@ class HomeController extends Controller
 
         $promotionBanner = json_decode(AppSetting::where('name', 'promotion_banner')->first()->data, true);
 
-        return view(self::PATH . 'index', compact('packages', 'promotionBanner'));
+        $faqs = json_decode(AppSetting::where('name', 'faq')->first()->data, true);
+
+        return view(self::PATH . 'index', compact('packages', 'promotionBanner', 'faqs'));
     }
 }

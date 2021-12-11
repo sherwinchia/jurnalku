@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="">
 
 <head>
   <meta charset="utf-8" />
@@ -27,7 +27,7 @@
   <script src="{{ mix('js/user.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased bg-gray-50">
+<body class="font-sans antialiased text-gray-700 bg-gray-50 dark:bg-dark-200 dark:text-gray-400">
   <div class="w-full">
     <div x-data="{ open: false }"
       class="flex flex-col px-4 py-4 mx-auto max-w-7xl md:items-center md:justify-between md:flex-row md:px-6 lg:px-0">
@@ -47,14 +47,8 @@
           </svg>
         </button>
       </div>
-      <nav :class="{'flex': open, 'hidden': !open}"
-        class="flex-col items-start flex-grow hidden pb-4 text-lg md:pb-0 md:flex md:justify-end md:flex-row md:items-center">
-        {{-- <a
-                        href="{{ route('user.home.index') }}"
-                        class="px-2 py-1 mt-2 md:mt-0 md:ml-4"
-                    >
-                        Home
-                    </a> --}}
+      <nav :class="{'flex': open, 'hidden': !open}" x-data="setup()" x-init="init()" x-cloak
+        class="flex-col items-start flex-grow hidden pb-4 text-lg md:pb-0 md:flex md:justify-end md:flex-row md:items-center dark:text-gray-300">
         <a href="{{ route('user.home.index') . '#pricing' }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
           Pricing
         </a>
@@ -70,6 +64,11 @@
             Sign Up
           </a>
         @endguest
+        <button x-on:click="toggleDarkMode()" type="button"
+          class="p-2 ml-2 text-sm rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700">
+          <x-icon.moon id="theme-toggle-dark-icon" class="w-5 h-5" />
+          <x-icon.sun id="theme-toggle-light-icon" class="w-5 h-5 " />
+        </button>
       </nav>
     </div>
   </div>
@@ -78,7 +77,7 @@
     {{ $slot }}
   </div>
 
-  <footer class="bottom-0 px-6 pt-16 pb-8 bg-primary-800">
+  <footer class="bottom-0 px-6 pt-16 pb-8 bg-primary-800 dark:bg-dark-300">
     <div
       class="grid grid-cols-1 gap-8 pb-10 mx-auto text-gray-300 max-w-7xl md:gap-10 lg:gap-12 md:grid-cols-2 lg:grid-cols-4">
       <div class="flex flex-col col-span-2 space-y-4">
@@ -125,6 +124,41 @@
   @livewireScripts
   <script src="{{ mix('js/alpine.js') }}"></script>
   @stack('scripts')
+
+  <script type="text/javascript">
+    const setup = () => {
+      return {
+        isDarkMode: false,
+        init() {
+          if (localStorage.getItem('dark-mode') === null) localStorage.setItem('dark-mode', false);
+          this.isDarkMode = localStorage.getItem('dark-mode') === 'true';
+          this.toggleHtmlDarkClass();
+        },
+        toggleDarkMode() {
+          this.isDarkMode = !this.isDarkMode;
+          localStorage.setItem('dark-mode', this.isDarkMode);
+
+          this.toggleHtmlDarkClass();
+        },
+        toggleHtmlDarkClass() {
+          const html = document.querySelector("html");
+          this.isDarkMode ? html.classList.add("dark") : html.classList.remove("dark");
+
+          let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+          let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+          // Change the icons inside the button based on previous settings
+          if (this.isDarkMode) {
+            themeToggleLightIcon.classList.add('hidden');
+            themeToggleDarkIcon.classList.remove('hidden');
+          } else {
+            themeToggleLightIcon.classList.remove('hidden');
+            themeToggleDarkIcon.classList.add('hidden');
+          }
+        }
+      }
+    }
+  </script>
 </body>
 
 </html>

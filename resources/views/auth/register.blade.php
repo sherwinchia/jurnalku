@@ -26,7 +26,8 @@
       <div class="mt-4">
         <x-jet-label for="phone_number" value="{{ __('Phone Number') }}" />
         <div class="relative flex w-full mt-1">
-          <div class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300">
+          <div
+            class="absolute inset-y-0 left-0 flex items-center p-2 overflow-hidden border-r border-gray-300 dark:border-gray-600">
             +62</div>
           <x-jet-input id="phone_number" type="number" name="phone_number" class="w-full pl-8 sm:pl-14"
             :value="old('phone_number')" required />
@@ -49,7 +50,7 @@
         <div class="mt-4">
           <x-jet-label for="terms">
             <div class="flex items-center">
-              <x-jet-checkbox name="terms" id="terms" />
+              <x-jet-input type="checkbox" name="terms" id="terms" />
 
               <div class="ml-2">
                 {!! __('I agree to the :terms_of_service and :privacy_policy', [

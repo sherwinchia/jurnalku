@@ -27,17 +27,30 @@
   <script src="{{ mix('js/user.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased">
-
-
-  <div class="flex flex-col justify-center items-center bg-gray-100">
+<body class="font-sans antialiased" x-data="setup()" x-init="init()" x-cloak>
+  <div class="flex flex-col items-center justify-center text-gray-700 bg-white dark:bg-dark-200 dark:text-gray-400">
     {{ $slot }}
   </div>
-
-  
   @livewireScripts
   <script src="{{ mix('js/alpine.js') }}"></script>
   @stack('scripts')
+
+  <script type="text/javascript">
+    const setup = () => {
+      return {
+        isDarkMode: false,
+        init() {
+          if (localStorage.getItem('dark-mode') === null) localStorage.setItem('dark-mode', false);
+          this.isDarkMode = localStorage.getItem('dark-mode') === 'true';
+          this.toggleHtmlDarkClass();
+        },
+        toggleHtmlDarkClass() {
+          const html = document.querySelector("html");
+          this.isDarkMode ? html.classList.add("dark") : html.classList.remove("dark");
+        }
+      }
+    }
+  </script>
 </body>
 
 </html>

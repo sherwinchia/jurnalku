@@ -1,6 +1,6 @@
 <div>
   <x-ui.header class="pb-2 mb-4 border-b border-gray-300 dark:border-gray-600">Promotion Banner</x-ui.header>
-  <x-ui.alt-form wire:submit.prevent="submit" heading="PromotionBanner">
+  <x-ui.alt-form wire:submit.prevent="submit">
     <div class="grid grid-cols-4 gap-4">
       <x-ui.form-section field="Active" required="true" class="col-span-full">
         <x-jet-input class="w-6 h-6" wire:model.defer="promotionBannerActive" type="checkbox" />
