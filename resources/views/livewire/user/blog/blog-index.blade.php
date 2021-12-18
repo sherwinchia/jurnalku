@@ -3,12 +3,12 @@
     <div class="flex flex-col space-y-4">
       @foreach ($blogs as $blog)
         <a href="{{ route('user.blogs.show', $blog->slug) }}">
-          <x-ui.card class="flex flex-col p-4 space-y-4">
+          <x-ui.card class="flex flex-col p-4 space-y-4 dark:text-gray-400">
             <div class="flex flex-col space-y-1">
-              <x-ui.header class="text-2xl font-semibold">
+              <x-ui.header class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 {{ $blog->title }}
               </x-ui.header>
-              <div class="flex space-x-2">
+              <div class="flex space-x-2 text-xs">
                 <span
                   class="pr-2 border-r border-gray-700 dark:border-gray-400">{{ date_to_human($blog->published_at, 'd F Y') }}
                 </span>

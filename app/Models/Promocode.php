@@ -37,6 +37,6 @@ class Promocode extends Model
 
     public function getUseCountAttribute()
     {
-        return Transaction::where('promocode_id', $this->id)->count();
+        return Transaction::where('status', 'success')->where('promocode_id', $this->id)->count();
     }
 }

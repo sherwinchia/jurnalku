@@ -4,33 +4,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
+  {{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
   @yield('meta-content')
 
-  <title>{{ config('app.name', 'Laravel') }}</title>
+  {{-- Fonts --}}
 
-  <!-- Fonts -->
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> -->
+  {{-- Favicon --}}
+  <x-meta.favicon />
 
-  <!--Favicon-->
-  <!-- <link rel="icon" type='image/x-icon' href="{{ asset('images/brand/favicon.ico') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/brand/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/brand/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/brand/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('images/brand/site.webmanifest') }}">  -->
-
-  <!-- Styles -->
+  {{-- Styles --}}
   <link rel="stylesheet" href="{{ mix('css/user.css') }}" />
   @livewireStyles
 
-  <!-- Scripts -->
+  {{-- Scripts --}}
   <script src="{{ mix('js/user.js') }}" defer></script>
 </head>
 
 <body class="font-sans antialiased text-gray-700 bg-gray-50 dark:bg-dark-200 dark:text-gray-400">
   <div class="w-full">
-    <div x-data="{ open: false }"
-      class="flex flex-col px-4 py-4 mx-auto max-w-7xl md:items-center md:justify-between md:flex-row md:px-6 lg:px-0">
+    <div x-data="setup()" x-init="init()" x-cloak
+      class="flex flex-col px-4 py-4 mx-auto max-w-7xl md:items-center md:justify-between md:flex-row md:px-6 xl:px-0">
       <div class="flex flex-row items-center justify-between">
         <a href="{{ route('user.home.index') }}"
           class="text-lg tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline">
@@ -47,8 +40,13 @@
           </svg>
         </button>
       </div>
-      <nav :class="{'flex': open, 'hidden': !open}" x-data="setup()" x-init="init()" x-cloak
-        class="flex-col items-start flex-grow hidden pb-4 text-lg md:pb-0 md:flex md:justify-end md:flex-row md:items-center dark:text-gray-300">
+      <nav :class="{'flex': open, 'hidden': !open}"
+        class="flex-col items-start flex-grow hidden py-4 space-y-2 text-lg lg:py-0 md:pb-0 md:flex md:justify-end md:flex-row md:items-center md:space-y-0 dark:text-gray-300">
+        <button x-on:click="toggleDarkMode()" type="button"
+          class="p-2 text-sm rounded-lg md:ml-2 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700">
+          <x-icon.moon id="theme-toggle-dark-icon" class="w-5 h-5" />
+          <x-icon.sun id="theme-toggle-light-icon" class="w-5 h-5 " />
+        </button>
         <a href="{{ route('user.home.index') . '#pricing' }}" class="px-2 py-1 mt-2 md:mt-0 md:ml-4">
           Pricing
         </a>
@@ -64,11 +62,6 @@
             Sign Up
           </a>
         @endguest
-        <button x-on:click="toggleDarkMode()" type="button"
-          class="p-2 ml-2 text-sm rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700">
-          <x-icon.moon id="theme-toggle-dark-icon" class="w-5 h-5" />
-          <x-icon.sun id="theme-toggle-light-icon" class="w-5 h-5 " />
-        </button>
       </nav>
     </div>
   </div>
@@ -77,9 +70,10 @@
     {{ $slot }}
   </div>
 
-  <footer class="bottom-0 px-6 pt-16 pb-8 bg-primary-800 dark:bg-dark-300">
+  <footer
+    class="bottom-0 px-6 py-8 from-primary-800 via-primary-700 to-primary-800 bg-gradient-to-r dark:from-dark-300 dark:to-dark-300">
     <div
-      class="grid grid-cols-1 gap-8 pb-10 mx-auto text-gray-300 max-w-7xl md:gap-10 lg:gap-12 md:grid-cols-2 lg:grid-cols-4">
+      class="grid grid-cols-1 gap-8 pb-10 mx-auto text-gray-200 dark:text-gray-400 max-w-7xl md:gap-10 lg:gap-12 md:grid-cols-2 lg:grid-cols-4">
       <div class="flex flex-col col-span-2 space-y-4">
         <h2 class="text-xl font-medium text-white">
           {{ ucfirst(config('app.name')) }}
@@ -129,6 +123,7 @@
     const setup = () => {
       return {
         isDarkMode: false,
+        open: false,
         init() {
           if (localStorage.getItem('dark-mode') === null) localStorage.setItem('dark-mode', false);
           this.isDarkMode = localStorage.getItem('dark-mode') === 'true';
@@ -147,7 +142,6 @@
           let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
           let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-          // Change the icons inside the button based on previous settings
           if (this.isDarkMode) {
             themeToggleLightIcon.classList.add('hidden');
             themeToggleDarkIcon.classList.remove('hidden');

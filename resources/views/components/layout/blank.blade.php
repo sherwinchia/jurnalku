@@ -9,26 +9,21 @@
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <!-- Fonts -->
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> -->
+  {{-- Fonts --}}
 
-  <!--Favicon-->
-  <!-- <link rel="icon" type='image/x-icon' href="{{ asset('images/brand/favicon.ico') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/brand/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/brand/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/brand/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('images/brand/site.webmanifest') }}">  -->
+  {{-- Favicon --}}
+  <x-meta.favicon />
 
-  <!-- Styles -->
+  {{-- Styles --}}
   <link rel="stylesheet" href="{{ mix('css/user.css') }}">
   @livewireStyles
 
-  <!-- Scripts -->
+  {{-- Scripts --}}
   <script src="{{ mix('js/user.js') }}" defer></script>
 </head>
 
 <body class="font-sans antialiased" x-data="setup()" x-init="init()" x-cloak>
-  <div class="flex flex-col items-center justify-center text-gray-700 bg-white dark:bg-dark-200 dark:text-gray-400">
+  <div class="flex flex-col items-center justify-center text-gray-700 bg-gray-100 dark:bg-dark-200 dark:text-gray-400">
     {{ $slot }}
   </div>
   @livewireScripts

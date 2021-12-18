@@ -1,3 +1,23 @@
+@section('meta-content')
+  <title>{{ ucfirst(config('app.name', 'Laravel')) }} | Register</title>
+  <meta name="description"
+    content="{{ ucfirst(config('app.name', 'Laravel')) }} is an web application to record and track your trading." />
+  <meta name="robots" content="index, follow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  {{-- <meta property="og:type" content="article" /> --}}
+  <meta property="og:title" content="{{ ucfirst(config('app.name', 'Laravel')) }} | Register" />
+  <meta property="og:description"
+    content="{{ ucfirst(config('app.name', 'Laravel')) }} is an web application to record and track your trading." />
+  <meta property="og:image" content="{{ asset('images/logo.png') }}" />
+  <meta property="og:url" content="{{ route('register') }}" />
+  <meta property="og:site_name" content="{{ ucfirst(config('app.name', 'Laravel')) }} | Register" />
+  <meta name="twitter:title" content="{{ ucfirst(config('app.name', 'Laravel')) }} | Register">
+  <meta name="twitter:description"
+    content="{{ ucfirst(config('app.name', 'Laravel')) }} is an web application to record and track your trading.">
+  <meta name="twitter:image" content="{{ asset('images/logo.png') }}">
+  <meta name="twitter:site" content="@sherwin_xnf">
+  <meta name="twitter:creator" content="@sherwin_xnf">
+@endsection
 <x-layout.blank>
   <x-jet-authentication-card>
     <x-slot name="logo">
@@ -58,7 +78,7 @@
         '<a target="_blank" href="' .
         route('user.terms.show') .
         '"
-                                class="text-sm text-gray-600 underline hover:text-gray-900">' .
+                                class="text-sm text-gray-600 underline hover:text-gray-900 dark:hover:text-gray-500">' .
         __('Terms of
                                 Service') .
         '</a>',
@@ -66,7 +86,7 @@
         '<a target="_blank" href="' .
         route('user.policy.show') .
         '"
-                                class="text-sm text-gray-600 underline hover:text-gray-900">' .
+                                class="text-sm text-gray-600 underline hover:text-gray-900 dark:hover:text-gray-500">' .
         __('Privacy
                                 Policy') .
         '</a>',
@@ -78,7 +98,8 @@
       @endif
 
       <div class="flex items-center justify-end mt-4">
-        <a class="text-sm text-gray-600 underline hover:text-gray-900" href="{{ route('login') }}">
+        <a class="text-sm text-gray-600 underline hover:text-gray-900 dark:hover:text-gray-500"
+          href="{{ route('login') }}">
           {{ __('Already registered?') }}
         </a>
 

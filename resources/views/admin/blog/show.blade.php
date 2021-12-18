@@ -1,3 +1,10 @@
+@section('meta-content')
+  <title>{{ ucfirst(config('app.name', 'Laravel')) }} | {{ $blog->title }}</title>
+  <meta name="description"
+    content="{{ ucfirst(config('app.name', 'Laravel')) }} is an web application to record and track your trading." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+@endsection
 <x-layout.admin>
   <x-ui.card class="flex flex-col max-w-3xl p-6 mx-auto space-y-4">
     <div class="flex flex-col space-y-1">

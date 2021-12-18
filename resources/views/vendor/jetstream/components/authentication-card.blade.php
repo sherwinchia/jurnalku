@@ -3,7 +3,7 @@
     <a href="{{ route('user.home.index') }}">{{ $logo }}</a>
   </div>
 
-  <div class="w-full px-6 py-4 mt-6 overflow-hidden shadow-md lg:w-96 sm:rounded-lg">
+  <div class="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md lg:w-96 sm:rounded-lg dark:bg-dark-100">
     {{ $slot }}
   </div>
 </div>

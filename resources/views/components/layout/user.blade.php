@@ -7,23 +7,16 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   @yield('meta-content')
 
-  <title>{{ config('app.name', 'Laravel') }}</title>
+  {{-- Fonts --}}
 
-  <!-- Fonts -->
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> -->
+  {{-- Favicon --}}
+  <x-meta.favicon />
 
-  <!--Favicon-->
-  {{-- <link rel="icon" type='image/x-icon' href="{{ asset('images/brand/favicon.ico') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/brand/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/brand/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/brand/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('images/brand/site.webmanifest') }}"> --}}
-
-  <!-- Styles -->
+  {{-- Styles --}}
   <link rel="stylesheet" href="{{ mix('css/user.css') }}">
   @livewireStyles
 
-  <!-- Scripts -->
+  {{-- Scripts --}}
   <script src="{{ asset('js/chartjs.js') }}"></script>
   <script src="{{ mix('js/user.js') }}"></script>
 </head>
@@ -31,11 +24,11 @@
 <body class="font-sans antialiased">
   <div class="flex h-screen overflow-y-hidden text-gray-700 bg-white dark:bg-dark-200 dark:text-gray-400"
     x-data="setup()" x-init="init()" x-cloak>
-    <!-- Sidebar backdrop -->
+    {{-- Sidebar backdrop --}}
     <div x-show.in.out.opacity="isSidebarOpen" class="fixed inset-0 z-10 bg-black bg-opacity-20 lg:hidden"
       style="backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)"></div>
 
-    <!-- Sidebar -->
+    {{-- Sidebar --}}
     <aside x-transition:enter="transition transform duration-300"
       x-transition:enter-start="-translate-x-full opacity-30 ease-in"
       x-transition:enter-end="translate-x-0 opacity-100 ease-out" x-transition:leave="transition transform duration-300"
@@ -43,7 +36,7 @@
       x-transition:leave-end="-translate-x-full opacity-0 ease-in"
       class="fixed inset-y-0 z-10 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform bg-white border-r shadow-lg dark:border-gray-600 dark:bg-dark-200 lg:z-auto lg:static lg:shadow-none"
       :class="{'-translate-x-full lg:translate-x-0 lg:w-20': !isSidebarOpen}">
-      <!-- sidebar header -->
+      {{-- Sidebar header --}}
       <div class="flex items-center justify-between p-2" :class="{'lg:justify-center': !isSidebarOpen}">
         <a href="{{ route('user.home.index') }}"
           class="flex items-center gap-2 p-2 text-xl font-semibold leading-8 tracking-widest uppercase dark:gray-500 whitespace-nowrap">
@@ -56,7 +49,7 @@
         </button>
       </div>
 
-      <!-- Sidebar links -->
+      {{-- Sidebar links --}}
       <nav class="flex justify-between flex-1 overflow-hidden hover:overflow-y-auto">
         <ul class="flex flex-col w-full h-full gap-2 p-2 overflow-y-auto text-lg">
           <li>
@@ -110,7 +103,7 @@
 
         </ul>
       </nav>
-      <!-- Sidebar footer -->
+      {{-- Sidebar footer --}}
       <div class="flex-shrink-0 p-2 border-t dark:border-gray-600 max-h-14">
         <form method="POST" action="{{ route('logout') }}">
           @csrf
@@ -128,14 +121,14 @@
     </aside>
 
     <div class="flex flex-col flex-1 h-full overflow-hidden">
-      <!-- Navbar -->
+      {{-- Navbar --}}
       <header class="flex-shrink-0 border-b dark:border-gray-600 ">
         <div class="flex items-center justify-between p-2">
-          <!-- Navbar left -->
+          {{-- Navbar left --}}
           <div class="flex items-center space-x-3">
             {{-- <span class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden"
               class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden"> {{ config('app.name') }}</span> --}}
-            <!-- Toggle sidebar button -->
+            {{-- Toggle sidebar button --}}
             <button x-on:click="toggleSidebarMenu()"
               class="p-2 text-sm rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-3 focus:ring-gray-200 dark:focus:ring-gray-700">
               <svg class="w-5 h-5 " :class="{'transform transition-transform -rotate-180': isSidebarOpen}"
@@ -152,22 +145,22 @@
           </button>
         </div>
       </header>
-      <!-- Main content -->
+      {{-- Main content --}}
       <main class="flex-1 max-h-full p-3 overflow-hidden overflow-y-auto bg-gray-50 dark:bg-dark-200">
-        <!-- Breadcrumbs -->
+        {{-- Breadcrumbs --}}
         @if (isset($breadcrumbs))
           <div class="mb-4">
             {{ $breadcrumbs }}
           </div>
         @endif
-        <!-- Main content header -->
+        {{-- Main content header --}}
         @if (isset($header))
           <div
             class="flex flex-col items-start justify-between pb-4 mb-4 space-y-4 border-b dark:border-gray-600 lg:items-center lg:space-y-0 lg:flex-row">
             <h1 class="text-lg font-medium whitespace-nowrap">{{ $header }}</h1>
           </div>
         @endif
-        <!-- Slot -->
+        {{-- Slot --}}
         {{ $slot }}
       </main>
     </div>
@@ -208,7 +201,6 @@
           let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
           let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-          // Change the icons inside the button based on previous settings
           if (this.isDarkMode) {
             themeToggleLightIcon.classList.add('hidden');
             themeToggleDarkIcon.classList.remove('hidden');

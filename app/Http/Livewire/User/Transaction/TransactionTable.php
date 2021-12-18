@@ -100,7 +100,7 @@ class TransactionTable extends Component
             }
         } catch (\Exception $e) {
             return $this->alert([
-                "type" => "error",
+                "type" => "warning",
                 "message" => "No payment guides found."
             ]);
         }
