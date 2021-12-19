@@ -1,14 +1,12 @@
 <x-ui.table>
   <x-slot name="header">
     <div class="flex w-full gap-2 lg:w-1/5">
-      <!-- <x-jet-input wire:model="search" type="text" placeholder="Search" /> -->
+      {{-- <x-jet-input wire:model="search" type="text" placeholder="Search" /> --}}
       <x-ui.form-section class="w-1/2" field="Show" required="false">
         <x-ui.select wire:model="perPage">
           <option value="10">10</option>
           <option value="15">15</option>
           <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
         </x-ui.select>
       </x-ui.form-section>
     </div>

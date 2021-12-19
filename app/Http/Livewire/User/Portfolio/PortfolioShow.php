@@ -156,7 +156,7 @@ class PortfolioShow extends Component
         if (isset($this->trade->exit_date) && isset($this->trade->exit_price)) {
             $this->trade->return = $this->trade->calculate_net;
             $this->trade->return_percentage = $this->trade->calculate_percentage;
-            // dd($this->trade->exit_date);
+
             if ($this->trade->return > 0) {
                 $this->trade->status = "win";
             }

@@ -82,7 +82,7 @@
           </x-ui.header>
           @if (isset($essentialsData['profit_factor']))
             <span
-              class="font-medium {{ text_color($essentialsData['profit_factor']) }}">{{ decimal_to_human($essentialsData['profit_factor'], '', false, 2) }}</span>
+              class="font-medium {{ $essentialsData['profit_factor'] > 1 ? 'text-green-400' : 'text-red-400' }}">{{ decimal_to_human($essentialsData['profit_factor'], '', false, 2) }}</span>
           @endif
         </x-ui.card>
       </div>

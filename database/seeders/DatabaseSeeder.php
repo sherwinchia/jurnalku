@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PackageSeeder::class,
             UserSeeder::class,
-            PortfolioSeeder::class,
+            // PortfolioSeeder::class,
             PromocodeSeeder::class,
             TransactionSeeder::class,
-            TradeSeeder::class,
+            // TradeSeeder::class,
             TransactionPackageSeeder::class,
             BlogSeeder::class,
         ]);

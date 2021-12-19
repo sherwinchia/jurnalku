@@ -33,6 +33,6 @@ class UserSeeder extends Seeder
             'slug' => generate_user_slug()
         ]);
 
-        User::factory()->count(100)->create();
+        User::factory()->count(10)->create();
     }
 }

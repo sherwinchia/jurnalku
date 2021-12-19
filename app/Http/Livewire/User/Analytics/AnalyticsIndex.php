@@ -28,7 +28,7 @@ class AnalyticsIndex extends Component
 
     public $recentTrades = [];
 
-    public $filter = 'All';
+    public $filter = '7D';
 
     public function mount()
     {
