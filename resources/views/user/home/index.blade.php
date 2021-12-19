@@ -20,6 +20,7 @@
 @endsection
 
 <x-layout.landing>
+
   @if ($promotionBanner['active'])
     {!! $promotionBanner['html'] !!}
   @endif

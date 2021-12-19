@@ -33,6 +33,12 @@ class TransactionTable extends Component
             "sortable" => true,
         ],
         [
+            "name" => "Date",
+            "field" => "created_at",
+            "sortable" => true,
+            "format" => ["date_to_human", "d F Y"]
+        ],
+        [
             "name" => "Reference",
             "field" => "reference",
             "sortable" => false,
@@ -43,22 +49,16 @@ class TransactionTable extends Component
             "sortable" => false,
         ],
         [
-            "name" => "Status",
-            "field" => "status",
-            "sortable" => true,
-            "custom" => true,
-        ],
-        [
             "name" => "Net Total",
             "field" => "net_total",
             "sortable" => true,
             "format" => ["decimal_to_human", "Rp"]
         ],
         [
-            "name" => "Date",
-            "field" => "created_at",
+            "name" => "Status",
+            "field" => "status",
             "sortable" => true,
-            "format" => ["date_to_human", "d F Y"]
+            "custom" => true,
         ],
         [
             "name" => "Action",
