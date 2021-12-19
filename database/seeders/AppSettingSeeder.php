@@ -29,7 +29,8 @@ class AppSettingSeeder extends Seeder
             'name' => 'trial',
             'data' => json_encode([
                 'active' => 1,
-                'duration' => 14
+                'duration' => 14,
+                'max_portfolio' => 3
             ])
         ]);
         AppSetting::create([

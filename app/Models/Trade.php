@@ -9,7 +9,7 @@ class Trade extends Model
 {
     use HasFactory;
 
-    protected $fillables = [
+    protected $fillable = [
         'portfolio_id',
         'entry_date',
         'exit_date',

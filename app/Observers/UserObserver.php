@@ -41,6 +41,7 @@ class UserObserver
             'user_id' => $user->id,
             'type' => 'free',
             'expired_at' => now()->addDays($freeDays),
+            'max_portfolio' => isset($appSettingData['max_portfolio']) ? $appSettingData['max_portfolio'] : 1
         ]);
 
         $portfolio = Portfolio::create([

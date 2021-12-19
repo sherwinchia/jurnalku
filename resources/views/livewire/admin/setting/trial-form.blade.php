@@ -14,6 +14,12 @@
           <x-message.validation type="error">{{ $message }}</x-message.validation>
         @enderror
       </x-ui.form-section>
+      <x-ui.form-section field="Max Portfolio" required="true" class="col-span-full">
+        <x-jet-input wire:model.defer="maxPortfolio" type="number" />
+        @error('maxPortfolio')
+          <x-message.validation type="error">{{ $message }}</x-message.validation>
+        @enderror
+      </x-ui.form-section>
       <div class="col-span-4">
         <x-jet-button type="submit" wire:loading.attr="disabled" wire:target="submit">
           Update

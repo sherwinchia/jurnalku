@@ -13,6 +13,7 @@ class TrialForm extends Component
     public $trial;
     public $trialActive;
     public $trialDuration;
+    public $maxPortfolio;
 
     public function mount()
     {
@@ -20,6 +21,7 @@ class TrialForm extends Component
         $trialData = json_decode($this->trial->data, true);
         $this->trialActive = $trialData['active'];
         $this->trialDuration = $trialData['duration'];
+        $this->maxPortfolio = $trialData['max_portfolio'];
     }
 
     public function submit()
@@ -27,11 +29,13 @@ class TrialForm extends Component
         $rawData = $this->validate([
             'trialActive' => 'required|boolean',
             'trialDuration' => 'required|numeric|min:0',
+            'maxPortfolio' => 'required|numeric|min:1'
         ]);
 
         $data = [
             'active' => $rawData['trialActive'],
-            'duration' => $rawData['trialDuration']
+            'duration' => $rawData['trialDuration'],
+            'max_portfolio' => $rawData['maxPortfolio']
         ];
 
         try {
