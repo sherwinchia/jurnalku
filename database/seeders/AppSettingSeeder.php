@@ -22,7 +22,9 @@ class AppSettingSeeder extends Seeder
                 'active' => 0,
                 'text-color' => '',
                 'background-color' => '',
-                'html' => '',
+                'html' => '<div class="flex items-center justify-center p-4 text-white bg-primary-500">
+<p class="text-xl">Web app trading journal by Sherwin, tertarik untuk membeli source code? <a href="https://api.whatsapp.com/send?phone=+6281295552928" target="_blank" class="cursor-pointer">Klik disini!</a></p>
+</div>',
             ])
         ]);
         AppSetting::create([
@@ -46,8 +48,16 @@ class AppSettingSeeder extends Seeder
             'name' => 'faq',
             'data' => json_encode([
                 [
-                    "question" => "this is question?",
-                    "answer" => "yup this is answer"
+                    "question" => "Lorem ipsum dolor amet?",
+                    "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sed libero turpis. Pellentesque accumsan diam vitae purus auctor, in vehicula magna varius. Ut quis ligula sit amet turpis placerat venenatis. Sed vehicula bibendum nisl. Phasellus et efficitur mi. Nam rhoncus at sem eget eleifend. Aliquam at turpis est. Fusce mauris neque, tincidunt ac tristique vitae, porta at nisi."
+                ],
+                [
+                    "question" => "Lorem ipsum dolor amet?",
+                    "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sed libero turpis. Pellentesque accumsan diam vitae purus auctor, in vehicula magna varius. Ut quis ligula sit amet turpis placerat venenatis. Sed vehicula bibendum nisl. Phasellus et efficitur mi. Nam rhoncus at sem eget eleifend. Aliquam at turpis est. Fusce mauris neque, tincidunt ac tristique vitae, porta at nisi."
+                ],
+                [
+                    "question" => "Lorem ipsum dolor amet?",
+                    "answer" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sed libero turpis. Pellentesque accumsan diam vitae purus auctor, in vehicula magna varius. Ut quis ligula sit amet turpis placerat venenatis. Sed vehicula bibendum nisl. Phasellus et efficitur mi. Nam rhoncus at sem eget eleifend. Aliquam at turpis est. Fusce mauris neque, tincidunt ac tristique vitae, porta at nisi."
                 ]
             ])
         ]);

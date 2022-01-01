@@ -1,29 +1,49 @@
-# Laravel 8 Boilerplate
+# Jurnalku
 
-Laravel 8 boilerplate built on top of Jetstream.
+Jurnalku a trading journal web application.
 
-User
+## Admin
 
-1. Login / Logout
-2. Manage profile
+-   Dashboard
+-   Manage users
+-   Manage transactions
+-   Manage packages
+-   Manage promocodes
+-   Manage blogs
+-   Settings
+-   Update profile
 
-Admin
+## User
 
-1. Login / Logout
-2. Manage profile
-3. Manage user
+-   Dashboard
+-   Manage portfolio
+-   Manage trade
+-   Settings
+-   Billings
+-   Update profile
+
+## Extra
+
+-   Support light mode dan dark mode
+-   Integrated with Tripay Payment Gateway
+
+# Stack
+
+Laravel, Livewire, Alpine JS, Tailwind CSS, PostgresSQL
 
 ### Installing
 
 1. Clone the repository using the command "git clone [link]"
-2. Create database in MySQL
+2. Create database in PostgresSQL
 3. Configure the .env file accordingly
 4. Run command
 
 ```
 $composer install
-$php artisan migrate
-$php artisan db:seed
+$php artisan key:generate
+$npm install
+$npm run dev or npm run prod
+$php artisan migrate --seed
 $php artisan serve
 ```
 
@@ -31,9 +51,5 @@ $php artisan serve
 
 -   Laravel 8
 -   Jetstream
--   MySql
-
-## Library Used
-
--   Spatie Backup
--   Spatie Media Library
+-   PostgresSQL
+-   TailwindCSS

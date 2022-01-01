@@ -114,6 +114,9 @@
       Copyright {{ now()->year }} {{ ucfirst(config('app.name')) }} -
       All Rights Reserved.
     </div>
+    <p class="text-xs text-center">
+      Design and built by Sherwin Variancia
+    </p>
   </footer>
   @livewireScripts
   <script src="{{ mix('js/alpine.js') }}"></script>

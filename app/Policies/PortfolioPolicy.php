@@ -41,13 +41,13 @@ class PortfolioPolicy
      */
     public function create(User $user)
     {
-        $subscription = $user->subscription_type;
-        if ($subscription === "paid" && $user->portfolios->count() < $user->max_portfolio) {
+        // $subscription = $user->subscription_type;
+        if ($user->portfolios->count() < $user->max_portfolio) {
             return true;
         }
-        if ($subscription === "free" && $user->portfolios->count() < 1) {
-            return true;
-        }
+        // if ($subscription === "free" && $user->portfolios->count() < 1) {
+        //     return true;
+        // }
         return false;
     }
 
