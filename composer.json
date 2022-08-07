@@ -18,11 +18,7 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.0",
-        "maatwebsite/excel": "^3.1",
-        "mtownsend/read-time": "^2.0",
-        "sherwinchia/livewire-image-uploader": "^1.0",
-        "spatie/laravel-backup": "^6.16",
-        "spatie/laravel-medialibrary": "9.0.0"
+        "maatwebsite/excel": "^3.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

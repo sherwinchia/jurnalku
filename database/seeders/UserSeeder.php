@@ -16,8 +16,8 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'phone_number' => '6281295552928',
+            'email' => 'admin@jurnalku.com',
+            'phone_number' => '6281283789123',
             'password' => bcrypt('secret'),
             'role_id' => 1,
             'slug' => generate_user_slug(),
@@ -26,8 +26,8 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'User',
-            'email' => 'user@user.com',
-            'phone_number' => '6281295552921',
+            'email' => 'user@gmail.com',
+            'phone_number' => '6281291232131',
             'password' => bcrypt('secret'),
             'role_id' => 2,
             'slug' => generate_user_slug()
