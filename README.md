@@ -31,6 +31,11 @@ Jurnalku a trading journal web application.
 
 Laravel, Livewire, Alpine JS, Tailwind CSS, PostgresSQL
 
+## Dev Credentials
+
+admin@jurnalku.com - secret
+user@gmail.com -secret
+
 ### Installing
 
 1. Clone the repository using the command "git clone [link]"
