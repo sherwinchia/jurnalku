@@ -33,8 +33,8 @@ Laravel, Livewire, Alpine JS, Tailwind CSS, PostgresSQL
 
 ## Dev Credentials
 
-admin@jurnalku.com - secret
-user@gmail.com -secret
+-   admin@jurnalku.com - secret
+-   user@gmail.com -secret
 
 ### Installing
 
